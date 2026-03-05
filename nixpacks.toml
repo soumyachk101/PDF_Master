@@ -1,0 +1,11 @@
+[phases.setup]
+nixPkgs = ["nodePackages.npm", "libreoffice", "poppler_utils", "libutil"]
+
+[phases.install]
+cmds = ["cd backend && npm install"]
+
+[phases.build]
+cmds = ["cd backend && npm run build --if-present"]
+
+[start]
+cmd = "cd backend && npm start"

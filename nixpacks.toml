@@ -1,11 +1,14 @@
 [phases.setup]
-nixPkgs = ["nodePackages.npm", "libreoffice", "poppler_utils", "libutil"]
+nixPkgs = ["node", "libreoffice", "poppler_utils", "libutil"]
+
+# Install, Build, and Start are now handled by the root package.json scripts
+# but we keep these explicit to ensure Railway's Railpack builder is bypassed or correctly guided.
 
 [phases.install]
-cmds = ["cd backend && npm install"]
+cmds = ["npm install --prefix backend"]
 
 [phases.build]
-cmds = ["cd backend && npm run build --if-present"]
+cmds = ["npm run build --prefix backend --if-present"]
 
 [start]
-cmd = "cd backend && npm start"
+cmd = "npm start --prefix backend"

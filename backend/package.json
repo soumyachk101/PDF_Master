@@ -6,10 +6,12 @@
   "scripts": {
     "start": "node src/app.js",
     "dev": "nodemon src/app.js",
-    "clean": "node -e \"require('fs').readdirSync('temp').forEach(f => f !== '.gitkeep' && require('fs').unlinkSync('temp/' + f))\""
+    "clean": "node -e \"require('fs').readdirSync('temp').forEach(f => f !== '.gitkeep' && require('fs').unlinkSync('temp/' + f))\"",
+    "postinstall": "node -e \"const fs=require('fs'); const dir='temp'; if(!fs.existsSync(dir)){fs.mkdirSync(dir,{recursive:true}); console.log('Created temp directory');}\""
   },
   "dependencies": {
     "archiver": "^7.0.1",
+    "axios": "^1.6.7",
     "cors": "^2.8.5",
     "docx": "^8.5.0",
     "dotenv": "^16.4.5",
@@ -28,7 +30,9 @@
     "uuid": "^9.0.1"
   },
   "devDependencies": {
-    "nodemon": "^3.1.0"
+    "jest": "^30.2.0",
+    "nodemon": "^3.1.0",
+    "supertest": "^7.2.2"
   },
   "engines": {
     "node": ">=18.0.0"

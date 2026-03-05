@@ -9,45 +9,61 @@ export default function ToolCard({ tool, index = 0 }) {
   return (
     <Link
       to={`/tool/${tool.slug}`}
-      className={`group relative card card-hover p-6 sm:p-7 flex flex-col gap-4
-        cursor-pointer animate-fade-up ${staggerClass}`}
+      className={`group relative card card-hover p-6 sm:p-8 flex flex-col gap-5
+        cursor-pointer animate-fade-up overflow-hidden ${staggerClass}`}
     >
+      {/* Background radial glow on hover */}
+      <div
+        className="absolute -top-24 -right-24 w-48 h-48 rounded-full blur-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-500 pointer-events-none"
+        style={{ backgroundColor: tool.color }}
+      />
+
       {/* Icon Component */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between relative z-10">
         <div
           className="w-14 h-14 rounded-2xl flex items-center justify-center shrink-0
-            shadow-skeuo-inset dark:shadow-skeuo-inset-dark transition-transform group-hover:scale-105"
-          style={{ backgroundColor: `${tool.color}15` }}
+            glass transition-transform duration-300 group-hover:scale-110"
+          style={{
+            boxShadow: `0 4px 20px ${tool.color}20`,
+            border: `1px solid ${tool.color}40`,
+            backgroundColor: `${tool.color}15`
+          }}
         >
-          <Icon size={26} style={{ color: tool.color }} strokeWidth={2} className="drop-shadow-sm" />
+          <Icon size={26} style={{ color: tool.color }} strokeWidth={2.5} />
         </div>
 
         {/* Arrow indicator */}
-        <div className="w-8 h-8 rounded-full flex items-center justify-center
-          bg-pdfkit-soft dark:bg-[#1A1A2E] shadow-skeuo-up dark:shadow-skeuo-up-dark
+        <div className="w-10 h-10 rounded-full flex items-center justify-center
+          glass
           opacity-0 group-hover:opacity-100 -translate-x-4
-          group-hover:translate-x-0 transition-all duration-300">
-          <ArrowRight size={16} className="text-pdfkit-red" strokeWidth={2.5} />
+          group-hover:translate-x-0 transition-all duration-400 ease-out">
+          <ArrowRight size={18} style={{ color: tool.color }} strokeWidth={2.5} />
         </div>
       </div>
 
       {/* Content */}
-      <div className="flex-1 mt-2">
-        <h3 className="font-display font-bold text-lg text-pdfkit-dark dark:text-white
-          mb-2 group-hover:text-pdfkit-red dark:group-hover:text-pdfkit-red transition-colors">
+      <div className="flex-1 mt-2 relative z-10">
+        <h3 className="font-display font-bold text-xl text-ink-primary dark:text-white
+          mb-2 transition-colors duration-300"
+          style={{ '--hover-color': tool.color }}
+          onMouseEnter={(e) => e.currentTarget.style.color = tool.color}
+          onMouseLeave={(e) => e.currentTarget.style.color = ''}
+        >
           {tool.name}
         </h3>
-        <p className="text-sm font-medium text-pdfkit-dark/60 dark:text-white/50 leading-relaxed
+        <p className="text-sm font-medium text-ink-secondary dark:text-ink-muted leading-relaxed
           line-clamp-2">
           {tool.desc}
         </p>
       </div>
 
-      {/* Hover border accent */}
+      {/* Hover border accent (subtle glow instead of flat bottom border) */}
       <div
-        className="absolute inset-x-0 bottom-0 h-0.5 rounded-b-card
-          scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"
-        style={{ backgroundColor: tool.color }}
+        className="absolute inset-0 rounded-card opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+        style={{
+          boxShadow: `inset 0 0 20px ${tool.color}15`,
+          border: `1px solid ${tool.color}30`
+        }}
       />
     </Link>
   )

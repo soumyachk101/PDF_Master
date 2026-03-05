@@ -6,23 +6,14 @@ const helmet = require('helmet')
 const rateLimit = require('express-rate-limit')
 const path = require('path')
 const fs = require('fs')
-const cron = require('node-cron')
 const pdfRoutes = require('./routes/pdf.routes')
 const errorHandler = require('./middleware/errorHandler')
+const { TEMP_DIR } = require('./config/paths')
 
 const app = express()
 const PORT = process.env.PORT || 4000
 
-// ─── Ensure temp directory exists ───────────────────────────────────────────
-const TEMP_DIR = path.join(__dirname, '../temp')
-try {
-  if (!fs.existsSync(TEMP_DIR)) {
-    fs.mkdirSync(TEMP_DIR, { recursive: true })
-    console.log('[startup] Created temp directory')
-  }
-} catch (err) {
-  console.error('[startup] Failed to create temp directory:', err.message)
-}
+// ─── Temp directory configuration is handled in src/config/paths.js ─────────
 
 // ─── Security middleware ─────────────────────────────────────────────────────
 app.use(helmet({
@@ -106,64 +97,31 @@ app.use((req, res) => {
 // ─── Error handler ───────────────────────────────────────────────────────────
 app.use(errorHandler)
 
-// ─── Auto-cleanup: delete temp files older than TTL ──────────────────────────
-const TTL_MINUTES = parseInt(process.env.TEMP_FILE_TTL_MINUTES || '30', 10)
+// ─── Start server (only if not running on Vercel) ────────────────────────────
+// Note: On Vercel, the app is exported and handled by the platform.
+// Background cleanup is removed for serverless compatibility.
+if (!process.env.VERCEL) {
+  const port = parseInt(PORT, 10) || 4000
+  const STARTUP_DELAY = process.env.RAILWAY ? 2000 : 500
 
-function cleanupTempFiles() {
-  try {
-    const files = fs.readdirSync(TEMP_DIR)
-    const now = Date.now()
-    let deleted = 0
+  setTimeout(() => {
+    app.listen(port, '0.0.0.0', () => {
+      console.log(`
+    ╔══════════════════════════════════╗
+    ║   PDFKit API — Running on :${port}  ║
+    ║   Environment: ${(process.env.NODE_ENV || 'development').padEnd(13)} ║
+    ╚══════════════════════════════════╝
+    `)
 
-    files.forEach(file => {
-      if (file === '.gitkeep') return
-      const filePath = path.join(TEMP_DIR, file)
-      try {
-        const stat = fs.statSync(filePath)
-        const ageMinutes = (now - stat.mtimeMs) / 1000 / 60
-        if (ageMinutes > TTL_MINUTES) {
-          fs.unlinkSync(filePath)
-          deleted++
+      // Log environment info for debugging
+      if (process.env.NODE_ENV === 'production') {
+        console.log('[startup] Production mode detected')
+        if (process.env.RAILWAY) {
+          console.log('[startup] Running on Railway platform')
         }
-      } catch { /* file already deleted */ }
-    })
-
-    if (deleted > 0) {
-      console.log(`[cleanup] Deleted ${deleted} old temp file(s)`)
-    }
-  } catch (err) {
-    console.error('[cleanup] Error:', err.message)
-  }
-}
-
-// Run cleanup every 10 minutes
-cron.schedule('*/10 * * * *', cleanupTempFiles)
-// Also run once at startup
-cleanupTempFiles()
-
-// ─── Start server ────────────────────────────────────────────────────────────
-const port = parseInt(PORT, 10) || 4000
-
-// Add slight delay to ensure filesystem is ready (Railway-specific)
-const STARTUP_DELAY = process.env.RAILWAY ? 2000 : 500
-
-setTimeout(() => {
-  app.listen(port, '0.0.0.0', () => {
-    console.log(`
-  ╔══════════════════════════════════╗
-  ║   PDFKit API — Running on :${port}  ║
-  ║   Environment: ${(process.env.NODE_ENV || 'development').padEnd(13)} ║
-  ╚══════════════════════════════════╝
-  `)
-
-    // Log environment info for debugging
-    if (process.env.NODE_ENV === 'production') {
-      console.log('[startup] Production mode detected')
-      if (process.env.RAILWAY) {
-        console.log('[startup] Running on Railway platform')
       }
-    }
-  })
-}, STARTUP_DELAY)
+    })
+  }, STARTUP_DELAY)
+}
 
 module.exports = app

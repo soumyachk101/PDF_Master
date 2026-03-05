@@ -36,50 +36,52 @@ export default function HomePage() {
   )
 
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen relative overflow-hidden">
+
       {/* ─── Hero ─── */}
-      <section className="pt-32 pb-16 sm:pt-40 sm:pb-20">
-        <div className="section-container text-center">
+      <section className="relative pt-32 pb-16 sm:pt-44 sm:pb-24">
+        {/* Animated background glows specific to hero */}
+        <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-primary-gradientStart/20 blur-[120px] rounded-full pointer-events-none animate-pulse-glow" />
+
+        <div className="section-container text-center relative z-10">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-pill mb-6 animate-fade-up
-            bg-pdfkit-soft dark:bg-pdfkit-dark shadow-skeuo-inset dark:shadow-skeuo-inset-dark
-            text-xs font-semibold text-pdfkit-dark dark:text-white border border-white/30 dark:border-white/5">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-pill mb-8 animate-fade-up glass border border-white/20">
             <span>🔒</span>
-            <span>Free · Secure · No signup required</span>
+            <span className="text-xs font-bold text-ink-primary dark:text-white tracking-wide uppercase">Free &middot; Secure &middot; No signup required</span>
           </div>
 
           {/* Headline */}
-          <h1 className="font-display font-extrabold
-            text-4xl sm:text-5xl md:text-6xl
-            text-pdfkit-dark dark:text-white
-            max-w-3xl mx-auto mb-5
-            animate-fade-up stagger-2 drop-shadow-sm">
+          <h1 className="font-display font-black
+            text-5xl sm:text-6xl md:text-7xl lg:text-[80px] leading-tight
+            text-ink-primary dark:text-white
+            max-w-4xl mx-auto mb-6
+            animate-fade-up stagger-2">
             Every PDF Tool
             <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-br from-pdfkit-red to-pdfkit-reddark drop-shadow-sm">You'll Ever Need</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-gradientStart via-primary to-primary-gradientEnd pr-2">You'll Ever Need</span>
           </h1>
 
           {/* Sub */}
-          <p className="text-base sm:text-lg text-pdfkit-dark/70 dark:text-white/60
-            max-w-xl mx-auto mb-10 animate-fade-up stagger-3 font-medium">
-            Merge, split, compress, convert, and secure your PDFs in seconds.
+          <p className="text-lg sm:text-xl text-ink-secondary dark:text-ink-muted
+            max-w-2xl mx-auto mb-12 animate-fade-up stagger-3 font-medium">
+            Merge, split, compress, convert, and secure your PDFs in seconds. <br className="hidden sm:block" />
             21 powerful tools, completely free.
           </p>
 
           {/* CTAs */}
           <div className="flex items-center justify-center gap-4 flex-wrap
             animate-fade-up stagger-4">
-            <a href="#tools" className="btn-primary">
+            <a href="#tools" className="btn-primary text-lg px-8 py-4">
               Explore Tools
-              <ArrowRight size={18} strokeWidth={2.5} />
+              <ArrowRight size={20} strokeWidth={2.5} />
             </a>
-            <a href="#features" className="btn-secondary">
+            <a href="#features" className="btn-secondary text-lg px-8 py-4">
               Learn More
             </a>
           </div>
 
           {/* Quick tool shortcuts */}
-          <div className="flex items-center justify-center gap-3 mt-10 flex-wrap
+          <div className="flex items-center justify-center gap-3 mt-12 flex-wrap
             animate-fade-up stagger-5">
             {['merge-pdf', 'compress-pdf', 'pdf-to-word', 'jpg-to-pdf'].map(slug => {
               const tool = TOOLS.find(t => t.slug === slug)
@@ -88,40 +90,41 @@ export default function HomePage() {
                 <Link
                   key={slug}
                   to={`/tool/${slug}`}
-                  className="text-xs font-bold text-pdfkit-dark/70 dark:text-white/70
-                    px-4 py-2 rounded-pill
-                    bg-pdfkit-soft dark:bg-[#252540]
-                    shadow-skeuo-up dark:shadow-skeuo-up-dark
-                    border border-white/50 dark:border-white/5
-                    hover:text-pdfkit-red dark:hover:text-pdfkit-red
-                    active:shadow-skeuo-down dark:active:shadow-skeuo-down-dark
-                    transition-all duration-200"
+                  className="text-sm font-semibold text-ink-primary dark:text-white
+                    px-5 py-2.5 rounded-full
+                    glass shadow-glass border border-white/20
+                    hover:border-primary-light/50 hover:shadow-glass-hover
+                    hover:-translate-y-0.5
+                    active:translate-y-0 active:scale-95
+                    transition-all duration-300"
                 >
                   {tool.name}
                 </Link>
               )
             })}
-            <span className="text-xs font-bold text-pdfkit-dark/50 dark:text-white/40 px-2">+ 17 more</span>
+            <span className="text-sm font-semibold text-ink-muted px-2 pt-1">+ 17 more</span>
           </div>
         </div>
       </section>
 
       {/* ─── Trust strip ─── */}
-      <TrustStrip />
+      <div className="relative z-10">
+        <TrustStrip />
+      </div>
 
       {/* ─── Tool grid ─── */}
-      <section id="tools" className="py-20 sm:py-24">
+      <section id="tools" className="py-24 relative z-10">
         <div className="section-container">
           {/* Section header */}
-          <div className="flex flex-col sm:flex-row sm:items-end
-            justify-between gap-6 mb-10">
+          <div className="flex flex-col md:flex-row md:items-end
+            justify-between gap-8 mb-12">
             <div>
-              <h2 className="font-display font-extrabold text-3xl sm:text-4xl
-                text-pdfkit-dark dark:text-white mb-2 drop-shadow-sm">
+              <h2 className="font-display font-black text-4xl sm:text-5xl
+                text-ink-primary dark:text-white mb-4 tracking-tight">
                 All PDF Tools
               </h2>
-              <p className="text-pdfkit-dark/60 dark:text-white/50 font-medium">
-                {TOOLS.length} tools · 100% free · No account needed
+              <p className="text-ink-secondary dark:text-ink-muted text-lg font-medium">
+                {TOOLS.length} tools &middot; 100% free &middot; No account needed
               </p>
             </div>
             <FilterTabs
@@ -132,14 +135,14 @@ export default function HomePage() {
 
           {/* Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4
-            gap-6">
+            gap-6 sm:gap-8">
             {filteredTools.map((tool, i) => (
               <ToolCard key={tool.slug} tool={tool} index={i} />
             ))}
           </div>
 
           {filteredTools.length === 0 && (
-            <div className="text-center py-20 font-medium text-pdfkit-dark/50 dark:text-white/40">
+            <div className="text-center py-24 font-semibold text-ink-muted text-lg">
               No tools found in this category.
             </div>
           )}
@@ -147,19 +150,15 @@ export default function HomePage() {
       </section>
 
       {/* ─── Features ─── */}
-      <section id="features" className="py-20 sm:py-24 relative">
-        {/* Physical Divider */}
-        <div className="absolute top-0 left-0 right-0 h-px bg-white/50 dark:bg-white/5 shadow-sm" />
-        <div className="absolute top-px left-0 right-0 h-px bg-black/5 dark:bg-black/20" />
-
+      <section id="features" className="py-24 relative z-10">
         <div className="section-container">
           <div className="text-center mb-16">
-            <h2 className="font-display font-extrabold text-3xl sm:text-4xl
-              text-pdfkit-dark dark:text-white mb-4 drop-shadow-sm">
+            <h2 className="font-display font-black text-4xl sm:text-5xl
+              text-ink-primary dark:text-white mb-6 tracking-tight">
               Why Choose PDFKit?
             </h2>
-            <p className="text-pdfkit-dark/70 dark:text-white/60 max-w-md mx-auto font-medium">
-              Built for speed, privacy, and ease of use on any device.
+            <p className="text-ink-secondary dark:text-ink-muted text-lg max-w-2xl mx-auto font-medium">
+              Built for speed, privacy, and an unmatched user experience.
             </p>
           </div>
 
@@ -169,19 +168,23 @@ export default function HomePage() {
               return (
                 <div
                   key={feat.title}
-                  className={`card p-8 animate-fade-up stagger-${i + 1} flex flex-col items-center text-center`}
+                  className={`card p-10 animate-fade-up stagger-${i + 1} flex flex-col items-center text-center`}
                 >
                   <div
-                    className="w-16 h-16 rounded-full flex items-center justify-center mb-6
-                      shadow-skeuo-inset dark:shadow-skeuo-inset-dark bg-pdfkit-soft dark:bg-[#1A1A2E]"
+                    className="w-20 h-20 rounded-[20px] flex items-center justify-center mb-8
+                      glass shadow-glass border border-white/20"
+                    style={{
+                      boxShadow: `0 8px 32px 0 ${feat.color}20`,
+                      background: `linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0))`
+                    }}
                   >
-                    <Icon size={28} style={{ color: feat.color }} strokeWidth={2.5} className="drop-shadow-sm" />
+                    <Icon size={32} style={{ color: feat.color }} strokeWidth={2.5} className="drop-shadow-md" />
                   </div>
-                  <h3 className="font-display font-bold text-lg
-                    text-pdfkit-dark dark:text-white mb-3">
+                  <h3 className="font-display font-bold text-2xl
+                    text-ink-primary dark:text-white mb-4">
                     {feat.title}
                   </h3>
-                  <p className="text-pdfkit-dark/70 dark:text-white/60 font-medium leading-relaxed">
+                  <p className="text-ink-secondary dark:text-ink-muted font-medium text-lg leading-relaxed">
                     {feat.desc}
                   </p>
                 </div>
@@ -192,37 +195,33 @@ export default function HomePage() {
       </section>
 
       {/* ─── CTA Banner ─── */}
-      <section className="py-20 sm:py-28">
+      <section className="py-24 relative z-10">
         <div className="section-container">
-          <div className="rounded-card p-12 sm:p-16 text-center
-            relative overflow-hidden
-            bg-gradient-to-br from-pdfkit-redlight to-pdfkit-reddark
-            shadow-skeuo-up border border-pdfkit-redlight/50">
-            {/* Background decoration */}
-            <div className="absolute -top-10 -right-10 w-64 h-64 rounded-full
-              bg-white/10 blur-2xl pointer-events-none" />
-            <div className="absolute -bottom-10 -left-10 w-48 h-48 rounded-full
-              bg-black/10 blur-2xl pointer-events-none" />
+          <div className="glass !rounded-[40px] p-12 sm:p-20 text-center
+            relative overflow-hidden border border-primary/20
+            shadow-[0_20px_60px_-15px_rgba(139,92,246,0.3)]">
 
-            <h2 className="font-display font-extrabold text-3xl sm:text-5xl
-              text-white mb-5 relative drop-shadow-md">
-              Start using PDFKit today
-            </h2>
-            <p className="text-white/90 mb-10 max-w-lg mx-auto relative font-medium text-lg drop-shadow-sm">
-              No sign up. No watermarks. No limits. Just powerful PDF tools.
-            </p>
-            <a
-              href="#tools"
-              className="inline-flex items-center gap-3
-                bg-white text-pdfkit-reddark font-bold text-lg
-                px-10 py-4 rounded-btn
-                shadow-skeuo-up hover:-translate-y-1 hover:brightness-105
-                active:translate-y-0 active:shadow-skeuo-down active:brightness-95
-                transition-all duration-200 relative"
-            >
-              Get Started Free
-              <ArrowRight size={20} strokeWidth={3} />
-            </a>
+            {/* Background mesh in CTA */}
+            <div className="absolute inset-0 bg-gradient-to-br from-primary-gradientStart/20 to-primary-gradientEnd/20 z-0" />
+            <div className="absolute -top-[200px] -right-[200px] w-[500px] h-[500px] rounded-full bg-primary-gradientEnd/30 blur-[100px] z-0 pointer-events-none" />
+            <div className="absolute -bottom-[200px] -left-[200px] w-[500px] h-[500px] rounded-full bg-primary-gradientStart/30 blur-[100px] z-0 pointer-events-none" />
+
+            <div className="relative z-10">
+              <h2 className="font-display font-black text-4xl sm:text-6xl
+                text-ink-primary dark:text-white mb-6 tracking-tight">
+                Ready to get started?
+              </h2>
+              <p className="text-ink-secondary dark:text-ink-muted mb-12 max-w-xl mx-auto font-medium text-xl">
+                No sign up. No watermarks. No limits. Just beautiful PDF tools.
+              </p>
+              <a
+                href="#tools"
+                className="btn-primary text-xl px-12 py-5 shadow-glow-primary hover:shadow-glow-primary-hover"
+              >
+                Start Using PDFKit Free
+                <ArrowRight size={24} strokeWidth={3} />
+              </a>
+            </div>
           </div>
         </div>
       </section>

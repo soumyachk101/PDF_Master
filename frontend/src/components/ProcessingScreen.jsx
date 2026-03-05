@@ -1,95 +1,47 @@
-export default function ProcessingScreen({ progress = 0, fileName }) {
-  const circumference = 2 * Math.PI * 36
+import { Loader2 } from 'lucide-react'
+
+export default function ProcessingScreen({ progress, fileName }) {
+  const radius = 60
+  const circumference = 2 * Math.PI * radius
+  const strokeDashoffset = circumference - (progress / 100) * circumference
 
   return (
-    <div className="max-w-[460px] mx-auto text-center py-16 animate-fade-in">
-      {/* Circular progress - skeuo raised ring */}
-      <div
-        className="relative w-32 h-32 mx-auto mb-8 rounded-full"
-        style={{
-          background: 'linear-gradient(135deg, #f0f0f4 0%, #e0e0e5 100%)',
-          boxShadow: '8px 8px 16px rgba(0,0,0,0.15), -8px -8px 16px rgba(255,255,255,0.9), inset 2px 2px 4px rgba(255,255,255,0.4)',
-        }}
-      >
-        <svg viewBox="0 0 88 88" className="w-32 h-32 -rotate-90">
-          {/* Track */}
+    <div className="max-w-[500px] mx-auto text-center py-20 px-8 glass rounded-[32px] animate-fade-in relative overflow-hidden">
+      {/* Background glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-primary/20 blur-[60px] rounded-full" />
+
+      <div className="relative w-40 h-40 mx-auto mb-10">
+        <svg className="w-full h-full -rotate-90 transform" viewBox="0 0 140 140">
           <circle
-            cx="44" cy="44" r="36"
-            fill="none"
-            stroke="rgba(0,0,0,0.08)"
-            strokeWidth="6"
+            cx="70" cy="70" r={radius}
+            className="stroke-surface-dark/10 dark:stroke-white/10"
+            strokeWidth="8" fill="none"
           />
-          {/* Progress */}
           <circle
-            cx="44" cy="44" r="36"
-            fill="none"
-            stroke="url(#redGradient)"
-            strokeWidth="6"
+            cx="70" cy="70" r={radius}
+            className="stroke-primary drop-shadow-[0_0_12px_rgba(139,92,246,0.6)] transition-all duration-300 ease-out"
+            strokeWidth="8" fill="none"
             strokeLinecap="round"
-            strokeDasharray={circumference}
-            strokeDashoffset={circumference * (1 - progress / 100)}
-            style={{ transition: 'stroke-dashoffset 0.4s ease' }}
+            style={{ strokeDasharray: circumference, strokeDashoffset }}
           />
-          <defs>
-            <linearGradient id="redGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#F48C84" />
-              <stop offset="100%" stopColor="#C84439" />
-            </linearGradient>
-          </defs>
         </svg>
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span
-            className="font-display font-black text-xl"
-            style={{ color: '#C84439' }}
-          >
-            {progress}%
-          </span>
+        <div className="absolute inset-0 flex flex-col items-center justify-center">
+          {progress < 100 ? (
+            <span className="font-display font-black text-3xl text-ink-primary dark:text-white">
+              {Math.round(progress)}%
+            </span>
+          ) : (
+            <Loader2 size={36} className="text-primary animate-spin" strokeWidth={2.5} />
+          )}
         </div>
       </div>
 
-      <h3
-        className="font-display font-extrabold text-2xl mb-3"
-        style={{ color: '#1A1A2E' }}
-      >
-        Processing your file…
+      <h3 className="font-display font-bold text-2xl
+        text-ink-primary dark:text-white mb-3 relative z-10">
+        {progress < 100 ? 'Processing your file...' : 'Almost there...'}
       </h3>
-
-      {fileName && (
-        <p
-          className="font-mono text-sm truncate max-w-xs mx-auto mb-6 px-4 py-1 rounded-lg"
-          style={{
-            color: '#555570',
-            background: 'rgba(0,0,0,0.04)',
-            boxShadow: 'inset 2px 2px 4px rgba(0,0,0,0.06), inset -2px -2px 4px rgba(255,255,255,0.8)',
-          }}
-        >
-          {fileName}
-        </p>
-      )}
-
-      {/* Linear progress bar - inset tray */}
-      <div
-        className="w-full max-w-xs mx-auto rounded-full h-3 overflow-hidden mb-3"
-        style={{
-          background: 'rgba(0,0,0,0.06)',
-          boxShadow: 'inset 2px 2px 5px rgba(0,0,0,0.12), inset -2px -2px 5px rgba(255,255,255,0.8)',
-        }}
-      >
-        <div
-          className="h-full rounded-full transition-all duration-400 ease-out"
-          style={{
-            width: `${progress}%`,
-            background: 'linear-gradient(to right, #F48C84, #C84439)',
-            boxShadow: '0 1px 3px rgba(200,68,57,0.4)',
-          }}
-        />
-      </div>
-
-      <p
-        className="text-xs font-bold uppercase tracking-widest"
-        style={{ color: 'rgba(0,0,0,0.25)' }}
-      >
-        Please don't close this tab
+      <p className="text-base font-medium text-ink-secondary dark:text-ink-muted truncate max-w-[280px] mx-auto relative z-10">
+        {fileName || 'Hang tight!'}
       </p>
     </div>
   )

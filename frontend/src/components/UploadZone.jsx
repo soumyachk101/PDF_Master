@@ -23,45 +23,47 @@ export default function UploadZone({ onFiles, accept, multiple, acceptLabel, err
     <div
       {...getRootProps()}
       className={`
-        max-w-upload mx-auto rounded-3xl
+        max-w-upload mx-auto rounded-[32px]
         p-12 sm:p-20 text-center select-none cursor-pointer
-        transition-all duration-300 group
-        border border-white/40 dark:border-white/5
+        transition-all duration-400 group relative
         ${hasError
-          ? 'bg-red-50 dark:bg-red-900/10 shadow-skeuo-inset-dark'
+          ? 'glass border-red-500/50 hover:bg-red-500/5 dark:hover:bg-red-500/10'
           : isDragActive
-            ? 'bg-pdfkit-dim/40 dark:bg-pdfkit-dark shadow-[inset_8px_8px_16px_rgba(0,0,0,0.2),inset_-8px_-8px_16px_rgba(255,255,255,0.7)] scale-[0.98]'
-            : 'bg-pdfkit-dim/20 dark:bg-[#151525] shadow-skeuo-inset dark:shadow-skeuo-inset-dark hover:bg-pdfkit-dim/30'
+            ? 'glass border-primary border-2 scale-[0.98] bg-primary/5 dark:bg-primary/10 shadow-[0_0_40px_rgba(139,92,246,0.2)]'
+            : 'glass border-dashed border-2 hover:border-primary/50 hover:shadow-glass-hover bg-surface/50 dark:bg-surface-dark/50'
         }`}
     >
       <input {...getInputProps()} />
 
+      {/* Background glowing orb */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 rounded-full blur-[60px] opacity-20 bg-primary pointer-events-none transition-opacity duration-300 group-hover:opacity-40" />
+
       {/* Icon Area */}
-      <div className={`w-20 h-20 mx-auto mb-6 rounded-full flex items-center justify-center
-        transition-all duration-300
-        ${hasError ? 'bg-red-100 dark:bg-red-900/30 shadow-skeuo-up' : 'bg-pdfkit-soft dark:bg-[#252540] shadow-skeuo-up dark:shadow-skeuo-up-dark'}
-        ${isDragActive ? 'scale-110 shadow-skeuo-down' : 'group-hover:scale-110 group-hover:shadow-skeuo-down dark:group-hover:shadow-skeuo-down-dark'}`}
+      <div className={`w-24 h-24 mx-auto mb-8 rounded-full flex items-center justify-center relative z-10
+        transition-all duration-500 glass shadow-glass
+        ${hasError ? 'text-red-500' : 'text-primary'}
+        ${isDragActive ? 'scale-110 shadow-glow-primary' : 'group-hover:scale-110 group-hover:shadow-glow-primary'}`}
       >
         {hasError
-          ? <AlertCircle size={32} className="text-pdfkit-red" strokeWidth={2.5} />
+          ? <AlertCircle size={36} strokeWidth={2.5} />
           : isDragActive
-            ? <FileUp size={32} className="text-pdfkit-red" strokeWidth={2.5} />
-            : <Upload size={32} className="text-pdfkit-red" strokeWidth={2.5} />
+            ? <FileUp size={36} strokeWidth={2.5} className="animate-bounce" />
+            : <Upload size={36} strokeWidth={2.5} />
         }
       </div>
 
       {/* Text */}
-      <h3 className="font-display font-extrabold text-xl sm:text-2xl
-        text-pdfkit-dark dark:text-white mb-3 drop-shadow-sm">
+      <h3 className="font-display font-bold text-2xl sm:text-3xl
+        text-ink-primary dark:text-white mb-4 relative z-10 transition-colors duration-300">
         {hasError
           ? 'Unsupported file'
           : isDragActive
-            ? 'Drop to upload'
+            ? 'Drop it right here!'
             : `Select ${acceptLabel?.split(',')[0]?.trim() || 'PDF'} file`
         }
       </h3>
 
-      <p className="text-base font-medium text-pdfkit-dark/60 dark:text-white/50 mb-8">
+      <p className="text-lg font-medium text-ink-secondary dark:text-ink-muted mb-10 relative z-10">
         {hasError
           ? error || 'Please upload a valid file type'
           : 'or drag and drop it here'
@@ -71,14 +73,14 @@ export default function UploadZone({ onFiles, accept, multiple, acceptLabel, err
       {!hasError && (
         <button
           type="button"
-          className="btn-primary text-base px-8 py-3.5 pointer-events-none"
+          className="btn-primary text-base px-8 py-3.5 pointer-events-none relative z-10"
         >
           <Upload size={18} strokeWidth={2.5} />
           Choose File{multiple ? 's' : ''}
         </button>
       )}
 
-      <p className="text-sm font-bold text-pdfkit-dark/40 dark:text-white/30 mt-6 uppercase tracking-wider">
+      <p className="text-sm font-bold text-ink-muted/70 mt-8 uppercase tracking-wider relative z-10">
         Accepted: {acceptLabel} · Max {multiple ? 'per file: ' : ''}100 MB
       </p>
     </div>

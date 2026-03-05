@@ -25,19 +25,16 @@ export default function Navbar({ darkMode, toggleDark }) {
     <>
       <header
         className={`fixed top-0 left-0 right-0 z-50 h-[72px] transition-all duration-300
-          ${scrolled
-            ? 'bg-[#E8E8EC]/90 dark:bg-[#1A1A2E]/90 backdrop-blur-md shadow-skeuo-up dark:shadow-skeuo-up-dark border-b border-white/40 dark:border-white/5'
-            : 'bg-transparent'
-          }`}
+          ${scrolled ? 'glass' : 'bg-transparent'}`}
       >
         <div className="section-container h-full flex items-center justify-between">
           {/* Logo */}
           <Link
             to="/"
-            className="flex items-center gap-2 font-display font-extrabold text-xl
+            className="flex items-center gap-2 font-display font-black text-xl
               tracking-tight hover:opacity-90 transition-opacity"
           >
-            <div className="w-8 h-8 rounded-[8px] bg-primary flex items-center justify-center">
+            <div className="w-8 h-8 rounded-[10px] bg-gradient-to-br from-primary-gradientStart to-primary-gradientEnd flex items-center justify-center shadow-glow-primary">
               <FileText size={16} className="text-white" strokeWidth={2.5} />
             </div>
             <span>
@@ -52,8 +49,8 @@ export default function Navbar({ darkMode, toggleDark }) {
               <a
                 key={link.label}
                 href={link.href}
-                className="text-sm font-medium text-ink-secondary dark:text-ink-muted
-                  hover:text-primary dark:hover:text-primary transition-colors"
+                className="text-sm font-semibold text-ink-secondary dark:text-ink-muted
+                  hover:text-primary dark:hover:text-primary-light transition-colors"
               >
                 {link.label}
               </a>
@@ -61,33 +58,32 @@ export default function Navbar({ darkMode, toggleDark }) {
           </nav>
 
           {/* Actions */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <button
               onClick={toggleDark}
               aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
-              className="w-9 h-9 rounded-pill bg-surface dark:bg-surface-dark
-                border border-border dark:border-border-dark
+              className="w-10 h-10 rounded-full glass
                 flex items-center justify-center
                 hover:border-primary hover:text-primary
-                transition-all duration-200"
+                transition-all duration-300 hover:shadow-glow-primary"
             >
               {darkMode
-                ? <Sun size={15} className="text-primary" />
-                : <Moon size={15} className="text-ink-secondary" />
+                ? <Sun size={18} className="text-primary-light" />
+                : <Moon size={18} className="text-ink-secondary hover:text-primary" />
               }
             </button>
 
             <Link
               to="/"
-              className="hidden md:inline-flex btn-primary text-sm px-5 py-2"
+              className="hidden md:inline-flex btn-primary text-sm px-5 py-2.5"
             >
               Get Started
             </Link>
 
             <button
               onClick={() => setMobileOpen(o => !o)}
-              className="md:hidden w-9 h-9 flex items-center justify-center
-                rounded-btn text-ink-secondary dark:text-white"
+              className="md:hidden w-10 h-10 flex items-center justify-center
+                rounded-btn text-ink-secondary dark:text-white glass"
               aria-label="Toggle menu"
             >
               {mobileOpen ? <X size={20} /> : <Menu size={20} />}
@@ -100,25 +96,23 @@ export default function Navbar({ darkMode, toggleDark }) {
       {mobileOpen && (
         <div className="fixed inset-0 z-40 md:hidden">
           <div
-            className="absolute inset-0 bg-black/20 backdrop-blur-sm"
+            className="absolute inset-0 bg-black/40 backdrop-blur-sm"
             onClick={() => setMobileOpen(false)}
           />
-          <nav className="absolute top-16 left-0 right-0 bg-white dark:bg-bg-dark
-            border-b border-border dark:border-border-dark
-            px-6 py-4 space-y-1 animate-slide-down shadow-lg">
+          <nav className="absolute top-20 left-4 right-4 glass rounded-2xl
+            p-4 space-y-2 animate-bounce-in shadow-glass">
             {NAV_LINKS.map(link => (
               <a
                 key={link.label}
                 href={link.href}
                 onClick={() => setMobileOpen(false)}
-                className="block py-3 text-base font-medium text-ink-primary dark:text-white
-                  border-b border-border dark:border-border-dark last:border-none
-                  hover:text-primary transition-colors"
+                className="block p-3 text-base font-semibold text-ink-primary dark:text-white
+                  rounded-xl hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
               >
                 {link.label}
               </a>
             ))}
-            <div className="pt-3">
+            <div className="pt-2">
               <Link to="/" className="btn-primary w-full text-sm py-3">
                 Get Started
               </Link>

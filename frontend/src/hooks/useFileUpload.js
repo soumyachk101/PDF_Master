@@ -1,7 +1,8 @@
 import { useState, useCallback } from 'react'
 import axios from 'axios'
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000'
+const RAW_API_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000'
+const API_URL = RAW_API_URL.replace(/\/+$/, '')
 
 // Health check function
 async function checkBackendHealth() {

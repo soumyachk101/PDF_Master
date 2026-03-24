@@ -1,0 +1,9 @@
+{
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "destination": "https://www.docshift.tech/$1",
+      "permanent": true
+    }
+  ]
+}

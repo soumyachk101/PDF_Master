@@ -1,7 +1,7 @@
 import { useState, useMemo, useDeferredValue, memo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Icons from 'lucide-react';
-import { Box, Typography, Button, Container, Card, CardContent, useTheme, InputBase, IconButton } from '@mui/material';
+import { Box, Typography, Button, Container, Card, CardContent, useTheme, InputBase, IconButton, Grid } from '@mui/material';
 import { alpha } from '@mui/material/styles';
 import { Helmet } from 'react-helmet-async';
 
@@ -389,6 +389,89 @@ function HomePage() {
                         <Typography variant="body2" sx={{ color: 'text.secondary', opacity: 0.8, maxWidth: '800px', mx: 'auto', lineHeight: 1.6 }}>
                             DocShift offers a comprehensive suite of completely free online PDF tools. Whether you need to securely <strong>merge PDF</strong> files, <strong>split PDF</strong> pages, or <strong>compress PDF</strong> size, our browser-based solutions process your documents locally. Maintain absolute privacy and 100% security while you manage, edit, and convert PDF documents. No accounts, no uploads, and no limitations.
                         </Typography>
+                    </Box>
+                </Container>
+            </Box>
+
+            {/* ── FEATURES SECTION ── */}
+            <Box id="features" component="section" sx={{
+                py: { xs: 12, md: 16 }, px: 3, position: 'relative',
+                bgcolor: 'background.default',
+                scrollMarginTop: '80px',
+                borderTop: `1px solid ${alpha(theme.palette.divider, 0.05)}`
+            }}>
+                <Container maxWidth="lg">
+                    <Box sx={{ mb: 8, textAlign: 'center' }}>
+                        <Typography variant="overline" sx={{ display: 'block', color: '#F05B25', letterSpacing: '0.1em', fontSize: '0.75rem', fontWeight: 800, mb: 1 }}>
+                            WHY CHOOSE DOCSHIFT
+                        </Typography>
+                        <Typography variant="h2" sx={{ color: mode === 'light' ? '#000' : '#fff', mb: 2, fontWeight: 900, letterSpacing: '-0.04em', fontSize: 'clamp(1.5rem, 3vw, 2.2rem)' }}>
+                            Built for Privacy & Speed
+                        </Typography>
+                    </Box>
+                    <Grid container spacing={4}>
+                        {[
+                            { title: 'Zero Server Uploads', desc: 'Your files never leave your device. All processing happens entirely within your local browser for maximum privacy.', icon: 'ShieldCheck' },
+                            { title: 'Lightning Fast', desc: 'Powered by modern browser APIs for instantaneous PDF manipulation, merging, compression and conversion.', icon: 'Zap' },
+                            { title: '100% Free Forever', desc: 'No hidden fees, no paywalls, no subscriptions. Every tool is completely available to everyone, for free.', icon: 'Gift' },
+                            { title: 'Cross-Platform', desc: 'Works seamlessly on Windows, Mac, Linux, iOS, and Android without installing any bloated native apps.', icon: 'MonitorSmartphone' }
+                        ].map((feat, idx) => (
+                            <Grid item xs={12} sm={6} md={3} key={idx}>
+                                <Box sx={{
+                                    p: 4, borderRadius: '24px', height: '100%',
+                                    bgcolor: mode === 'light' ? 'rgba(36, 15, 48, 0.02)' : 'rgba(255, 255, 255, 0.02)',
+                                    border: `1px solid ${alpha(theme.palette.divider, 0.08)}`,
+                                    transition: 'transform 0.3s ease',
+                                    '&:hover': { transform: 'translateY(-5px)', bgcolor: mode === 'light' ? 'rgba(36, 15, 48, 0.04)' : alpha(theme.palette.divider, 0.04) }
+                                }}>
+                                    <Box sx={{ width: 48, height: 48, borderRadius: '12px', bgcolor: alpha('#F05B25', 0.1), display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 3 }}>
+                                        <DynamicIcon name={feat.icon} size={24} color="#F05B25" />
+                                    </Box>
+                                    <Typography variant="h6" sx={{ fontWeight: 800, mb: 1, fontSize: '1.1rem' }}>{feat.title}</Typography>
+                                    <Typography variant="body2" sx={{ color: 'text.secondary', lineHeight: 1.6 }}>{feat.desc}</Typography>
+                                </Box>
+                            </Grid>
+                        ))}
+                    </Grid>
+                </Container>
+            </Box>
+
+            {/* ── ABOUT SECTION ── */}
+            <Box id="about" component="section" sx={{
+                py: { xs: 12, md: 16 }, px: 3, position: 'relative',
+                background: mode === 'light' ? 'linear-gradient(180deg, rgba(36,15,48,0.02) 0%, rgba(240,91,37,0.05) 100%)' : 'linear-gradient(180deg, rgba(255,255,255,0.01) 0%, rgba(240,91,37,0.05) 100%)',
+                scrollMarginTop: '80px',
+                borderTop: `1px solid ${alpha(theme.palette.divider, 0.05)}`
+            }}>
+                <Container maxWidth="md">
+                    <Box sx={{ textAlign: 'center' }}>
+                        <Typography variant="overline" sx={{ display: 'block', color: theme.palette.primary.main, letterSpacing: '0.1em', fontSize: '0.75rem', fontWeight: 800, mb: 2 }}>
+                            OUR MISSION
+                        </Typography>
+                        <Typography variant="h3" sx={{ color: mode === 'light' ? '#000' : '#fff', mb: 4, fontWeight: 900, letterSpacing: '-0.03em', fontSize: 'clamp(1.8rem, 4vw, 2.5rem)', lineHeight: 1.3 }}>
+                            We believe that document privacy is a fundamental right.
+                        </Typography>
+                        <Typography variant="body1" sx={{ color: 'text.secondary', fontSize: '1.1rem', lineHeight: 1.8, mb: 4 }}>
+                            DocShift was created to solve a massive problem: almost every free online PDF tool forces you to upload your sensitive personal and business documents to their unverified servers. This presents an enormous security risk.
+                            <br /><br />
+                            By leveraging modern browser technologies, we brought the processing power of local offline tools directly to your web browser. You get the ultra-convenience of an elegant web app with the strict offline security that guarantees your files never leave your device.
+                        </Typography>
+                        <Button 
+                            variant="outlined" 
+                            size="large" 
+                            onClick={() => {
+                                const toolsEl = document.getElementById('tools');
+                                if (toolsEl) toolsEl.scrollIntoView({ behavior: 'smooth' });
+                            }} 
+                            sx={{ 
+                                borderRadius: '100px', px: 4, py: 1.5, fontWeight: 700, 
+                                borderColor: alpha(theme.palette.text.primary, 0.2), 
+                                color: 'text.primary', 
+                                '&:hover': { borderColor: theme.palette.primary.main, bgcolor: alpha(theme.palette.primary.main, 0.05) } 
+                            }}
+                        >
+                            Explore Tools
+                        </Button>
                     </Box>
                 </Container>
             </Box>

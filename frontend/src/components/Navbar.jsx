@@ -186,37 +186,40 @@ export default function Navbar() {
                                         }}
                                     >
                                         <Card sx={{ 
-                                            width: 1000, 
-                                            p: 5, 
-                                            borderRadius: '32px',
+                                            width: 'max-content',
+                                            maxWidth: '90vw',
+                                            p: 4, 
+                                            borderRadius: '24px',
                                             boxShadow: isDark 
-                                                ? '0 40px 100px -20px rgba(0,0,0,0.9), 0 0 0 1px rgba(255,255,255,0.05)' 
-                                                : '0 40px 100px -20px rgba(0,0,0,0.15), 0 0 0 1px rgba(0,0,0,0.05)',
+                                                ? '0 40px 100px -20px rgba(0,0,0,1), 0 0 0 1px rgba(255,255,255,0.08)' 
+                                                : '0 40px 100px -20px rgba(0,0,0,0.25), 0 0 0 1px rgba(0,0,0,0.05)',
                                             border: 'none',
-                                            bgcolor: isDark ? 'rgba(15, 17, 21, 0.85)' : 'rgba(255, 255, 255, 0.85)',
-                                            backdropFilter: 'blur(40px)',
+                                            bgcolor: isDark ? '#14141A' : '#FFFFFF', // Solid color fixes browser backdrop-filter bug
                                         }}>
-                                            <Grid container spacing={4}>
+                                            <Box sx={{
+                                                columnCount: { xs: 1, sm: 2, md: 3, lg: 4 },
+                                                columnGap: '40px',
+                                            }}>
                                                 {categorizedTools.map(category => {
                                                     const catTools = category.tools;
                                                     const catColor = catTools[0]?.color || primaryColor;
                                                     
                                                     return (
-                                                        <Grid item xs={3} key={category.id}>
+                                                        <Box key={category.id} sx={{ breakInside: 'avoid-column', mb: 4 }}>
                                                             <Typography 
                                                                 variant="overline" 
                                                                 sx={{ 
                                                                     fontWeight: 900, 
                                                                     color: catColor, 
                                                                     letterSpacing: '0.08em', 
-                                                                    mb: 2.5, 
+                                                                    mb: 2, 
                                                                     display: 'block',
                                                                     fontSize: '0.75rem'
                                                                 }}
                                                             >
                                                                 {category.label}
                                                             </Typography>
-                                                            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+                                                            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
                                                                 {catTools.map(tool => (
                                                                     <Box 
                                                                         key={tool.slug} 
@@ -225,9 +228,9 @@ export default function Navbar() {
                                                                             display: 'flex', 
                                                                             alignItems: 'center',
                                                                             cursor: 'pointer',
-                                                                            py: 0.75,
-                                                                            px: 1,
-                                                                            mx: -1,
+                                                                            py: 0.8,
+                                                                            px: 1.5,
+                                                                            mx: -1.5,
                                                                             borderRadius: '8px',
                                                                             transition: 'background 0.2s',
                                                                             '&:hover': {
@@ -258,10 +261,10 @@ export default function Navbar() {
                                                                     </Box>
                                                                 ))}
                                                             </Box>
-                                                        </Grid>
+                                                        </Box>
                                                     );
                                                 })}
-                                            </Grid>
+                                            </Box>
                                         </Card>
                                     </motion.div>
                                 )}
@@ -419,7 +422,7 @@ export default function Navbar() {
                         </Box>
 
                         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-                            {['Home', 'Features', 'Pricing', 'API'].map((item) => (
+                            {['Home', 'Features', 'About'].map((item) => (
                                 <Button 
                                     key={item}
                                     fullWidth 

@@ -1,10 +1,12 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { Box, Typography, IconButton, Button } from '@mui/material';
 import * as LucideIcons from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 
 export default function DropzoneArea({ onFileSelect, accept, maxSize, selectedFiles, hasUrl, multiple }) {
+    const [isHovered, setIsHovered] = useState(false);
+
     const onDrop = useCallback(acceptedFiles => {
         if (acceptedFiles?.length > 0) {
             onFileSelect(multiple ? acceptedFiles : [acceptedFiles[0]]);
@@ -44,175 +46,230 @@ export default function DropzoneArea({ onFileSelect, accept, maxSize, selectedFi
             width: '100%', 
             opacity: hasUrl ? 0.5 : 1, 
             pointerEvents: hasUrl ? 'none' : 'auto', 
-            transition: 'opacity 0.3s',
-            background: 'linear-gradient(135deg, #1a0a00 0%, #0d0d0d 50%, #001a1a 100%)',
+            transition: 'opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+            background: 'linear-gradient(145deg, rgba(26,10,0,0.8) 0%, rgba(13,13,13,0.9) 50%, rgba(0,26,26,0.8) 100%)',
             padding: { xs: '32px 20px', sm: '48px 32px' },
-            borderRadius: '24px',
+            borderRadius: '28px',
             position: 'relative',
-            overflow: 'hidden'
+            overflow: 'hidden',
+            boxShadow: '0 24px 48px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05)',
         }}>
-            {/* Decorative Blurred Orbs */}
+            {/* Animated Background Mesh/Gradient */}
             <Box sx={{
-                position: 'absolute', pointerEvents: 'none', zIndex: 0,
-                width: '300px', height: '300px', top: '-80px', left: '-60px',
-                background: 'radial-gradient(circle, rgba(255,80,20,0.18) 0%, transparent 70%)'
-            }} />
-            <Box sx={{
-                position: 'absolute', pointerEvents: 'none', zIndex: 0,
-                width: '250px', height: '250px', bottom: '-60px', right: '-40px',
-                background: 'radial-gradient(circle, rgba(20,200,180,0.1) 0%, transparent 70%)'
+                position: 'absolute', inset: 0, zIndex: 0, opacity: 0.6,
+                background: 'radial-gradient(circle at 50% -20%, rgba(255,90,20,0.15), transparent 60%), radial-gradient(circle at 100% 120%, rgba(20,200,180,0.1), transparent 50%)',
+                animation: 'pulse-bg 8s ease-in-out infinite alternate',
+                '@keyframes pulse-bg': {
+                    '0%': { transform: 'scale(1)', opacity: 0.5 },
+                    '100%': { transform: 'scale(1.05)', opacity: 0.8 }
+                }
             }} />
 
-            <Box
-                {...getRootProps()}
-                className={isDragActive ? 'dragging' : ''}
-                sx={{
-                    position: 'relative', 
-                    zIndex: 1,
-                    borderRadius: '20px', 
-                    padding: '44px 24px 36px',
-                    background: 'rgba(255,255,255,0.04)',
-                    backdropFilter: 'blur(20px)',
-                    WebkitBackdropFilter: 'blur(20px)',
-                    border: '1px solid rgba(255,255,255,0.1)',
-                    boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.1)',
-                    transition: 'all 0.3s ease',
-                    textAlign: 'center',
-                    cursor: 'pointer',
-                    minHeight: '280px',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    '&.dragging': {
-                        background: 'rgba(255,90,20,0.08)',
-                        borderColor: 'rgba(255,90,20,0.5)',
-                        boxShadow: '0 0 40px rgba(255,80,20,0.2), inset 0 1px 0 rgba(255,255,255,0.15)'
-                    }
-                }}
+            <motion.div
+                onHoverStart={() => setIsHovered(true)}
+                onHoverEnd={() => setIsHovered(false)}
+                style={{ position: 'relative', zIndex: 1, width: '100%' }}
             >
-                {/* Glow Ring div inside dropzone */}
-                <Box sx={{
-                    position: 'absolute',
-                    inset: '-1px',
-                    background: 'linear-gradient(135deg, rgba(255,90,20,0.4), rgba(255,255,255,0.05), rgba(20,200,180,0.2))',
-                    opacity: isDragActive ? 1 : 0,
-                    animation: isDragActive ? 'glow-pulse 1.5s ease-in-out infinite' : 'none',
-                    mask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
-                    maskComposite: 'exclude',
-                    WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
-                    WebkitMaskComposite: 'xor',
-                    padding: '1px',
-                    borderRadius: 'inherit',
-                    pointerEvents: 'none',
-                    '@keyframes glow-pulse': {
-                        '0%, 100%': { opacity: 0.5 },
-                        '50%': { opacity: 1 }
-                    }
-                }} />
-                
-                <input {...getInputProps()} />
+                <Box
+                    {...getRootProps()}
+                    className={isDragActive ? 'dragging' : ''}
+                    sx={{
+                        position: 'relative', 
+                        borderRadius: '24px', 
+                        padding: { xs: '40px 20px', sm: '56px 32px' },
+                        background: isDragActive ? 'rgba(255,255,255,0.08)' : 'rgba(255,255,255,0.03)',
+                        backdropFilter: 'blur(24px)',
+                        WebkitBackdropFilter: 'blur(24px)',
+                        border: '2px dashed',
+                        borderColor: isDragActive ? 'rgba(255,90,20,0.6)' : isHovered ? 'rgba(255,255,255,0.3)' : 'rgba(255,255,255,0.1)',
+                        transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                        textAlign: 'center',
+                        cursor: 'pointer',
+                        minHeight: '300px',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        '&.dragging': {
+                            transform: 'scale(1.02)',
+                            boxShadow: '0 0 60px rgba(255,90,20,0.25), inset 0 0 30px rgba(255,255,255,0.05)'
+                        }
+                    }}
+                >
+                    <input {...getInputProps()} />
 
-                <AnimatePresence mode="wait">
-                    {!selectedFiles || selectedFiles.length === 0 ? (
-                        <motion.div key="upload-prompt" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }} transition={{ duration: 0.25 }} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%', position: 'relative', zIndex: 2 }}>
-                            
-                            {/* Upload Icon Container */}
-                            <Box sx={{
-                                width: '76px', height: '76px', margin: '0 auto 20px', position: 'relative',
-                                animation: 'float 3.5s ease-in-out infinite',
-                                '@keyframes float': {
-                                    '0%, 100%': { transform: 'translateY(0)' },
-                                    '50%': { transform: 'translateY(-8px)' }
-                                }
-                            }}>
-                                {/* Spinning Ring */}
-                                <Box sx={{
-                                    position: 'absolute', inset: '-6px', borderRadius: '50%',
-                                    border: '1px solid rgba(255,90,20,0.2)',
-                                    borderTopColor: 'rgba(255,90,20,0.6)',
-                                    animation: 'rotate 4s linear infinite',
-                                    '@keyframes rotate': {
-                                        from: { transform: 'rotate(0deg)' },
-                                        to: { transform: 'rotate(360deg)' }
-                                    }
-                                }} />
-                                {/* Inner Circle */}
-                                <Box sx={{
-                                    width: '76px', height: '76px', borderRadius: '50%',
-                                    background: 'rgba(255,255,255,0.06)',
-                                    backdropFilter: 'blur(10px)',
-                                    border: '1px solid rgba(255,255,255,0.12)',
-                                    display: 'flex', alignItems: 'center', justifyContent: 'center'
-                                }}>
-                                    <LucideIcons.Upload size={28} color="rgba(255,120,60,0.9)" />
-                                </Box>
-                            </Box>
-
-                            <Typography sx={{ color: '#fff', fontSize: '1.15rem', fontWeight: 600, letterSpacing: '-0.02em', mb: 0.5 }}>
-                                Drop your PDF here
-                            </Typography>
-                            <Typography sx={{ color: 'rgba(255,255,255,0.38)', fontSize: '0.82rem', lineHeight: 1.6, mb: 3, whiteSpace: 'pre-line' }}>
-                                {"Drag & drop or click to browse.\nFiles never leave your browser."}
-                            </Typography>
-
-                            <Box sx={{
-                                display: 'inline-flex', alignItems: 'center', gap: '6px',
-                                background: 'rgba(255,255,255,0.06)', backdropFilter: 'blur(10px)',
-                                border: '1px solid rgba(255,255,255,0.12)', borderRadius: '10px',
-                                padding: '9px 22px', color: 'rgba(255,255,255,0.8)', fontSize: '0.82rem',
-                                transition: 'all 0.2s',
-                                '&:hover': {
-                                    background: 'rgba(255,255,255,0.1)', borderColor: 'rgba(255,255,255,0.2)', color: '#fff'
-                                }
-                            }}>
-                                Browse Files
-                            </Box>
-
-                            <Box sx={{ display: 'flex', gap: { xs: 1, sm: 1.5 }, mt: 3, flexWrap: 'wrap', justifyContent: 'center' }}>
-                                {["PDF only", `Max ${maxSize ? formatSize(maxSize) : '100 MB'}`, "100% private"].map(txt => (
-                                    <Box key={txt} sx={{
-                                        background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)',
-                                        borderRadius: '999px', padding: '4px 12px', color: 'rgba(255,255,255,0.35)',
-                                        fontSize: '0.7rem', backdropFilter: 'blur(4px)'
+                    <AnimatePresence mode="wait">
+                        {!selectedFiles || selectedFiles.length === 0 ? (
+                            <motion.div 
+                                key="upload-prompt" 
+                                initial={{ opacity: 0, y: 20 }} 
+                                animate={{ opacity: 1, y: 0 }} 
+                                exit={{ opacity: 0, y: -20 }} 
+                                transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }} 
+                                style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}
+                            >
+                                {/* Interactive Upload Icon */}
+                                <motion.div 
+                                    animate={{ 
+                                        y: isDragActive ? -15 : (isHovered ? -8 : 0),
+                                        scale: isDragActive ? 1.1 : 1
+                                    }}
+                                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                                >
+                                    <Box sx={{
+                                        width: '88px', height: '88px', margin: '0 auto 24px', position: 'relative',
+                                        display: 'flex', alignItems: 'center', justifyContent: 'center'
                                     }}>
-                                        {txt}
+                                        {/* Outer Rotating Dash */}
+                                        <Box sx={{
+                                            position: 'absolute', inset: 0, borderRadius: '50%',
+                                            border: '2px dashed',
+                                            borderColor: isDragActive ? 'rgba(255,90,20,0.8)' : 'rgba(255,255,255,0.2)',
+                                            animation: isDragActive ? 'spin 3s linear infinite' : 'spin 8s linear infinite',
+                                            '@keyframes spin': { '100%': { transform: 'rotate(360deg)' } }
+                                        }} />
+                                        
+                                        {/* Inner Glass Circle */}
+                                        <Box sx={{
+                                            width: '68px', height: '68px', borderRadius: '50%',
+                                            background: isDragActive ? 'rgba(255,90,20,0.2)' : 'rgba(255,255,255,0.06)',
+                                            backdropFilter: 'blur(12px)',
+                                            border: '1px solid',
+                                            borderColor: isDragActive ? 'rgba(255,90,20,0.5)' : 'rgba(255,255,255,0.15)',
+                                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                            transition: 'all 0.3s ease',
+                                            boxShadow: isDragActive ? '0 0 30px rgba(255,90,20,0.4)' : '0 10px 30px rgba(0,0,0,0.2)'
+                                        }}>
+                                            <LucideIcons.CloudUpload size={32} color={isDragActive ? "#fff" : "rgba(255,255,255,0.9)"} strokeWidth={isDragActive ? 2.5 : 2} />
+                                        </Box>
                                     </Box>
-                                ))}
-                            </Box>
-                        </motion.div>
-                    ) : (
-                        <motion.div key="file-selected" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }} transition={{ duration: 0.25 }} style={{ width: '100%', position: 'relative', zIndex: 2 }}>
-                            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, p: 2 }}>
+                                </motion.div>
+
+                                <Typography sx={{ color: '#fff', fontSize: { xs: '1.25rem', sm: '1.5rem' }, fontWeight: 700, letterSpacing: '-0.02em', mb: 1 }}>
+                                    {isDragActive ? "Drop to upload instantly" : "Drag & Drop your files"}
+                                </Typography>
+                                <Typography sx={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.95rem', lineHeight: 1.6, mb: 4, maxWidth: '300px' }}>
+                                    Secure, private, and lightning fast. Your files never leave your browser.
+                                </Typography>
+
+                                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                                    <Box sx={{
+                                        display: 'inline-flex', alignItems: 'center', gap: '8px',
+                                        background: isHovered ? 'rgba(255,255,255,0.15)' : 'rgba(255,255,255,0.08)',
+                                        backdropFilter: 'blur(10px)',
+                                        border: '1px solid rgba(255,255,255,0.2)', 
+                                        borderRadius: '12px',
+                                        padding: '12px 28px', color: '#fff', fontSize: '0.9rem', fontWeight: 600,
+                                        transition: 'all 0.3s',
+                                        boxShadow: '0 4px 15px rgba(0,0,0,0.2)'
+                                    }}>
+                                        <LucideIcons.Search size={18} />
+                                        Browse Files
+                                    </Box>
+                                </motion.div>
+
+                                <Box sx={{ display: 'flex', gap: 1.5, mt: 4, flexWrap: 'wrap', justifyContent: 'center' }}>
+                                    {["PDF Format", `Up to ${maxSize ? formatSize(maxSize) : '100 MB'}`, "Client-side only"].map((txt, idx) => (
+                                        <motion.div key={txt} initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.1 * idx }}>
+                                            <Box sx={{
+                                                background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)',
+                                                borderRadius: '8px', padding: '6px 14px', color: 'rgba(255,255,255,0.6)',
+                                                fontSize: '0.75rem', fontWeight: 500, backdropFilter: 'blur(4px)',
+                                                display: 'flex', alignItems: 'center', gap: 1
+                                            }}>
+                                                {idx === 0 && <LucideIcons.FileType size={14} />}
+                                                {idx === 1 && <LucideIcons.HardDrive size={14} />}
+                                                {idx === 2 && <LucideIcons.ShieldCheck size={14} />}
+                                                {txt}
+                                            </Box>
+                                        </motion.div>
+                                    ))}
+                                </Box>
+                            </motion.div>
+                        ) : (
+                            <motion.div 
+                                key="file-selected" 
+                                initial={{ opacity: 0, y: 20 }} 
+                                animate={{ opacity: 1, y: 0 }} 
+                                exit={{ opacity: 0, y: -20 }} 
+                                transition={{ duration: 0.4, staggerChildren: 0.1 }} 
+                                style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '16px' }}
+                            >
+                                <Typography sx={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.85rem', fontWeight: 600, textAlign: 'left', mb: 1, textTransform: 'uppercase', letterSpacing: '1px' }}>
+                                    Ready for processing
+                                </Typography>
+                                
                                 {selectedFiles.map((file, i) => (
-                                    <Box key={i} sx={{ display: 'flex', alignItems: 'center', gap: 3, p: 2.5, borderRadius: '16px', background: 'rgba(255,255,255,0.05)', border: `1px solid rgba(255,255,255,0.1)`, textAlign: 'left', backdropFilter: 'blur(10px)' }}>
-                                        <Box sx={{ p: 2, borderRadius: '12px', background: 'rgba(255,90,20,0.15)', color: '#ff5a14' }}>
-                                            <LucideIcons.File size={32} />
+                                    <motion.div 
+                                        key={i} 
+                                        initial={{ opacity: 0, x: -20 }} 
+                                        animate={{ opacity: 1, x: 0 }}
+                                        layout
+                                    >
+                                        <Box sx={{ 
+                                            display: 'flex', alignItems: 'center', gap: 3, p: 2.5, 
+                                            borderRadius: '16px', background: 'rgba(255,255,255,0.04)', 
+                                            border: '1px solid rgba(255,255,255,0.08)', 
+                                            textAlign: 'left', backdropFilter: 'blur(12px)',
+                                            transition: 'all 0.3s',
+                                            '&:hover': { background: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.15)', transform: 'translateY(-2px)' }
+                                        }}>
+                                            <Box sx={{ 
+                                                p: 2, borderRadius: '12px', background: 'linear-gradient(135deg, rgba(255,90,20,0.2), rgba(255,90,20,0.05))', 
+                                                color: '#ff5a14', boxShadow: 'inset 0 0 0 1px rgba(255,90,20,0.2)' 
+                                            }}>
+                                                <LucideIcons.FileText size={28} strokeWidth={1.5} />
+                                            </Box>
+                                            <Box sx={{ flex: 1, minWidth: 0 }}>
+                                                <Typography variant="subtitle1" noWrap sx={{ fontWeight: 600, color: '#fff', fontSize: '1.05rem', letterSpacing: '-0.01em' }}>
+                                                    {file.name}
+                                                </Typography>
+                                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mt: 0.5 }}>
+                                                    <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.85rem' }}>
+                                                        {formatSize(file.size)}
+                                                    </Typography>
+                                                    <Box sx={{ width: '4px', height: '4px', borderRadius: '50%', background: 'rgba(255,255,255,0.2)' }} />
+                                                    <Typography variant="body2" sx={{ color: '#20c997', fontSize: '0.85rem', fontWeight: 500 }}>
+                                                        Valid PDF
+                                                    </Typography>
+                                                </Box>
+                                            </Box>
+                                            <IconButton 
+                                                onClick={(e) => handleRemoveFile(i, e)} 
+                                                sx={{ 
+                                                    color: 'rgba(255,255,255,0.4)', 
+                                                    background: 'rgba(255,255,255,0.05)',
+                                                    '&:hover': { background: 'rgba(255,50,50,0.2)', color: '#ff6b6b' } 
+                                                }}
+                                            >
+                                                <LucideIcons.Trash2 size={18} />
+                                            </IconButton>
                                         </Box>
-                                        <Box sx={{ flex: 1, minWidth: 0 }}>
-                                            <Typography variant="subtitle1" noWrap sx={{ fontWeight: 600, color: '#fff', fontSize: '1rem' }}>
-                                                {file.name}
-                                            </Typography>
-                                            <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.5)', mt: 0.5 }}>
-                                                {formatSize(file.size)}
-                                            </Typography>
-                                        </Box>
-                                        <IconButton onClick={(e) => handleRemoveFile(i, e)} color="inherit" sx={{ color: 'rgba(255,255,255,0.4)', '&:hover': { background: 'rgba(255,255,255,0.1)', color: '#fff' } }}>
-                                            <LucideIcons.X size={20} />
-                                        </IconButton>
-                                    </Box>
+                                    </motion.div>
                                 ))}
                                 
                                 {multiple && (
-                                    <Button variant="outlined" sx={{ mt: 2, alignSelf: 'center', borderRadius: '12px', textTransform: 'none', borderColor: 'rgba(255,255,255,0.2)', color: '#fff', '&:hover': { borderColor: '#fff', background: 'rgba(255,255,255,0.05)' } }} onClick={(e) => { e.stopPropagation(); document.querySelector('input[type="file"]').click(); }}>
-                                        + Add more files
-                                    </Button>
+                                    <motion.div layout>
+                                        <Button 
+                                            variant="outlined" 
+                                            startIcon={<LucideIcons.Plus size={18} />}
+                                            sx={{ 
+                                                mt: 2, alignSelf: 'center', borderRadius: '12px', textTransform: 'none', 
+                                                borderColor: 'rgba(255,255,255,0.15)', color: 'rgba(255,255,255,0.8)', 
+                                                py: 1.5, px: 3, fontSize: '0.95rem', fontWeight: 600,
+                                                '&:hover': { borderColor: '#fff', background: 'rgba(255,255,255,0.1)', color: '#fff' } 
+                                            }} 
+                                            onClick={(e) => { e.stopPropagation(); document.querySelector('input[type="file"]').click(); }}
+                                        >
+                                            Add more files
+                                        </Button>
+                                    </motion.div>
                                 )}
-                            </Box>
-                        </motion.div>
-                    )}
-                </AnimatePresence>
-            </Box>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+                </Box>
+            </motion.div>
         </Box>
     );
 }

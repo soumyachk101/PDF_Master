@@ -2,6 +2,10 @@
 const nextConfig = {
   transpilePackages: ['@mui/material', '@mui/icons-material', '@emotion/react', '@emotion/styled'],
   reactStrictMode: true,
+  poweredByHeader: false,
+  images: {
+    formats: ['image/avif', 'image/webp'],
+  },
   async headers() {
     return [
       {

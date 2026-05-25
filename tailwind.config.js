@@ -14,24 +14,49 @@ module.exports = {
                     muted: '#E0E0E0',
                 },
                 primary: {
-                    DEFAULT: '#D02020', // Bauhaus Red
+                    DEFAULT: 'hsl(var(--primary))',
                     hover: '#B01A1A',
                     light: '#E04D4D',
                     dark: '#901616',
                     glow: 'rgba(208, 32, 32, 0.4)',
+                    foreground: 'hsl(var(--primary-foreground))',
                 },
+                secondary: {
+                    DEFAULT: 'hsl(var(--secondary))',
+                    foreground: 'hsl(var(--secondary-foreground))',
+                },
+                destructive: {
+                    DEFAULT: 'hsl(var(--destructive))',
+                    foreground: 'hsl(var(--destructive-foreground))',
+                },
+                muted: {
+                    DEFAULT: 'hsl(var(--muted))',
+                    foreground: 'hsl(var(--muted-foreground))',
+                },
+                accent: {
+                    DEFAULT: 'hsl(var(--accent))',
+                    foreground: 'hsl(var(--accent-foreground))',
+                    secondary: '#F0C020', // Bauhaus Yellow
+                },
+                background: 'hsl(var(--background))',
+                foreground: 'hsl(var(--foreground))',
+                card: {
+                    DEFAULT: 'hsl(var(--card))',
+                    foreground: 'hsl(var(--card-foreground))',
+                },
+                popover: {
+                    DEFAULT: 'hsl(var(--popover))',
+                    foreground: 'hsl(var(--popover-foreground))',
+                },
+                border: 'hsl(var(--border))',
+                input: 'hsl(var(--input))',
+                ring: 'hsl(var(--ring))',
                 surface: {
                     DEFAULT: '#F0F0F0',
                     glass: 'rgba(240, 240, 240, 0.8)',
                     dark: '#121212',
                     deeper: '#0A0A0A',
                     glassDark: 'rgba(18, 18, 18, 0.85)',
-                },
-                border: {
-                    DEFAULT: '#121212',
-                    glass: 'rgba(18, 18, 18, 0.2)',
-                    dark: '#F0F0F0',
-                    glassDark: 'rgba(240, 240, 240, 0.1)',
                 },
                 ink: {
                     primary: '#121212',
@@ -42,15 +67,11 @@ module.exports = {
                     DEFAULT: '#F0F0F0',
                     dark: '#121212',
                 },
-                accent: {
-                    DEFAULT: '#1040C0', // Bauhaus Blue
-                    secondary: '#F0C020', // Bauhaus Yellow
-                }
             },
             fontFamily: {
-                display: ['"Space Grotesk"', 'Outfit', 'sans-serif'],
-                body: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif'],
-                mono: ['"JetBrains Mono"', 'monospace'],
+                display: ['var(--font-display)', 'Outfit', 'sans-serif'],
+                body: ['var(--font-body)', 'Inter', 'sans-serif'],
+                mono: ['var(--font-mono)', 'monospace'],
             },
             borderRadius: {
                 none: '0px',
@@ -58,6 +79,9 @@ module.exports = {
                 btn: '0px',
                 pill: '9999px',
                 full: '9999px',
+                lg: 'var(--radius)',
+                md: 'calc(var(--radius) - 2px)',
+                sm: 'calc(var(--radius) - 4px)',
             },
             boxShadow: {
                 bauhaus: '4px 4px 0px 0px #121212',

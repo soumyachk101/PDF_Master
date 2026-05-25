@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { Box, Typography, Button, Container, Card, CircularProgress, TextField, InputAdornment, useTheme, Alert } from '@mui/material';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useFileUpload } from '@/hooks/useFileUpload';
-import { getToolBySlug, TOOLS } from '@/utils/tools';
+import { getToolBySlug } from '@/utils/tools';
 import DropzoneArea from '@/components/DropzoneArea';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { Home, ArrowLeft, ArrowRight, Download, CheckCircle, AlertCircle, AlertTriangle, Link as LinkIcon } from 'lucide-react';
@@ -416,104 +416,6 @@ function ToolPage({ toolSlug }) {
                 </motion.div>
             </Box>
 
-                {/* SEO Rich Content Section */}
-                <Box sx={{ mt: 10, mb: 4, width: '100%', maxWidth: '800px', textAlign: 'left' }}>
-                    <Typography variant="h4" component="h2" sx={{ fontWeight: 800, mb: 3, color: 'text.primary' }}>How to {tool.name}</Typography>
-                    {tool.seoArticle ? (
-                        <Typography
-                            variant="body1"
-                            sx={{ color: 'text.secondary', mb: 5, lineHeight: 1.8, fontSize: '1.1rem', '& a': { color: 'primary.main', textDecoration: 'none', fontWeight: 600, '&:hover': { textDecoration: 'underline' } } }}
-                            dangerouslySetInnerHTML={{ __html: tool.seoArticle }}
-                        />
-                    ) : (
-                        <Typography variant="body1" sx={{ color: 'text.secondary', mb: 5, lineHeight: 1.8, fontSize: '1.1rem' }}>
-                            Use our free online tool to {tool.name.toLowerCase()} instantly. Upload your file above and let our secure servers do the heavy lifting. No installation required.
-                        </Typography>
-                    )}
-
-                    <Typography variant="h5" component="h2" sx={{ fontWeight: 700, mb: 2, color: 'text.primary' }}>Why use DocShift?</Typography>
-                    <Typography variant="body1" sx={{ color: 'text.secondary', mb: 5, lineHeight: 1.8, fontSize: '1.1rem' }}>
-                        <strong>100% Private & Secure:</strong> We take your privacy seriously. Files are never stored permanently, ensuring your data remains completely secure. No account or email required to use our tools.
-                        <br/><br/>
-                        <strong>Blazing Fast:</strong> Forget heavy desktop software. Process your documents in absolute seconds directly from your browser with zero bloatware.
-                    </Typography>
-
-                    {tool.faqs && tool.faqs.length > 0 && (
-                        <Box sx={{ mt: 2 }}>
-                            <Typography variant="h5" component="h2" sx={{ fontWeight: 700, mb: 4, color: 'text.primary' }}>Frequently Asked Questions</Typography>
-                            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-                                {tool.faqs.map((faq, i) => (
-                                    <Box key={i} sx={{ p: 3, bgcolor: '#ffffff', border: '3px solid #121212', borderRadius: '0px', boxShadow: '4px 4px 0px 0px #121212' }}>
-                                        <Typography variant="h6" component="h3" sx={{ fontWeight: 700, fontSize: '1.1rem', mb: 1, color: 'text.primary' }}>{faq.q}</Typography>
-                                        <Typography variant="body2" sx={{ color: 'text.secondary', lineHeight: 1.6, fontSize: '1.05rem' }}>{faq.a}</Typography>
-                                    </Box>
-                                ))}
-                            </Box>
-                        </Box>
-                    )}
-                </Box>
-
-                {/* ── RELATED TOOLS ── */}
-                {(() => {
-                    const currentCategory = tool.category;
-                    const relatedTools = TOOLS.filter(t => t.slug !== tool.slug && t.category === currentCategory).slice(0, 4);
-                    if (relatedTools.length === 0) return null;
-
-                    return (
-                        <Box sx={{ mt: 8, pt: 6, borderTop: `1px solid ${alpha(theme.palette.divider, 0.1)}` }}>
-                            <Typography variant="h5" component="h2" sx={{ fontWeight: 800, mb: 4, color: 'text.primary', textAlign: 'center' }}>
-                                Related Tools
-                            </Typography>
-                            <Box sx={{
-                                display: 'grid',
-                                gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' },
-                                gap: 3
-                            }}>
-                                {relatedTools.map(related => (
-                                    <Box
-                                        key={related.slug}
-                                        component={Link}
-                                        href={`/tool/${related.slug}`}
-                                        sx={{
-                                            p: 3,
-                                            borderRadius: '0px',
-                                            bgcolor: '#ffffff',
-                                            border: '3px solid #121212',
-                                            boxShadow: '4px 4px 0px 0px #121212',
-                                            textDecoration: 'none',
-                                            transition: 'all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-                                            '&:hover': {
-                                                transform: 'translate(2px, 2px)',
-                                                boxShadow: '2px 2px 0px 0px #121212'
-                                            }
-                                        }}
-                                    >
-                                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
-                                            <Box sx={{
-                                                width: 40, height: 40,
-                                                borderRadius: '0px',
-                                                bgcolor: '#ffffff',
-                                                border: '2px solid #121212',
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                justifyContent: 'center',
-                                                color: '#121212'
-                                            }}>
-                                                <DynamicIcon name={related.icon} size={20} />
-                                            </Box>
-                                            <Typography variant="subtitle2" sx={{ fontWeight: 700, color: 'text.primary' }}>
-                                                {related.name}
-                                            </Typography>
-                                        </Box>
-                                        <Typography variant="body2" sx={{ color: 'text.secondary', fontSize: '0.85rem', lineHeight: 1.5 }}>
-                                            {related.shortDesc}
-                                        </Typography>
-                                    </Box>
-                                ))}
-                            </Box>
-                        </Box>
-                    );
-                  })()}
             </Container>
         </Box>
     );

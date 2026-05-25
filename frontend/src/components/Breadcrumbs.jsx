@@ -5,7 +5,7 @@ import { Home, ChevronRight } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 
 /**
- * Breadcrumb Navigation Component - Bauhaus Style
+ * Breadcrumb Navigation Component - Industrial Skeuomorphism Style
  */
 export default function Breadcrumbs({ items = [] }) {
   const pathname = usePathname();
@@ -71,17 +71,17 @@ export default function Breadcrumbs({ items = [] }) {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
 
-      <nav aria-label="Breadcrumb" className="mb-8 overflow-x-auto whitespace-nowrap">
-        <ol className="flex items-center gap-0 list-none p-0 m-0">
+      <nav aria-label="Breadcrumb" className="mb-8 overflow-x-auto whitespace-nowrap scrollbar-none py-1">
+        <ol className="flex items-center gap-1.5 list-none p-0 m-0">
           {breadcrumbItems.map((item, index) => {
             const Icon = item.icon;
             const isLast = item.isCurrent || index === breadcrumbItems.length - 1;
 
             return (
-              <li key={index} className="flex items-center group">
+              <li key={index} className="flex items-center">
                 {index > 0 && (
-                  <span className="mx-2 text-bauhaus-black flex items-center justify-center">
-                    <ChevronRight size={18} strokeWidth={3} />
+                  <span className="mx-1 text-border-dark flex items-center justify-center pointer-events-none">
+                    <ChevronRight size={14} strokeWidth={2.5} />
                   </span>
                 )}
 
@@ -89,17 +89,17 @@ export default function Breadcrumbs({ items = [] }) {
                   {isLast ? (
                     <span
                       aria-current="page"
-                      className="flex items-center gap-2 px-3 py-1.5 bg-bauhaus-yellow border-2 border-bauhaus-black text-bauhaus-black font-display font-bold text-sm"
+                      className="flex items-center gap-1.5 px-3 py-1.5 bg-chassis border border-white/30 text-ink font-mono font-bold text-xs shadow-neu-pressed rounded-full select-none"
                     >
-                      {Icon && <Icon size={14} strokeWidth={3} />}
+                      {Icon ? <Icon size={12} strokeWidth={2.5} /> : <span className="led-indicator led-green flex-shrink-0" />}
                       {item.name}
                     </span>
                   ) : (
                     <Link
                       href={item.href}
-                      className="flex items-center gap-2 px-3 py-1.5 border-2 border-bauhaus-black text-bauhaus-black font-display font-bold text-sm hover:bg-bauhaus-blue hover:text-white transition-colors"
+                      className="flex items-center gap-1.5 px-3 py-1.5 bg-chassis border border-white/50 text-ink-secondary font-mono font-bold text-xs shadow-neu-sharp rounded-full hover:shadow-none hover:text-ink transition-all duration-150"
                     >
-                      {Icon && <Icon size={14} strokeWidth={3} />}
+                      {Icon && <Icon size={12} strokeWidth={2.5} />}
                       {item.name}
                     </Link>
                   )}

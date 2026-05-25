@@ -5,7 +5,7 @@ const HomePage = dynamic(() => import('@/views/HomePage'), {
 });
 
 export const metadata = {
-  title: 'DocShift – Free & Private PDF Tools | Bauhaus Style',
+  title: 'DocShift – Free & Private PDF Tools',
   description: 'Access 30+ PDF tools in your browser. Merge, compress, and convert PDFs securely without uploading files to any server. 100% private and free.',
   keywords: 'pdf tools, merge pdf, split pdf, free online pdf tools, secure pdf editor, convert pdf',
   alternates: {

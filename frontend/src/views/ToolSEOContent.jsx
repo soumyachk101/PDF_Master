@@ -8,34 +8,43 @@ export default function ToolSEOContent({ toolSlug }) {
     return (
         <>
             {/* SEO Rich Content Section */}
-            <section style={{ marginTop: '5rem', marginBottom: '2rem', width: '100%', maxWidth: '800px', textAlign: 'left' }}>
-                <h2 style={{ fontWeight: 800, marginBottom: '1rem', fontSize: '2rem' }}>How to {tool.name}</h2>
+            <section className="mt-20 mb-8 w-full max-w-3xl text-left">
+                <h2 className="font-display font-extrabold text-2xl mb-4 text-ink drop-shadow-[0_1px_1px_rgba(255,255,255,1)]">
+                    How to {tool.name}
+                </h2>
                 {tool.seoArticle ? (
-                    <p
-                        style={{ color: '#404040', marginBottom: '2.5rem', lineHeight: 1.8, fontSize: '1.1rem' }}
+                    <div
+                        className="font-mono text-xs text-ink-secondary leading-relaxed mb-10 space-y-4"
                         dangerouslySetInnerHTML={{ __html: tool.seoArticle }}
                     />
                 ) : (
-                    <p style={{ color: '#404040', marginBottom: '2.5rem', lineHeight: 1.8, fontSize: '1.1rem' }}>
-                        Use our free online tool to {tool.name.toLowerCase()} instantly. Upload your file above and let our secure servers do the heavy lifting. No installation required.
+                    <p className="font-mono text-xs text-ink-secondary leading-relaxed mb-10">
+                        Use our free online tool to {tool.name.toLowerCase()} instantly. Load your file above and let our secure client-side processor execute it locally. No installation required.
                     </p>
                 )}
 
-                <h2 style={{ fontWeight: 700, marginBottom: '0.5rem', fontSize: '1.5rem' }}>Why use DocShift?</h2>
-                <p style={{ color: '#404040', marginBottom: '2.5rem', lineHeight: 1.8, fontSize: '1.1rem' }}>
-                    <strong>100% Private &amp; Secure:</strong> We take your privacy seriously. Files are never stored permanently, ensuring your data remains completely secure. No account or email required to use our tools.
-                    <br /><br />
-                    <strong>Blazing Fast:</strong> Forget heavy desktop software. Process your documents in absolute seconds directly from your browser with zero bloatware.
-                </p>
+                <h2 className="font-display font-extrabold text-lg mb-2 text-ink drop-shadow-[0_1px_1px_rgba(255,255,255,1)]">
+                    Why use DocShift?
+                </h2>
+                <div className="font-mono text-xs text-ink-secondary leading-relaxed mb-10 space-y-3">
+                    <p>
+                        <strong>100% Private &amp; Secure:</strong> We take your document privacy seriously. Files are never stored or transmitted, ensuring your data remains completely secure on your own local hardware.
+                    </p>
+                    <p>
+                        <strong>Blazing Fast:</strong> Forget heavy desktop software. Process your documents in absolute seconds directly from your web browser with zero server latency.
+                    </p>
+                </div>
 
                 {tool.faqs && tool.faqs.length > 0 && (
-                    <div style={{ marginTop: '0.5rem' }}>
-                        <h2 style={{ fontWeight: 700, marginBottom: '1rem', fontSize: '1.5rem' }}>Frequently Asked Questions</h2>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                    <div className="mt-8">
+                        <h2 className="font-display font-extrabold text-lg mb-4 text-ink drop-shadow-[0_1px_1px_rgba(255,255,255,1)]">
+                            Frequently Asked Questions
+                        </h2>
+                        <div className="flex flex-col gap-4">
                             {tool.faqs.map((faq, i) => (
-                                <div key={i} style={{ padding: '1rem', backgroundColor: '#ffffff', border: '3px solid #121212', borderRadius: '0px', boxShadow: '4px 4px 0px 0px #121212' }}>
-                                    <h3 style={{ fontWeight: 700, fontSize: '1.1rem', marginBottom: '0.25rem', color: '#121212' }}>{faq.q}</h3>
-                                    <p style={{ color: '#404040', lineHeight: 1.6, fontSize: '1.05rem' }}>{faq.a}</p>
+                                <div key={i} className="p-5 rounded-2xl bg-chassis border border-white/40 shadow-neu">
+                                    <h3 className="font-mono font-bold text-xs text-ink mb-1.5 uppercase tracking-wide">{faq.q}</h3>
+                                    <p className="font-mono text-[11px] leading-relaxed text-ink-secondary">{faq.a}</p>
                                 </div>
                             ))}
                         </div>
@@ -54,29 +63,21 @@ function RelatedToolsSection({ currentSlug, currentCategory }) {
     if (relatedTools.length === 0) return null;
 
     return (
-        <section style={{ marginTop: '2rem', paddingTop: '1.5rem', borderTop: '1px solid rgba(18, 18, 18, 0.1)' }}>
-            <h2 style={{ fontWeight: 800, marginBottom: '1rem', fontSize: '1.5rem', textAlign: 'center' }}>
+        <section className="mt-12 pt-8 border-t border-black/5 w-full max-w-3xl">
+            <h2 className="font-display font-extrabold text-lg mb-6 text-center text-ink drop-shadow-[0_1px_1px_rgba(255,255,255,1)]">
                 Related Tools
             </h2>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1rem' }}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
                 {relatedTools.map(related => (
                     <Link
                         key={related.slug}
                         href={`/tool/${related.slug}`}
-                        style={{
-                            padding: '1rem',
-                            borderRadius: '0px',
-                            backgroundColor: '#ffffff',
-                            border: '3px solid #121212',
-                            boxShadow: '4px 4px 0px 0px #121212',
-                            textDecoration: 'none',
-                            transition: 'all 0.2s',
-                        }}
+                        className="p-4 rounded-xl bg-chassis border border-white/40 shadow-neu hover:-translate-y-0.5 hover:shadow-neu-float active:shadow-neu-pressed transition-all duration-150 block text-decoration-none"
                     >
-                        <p style={{ fontWeight: 700, color: '#121212', marginBottom: '0.5rem', fontSize: '0.9rem' }}>
+                        <p className="font-mono font-bold text-[10px] text-ink uppercase tracking-wider mb-1">
                             {related.name}
                         </p>
-                        <p style={{ color: '#404040', fontSize: '0.85rem', lineHeight: 1.5, margin: 0 }}>
+                        <p className="font-mono text-[9px] text-ink-secondary leading-normal">
                             {related.shortDesc}
                         </p>
                     </Link>

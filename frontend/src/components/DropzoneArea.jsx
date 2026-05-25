@@ -51,67 +51,62 @@ export default function DropzoneArea({ onFileSelect, accept, maxSize, selectedFi
 
     return (
         <div className={`w-full transition-opacity duration-400 ${hasUrl ? 'opacity-50 pointer-events-none' : 'opacity-100'}`}>
-            <motion.div
-                className="relative z-10 w-full"
-            >
+            <motion.div className="relative z-10 w-full">
                 <div
                     {...getRootProps()}
-                    className={`relative border-8 border-bauhaus-black p-8 sm:p-12 text-center cursor-pointer min-h-[300px] flex flex-col items-center justify-center transition-all duration-300 ${
+                    className={`relative rounded-2xl p-8 sm:p-12 text-center cursor-pointer min-h-[300px] flex flex-col items-center justify-center transition-all duration-300 ${
                         isDragActive 
-                            ? 'bg-bauhaus-yellow shadow-none translate-x-1 translate-y-1' 
-                            : 'bg-white shadow-bauhaus-lg'
+                            ? 'bg-chassis/80 shadow-[inset_4px_4px_10px_rgba(0,0,0,0.1),0_0_15px_rgba(255,71,87,0.2)] border border-accent/40' 
+                            : 'bg-chassis shadow-neu-recessed border border-white/20'
                     }`}
                 >
                     <input {...getInputProps()} aria-label="Upload files" />
-
-                    {/* Decorative Corner Shapes */}
-                    <div className="absolute top-0 left-0 w-8 h-8 bg-bauhaus-red border-r-4 border-b-4 border-bauhaus-black" />
-                    <div className="absolute bottom-0 right-0 w-8 h-8 bg-bauhaus-blue border-l-4 border-t-4 border-bauhaus-black" />
 
                     <AnimatePresence mode="wait">
                         {!selectedFiles || selectedFiles.length === 0 ? (
                             <motion.div 
                                 key="upload-prompt" 
-                                initial={{ opacity: 0, scale: 0.9 }} 
+                                initial={{ opacity: 0, scale: 0.95 }} 
                                 animate={{ opacity: 1, scale: 1 }} 
-                                exit={{ opacity: 0, scale: 1.1 }} 
+                                exit={{ opacity: 0, scale: 1.05 }} 
                                 className="flex flex-col items-center w-full gap-6"
                             >
                                 <div className="relative">
                                     <motion.div 
                                         animate={{ 
-                                            rotate: isDragActive ? 180 : 0,
-                                            scale: isDragActive ? 1.2 : 1
+                                            scale: isDragActive ? 1.1 : 1
                                         }}
-                                        className="w-20 h-20 bg-bauhaus-red border-4 border-bauhaus-black flex items-center justify-center shadow-bauhaus"
+                                        className="w-20 h-20 rounded-full bg-chassis border border-white/40 shadow-neu flex items-center justify-center hover:scale-105 transition-transform duration-300"
                                     >
-                                        <CloudUpload size={40} className="text-white" />
+                                        <CloudUpload size={32} className="text-accent" />
                                     </motion.div>
-                                    <div className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-bauhaus-blue border-4 border-bauhaus-black" />
+                                    <div className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-chassis border border-white/40 shadow-neu flex items-center justify-center z-10">
+                                        <span className="led-indicator led-green w-2 h-2" />
+                                    </div>
                                 </div>
 
                                 <div className="space-y-2">
-                                    <h2 className="font-display font-black text-3xl uppercase tracking-tighter text-bauhaus-black">
-                                        {isDragActive ? "Drop Now" : "Upload PDF"}
+                                    <h2 className="font-display font-bold text-2xl tracking-tight text-ink drop-shadow-[0_1px_1px_rgba(255,255,255,1)]">
+                                        {isDragActive ? "Drop files to load" : "Load PDF Documents"}
                                     </h2>
-                                    <p className="font-display font-bold uppercase text-xs tracking-widest text-bauhaus-black/70 max-w-[280px] mx-auto">
-                                        Secure, private, and lightning fast. Your files never leave your browser.
+                                    <p className="font-mono text-[10px] uppercase tracking-wider text-ink-secondary max-w-[320px] mx-auto">
+                                        Processing occurs 100% locally. File contents are never transmitted.
                                     </p>
                                 </div>
 
-                                <div className="px-8 py-4 border-4 border-bauhaus-black bg-white shadow-bauhaus hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all flex items-center gap-3 font-display font-black uppercase tracking-widest text-sm">
-                                    <Search size={18} />
+                                <div className="px-6 h-11 rounded-lg bg-chassis border border-white/50 text-ink shadow-neu hover:-translate-y-0.5 active:translate-y-0 active:shadow-neu-pressed transition-all duration-150 flex items-center gap-2 font-mono font-bold uppercase tracking-wider text-xs select-none">
+                                    <Search size={14} />
                                     Browse Files
                                 </div>
 
                                 <div className="flex flex-wrap justify-center gap-3 mt-4">
                                     {[
-                                        { txt: "PDF Format", icon: FileType, color: "bg-bauhaus-red" },
-                                        { txt: `Up to ${maxSize ? formatSize(maxSize) : '100 MB'}`, icon: HardDrive, color: "bg-bauhaus-blue" },
-                                        { txt: "Client-side", icon: ShieldCheck, color: "bg-bauhaus-yellow" }
+                                        { txt: "PDF Format", icon: FileType },
+                                        { txt: `Max: ${maxSize ? formatSize(maxSize) : '100 MB'}`, icon: HardDrive },
+                                        { txt: "Offline Secure", icon: ShieldCheck }
                                     ].map((item, idx) => (
-                                        <div key={idx} className="flex items-center gap-2 px-3 py-1 border-2 border-bauhaus-black bg-white font-display font-bold text-[10px] uppercase tracking-widest">
-                                            <item.icon size={12} className="text-bauhaus-black" />
+                                        <div key={idx} className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/40 bg-chassis text-ink-secondary shadow-neu-sharp font-mono text-[10px] uppercase tracking-wider">
+                                            <item.icon size={12} className="text-accent" />
                                             {item.txt}
                                         </div>
                                     ))}
@@ -125,12 +120,13 @@ export default function DropzoneArea({ onFileSelect, accept, maxSize, selectedFi
                                 exit={{ opacity: 0, x: 20 }} 
                                 className="w-full flex flex-col gap-4"
                             >
-                                <div className="flex items-center justify-between border-b-4 border-bauhaus-black pb-2">
-                                    <span className="font-display font-black text-sm uppercase tracking-widest text-bauhaus-red">
-                                        Selected File{selectedFiles.length > 1 ? 's' : ''}
+                                <div className="flex items-center justify-between border-b border-black/5 pb-3">
+                                    <span className="font-mono font-bold text-xs uppercase tracking-widest text-accent flex items-center gap-2">
+                                        <span className="led-indicator led-green animate-pulse" />
+                                        Files Loaded ({selectedFiles.length})
                                     </span>
-                                    <span className="font-display font-black text-sm text-bauhaus-black">
-                                        {selectedFiles.length} TOTAL
+                                    <span className="font-mono font-bold text-xs text-ink-secondary">
+                                        SYSTEM READY
                                     </span>
                                 </div>
                                 
@@ -139,31 +135,32 @@ export default function DropzoneArea({ onFileSelect, accept, maxSize, selectedFi
                                         <motion.div 
                                             key={i} 
                                             layout
-                                            className="flex items-center gap-4 p-4 bg-white border-4 border-bauhaus-black shadow-bauhaus hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all group"
+                                            className="flex items-center gap-4 p-4 rounded-xl bg-chassis border border-white/40 shadow-neu hover:shadow-neu-float transition-all duration-200"
                                         >
-                                            <div className="w-12 h-12 flex-shrink-0 bg-bauhaus-blue border-2 border-bauhaus-black flex items-center justify-center text-white">
-                                                <FileText size={24} />
+                                            <div className="w-12 h-12 rounded-lg bg-chassis border border-white/30 shadow-neu-pressed flex items-center justify-center text-accent flex-shrink-0">
+                                                <FileText size={20} />
                                             </div>
                                             <div className="flex-1 min-w-0 text-left">
-                                                <p className="font-display font-black text-lg uppercase tracking-tighter truncate text-bauhaus-black">
+                                                <p className="font-mono font-extrabold text-sm text-ink truncate">
                                                     {file.name}
                                                 </p>
-                                                <div className="flex items-center gap-2">
-                                                    <span className="font-display font-bold text-[10px] uppercase tracking-widest text-bauhaus-black/70">
+                                                <div className="flex items-center gap-2.5 mt-1 font-mono text-[10px]">
+                                                    <span className="text-ink-secondary">
                                                         {formatSize(file.size)}
                                                     </span>
-                                                    <span className="w-1 h-1 bg-bauhaus-black/20 rounded-full" />
-                                                    <span className="font-display font-black text-[10px] uppercase tracking-widest text-green-600">
-                                                        READY
+                                                    <span className="w-1 h-1 rounded-full bg-border-dark/50" />
+                                                    <span className="text-emerald-500 font-extrabold flex items-center gap-1">
+                                                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                                                        LOCAL READY
                                                     </span>
                                                 </div>
                                             </div>
                                             <button
                                                 onClick={(e) => handleRemoveFile(i, e)}
-                                                className="w-10 h-10 flex items-center justify-center border-2 border-bauhaus-black bg-bauhaus-red text-white shadow-[2px_2px_0px_0px_black] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all"
+                                                className="w-10 h-10 flex items-center justify-center rounded-full bg-chassis border border-white/40 text-accent shadow-neu hover:shadow-neu-sharp active:shadow-neu-pressed active:translate-y-[1px] transition-all flex-shrink-0"
                                                 aria-label={`Remove ${file.name}`}
                                             >
-                                                <Trash2 size={18} />
+                                                <Trash2 size={16} />
                                             </button>
                                         </motion.div>
                                     ))}
@@ -171,10 +168,10 @@ export default function DropzoneArea({ onFileSelect, accept, maxSize, selectedFi
                                 
                                 {multiple && (
                                     <button 
-                                        className="mt-2 self-center flex items-center gap-2 px-6 py-3 border-4 border-bauhaus-black bg-bauhaus-blue text-white font-display font-black uppercase tracking-widest text-xs shadow-bauhaus hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all"
+                                        className="mt-3 self-center flex items-center gap-2 h-10 px-5 rounded-lg bg-chassis border border-white/50 text-ink shadow-neu hover:-translate-y-0.5 active:translate-y-0 active:shadow-neu-pressed transition-all duration-150 font-mono font-bold uppercase tracking-wider text-xs select-none"
                                         onClick={(e) => { e.stopPropagation(); document.querySelector('input[type="file"]').click(); }}
                                     >
-                                        <Plus size={18} />
+                                        <Plus size={16} />
                                         Add More Files
                                     </button>
                                 )}

@@ -5,20 +5,18 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { BauhausButton } from '@/components/ui/BauhausComponents';
+import { IndustrialButton } from '@/components/ui/IndustrialComponents';
 
-const BauhausLogo = () => (
-    <div className="flex items-center gap-2 group">
-        <div className="flex gap-1 items-end">
-            <div className="w-4 h-4 rounded-full bg-bauhaus-red border-2 border-bauhaus-black transition-transform group-hover:scale-110" />
-            <div className="w-5 h-5 bg-bauhaus-blue border-2 border-bauhaus-black transition-transform group-hover:-rotate-12" />
-            <div className="w-0 h-0 border-l-[12px] border-l-transparent border-r-[12px] border-r-transparent border-b-[20px] border-b-bauhaus-yellow relative transition-transform group-hover:translate-y-[-2px]">
-                <div className="absolute top-[2px] left-[-10px] w-0 h-0 border-l-[10px] border-l-transparent border-r-[10px] border-r-transparent border-b-[16px] border-b-bauhaus-black opacity-20" />
-            </div>
-        </div>
-        <span className="font-display font-black text-2xl tracking-tighter uppercase">
-            Doc<span className="text-bauhaus-red">Shift</span>
+const IndustrialLogo = () => (
+    <div className="flex items-center gap-3 group select-none">
+        <span className="font-mono font-black text-2xl tracking-tight flex items-center gap-1.5">
+            <span className="text-ink">DOC</span>
+            <span className="text-accent bg-accent/10 px-2 py-0.5 rounded shadow-neu-pressed border border-accent/20">SHIFT</span>
         </span>
+        <div className="flex items-center gap-1.5 bg-black/5 px-2.5 py-1 rounded-full border border-white/30 shadow-[inset_1px_1px_2px_rgba(0,0,0,0.1)]">
+            <span className="led-indicator led-green" />
+            <span className="text-[10px] font-mono font-bold tracking-wider text-ink-secondary">SYS_OK</span>
+        </div>
     </div>
 );
 
@@ -56,47 +54,48 @@ export default function Navbar() {
 
     return (
         <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-            scrolled ? 'bg-bauhaus-white border-b-4 border-bauhaus-black' : 'bg-transparent'
+            scrolled ? 'bg-chassis/90 backdrop-blur-md shadow-neu border-b border-white/20' : 'bg-transparent'
         }`}>
             <div className="max-w-7xl mx-auto px-4 sm:px-8">
                 <div className="flex items-center justify-between h-20 sm:h-24">
                     {/* Logo */}
                     <Link href="/" className="flex-shrink-0" aria-label="DocShift - Home">
-                        <BauhausLogo />
+                        <IndustrialLogo />
                     </Link>
 
                     {/* Desktop Menu */}
-                    <div className="hidden lg:flex items-center gap-12">
+                    <div className="hidden lg:flex items-center gap-10">
                         {navLinks.map((link) => (
                             <button
                                 key={link.name}
                                 onClick={() => handleNav(link.path)}
-                                className="font-display font-bold uppercase tracking-widest text-sm hover:text-bauhaus-red transition-colors relative group"
+                                className="font-mono font-bold uppercase tracking-widest text-xs text-ink-secondary hover:text-accent transition-colors relative group py-2"
                             >
                                 {link.name}
-                                <span className="absolute -bottom-1 left-0 w-0 h-1 bg-bauhaus-yellow transition-all group-hover:w-full" />
+                                <span className="absolute -bottom-0.5 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-accent transition-all group-hover:w-8 rounded-full" />
                             </button>
                         ))}
                     </div>
 
                     {/* Actions */}
                     <div className="hidden lg:flex items-center gap-4">
-                        <BauhausButton
-                            variant="blue"
+                        <IndustrialButton
+                            variant="primary"
                             onClick={() => handleNav('/#tools')}
+                            className="text-xs tracking-wider"
                         >
                             Get Started
-                        </BauhausButton>
+                        </IndustrialButton>
                     </div>
 
                     {/* Mobile Toggle */}
                     <div className="flex lg:hidden items-center gap-3">
                         <button
                             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                            className="p-2 border-2 border-bauhaus-black bg-white"
+                            className="p-2.5 rounded-lg bg-chassis border border-white/40 shadow-neu hover:shadow-neu-sharp active:shadow-neu-pressed transition-all duration-150 text-ink"
                             aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
                         >
-                            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                            {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
                         </button>
                     </div>
                 </div>
@@ -109,25 +108,25 @@ export default function Navbar() {
                         initial={{ opacity: 0, y: -20 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -20 }}
-                        className="lg:hidden absolute top-full left-0 right-0 bg-bauhaus-white border-b-4 border-bauhaus-black p-8 shadow-bauhaus-lg"
+                        className="lg:hidden absolute top-full left-4 right-4 bg-chassis border border-white/40 p-6 rounded-2xl shadow-neu-float mt-2 z-50"
                     >
-                        <div className="flex flex-col gap-6">
+                        <div className="flex flex-col gap-5">
                             {navLinks.map((link) => (
                                 <button
                                     key={link.name}
                                     onClick={() => handleNav(link.path)}
-                                    className="font-display font-black text-3xl uppercase tracking-tighter text-left hover:text-bauhaus-red"
+                                    className="font-mono font-bold text-base uppercase tracking-wider text-left text-ink hover:text-accent py-2 border-b border-white/10"
                                 >
                                     {link.name}
                                 </button>
                             ))}
-                            <BauhausButton
-                                variant="red"
-                                className="w-full text-xl"
+                            <IndustrialButton
+                                variant="primary"
+                                className="w-full text-xs tracking-wider mt-2"
                                 onClick={() => handleNav('/#tools')}
                             >
                                 Get Started
-                            </BauhausButton>
+                            </IndustrialButton>
                         </div>
                     </motion.div>
                 )}

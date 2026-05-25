@@ -1,22 +1,16 @@
 'use client';
 
-import { useState, useMemo, useEffect } from 'react';
+import { useMemo, useEffect } from 'react';
 import { ThemeProvider, CssBaseline } from '@mui/material';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
-import { lightTheme, darkTheme } from '@/theme/theme';
+import { lightTheme } from '@/theme/theme';
 import { ColorModeContext } from '@/contexts/ColorModeContext';
 import { Analytics } from '@vercel/analytics/react';
 
 export default function Providers({ children }) {
-  const [mode, setMode] = useState('dark');
-
   useEffect(() => {
-    if (mode === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }, [mode]);
+    document.documentElement.classList.remove('dark');
+  }, []);
 
   useEffect(() => {
     if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
@@ -33,11 +27,11 @@ export default function Providers({ children }) {
   }, []);
 
   const colorMode = useMemo(() => ({
-    mode,
-    toggleColorMode: () => setMode(prev => prev === 'dark' ? 'light' : 'dark'),
-  }), [mode]);
+    mode: 'light',
+    toggleColorMode: () => {},
+  }), []);
 
-  const theme = mode === 'dark' ? darkTheme : lightTheme;
+  const theme = lightTheme;
 
   return (
     <ColorModeContext.Provider value={colorMode}>

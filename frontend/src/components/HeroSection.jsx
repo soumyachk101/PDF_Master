@@ -70,7 +70,7 @@ const HeroSection = () => {
                         initial={{ y: 30, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
                         transition={{ duration: 0.6, delay: 0.1 }}
-                        className="text-6xl md:text-8xl lg:text-9xl font-black uppercase tracking-tighter leading-[0.9] mb-8 text-bauhaus-black"
+                        className="text-6xl md:text-8xl lg:text-9xl font-black uppercase tracking-tighter leading-none sm:leading-[0.9] mb-8 text-bauhaus-black"
                     >
                         The PDF <span className="text-bauhaus-red">Toolkit</span><br />
                         <span className="relative">
@@ -97,7 +97,7 @@ const HeroSection = () => {
                         initial={{ y: 20, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
                         transition={{ duration: 0.6, delay: 0.3 }}
-                        className="flex flex-col sm:row gap-6 mb-16 w-full sm:w-auto"
+                        className="flex flex-col sm:flex-row gap-6 mb-16 w-full sm:w-auto"
                     >
                         <div className="flex flex-wrap justify-center gap-6">
                             <BauhausButton 

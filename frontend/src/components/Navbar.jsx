@@ -3,9 +3,8 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Menu, X, Sun, Moon } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useColorMode } from '@/contexts/ColorModeContext';
 import { BauhausButton } from '@/components/ui/BauhausComponents';
 
 const BauhausLogo = () => (
@@ -25,8 +24,6 @@ const BauhausLogo = () => (
 
 export default function Navbar() {
     const router = useRouter();
-    const { mode, toggleColorMode } = useColorMode();
-    const isDark = mode === 'dark';
     const [scrolled, setScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -84,12 +81,6 @@ export default function Navbar() {
 
                     {/* Actions */}
                     <div className="hidden lg:flex items-center gap-4">
-                        <button
-                            onClick={toggleColorMode}
-                            className="p-3 border-2 border-bauhaus-black bg-white shadow-[2px_2px_0px_0px_black] active:shadow-none active:translate-x-[2px] active:translate-y-[2px] transition-all"
-                        >
-                            {isDark ? <Sun size={20} /> : <Moon size={20} />}
-                        </button>
                         <BauhausButton
                             variant="blue"
                             onClick={() => handleNav('/#tools')}
@@ -100,12 +91,6 @@ export default function Navbar() {
 
                     {/* Mobile Toggle */}
                     <div className="flex lg:hidden items-center gap-3">
-                        <button
-                            onClick={toggleColorMode}
-                            className="p-2 border-2 border-bauhaus-black bg-white"
-                        >
-                            {isDark ? <Sun size={20} /> : <Moon size={20} />}
-                        </button>
                         <button
                             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                             className="p-2 border-2 border-bauhaus-black bg-white"

@@ -110,7 +110,7 @@ export default function RootLayout({ children }) {
             <ScrollToHash />
           </Suspense>
           <Navbar />
-          <main style={{ minHeight: '100vh', paddingTop: '64px' }}>
+          <main className="pt-20 sm:pt-24 min-h-screen">
             {children}
           </main>
           <Footer />

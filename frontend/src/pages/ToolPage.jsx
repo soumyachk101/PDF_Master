@@ -39,6 +39,32 @@ function alpha(color, opacity) {
     return color.replace(')', `, ${opacity})`).replace('rgb', 'rgba');
 }
 
+const bauhausInputStyle = {
+    '& .MuiOutlinedInput-root': {
+        borderRadius: '0px',
+        border: '4px solid #000000',
+        bgcolor: '#ffffff',
+        fontFamily: '"Space Grotesk", sans-serif',
+        fontWeight: 800,
+        textTransform: 'uppercase',
+        letterSpacing: '0.05em',
+        color: '#000000',
+        '& .MuiOutlinedInput-notchedOutline': { border: 'none' },
+        '&:hover .MuiOutlinedInput-notchedOutline': { border: 'none' },
+        '&.Mui-focused .MuiOutlinedInput-notchedOutline': { border: 'none' },
+    },
+    '& .MuiInputLabel-root': {
+        color: '#000000',
+        fontFamily: '"Space Grotesk", sans-serif',
+        fontWeight: 800,
+        textTransform: 'uppercase',
+        letterSpacing: '0.05em',
+        '&.Mui-focused': {
+            color: '#000000',
+        }
+    }
+};
+
 function ToolPage({ toolSlug }) {
     const theme = useTheme();
     const tool = getToolBySlug(toolSlug);
@@ -145,14 +171,20 @@ function ToolPage({ toolSlug }) {
 
                 <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15, duration: 0.4 }} style={{ width: '100%', maxWidth: '800px' }}>
                     <Card sx={{
-                        p: { xs: 3, md: 4 },
+                        p: { xs: 4, md: 6 },
                         position: 'relative', overflow: 'hidden',
-                        borderTop: `4px solid ${tool.color}`,
+                        borderRadius: '0px',
+                        border: '8px solid #000000',
+                        bgcolor: '#ffffff',
+                        boxShadow: '8px 8px 0px 0px #000000',
                         minHeight: { xs: '380px', md: '420px' },
                         display: 'flex',
                         flexDirection: 'column',
                         justifyContent: 'center'
                     }}>
+                        {/* Decorative Corner Shapes */}
+                        <div className="absolute top-0 left-0 w-8 h-8 bg-bauhaus-red border-r-4 border-b-4 border-bauhaus-black z-10" />
+                        <div className="absolute bottom-0 right-0 w-8 h-8 bg-bauhaus-blue border-l-4 border-t-4 border-bauhaus-black z-10" />
                         <AnimatePresence>
                             {(status === 'idle' || status === 'error') && (
                                 <motion.div key="upload" variants={stateVariants} initial="initial" animate="animate" exit="exit" style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
@@ -162,16 +194,17 @@ function ToolPage({ toolSlug }) {
                                             <TextField
                                                 fullWidth
                                                 variant="outlined"
-                                                placeholder="Enter website URL (e.g., https://example.com)"
+                                                placeholder="ENTER WEBSITE URL (E.G., HTTPS://EXAMPLE.COM)"
                                                 value={url}
                                                 onChange={(e) => setUrl(e.target.value)}
+                                                sx={bauhausInputStyle}
                                                 InputProps={{
                                                     startAdornment: (
                                                         <InputAdornment position="start">
-                                                            <LinkIcon size={20} color={theme.palette.text.secondary} />
+                                                            <LinkIcon size={20} color="#000000" />
                                                         </InputAdornment>
                                                     ),
-                                                    sx: { borderRadius: '16px', bgcolor: 'background.default' }
+                                                    sx: { borderRadius: '0px', bgcolor: '#ffffff' }
                                                 }}
                                             />
                                             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
@@ -193,22 +226,22 @@ function ToolPage({ toolSlug }) {
 
                                     {/* Additional Tool Parameters */}
                                     {files.length > 0 && toolSlug === 'split-pdf' && (
-                                        <TextField fullWidth label="Page Ranges (e.g., 1-3,5)" variant="outlined" value={params.ranges || ''} onChange={(e) => handleParamChange('ranges', e.target.value)} />
+                                        <TextField fullWidth label="Page Ranges (e.g., 1-3,5)" variant="outlined" value={params.ranges || ''} onChange={(e) => handleParamChange('ranges', e.target.value)} sx={bauhausInputStyle} />
                                     )}
                                     {files.length > 0 && toolSlug === 'extract-pages' && (
-                                        <TextField fullWidth label="Page Ranges to Extract (e.g., 2,4-6)" variant="outlined" value={params.ranges || ''} onChange={(e) => handleParamChange('ranges', e.target.value)} />
+                                        <TextField fullWidth label="Page Ranges to Extract (e.g., 2,4-6)" variant="outlined" value={params.ranges || ''} onChange={(e) => handleParamChange('ranges', e.target.value)} sx={bauhausInputStyle} />
                                     )}
                                     {files.length > 0 && toolSlug === 'remove-pages' && (
-                                        <TextField fullWidth label="Page Numbers to Remove (e.g., 1,3)" variant="outlined" value={params.pages || ''} onChange={(e) => handleParamChange('pages', e.target.value)} />
+                                        <TextField fullWidth label="Page Numbers to Remove (e.g., 1,3)" variant="outlined" value={params.pages || ''} onChange={(e) => handleParamChange('pages', e.target.value)} sx={bauhausInputStyle} />
                                     )}
                                     {files.length > 0 && toolSlug === 'rotate-pdf' && (
-                                        <TextField fullWidth label="Degrees (e.g., 90, 180, 270)" type="number" variant="outlined" value={params.degrees || '90'} onChange={(e) => handleParamChange('degrees', e.target.value)} />
+                                        <TextField fullWidth label="Degrees (e.g., 90, 180, 270)" type="number" variant="outlined" value={params.degrees || '90'} onChange={(e) => handleParamChange('degrees', e.target.value)} sx={bauhausInputStyle} />
                                     )}
                                     {files.length > 0 && (toolSlug === 'protect-pdf' || toolSlug === 'unlock-pdf') && (
-                                        <TextField fullWidth label="Password" type="password" variant="outlined" value={params.password || ''} onChange={(e) => handleParamChange('password', e.target.value)} />
+                                        <TextField fullWidth label="Password" type="password" variant="outlined" value={params.password || ''} onChange={(e) => handleParamChange('password', e.target.value)} sx={bauhausInputStyle} />
                                     )}
                                     {files.length > 0 && (toolSlug === 'add-watermark' || toolSlug === 'sign-pdf') && (
-                                        <TextField fullWidth label="Text" variant="outlined" value={params.text || ''} onChange={(e) => handleParamChange('text', e.target.value)} />
+                                        <TextField fullWidth label="Text" variant="outlined" value={params.text || ''} onChange={(e) => handleParamChange('text', e.target.value)} sx={bauhausInputStyle} />
                                     )}
 
                                     <AnimatePresence>
@@ -229,24 +262,27 @@ function ToolPage({ toolSlug }) {
                                         endIcon={<ArrowRight size={20} />}
                                         sx={{
                                             width: '100%',
-                                            mt: '14px',
-                                            padding: '15px',
-                                            borderRadius: '14px',
-                                            background: 'linear-gradient(135deg, #ff5a14, #cc3d00)',
-                                            boxShadow: '0 4px 20px rgba(255,80,20,0.25)',
-                                            color: '#fff',
+                                            mt: '24px',
+                                            padding: '16px',
+                                            borderRadius: '0px',
+                                            border: '4px solid #000000',
+                                            bgcolor: 'primary.main',
+                                            color: '#DCDCDC',
                                             fontSize: '1.1rem',
-                                            fontWeight: 700,
+                                            fontWeight: 900,
                                             textTransform: 'none',
-                                            transition: 'all 0.3s ease',
+                                            letterSpacing: '0.05em',
+                                            boxShadow: '4px 4px 0px 0px #000000',
+                                            transition: 'all 0.2s',
                                             '&:hover': {
-                                                boxShadow: '0 6px 28px rgba(255,80,20,0.4)',
-                                                transform: 'translateY(-1px)',
-                                                background: 'linear-gradient(135deg, #ff5a14, #cc3d00)'
+                                                bgcolor: 'primary.dark',
+                                                boxShadow: 'none',
+                                                transform: 'translate(4px, 4px)',
                                             },
                                             '&.Mui-disabled': {
-                                                background: 'rgba(255,255,255,0.05)',
-                                                color: 'rgba(255,255,255,0.3)',
+                                                background: 'rgba(0, 0, 0, 0.05)',
+                                                color: 'rgba(0, 0, 0, 0.3)',
+                                                border: '4px solid rgba(0, 0, 0, 0.2)',
                                                 boxShadow: 'none',
                                                 transform: 'none'
                                             }
@@ -293,14 +329,31 @@ function ToolPage({ toolSlug }) {
                                             <Typography variant="h4" sx={{ fontWeight: 800, mb: 1, color: 'text.primary' }}>Task Complete!</Typography>
                                             <Typography variant="body1" sx={{ color: 'text.secondary', fontSize: '1.1rem' }}>Your file has been successfully processed.</Typography>
                                         </Box>
-                                        <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: 2, width: '100%', mt: 2 }}>
+                                        <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: 3, width: '100%', mt: 2 }}>
                                             <Button
                                                 onClick={handleDownload}
                                                 variant="contained"
-                                                color="success"
                                                 size="large"
                                                 startIcon={<Download size={22} />}
-                                                sx={{ flex: 1, py: 2, borderRadius: '16px', fontSize: '1.1rem', fontWeight: 700, boxShadow: `0 10px 20px -10px ${theme.palette.success.main}` }}
+                                                sx={{
+                                                    flex: 1,
+                                                    py: 2,
+                                                    borderRadius: '0px',
+                                                    border: '4px solid #000000',
+                                                    bgcolor: '#347B60',
+                                                    color: '#DCDCDC',
+                                                    fontSize: '1.1rem',
+                                                    fontWeight: 900,
+                                                    textTransform: 'uppercase',
+                                                    letterSpacing: '0.05em',
+                                                    boxShadow: '4px 4px 0px 0px #000000',
+                                                    transition: 'all 0.2s',
+                                                    '&:hover': {
+                                                        bgcolor: 'rgba(52, 123, 96, 0.9)',
+                                                        boxShadow: 'none',
+                                                        transform: 'translate(4px, 4px)',
+                                                    }
+                                                }}
                                             >
                                                 Download Result
                                             </Button>
@@ -308,7 +361,26 @@ function ToolPage({ toolSlug }) {
                                                 onClick={handleReset}
                                                 variant="outlined"
                                                 size="large"
-                                                sx={{ flex: 1, py: 2, borderRadius: '16px', fontSize: '1.1rem', fontWeight: 700, borderColor: theme.palette.divider, color: theme.palette.text.primary, '&:hover': { borderColor: theme.palette.primary.main } }}
+                                                sx={{
+                                                    flex: 1,
+                                                    py: 2,
+                                                    borderRadius: '0px',
+                                                    border: '4px solid #000000',
+                                                    bgcolor: '#ffffff',
+                                                    color: '#000000',
+                                                    fontSize: '1.1rem',
+                                                    fontWeight: 900,
+                                                    textTransform: 'uppercase',
+                                                    letterSpacing: '0.05em',
+                                                    boxShadow: '4px 4px 0px 0px #000000',
+                                                    transition: 'all 0.2s',
+                                                    '&:hover': {
+                                                        bgcolor: '#f5f5f5',
+                                                        borderColor: '#000000',
+                                                        boxShadow: 'none',
+                                                        transform: 'translate(4px, 4px)',
+                                                    }
+                                                }}
                                             >
                                                 Start Over
                                             </Button>

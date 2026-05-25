@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import {
   CloudUpload,
@@ -15,8 +15,6 @@ import {
 import { AnimatePresence, motion } from 'framer-motion';
 
 export default function DropzoneArea({ onFileSelect, accept, maxSize, selectedFiles, hasUrl, multiple }) {
-    const [isHovered, setIsHovered] = useState(false);
-
     const onDrop = useCallback(acceptedFiles => {
         if (acceptedFiles?.length > 0) {
             onFileSelect(multiple ? acceptedFiles : [acceptedFiles[0]]);
@@ -54,8 +52,6 @@ export default function DropzoneArea({ onFileSelect, accept, maxSize, selectedFi
     return (
         <div className={`w-full transition-opacity duration-400 ${hasUrl ? 'opacity-50 pointer-events-none' : 'opacity-100'}`}>
             <motion.div
-                onHoverStart={() => setIsHovered(true)}
-                onHoverEnd={() => setIsHovered(false)}
                 className="relative z-10 w-full"
             >
                 <div

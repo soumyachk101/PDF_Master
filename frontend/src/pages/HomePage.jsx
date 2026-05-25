@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo, useDeferredValue, memo } from 'react';
+import React, { useState, useMemo, useDeferredValue, memo } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, X, ArrowUpRight, ShieldCheck, Zap, ServerCrash, HeartHandshake, Gift, MonitorSmartphone } from 'lucide-react';
@@ -11,8 +11,8 @@ import HeroSection from '@/components/HeroSection';
 import { BauhausSection, BauhausCard, BauhausButton, BauhausBadge, cn } from '@/components/ui/BauhausComponents';
 
 const DynamicIcon = memo(({ name, color, size = 24, className }) => {
-    const Icon = getIcon(name);
-    return <Icon size={size} color={color} className={className} />;
+    const IconComponent = getIcon(name);
+    return React.createElement(IconComponent, { size, color, className });
 });
 
 function HomePage() {

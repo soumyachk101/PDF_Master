@@ -3,7 +3,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, ShieldCheck, Zap, Globe } from 'lucide-react';
-import { BauhausButton, BauhausBadge, cn } from './ui/BauhausComponents';
+import { BauhausButton, BauhausBadge } from './ui/BauhausComponents';
 
 const HeroSection = () => {
     const handleScrollDown = () => {

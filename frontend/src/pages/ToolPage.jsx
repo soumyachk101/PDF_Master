@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, memo } from 'react';
+import React, { useState, memo } from 'react';
 import Link from 'next/link';
 import { Box, Typography, Button, Container, Card, CircularProgress, TextField, InputAdornment, useTheme, Alert } from '@mui/material';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -12,8 +12,8 @@ import { Home, ArrowLeft, ArrowRight, Download, CheckCircle, AlertCircle, AlertT
 import { getIcon } from '@/utils/icons';
 
 const DynamicIcon = memo(({ name, color, size = 24, className = "" }) => {
-    const Icon = getIcon(name);
-    return <Icon size={size} color={color} className={className} />;
+    const IconComponent = getIcon(name);
+    return React.createElement(IconComponent, { size, color, className });
 });
 
 const pageVariants = {

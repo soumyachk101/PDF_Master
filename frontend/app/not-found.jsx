@@ -1,4 +1,4 @@
-import NotFoundPage from '@/pages/NotFoundPage';
+import NotFoundPage from '@/views/NotFoundPage';
 
 export const metadata = {
   title: 'Page Not Found – 404 | DocShift Free PDF Tools',

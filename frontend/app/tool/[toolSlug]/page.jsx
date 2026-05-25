@@ -1,5 +1,5 @@
 import { getToolBySlug, TOOLS } from '@/utils/tools';
-import ToolPage from '@/pages/ToolPage';
+import ToolPage from '@/views/ToolPage';
 
 export function generateStaticParams() {
   return TOOLS.map((tool) => ({

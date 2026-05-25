@@ -144,32 +144,33 @@ function ToolPage({ toolSlug }) {
             <Box sx={{ position: 'absolute', top: '20%', left: '-10%', width: 400, height: 400, bgcolor: 'rgba(64, 169, 246, 0.1)', borderRadius: '50%', filter: 'blur(150px)', pointerEvents: 'none', mixBlendMode: 'multiply' }} />
 
             <Container maxWidth="md" sx={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', py: { xs: 4, md: 6 }, position: 'relative', zIndex: 10 }}>
-                {/* Breadcrumb Navigation */}
-                <Breadcrumbs items={[
-                  { name: 'Home', href: '/', icon: Home },
-                  { name: tool.name, href: `/tool/${tool.slug}`, isCurrent: true }
-                ]} />
+                <Box sx={{ width: '100%', maxWidth: '800px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    {/* Breadcrumb Navigation */}
+                    <Breadcrumbs items={[
+                      { name: 'Home', href: '/', icon: Home },
+                      { name: tool.name, href: `/tool/${tool.slug}`, isCurrent: true }
+                    ]} />
 
-                <Box component={Link} href="/#tools" sx={{ alignSelf: 'flex-start', mb: 3, color: 'text.secondary', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 1, fontWeight: 600, '&:hover': { color: 'primary.main' }, transition: 'color 0.2s' }}>
-                    <ArrowLeft size={16} /> Back to All Tools
-                </Box>
-
-                <motion.div initial="initial" animate="in" exit="out" variants={pageVariants} style={{ width: '100%', textAlign: 'center', marginBottom: '24px' }}>
-                    <Box sx={{
-                        display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 64, height: 64, borderRadius: '20px', mb: 2,
-                        bgcolor: `${tool.color}15`, color: tool.color, border: `1px solid ${theme.palette.divider}`
-                    }}>
-                        <DynamicIcon name={tool.icon} size={32} />
+                    <Box component={Link} href="/#tools" sx={{ alignSelf: 'flex-start', mb: 3, color: 'text.secondary', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 1, fontWeight: 600, '&:hover': { color: 'primary.main' }, transition: 'color 0.2s' }}>
+                        <ArrowLeft size={16} /> Back to All Tools
                     </Box>
-                    <Typography variant="h3" component="h1" sx={{ fontWeight: 800, mb: 1, color: 'text.primary' }}>
-                        {tool.name} Online Free
-                    </Typography>
-                    <Typography variant="h6" sx={{ color: 'text.secondary', maxWidth: '600px', mx: 'auto', fontWeight: 400 }}>
-                        {tool.desc}
-                    </Typography>
-                </motion.div>
 
-                <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15, duration: 0.4 }} style={{ width: '100%', maxWidth: '800px' }}>
+                    <motion.div initial="initial" animate="in" exit="out" variants={pageVariants} style={{ width: '100%', textAlign: 'center', marginBottom: '24px' }}>
+                        <Box sx={{
+                            display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 64, height: 64, borderRadius: '20px', mb: 2,
+                            bgcolor: `${tool.color}15`, color: tool.color, border: `1px solid ${theme.palette.divider}`
+                        }}>
+                            <DynamicIcon name={tool.icon} size={32} />
+                        </Box>
+                        <Typography variant="h3" component="h1" sx={{ fontWeight: 800, mb: 1, color: 'text.primary' }}>
+                            {tool.name} Online Free
+                        </Typography>
+                        <Typography variant="h6" sx={{ color: 'text.secondary', maxWidth: '600px', mx: 'auto', fontWeight: 400 }}>
+                            {tool.desc}
+                        </Typography>
+                    </motion.div>
+
+                    <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15, duration: 0.4 }} style={{ width: '100%' }}>
                     <Card sx={{
                         p: { xs: 4, md: 6 },
                         position: 'relative', overflow: 'hidden',
@@ -263,28 +264,29 @@ function ToolPage({ toolSlug }) {
                                         sx={{
                                             width: '100%',
                                             mt: '24px',
-                                            padding: '16px',
+                                            padding: '18px',
                                             borderRadius: '0px',
-                                            border: '4px solid #000000',
-                                            bgcolor: 'primary.main',
-                                            color: '#DCDCDC',
-                                            fontSize: '1.1rem',
+                                            border: '4px solid #121212',
+                                            bgcolor: '#D02020',
+                                            color: '#ffffff',
+                                            fontSize: '1.2rem',
                                             fontWeight: 900,
-                                            textTransform: 'none',
-                                            letterSpacing: '0.05em',
-                                            boxShadow: '4px 4px 0px 0px #000000',
+                                            textTransform: 'uppercase',
+                                            letterSpacing: '0.1em',
+                                            boxShadow: '4px 4px 0px 0px #121212',
                                             transition: 'all 0.2s',
                                             '&:hover': {
-                                                bgcolor: 'primary.dark',
+                                                bgcolor: '#B01A1A',
                                                 boxShadow: 'none',
                                                 transform: 'translate(4px, 4px)',
                                             },
                                             '&.Mui-disabled': {
-                                                background: 'rgba(0, 0, 0, 0.05)',
-                                                color: 'rgba(0, 0, 0, 0.3)',
-                                                border: '4px solid rgba(0, 0, 0, 0.2)',
+                                                bgcolor: '#E0E0E0',
+                                                color: '#737373',
+                                                border: '4px solid #121212',
                                                 boxShadow: 'none',
-                                                transform: 'none'
+                                                transform: 'none',
+                                                opacity: 0.8
                                             }
                                         }}
                                     >
@@ -391,6 +393,7 @@ function ToolPage({ toolSlug }) {
                         </AnimatePresence>
                     </Card>
                 </motion.div>
+            </Box>
 
                 {/* SEO Rich Content Section */}
                 <Box sx={{ mt: 10, mb: 4, width: '100%', maxWidth: '800px', textAlign: 'left' }}>

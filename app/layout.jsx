@@ -5,6 +5,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ScrollToHash from '@/components/ScrollToHash';
 import { Suspense } from 'react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 const interDisplay = Inter({
   subsets: ['latin'],
@@ -117,6 +118,7 @@ export default function RootLayout({ children }) {
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }} />
       </head>
       <body>
+        <SpeedInsights />
         <Providers>
           <div className="noise-overlay" />
           <Suspense>

@@ -1,25 +1,25 @@
+'use client';
+
 import { useState, useMemo, useDeferredValue, memo } from 'react';
-import { useNavigate } from 'react-router-dom';
-import * as Icons from 'lucide-react';
-import { Box, Typography, Button, Container, Card, CardContent, useTheme, InputBase, IconButton, Grid } from '@mui/material';
-import { alpha } from '@mui/material/styles';
-import { Helmet } from 'react-helmet-async';
+import { useRouter } from 'next/navigation';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Search, X, ArrowUpRight, ShieldCheck, Zap, ServerCrash, HeartHandshake, Gift, MonitorSmartphone } from 'lucide-react';
 
-import { CATEGORIES, TOOLS } from '../utils/tools';
-import HeroSection from '../components/HeroSection';
+import { CATEGORIES, TOOLS } from '@/utils/tools';
+import { getIcon, Icons } from '@/utils/icons';
+import HeroSection from '@/components/HeroSection';
+import { BauhausSection, BauhausCard, BauhausButton, BauhausBadge, cn } from '@/components/ui/BauhausComponents';
 
-const DynamicIcon = memo(({ name, color, size = 24 }) => {
-    const Icon = Icons[name] || Icons.FileText;
-    return <Icon size={size} color={color} />;
+const DynamicIcon = memo(({ name, color, size = 24, className }) => {
+    const Icon = getIcon(name);
+    return <Icon size={size} color={color} className={className} />;
 });
 
 function HomePage() {
-    const theme = useTheme();
-    const mode = theme.palette.mode;
     const [activeCategory, setActiveCategory] = useState('all');
     const [searchQuery, setSearchQuery] = useState('');
     const deferredSearchQuery = useDeferredValue(searchQuery);
-    const navigate = useNavigate();
+    const router = useRouter();
 
     // Dynamically calculate counts for categories
     const categoryCounts = useMemo(() => {
@@ -34,449 +34,223 @@ function HomePage() {
         if (activeCategory === 'all') return TOOLS;
         return TOOLS.filter(tool => tool.category === activeCategory);
     }, [activeCategory]);
-    
+
     const displayedTools = useMemo(() => {
         if (!deferredSearchQuery.trim()) return categoryTools;
         const q = deferredSearchQuery.toLowerCase();
-        return categoryTools.filter(tool => 
-            tool.name.toLowerCase().includes(q) || 
-            tool.shortDesc.toLowerCase().includes(q) || 
-            tool.desc.toLowerCase().includes(q) || 
+        return categoryTools.filter(tool =>
+            tool.name.toLowerCase().includes(q) ||
+            tool.shortDesc.toLowerCase().includes(q) ||
+            tool.desc.toLowerCase().includes(q) ||
             tool.slug.toLowerCase().includes(q)
         );
     }, [categoryTools, deferredSearchQuery]);
 
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%', minHeight: '100vh', bgcolor: 'background.default' }}>
-            <Helmet>
-                <title>DocShift – Free & Private PDF Tools | No Uploads Required</title>
-                <meta name="description" content="Access 30+ PDF tools in your browser. Merge, compress, and convert PDFs securely without uploading files to any server. 100% private and free." />
-                <meta name="keywords" content="pdf tools, merge pdf, split pdf, free online pdf tools, secure pdf editor, convert pdf" />
-                <link rel="canonical" href="https://www.docshift.tech/" />
-                <script type="application/ld+json">
-                    {`
-                    {
-                        "@context": "https://schema.org",
-                        "@type": "ItemList",
-                        "itemListElement": ${JSON.stringify(TOOLS.slice(0, 10).map((tool, index) => ({
-                            "@type": "SoftwareApplication",
-                            "position": index + 1,
-                            "name": tool.name,
-                            "url": `https://www.docshift.tech/tool/${tool.slug}`,
-                            "applicationCategory": "PDFTool",
-                            "operatingSystem": "Any"
-                        })))}
-                    }
-                    `}
-                </script>
-            </Helmet>
-            
-            {/* ── PREMIUM HERO SECTION ── */}
+        <div className="flex flex-col w-full min-h-screen bg-bauhaus-white font-bauhaus">
+
+            {/* ── HERO SECTION ── */}
             <HeroSection />
 
             {/* ── TRUST STRIP ── */}
-            <Box sx={{
-                borderTop: `1px solid ${theme.palette.divider}`,
-                borderBottom: `1px solid ${theme.palette.divider}`,
-                py: 5,
-                bgcolor: theme.palette.background.default,
-            }}>
-                <Container maxWidth="lg">
-                    <Box sx={{
-                        display: 'flex',
-                        flexWrap: 'wrap',
-                        justifyContent: 'center',
-                        gap: { xs: 4, md: 8 },
-                    }}>
+            <div className="border-y-4 border-bauhaus-black bg-white py-12">
+                <div className="container mx-auto px-6">
+                    <div className="flex flex-wrap justify-center gap-8 md:gap-16">
                         {[
-                            { id: 'secure', icon: 'ShieldCheck', text: 'Secure Encryption' },
-                            { id: 'fast', icon: 'Zap', text: 'In-Browser Speed' },
-                            { id: 'zero', icon: 'ServerCrash', text: 'No Uploads' },
-                            { id: 'free', icon: 'HeartHandshake', text: '100% Private' },
+                            { id: 'secure', icon: <ShieldCheck className="text-bauhaus-red" />, text: 'Secure Encryption' },
+                            { id: 'fast', icon: <Zap className="text-bauhaus-blue" />, text: 'In-Browser Speed' },
+                            { id: 'zero', icon: <ServerCrash className="text-bauhaus-yellow bg-black rounded-full p-0.5" />, text: 'No Uploads' },
+                            { id: 'free', icon: <HeartHandshake className="text-bauhaus-red" />, text: '100% Private' },
                         ].map((item) => (
-                            <Box key={item.id} sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                                <Box sx={{
-                                    width: 48, height: 48, borderRadius: '14px',
-                                    bgcolor: alpha(theme.palette.primary.main, 0.08),
-                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                    border: `1px solid ${alpha(theme.palette.primary.main, 0.1)}`,
-                                }}>
-                                    <DynamicIcon name={item.icon} size={22} color={theme.palette.primary.main} />
-                                </Box>
-                                <Typography variant="caption" sx={{
-                                    fontWeight: 800,
-                                    textTransform: 'uppercase',
-                                    letterSpacing: '0.1em',
-                                    color: 'text.secondary',
-                                    fontSize: '0.75rem',
-                                }}>
+                            <div key={item.id} className="flex items-center gap-4 group">
+                                <div className="w-12 h-12 flex items-center justify-center border-2 border-bauhaus-black bg-white shadow-[4px_4px_0px_0px_black] group-hover:shadow-none group-hover:translate-x-[2px] group-hover:translate-y-[2px] transition-all">
+                                    {item.icon}
+                                </div>
+                                <span className="font-black uppercase tracking-tighter text-sm text-bauhaus-black">
                                     {item.text}
-                                </Typography>
-                            </Box>
+                                </span>
+                            </div>
                         ))}
-                    </Box>
-                </Container>
-            </Box>
+                    </div>
+                </div>
+            </div>
 
             {/* ── MAIN TOOLS GRID ── */}
-            <Box id="tools" component="section" sx={{
-                py: { xs: 12, md: 20 }, px: 3, position: 'relative',
-                bgcolor: 'background.default',
-                scrollMarginTop: '80px'
-            }}>
-                <Container maxWidth="xl">
-                    <Box sx={{ mb: 10, textAlign: 'center' }}>
-                        <Typography variant="overline" sx={{
-                            display: 'block',
-                            color: '#F05B25',
-                            letterSpacing: '0.1em',
-                            fontSize: '0.75rem',
-                            fontWeight: 800,
-                            mb: 1
-                        }}>
-                            PDF TOOLS
-                        </Typography>
-                        <Typography variant="h2" sx={{
-                            color: mode === 'light' ? '#000' : '#fff',
-                            mb: 2,
-                            fontWeight: 900,
-                            letterSpacing: '-0.04em',
-                            fontSize: 'clamp(1.5rem, 3vw, 2.2rem)',
-                        }}>
-                            Everything you need for PDFs
-                        </Typography>
-                        <Typography variant="body1" sx={{ color: 'text.secondary', maxWidth: '600px', mx: 'auto', fontWeight: 500, opacity: 0.8 }}>
-                            30+ free tools. No uploads. No limits.
-                        </Typography>
-                    </Box>
+            <BauhausSection id="tools" bgVariant="white" className="scroll-mt-20 py-32">
+                <div className="text-center mb-20">
+                    <BauhausBadge color="red" className="mb-4 inline-block">
+                        PDF TOOLS
+                    </BauhausBadge>
+                    <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter mb-4 text-bauhaus-black">
+                        Everything you need for PDFs
+                    </h2>
+                    <p className="text-xl text-gray-600 font-bold uppercase tracking-widest opacity-80">
+                        30+ free tools. No uploads. No limits.
+                    </p>
+                </div>
 
-                    {/* Standalone Search Bar */}
-                    <Box sx={{ 
-                        display: 'flex', 
-                        justifyContent: 'center',
-                        mb: 6,
-                        px: 2
-                    }}>
-                        <Box sx={{
-                            display: 'flex', alignItems: 'center', gap: 2,
-                            width: '100%',
-                            maxWidth: '650px',
-                            px: 3, py: 2,
-                            borderRadius: '24px',
-                            bgcolor: mode === 'light' ? 'rgba(255, 255, 255, 0.8)' : 'rgba(17, 17, 22, 0.6)',
-                            backdropFilter: 'blur(30px)',
-                            WebkitBackdropFilter: 'blur(30px)',
-                            border: `1.5px solid ${mode === 'light' ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.08)'}`,
-                            boxShadow: mode === 'light' ? '0 12px 40px -10px rgba(0,0,0,0.08)' : '0 20px 60px -12px rgba(0,0,0,0.5)',
-                            transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                            '&:focus-within': {
-                                border: `1.5px solid ${theme.palette.primary.main}`,
-                                boxShadow: mode === 'light' 
-                                    ? `0 20px 50px -10px ${alpha(theme.palette.primary.main, 0.2)}, 0 0 0 4px ${alpha(theme.palette.primary.main, 0.15)}`
-                                    : `0 20px 60px -12px rgba(0,0,0,0.6), 0 0 0 4px ${alpha(theme.palette.primary.main, 0.15)}`,
-                                transform: 'translateY(-2px) scale(1.01)',
-                                bgcolor: mode === 'light' ? '#fff' : 'rgba(17, 17, 22, 0.8)',
-                            }
-                        }}>
-                            <Icons.Search size={22} color={theme.palette.text.secondary} />
-                            <InputBase
-                                placeholder="Search from 30+ PDF tools..."
-                                value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
-                                sx={{ 
-                                    fontSize: '1.1rem', 
-                                    fontWeight: 600, 
-                                    flex: 1,
-                                    color: 'text.primary',
-                                    '& input::placeholder': {
-                                        color: 'text.secondary',
-                                        opacity: 0.7
-                                    }
-                                }}
-                            />
+                {/* Bauhaus Search Bar */}
+                <div className="flex justify-center mb-16 px-4">
+                    <div className="relative group max-w-2xl w-full">
+                        <input
+                            type="text"
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            placeholder="SEARCH FROM 30+ PDF TOOLS..."
+                            className="w-full pl-6 pr-16 py-5 bg-white border-4 border-bauhaus-black shadow-bauhaus focus:outline-none focus:ring-0 focus:shadow-[8px_8px_0px_0px_black] transition-all font-black uppercase tracking-widest text-lg placeholder:text-gray-400"
+                        />
+                        <div className="absolute right-6 top-1/2 -translate-y-1/2 flex items-center gap-2">
                             {searchQuery && (
-                                <IconButton 
-                                    size="small" 
-                                    onClick={() => setSearchQuery('')} 
-                                    sx={{ 
-                                        p: 0.5,
-                                        '&:hover': { color: 'error.main' }
-                                    }}
-                                >
-                                    <Icons.X size={20} />
-                                </IconButton>
+                                <button onClick={() => setSearchQuery('')} className="p-1 hover:text-bauhaus-red transition-colors">
+                                    <X size={24} />
+                                </button>
                             )}
-                        </Box>
-                    </Box>
+                            <Search size={28} className="text-bauhaus-black" />
+                        </div>
+                    </div>
+                </div>
 
-                    {/* Controls Bar */}
-                    <Box sx={{ 
-                        display: 'flex', 
-                        alignItems: 'center', 
-                        justifyContent: 'center', 
-                        mb: 8,
-                        p: { xs: 1, md: 1.5 },
-                        width: { xs: '100%', md: 'fit-content' },
-                        maxWidth: '100%',
-                        margin: '0 auto 64px auto',
-                        borderRadius: { xs: '16px', md: '24px' },
-                        bgcolor: mode === 'light' ? 'rgba(255, 255, 255, 0.7)' : 'rgba(17, 17, 22, 0.5)',
-                        backdropFilter: 'blur(20px)',
-                        border: `1.5px solid ${mode === 'light' ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.06)'}`,
-                        boxShadow: mode === 'light' ? '0 10px 40px -10px rgba(0,0,0,0.05)' : 'none',
-                        overflow: 'hidden'
-                    }}>
-                        {/* Category Buttons */}
-                        <Box sx={{ 
-                            display: 'flex', 
-                            overflowX: 'auto', 
-                            gap: 1.5, 
-                            px: { xs: 2.5, md: 0 },
-                            width: '100%',
-                            justifyContent: { xs: 'flex-start', md: 'center' },
-                            '&::-webkit-scrollbar': { display: 'none' },
-                            msOverflowStyle: 'none',
-                            scrollbarWidth: 'none'
-                        }}>
-                            {CATEGORIES.map(category => (
-                                <Button
-                                    key={category.id}
-                                    onClick={() => setActiveCategory(category.id)}
-                                    size="small"
-                                    sx={{
-                                        borderRadius: '999px', px: 2.5, py: 1,
-                                        whiteSpace: 'nowrap', flexShrink: 0,
-                                        fontSize: '0.85rem', fontWeight: activeCategory === category.id ? 600 : 500,
-                                        bgcolor: activeCategory === category.id ? '#F05B25' : 'transparent',
-                                        color: activeCategory === category.id ? '#fff' : alpha(theme.palette.text.primary, 0.6),
-                                        border: `1px solid ${activeCategory === category.id ? 'transparent' : alpha(theme.palette.text.primary, 0.12)}`,
-                                        transition: 'all 0.2s ease',
-                                        '&:hover': {
-                                            borderColor: alpha(theme.palette.text.primary, 0.5),
-                                            color: alpha(theme.palette.text.primary, 1),
-                                            bgcolor: activeCategory === category.id ? '#F05B25' : 'transparent'
-                                        }
-                                    }}
-                                >
-                                    {category.label}
-                                    <Box component="span" sx={{
-                                        ml: 1, px: 0.8, py: 0.2, borderRadius: '999px', fontSize: '0.65rem', fontWeight: 700,
-                                        bgcolor: activeCategory === category.id ? 'rgba(0,0,0,0.15)' : alpha(theme.palette.text.primary, 0.05),
-                                        color: activeCategory === category.id ? '#fff' : 'inherit'
-                                    }}>
-                                        {categoryCounts[category.id] || 0}
-                                    </Box>
-                                </Button>
-                            ))}
-                        </Box>
+                {/* Category Filtering */}
+                <div className="flex flex-wrap justify-center gap-4 mb-20 px-4">
+                    {CATEGORIES.map(category => (
+                        <button
+                            key={category.id}
+                            onClick={() => setActiveCategory(category.id)}
+                            className={cn(
+                                "px-6 py-2 font-black uppercase tracking-tighter text-sm border-2 border-bauhaus-black transition-all",
+                                activeCategory === category.id
+                                    ? "bg-bauhaus-black text-white shadow-none translate-x-[2px] translate-y-[2px]"
+                                    : "bg-white text-bauhaus-black shadow-[4px_4px_0px_0px_black] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px]"
+                            )}
+                        >
+                            {category.label}
+                            <span className={cn(
+                                "ml-2 px-2 py-0.5 text-[10px] border-2",
+                                activeCategory === category.id ? "border-white bg-white text-black" : "border-bauhaus-black bg-bauhaus-black text-white"
+                            )}>
+                                {categoryCounts[category.id] || 0}
+                            </span>
+                        </button>
+                    ))}
+                </div>
 
-
-                    </Box>
-
-                    {/* Tools Grid with Optimized Animations */}
-                    <Box sx={{ 
-                        display: 'grid', 
-                        gridTemplateColumns: { xs: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)', lg: 'repeat(4, 1fr)' }, 
-                        gap: '12px', 
-                        minHeight: '400px',
-                        p: 0,
-                        '@keyframes fadeInUp': {
-                            from: { opacity: 0, transform: 'translateY(20px)' },
-                            to: { opacity: 1, transform: 'translateY(0)' }
-                        }
-                    }}>
+                {/* Tools Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <AnimatePresence mode="popLayout">
                         {displayedTools.length > 0 ? (
                             displayedTools.map((tool, index) => (
-                                <Box 
-                                    key={tool.slug} 
-                                    onClick={() => navigate(`/tool/${tool.slug}`)}
-                                    sx={{
-                                        position: 'relative',
-                                        cursor: 'pointer',
-                                        borderRadius: '16px',
-                                        bgcolor: mode === 'light' ? 'rgba(36, 15, 48, 0.03)' : alpha(theme.palette.text.primary, 0.03),
-                                        border: mode === 'light' ? '1px solid rgba(36, 15, 48, 0.08)' : `1px solid ${alpha(theme.palette.text.primary, 0.06)}`,
-                                        transition: 'all 0.25s ease',
-                                        height: '100%',
-                                        display: 'flex',
-                                        flexDirection: 'column',
-                                        p: 3,
-                                        overflow: 'hidden',
-                                        opacity: 0,
-                                        animation: 'fadeInUp 0.4s ease forwards',
-                                        animationDelay: `${index * 0.05}s`,
-                                        '&::before': {
-                                            content: '""',
-                                            position: 'absolute',
-                                            left: 0,
-                                            top: 0,
-                                            bottom: 0,
-                                            width: '3px',
-                                            bgcolor: '#347B60',
-                                            transform: 'scaleY(0)',
-                                            transformOrigin: 'bottom',
-                                            transition: 'transform 0.25s ease',
-                                        },
-                                        '&:hover': {
-                                            borderColor: '#347B60',
-                                            boxShadow: '0 0 20px rgba(52, 123, 96, 0.15)',
-                                            bgcolor: 'rgba(52, 123, 96, 0.08)',
-                                            '&::before': { transform: 'scaleY(1)' },
-                                            '& .card-icon-wrapper': {
-                                                bgcolor: mode === 'light' ? 'rgba(36, 15, 48, 0.15)' : alpha(tool.color, 0.15),
-                                            },
-                                            '& .card-icon': {
-                                                transform: 'scale(1.1)',
-                                            },
-                                            '& .card-arrow': {
-                                                opacity: 1,
-                                                transform: 'translateX(0)',
-                                            }
-                                        }
-                                    }}
+                                <motion.div
+                                    layout
+                                    key={tool.slug}
+                                    initial={{ opacity: 0, scale: 0.9 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    exit={{ opacity: 0, scale: 0.9 }}
+                                    transition={{ duration: 0.2 }}
                                 >
-                                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 3 }}>
-                                        <Box className="card-icon-wrapper" sx={{
-                                            width: 56, height: 56, borderRadius: '16px',
-                                            bgcolor: mode === 'light' ? 'rgba(36, 15, 48, 0.06)' : alpha(tool.color, 0.08), 
-                                            color: mode === 'light' ? '#240F30' : tool.color,
-                                            display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                            transition: 'background-color 0.25s ease'
-                                        }}>
-                                            <Box className="card-icon" sx={{ transition: 'transform 0.2s ease', display: 'flex' }}>
-                                                <DynamicIcon name={tool.icon} size={26} />
-                                            </Box>
-                                        </Box>
-                                        <Box className="card-arrow" sx={{
-                                            opacity: 0,
-                                            transform: 'translateX(-10px)',
-                                            transition: 'all 0.25s ease',
-                                            color: '#347B60',
-                                            p: 1
-                                        }}>
-                                            <Icons.ArrowUpRight size={20} />
-                                        </Box>
-                                    </Box>
-                                    <Box>
-                                        <Typography sx={{ 
-                                            fontWeight: 600, 
-                                            fontSize: '1rem',
-                                            color: mode === 'light' ? '#240F30' : 'text.primary',
-                                            mb: 0.5
-                                        }}>
+                                    <BauhausCard
+                                        className="h-full cursor-pointer flex flex-col group"
+                                        decoration={['circle', 'square', 'triangle'][index % 3]}
+                                        decorationColor={['red', 'blue', 'yellow'][index % 3]}
+                                        onClick={() => router.push(`/tool/${tool.slug}`)}
+                                    >
+                                        <div className="flex justify-between items-start mb-6">
+                                            <div className={cn(
+                                                "w-14 h-14 border-2 border-bauhaus-black flex items-center justify-center transition-all group-hover:-rotate-6 shadow-[4px_4px_0px_0px_black]",
+                                                index % 3 === 0 ? "bg-bauhaus-red" : index % 3 === 1 ? "bg-bauhaus-blue" : "bg-bauhaus-yellow"
+                                            )}>
+                                                <DynamicIcon name={tool.icon} size={28} className="text-white drop-shadow-[1px_1px_0px_black]" />
+                                            </div>
+                                            <ArrowUpRight size={24} className="opacity-0 group-hover:opacity-100 transition-opacity text-bauhaus-black" />
+                                        </div>
+
+                                        <h3 className="text-xl font-black uppercase tracking-tighter mb-2 group-hover:text-bauhaus-red transition-colors">
                                             {tool.name}
-                                        </Typography>
-                                        <Typography sx={{ 
-                                            color: mode === 'light' ? 'rgba(36, 15, 48, 0.65)' : 'text.primary', 
-                                            opacity: mode === 'light' ? 1 : 0.55,
-                                            fontSize: '0.82rem',
-                                            lineHeight: 1.5
-                                        }}>
+                                        </h3>
+                                        <p className="text-sm text-gray-600 font-medium leading-snug">
                                             {tool.shortDesc}
-                                        </Typography>
-                                    </Box>
-                                </Box>
+                                        </p>
+                                    </BauhausCard>
+                                </motion.div>
                             ))
                         ) : (
-                            <Box sx={{ gridColumn: '1 / -1', py: 12, textAlign: 'center' }}>
-                                <Typography variant="h6" sx={{ color: 'text.secondary', fontWeight: 600 }}>No tools found matching your search.</Typography>
-                            </Box>
+                            <div className="col-span-full py-20 text-center">
+                                <h3 className="text-2xl font-black uppercase tracking-tighter">No tools found matching your search.</h3>
+                            </div>
                         )}
-                    </Box>
+                    </AnimatePresence>
+                </div>
 
-                    {/* SEO Footer Content */}
-                    <Box sx={{ mt: 8, pt: 6, borderTop: `1px solid ${alpha(theme.palette.divider, 0.1)}`, textAlign: 'center' }}>
-                        <Typography variant="body2" sx={{ color: 'text.secondary', opacity: 0.8, maxWidth: '800px', mx: 'auto', lineHeight: 1.6 }}>
-                            DocShift offers a comprehensive suite of completely free online PDF tools. Whether you need to securely <strong>merge PDF</strong> files, <strong>split PDF</strong> pages, or <strong>compress PDF</strong> size, our browser-based solutions process your documents locally. Maintain absolute privacy and 100% security while you manage, edit, and convert PDF documents. No accounts, no uploads, and no limitations.
-                        </Typography>
-                    </Box>
-                </Container>
-            </Box>
+                {/* SEO Footer Content */}
+                <div className="mt-20 pt-12 border-t-4 border-bauhaus-black text-center">
+                    <p className="text-sm md:text-base text-gray-700 font-medium max-w-4xl mx-auto leading-relaxed uppercase tracking-tighter">
+                        DocShift offers a comprehensive suite of completely free online PDF tools. Whether you need to securely <strong>merge PDF</strong> files, <strong>split PDF</strong> pages, or <strong>compress PDF</strong> size, our browser-based solutions process your documents locally. Maintain absolute privacy and 100% security while you manage, edit, and convert PDF documents. No accounts, no uploads, and no limitations.
+                    </p>
+                </div>
+            </BauhausSection>
 
             {/* ── FEATURES SECTION ── */}
-            <Box id="features" component="section" sx={{
-                py: { xs: 12, md: 16 }, px: 3, position: 'relative',
-                bgcolor: 'background.default',
-                scrollMarginTop: '80px',
-                borderTop: `1px solid ${alpha(theme.palette.divider, 0.05)}`
-            }}>
-                <Container maxWidth="lg">
-                    <Box sx={{ mb: 8, textAlign: 'center' }}>
-                        <Typography variant="overline" sx={{ display: 'block', color: '#F05B25', letterSpacing: '0.1em', fontSize: '0.75rem', fontWeight: 800, mb: 1 }}>
-                            WHY CHOOSE DOCSHIFT
-                        </Typography>
-                        <Typography variant="h2" sx={{ color: mode === 'light' ? '#000' : '#fff', mb: 2, fontWeight: 900, letterSpacing: '-0.04em', fontSize: 'clamp(1.5rem, 3vw, 2.2rem)' }}>
-                            Built for Privacy & Speed
-                        </Typography>
-                    </Box>
-                    <Grid container spacing={4}>
-                        {[
-                            { title: 'Zero Server Uploads', desc: 'Your files never leave your device. All processing happens entirely within your local browser for maximum privacy.', icon: 'ShieldCheck' },
-                            { title: 'Lightning Fast', desc: 'Powered by modern browser APIs for instantaneous PDF manipulation, merging, compression and conversion.', icon: 'Zap' },
-                            { title: '100% Free Forever', desc: 'No hidden fees, no paywalls, no subscriptions. Every tool is completely available to everyone, for free.', icon: 'Gift' },
-                            { title: 'Cross-Platform', desc: 'Works seamlessly on Windows, Mac, Linux, iOS, and Android without installing any bloated native apps.', icon: 'MonitorSmartphone' }
-                        ].map((feat, idx) => (
-                            <Grid item xs={12} sm={6} md={3} key={idx}>
-                                <Box sx={{
-                                    p: 4, borderRadius: '24px', height: '100%',
-                                    bgcolor: mode === 'light' ? 'rgba(36, 15, 48, 0.02)' : 'rgba(255, 255, 255, 0.02)',
-                                    border: `1px solid ${alpha(theme.palette.divider, 0.08)}`,
-                                    transition: 'transform 0.3s ease',
-                                    '&:hover': { transform: 'translateY(-5px)', bgcolor: mode === 'light' ? 'rgba(36, 15, 48, 0.04)' : alpha(theme.palette.divider, 0.04) }
-                                }}>
-                                    <Box sx={{ width: 48, height: 48, borderRadius: '12px', bgcolor: alpha('#F05B25', 0.1), display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 3 }}>
-                                        <DynamicIcon name={feat.icon} size={24} color="#F05B25" />
-                                    </Box>
-                                    <Typography variant="h6" sx={{ fontWeight: 800, mb: 1, fontSize: '1.1rem' }}>{feat.title}</Typography>
-                                    <Typography variant="body2" sx={{ color: 'text.secondary', lineHeight: 1.6 }}>{feat.desc}</Typography>
-                                </Box>
-                            </Grid>
-                        ))}
-                    </Grid>
-                </Container>
-            </Box>
+            <BauhausSection id="features" bgVariant="yellow" className="py-32">
+                <div className="text-center mb-16">
+                    <BauhausBadge color="black" className="mb-4 inline-block bg-black text-white border-white">
+                        WHY CHOOSE DOCSHIFT
+                    </BauhausBadge>
+                    <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-bauhaus-black">
+                        Built for Privacy & Speed
+                    </h2>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    {[
+                        { title: 'Zero Uploads', desc: 'Your files never leave your device. All processing happens entirely within your local browser.', icon: 'ShieldCheck', color: 'red' },
+                        { title: 'Lightning Fast', desc: 'Powered by modern browser APIs for instantaneous PDF manipulation and conversion.', icon: 'Zap', color: 'blue' },
+                        { title: '100% Free', desc: 'No hidden fees, no paywalls, no subscriptions. Every tool is completely available to everyone.', icon: 'Gift', color: 'black' },
+                        { title: 'Universal', desc: 'Works seamlessly on Windows, Mac, Linux, iOS, and Android without installing apps.', icon: 'MonitorSmartphone', color: 'red' }
+                    ].map((feat, idx) => (
+                        <div key={idx} className="bg-white p-8 border-4 border-bauhaus-black shadow-bauhaus hover:-translate-y-2 transition-transform">
+                            <div className={cn(
+                                "w-12 h-12 flex items-center justify-center border-2 border-bauhaus-black mb-6 shadow-[4px_4px_0px_0px_black]",
+                                feat.color === 'red' ? "bg-bauhaus-red text-white" : feat.color === 'blue' ? "bg-bauhaus-blue text-white" : "bg-bauhaus-black text-white"
+                            )}>
+                                <DynamicIcon name={feat.icon} size={24} />
+                            </div>
+                            <h4 className="text-xl font-black uppercase tracking-tighter mb-3">{feat.title}</h4>
+                            <p className="text-sm font-medium text-gray-700 leading-relaxed">{feat.desc}</p>
+                        </div>
+                    ))}
+                </div>
+            </BauhausSection>
 
             {/* ── ABOUT SECTION ── */}
-            <Box id="about" component="section" sx={{
-                py: { xs: 12, md: 16 }, px: 3, position: 'relative',
-                background: mode === 'light' ? 'linear-gradient(180deg, rgba(36,15,48,0.02) 0%, rgba(240,91,37,0.05) 100%)' : 'linear-gradient(180deg, rgba(255,255,255,0.01) 0%, rgba(240,91,37,0.05) 100%)',
-                scrollMarginTop: '80px',
-                borderTop: `1px solid ${alpha(theme.palette.divider, 0.05)}`
-            }}>
-                <Container maxWidth="md">
-                    <Box sx={{ textAlign: 'center' }}>
-                        <Typography variant="overline" sx={{ display: 'block', color: theme.palette.primary.main, letterSpacing: '0.1em', fontSize: '0.75rem', fontWeight: 800, mb: 2 }}>
-                            OUR MISSION
-                        </Typography>
-                        <Typography variant="h3" sx={{ color: mode === 'light' ? '#000' : '#fff', mb: 4, fontWeight: 900, letterSpacing: '-0.03em', fontSize: 'clamp(1.8rem, 4vw, 2.5rem)', lineHeight: 1.3 }}>
-                            We believe that document privacy is a fundamental right.
-                        </Typography>
-                        <Typography variant="body1" sx={{ color: 'text.secondary', fontSize: '1.1rem', lineHeight: 1.8, mb: 4 }}>
-                            DocShift was created to solve a massive problem: almost every free online PDF tool forces you to upload your sensitive personal and business documents to their unverified servers. This presents an enormous security risk.
-                            <br /><br />
+            <BauhausSection id="about" bgVariant="blue" className="py-32 text-white">
+                <div className="max-w-4xl mx-auto text-center">
+                    <BauhausBadge color="yellow" className="mb-6 inline-block">
+                        OUR MISSION
+                    </BauhausBadge>
+                    <h3 className="text-3xl md:text-5xl font-black uppercase tracking-tighter mb-8 leading-tight">
+                        We believe that document privacy is a fundamental right.
+                    </h3>
+                    <div className="space-y-6 text-lg md:text-xl font-medium leading-relaxed opacity-90 mb-12">
+                        <p>
+                            DocShift was created to solve a massive problem: almost every free online PDF tool forces you to upload your sensitive documents to unverified servers.
+                        </p>
+                        <p>
                             By leveraging modern browser technologies, we brought the processing power of local offline tools directly to your web browser. You get the ultra-convenience of an elegant web app with the strict offline security that guarantees your files never leave your device.
-                        </Typography>
-                        <Button 
-                            variant="outlined" 
-                            size="large" 
-                            onClick={() => {
-                                const toolsEl = document.getElementById('tools');
-                                if (toolsEl) toolsEl.scrollIntoView({ behavior: 'smooth' });
-                            }} 
-                            sx={{ 
-                                borderRadius: '100px', px: 4, py: 1.5, fontWeight: 700, 
-                                borderColor: alpha(theme.palette.text.primary, 0.2), 
-                                color: 'text.primary', 
-                                '&:hover': { borderColor: theme.palette.primary.main, bgcolor: alpha(theme.palette.primary.main, 0.05) } 
-                            }}
-                        >
-                            Explore Tools
-                        </Button>
-                    </Box>
-                </Container>
-            </Box>
-        </Box>
+                        </p>
+                    </div>
+                    <BauhausButton
+                        variant="yellow"
+                        className="text-xl px-12 py-5"
+                        onClick={() => {
+                            const toolsEl = document.getElementById('tools');
+                            if (toolsEl) toolsEl.scrollIntoView({ behavior: 'smooth' });
+                        }}
+                    >
+                        EXPLORE TOOLS
+                    </BauhausButton>
+                </div>
+            </BauhausSection>
+        </div>
     );
-};
+}
 
 export default memo(HomePage);

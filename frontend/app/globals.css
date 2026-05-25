@@ -1,0 +1,237 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-body antialiased bg-bauhaus-white text-bauhaus-black;
+
+    /* Bauhaus geometric scrollbar */
+    &::-webkit-scrollbar {
+      width: 12px;
+    }
+
+    &::-webkit-scrollbar-track {
+      @apply bg-bauhaus-muted border-l-2 border-bauhaus-black;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      @apply bg-bauhaus-red border-2 border-bauhaus-black shadow-[2px_2px_0px_0px_black];
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      @apply bg-bauhaus-blue;
+    }
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display font-black uppercase tracking-tighter leading-[0.9] text-bauhaus-black;
+  }
+
+  /* Bauhaus-specific type scale */
+  h1 { @apply text-6xl sm:text-7xl lg:text-8xl; }
+  h2 { @apply text-4xl sm:text-5xl lg:text-6xl; }
+  h3 { @apply text-2xl sm:text-3xl lg:text-4xl; }
+
+  p { @apply font-medium leading-relaxed; }
+
+  ::selection {
+    @apply bg-bauhaus-yellow text-bauhaus-black;
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-surface-glass backdrop-blur-xl border border-border-glass shadow-glass;
+  }
+
+  .glass-dark {
+    @apply bg-surface-glassDark backdrop-blur-xl border border-border-glassDark shadow-glass-dark;
+  }
+
+  /* Advanced Aurora Mesh Gradient */
+  .bg-mesh-light {
+    background-color: #FFF0F6;
+    background-image:
+      radial-gradient(at 40% 20%, rgba(52, 123, 96, 0.12) 0px, transparent 50%),
+      radial-gradient(at 80% 0%, rgba(64, 169, 246, 0.12) 0px, transparent 50%),
+      radial-gradient(at 0% 50%, rgba(52, 123, 96, 0.08) 0px, transparent 50%);
+    background-size: 200% 200%;
+    animation: aurora 15s ease infinite alternate;
+  }
+
+  .bg-mesh-dark {
+    background-color: #000000;
+    background-image:
+      radial-gradient(at 40% 20%, rgba(240, 91, 37, 0.15) 0px, transparent 50%),
+      radial-gradient(at 80% 0%, rgba(64, 169, 246, 0.15) 0px, transparent 50%),
+      radial-gradient(at 0% 50%, rgba(240, 91, 37, 0.1) 0px, transparent 50%);
+    background-size: 200% 200%;
+    animation: aurora 15s ease infinite alternate;
+  }
+
+  .text-gradient {
+    background-image: linear-gradient(to right, #F05B25, #F47B4F);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .text-gradient-blue {
+    background-image: linear-gradient(to right, #40A9F6, #6FBEF8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+@keyframes aurora {
+  0% { background-position: 0% 0%; }
+  50% { background-position: 100% 100%; }
+  100% { background-position: 0% 0%; }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.loader {
+  width: 52px;
+  height: 52px;
+  border: 4px solid rgba(240, 91, 37, 0.1);
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  box-sizing: border-box;
+  animation: rotation 0.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+.loader::after {
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  left: -4px;
+  top: -4px;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 4px solid transparent;
+  border-bottom-color: #F05B25;
+  filter: drop-shadow(0 0 8px rgba(240, 91, 37, 0.3));
+}
+
+.dark .loader {
+  border-color: rgba(240, 91, 37, 0.1);
+}
+.dark .loader::after {
+  border-bottom-color: #F05B25;
+  filter: drop-shadow(0 0 10px rgba(240, 91, 37, 0.4));
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Premium Theme Animations & Effects */
+
+:root {
+  --glow-primary: rgba(37, 99, 235, 0.5);
+  --glow-secondary: rgba(56, 189, 248, 0.5);
+}
+
+/* Ambient Drift Orbs */
+@keyframes ambient-drift {
+  0% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -50px) scale(1.1); }
+  66% { transform: translate(-20px, 20px) scale(0.9); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+.ambient-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.4;
+  animation: ambient-drift 15s ease-in-out infinite;
+}
+
+/* Noise/Grain Texture */
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* Gradient Shimmer Text */
+.text-shimmer {
+  background: linear-gradient(
+    to right,
+    currentColor 20%,
+    rgba(255, 255, 255, 0.8) 40%,
+    rgba(255, 255, 255, 0.8) 60%,
+    currentColor 80%
+  );
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 4s linear infinite;
+}
+
+@keyframes shimmer {
+  to { background-position: 200% center; }
+}
+
+/* Skeleton Shimmer */
+.skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.05) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton 1.5s infinite;
+}
+
+.dark .skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.03) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+@keyframes skeleton {
+  from { background-position: 200% 0; }
+  to { background-position: -200% 0; }
+}
+
+/* Interactive Glow */
+.glow-on-focus:focus-within {
+  box-shadow: 0 0 0 2px var(--glow-primary);
+  transition: box-shadow 0.3s ease;
+}
+
+.dark .glow-on-focus:focus-within {
+  box-shadow: 0 0 0 2px var(--glow-secondary);
+}

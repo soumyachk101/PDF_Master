@@ -1,15 +1,18 @@
+'use client';
+
 import { useState, memo } from 'react';
-import * as LucideIcons from 'lucide-react';
-import { useParams, Link } from 'react-router-dom';
+import Link from 'next/link';
 import { Box, Typography, Button, Container, Card, CircularProgress, TextField, InputAdornment, useTheme, Alert } from '@mui/material';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Helmet } from 'react-helmet-async';
-import { useFileUpload } from '../hooks/useFileUpload';
-import { getToolBySlug } from '../utils/tools';
-import DropzoneArea from '../components/DropzoneArea';
+import { useFileUpload } from '@/hooks/useFileUpload';
+import { getToolBySlug, TOOLS } from '@/utils/tools';
+import DropzoneArea from '@/components/DropzoneArea';
+import Breadcrumbs from '@/components/Breadcrumbs';
+import { Home, ArrowLeft, ArrowRight, Download, CheckCircle, AlertCircle, AlertTriangle, Link as LinkIcon } from 'lucide-react';
+import { getIcon } from '@/utils/icons';
 
 const DynamicIcon = memo(({ name, color, size = 24, className = "" }) => {
-    const Icon = LucideIcons[name] || LucideIcons.FileText;
+    const Icon = getIcon(name);
     return <Icon size={size} color={color} className={className} />;
 });
 
@@ -25,9 +28,19 @@ const stateVariants = {
     exit: { opacity: 0, scale: 1.02, transition: { duration: 0.2 } }
 };
 
-function ToolPage() {
+function alpha(color, opacity) {
+    if (!color) return `rgba(37, 99, 235, ${opacity})`;
+    if (color.startsWith('#')) {
+        let r = parseInt(color.slice(1, 3), 16),
+            g = parseInt(color.slice(3, 5), 16),
+            b = parseInt(color.slice(5, 7), 16);
+        return `rgba(${r}, ${g}, ${b}, ${opacity})`;
+    }
+    return color.replace(')', `, ${opacity})`).replace('rgb', 'rgba');
+}
+
+function ToolPage({ toolSlug }) {
     const theme = useTheme();
-    const { toolSlug } = useParams();
     const tool = getToolBySlug(toolSlug);
 
     const [files, setFiles] = useState([]);
@@ -87,10 +100,10 @@ function ToolPage() {
         return (
             <Box sx={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', p: 3, bgcolor: 'background.default', minHeight: '100vh' }}>
                 <Card sx={{ p: 6, borderRadius: '32px', maxWidth: '500px', width: '100%', textAlign: 'center', boxShadow: theme.shadows[4] }}>
-                    <LucideIcons.AlertTriangle size={48} color={theme.palette.warning.main} style={{ margin: '0 auto', marginBottom: '24px' }} />
+                    <AlertTriangle size={48} color={theme.palette.warning.main} style={{ margin: '0 auto', marginBottom: '24px' }} />
                     <Typography variant="h4" sx={{ fontWeight: 800, mb: 2 }}>Tool Not Found</Typography>
                     <Typography variant="body1" sx={{ color: 'text.secondary', mb: 4 }}>The tool you are looking for doesn't exist or has been moved.</Typography>
-                    <Button component={Link} to="/" variant="contained" size="large" startIcon={<LucideIcons.ArrowLeft size={18} />} sx={{ borderRadius: '12px', fontWeight: 700 }}>
+                    <Button component={Link} href="/" variant="contained" size="large" startIcon={<ArrowLeft size={18} />} sx={{ borderRadius: '12px', fontWeight: 700 }}>
                         Back to Home
                     </Button>
                 </Card>
@@ -100,62 +113,19 @@ function ToolPage() {
 
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%', minHeight: '100vh', bgcolor: 'background.default', position: 'relative', overflow: 'hidden' }}>
-            <Helmet>
-                <title>{`${tool.name} Online Free – DocShift`}</title>
-                <meta name="description" content={tool.shortDesc} />
-                {(tool.seoKeywords) && <meta name="keywords" content={tool.seoKeywords} />}
-                <link rel="canonical" href={`https://www.docshift.tech/tool/${tool.slug}`} />
-                <script type="application/ld+json">
-                    {`
-                    {
-                        "@context": "https://schema.org",
-                        "@type": "SoftwareApplication",
-                        "name": "${tool.name}",
-                        "operatingSystem": "Any",
-                        "applicationCategory": "PDFTool",
-                        "url": "https://www.docshift.tech/tool/${tool.slug}",
-                        "author": {
-                            "@type": "Organization",
-                            "name": "DocShift"
-                        },
-                        "offers": {
-                            "@type": "Offer",
-                            "price": "0",
-                            "priceCurrency": "USD"
-                        }
-                    }
-                    `}
-                </script>
-                <script type="application/ld+json">
-                    {`
-                    {
-                        "@context": "https://schema.org",
-                        "@type": "BreadcrumbList",
-                        "itemListElement": [
-                            {
-                                "@type": "ListItem",
-                                "position": 1,
-                                "name": "Home",
-                                "item": "https://www.docshift.tech/"
-                            },
-                            {
-                                "@type": "ListItem",
-                                "position": 2,
-                                "name": "${tool.name}",
-                                "item": "https://www.docshift.tech/tool/${tool.slug}"
-                            }
-                        ]
-                    }
-                    `}
-                </script>
-            </Helmet>
+
             <Box sx={{ position: 'absolute', top: 0, right: 0, width: 500, height: 500, bgcolor: alpha(theme.palette.primary.main, 0.1), borderRadius: '50%', filter: 'blur(150px)', pointerEvents: 'none', mixBlendMode: 'multiply' }} />
             <Box sx={{ position: 'absolute', top: '20%', left: '-10%', width: 400, height: 400, bgcolor: 'rgba(64, 169, 246, 0.1)', borderRadius: '50%', filter: 'blur(150px)', pointerEvents: 'none', mixBlendMode: 'multiply' }} />
 
             <Container maxWidth="md" sx={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', py: { xs: 4, md: 6 }, position: 'relative', zIndex: 10 }}>
+                {/* Breadcrumb Navigation */}
+                <Breadcrumbs items={[
+                  { name: 'Home', href: '/', icon: Home },
+                  { name: tool.name, href: `/tool/${tool.slug}`, isCurrent: true }
+                ]} />
 
-                <Box component={Link} to="/#tools" data-magnetic sx={{ alignSelf: 'flex-start', mb: 3, color: 'text.secondary', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 1, fontWeight: 600, '&:hover': { color: 'primary.main' }, transition: 'color 0.2s' }}>
-                    <LucideIcons.ArrowLeft size={16} /> Back to All Tools
+                <Box component={Link} href="/#tools" sx={{ alignSelf: 'flex-start', mb: 3, color: 'text.secondary', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 1, fontWeight: 600, '&:hover': { color: 'primary.main' }, transition: 'color 0.2s' }}>
+                    <ArrowLeft size={16} /> Back to All Tools
                 </Box>
 
                 <motion.div initial="initial" animate="in" exit="out" variants={pageVariants} style={{ width: '100%', textAlign: 'center', marginBottom: '24px' }}>
@@ -198,7 +168,7 @@ function ToolPage() {
                                                 InputProps={{
                                                     startAdornment: (
                                                         <InputAdornment position="start">
-                                                            <LucideIcons.LinkIcon size={20} color={theme.palette.text.secondary} />
+                                                            <LinkIcon size={20} color={theme.palette.text.secondary} />
                                                         </InputAdornment>
                                                     ),
                                                     sx: { borderRadius: '16px', bgcolor: 'background.default' }
@@ -244,7 +214,7 @@ function ToolPage() {
                                     <AnimatePresence>
                                         {error && (
                                             <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }}>
-                                                <Alert severity="error" sx={{ borderRadius: '16px', mt: 2 }} icon={<LucideIcons.AlertCircle size={24} />}>
+                                                <Alert severity="error" sx={{ borderRadius: '16px', mt: 2 }} icon={<AlertCircle size={24} />}>
                                                     {error}
                                                 </Alert>
                                             </motion.div>
@@ -256,8 +226,7 @@ function ToolPage() {
                                         disabled={(!files.length && !url) || (isUrlSupported && !url && !files.length)}
                                         variant="contained"
                                         size="large"
-                                        data-magnetic
-                                        endIcon={<LucideIcons.ArrowRight size={20} />}
+                                        endIcon={<ArrowRight size={20} />}
                                         sx={{
                                             width: '100%',
                                             mt: '14px',
@@ -317,7 +286,7 @@ function ToolPage() {
                                                 color: theme.palette.success.main, display: 'flex', alignItems: 'center', justifyContent: 'center',
                                                 border: `1px solid ${alpha(theme.palette.success.main, 0.2)}`, flexShrink: 0
                                             }}>
-                                                <LucideIcons.CheckCircle size={48} strokeWidth={2.5} />
+                                                <CheckCircle size={48} strokeWidth={2.5} />
                                             </Box>
                                         </motion.div>
                                         <Box>
@@ -330,8 +299,7 @@ function ToolPage() {
                                                 variant="contained"
                                                 color="success"
                                                 size="large"
-                                                data-magnetic
-                                                startIcon={<LucideIcons.Download size={22} />}
+                                                startIcon={<Download size={22} />}
                                                 sx={{ flex: 1, py: 2, borderRadius: '16px', fontSize: '1.1rem', fontWeight: 700, boxShadow: `0 10px 20px -10px ${theme.palette.success.main}` }}
                                             >
                                                 Download Result
@@ -356,8 +324,8 @@ function ToolPage() {
                 <Box sx={{ mt: 10, mb: 4, width: '100%', maxWidth: '800px', textAlign: 'left' }}>
                     <Typography variant="h4" component="h2" sx={{ fontWeight: 800, mb: 3, color: 'text.primary' }}>How to {tool.name}</Typography>
                     {tool.seoArticle ? (
-                        <Typography 
-                            variant="body1" 
+                        <Typography
+                            variant="body1"
                             sx={{ color: 'text.secondary', mb: 5, lineHeight: 1.8, fontSize: '1.1rem', '& a': { color: 'primary.main', textDecoration: 'none', fontWeight: 600, '&:hover': { textDecoration: 'underline' } } }}
                             dangerouslySetInnerHTML={{ __html: tool.seoArticle }}
                         />
@@ -388,20 +356,70 @@ function ToolPage() {
                         </Box>
                     )}
                 </Box>
+
+                {/* ── RELATED TOOLS ── */}
+                {(() => {
+                    const currentCategory = tool.category;
+                    const relatedTools = TOOLS.filter(t => t.slug !== tool.slug && t.category === currentCategory).slice(0, 4);
+                    if (relatedTools.length === 0) return null;
+
+                    return (
+                        <Box sx={{ mt: 8, pt: 6, borderTop: `1px solid ${alpha(theme.palette.divider, 0.1)}` }}>
+                            <Typography variant="h5" component="h2" sx={{ fontWeight: 800, mb: 4, color: 'text.primary', textAlign: 'center' }}>
+                                Related Tools
+                            </Typography>
+                            <Box sx={{
+                                display: 'grid',
+                                gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' },
+                                gap: 3
+                            }}>
+                                {relatedTools.map(related => (
+                                    <Box
+                                        key={related.slug}
+                                        component={Link}
+                                        href={`/tool/${related.slug}`}
+                                        sx={{
+                                            p: 3,
+                                            borderRadius: '16px',
+                                            bgcolor: alpha(theme.palette.background.paper, 0.5),
+                                            border: `1px solid ${theme.palette.divider}`,
+                                            textDecoration: 'none',
+                                            transition: 'all 0.2s',
+                                            '&:hover': {
+                                                borderColor: theme.palette.primary.main,
+                                                transform: 'translateY(-2px)',
+                                                boxShadow: `0 8px 24px -8px ${alpha(theme.palette.primary.main, 0.2)}`
+                                            }
+                                        }}
+                                    >
+                                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
+                                            <Box sx={{
+                                                width: 40, height: 40,
+                                                borderRadius: '12px',
+                                                bgcolor: alpha(related.color, 0.1),
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                                color: related.color
+                                            }}>
+                                                <DynamicIcon name={related.icon} size={20} />
+                                            </Box>
+                                            <Typography variant="subtitle2" sx={{ fontWeight: 700, color: 'text.primary' }}>
+                                                {related.name}
+                                            </Typography>
+                                        </Box>
+                                        <Typography variant="body2" sx={{ color: 'text.secondary', fontSize: '0.85rem', lineHeight: 1.5 }}>
+                                            {related.shortDesc}
+                                        </Typography>
+                                    </Box>
+                                ))}
+                            </Box>
+                        </Box>
+                    );
+                  })()}
             </Container>
         </Box>
     );
 }
 
 export default memo(ToolPage);
-
-function alpha(color, opacity) {
-    if (!color) return `rgba(37, 99, 235, ${opacity})`;
-    if (color.startsWith('#')) {
-        let r = parseInt(color.slice(1, 3), 16),
-            g = parseInt(color.slice(3, 5), 16),
-            b = parseInt(color.slice(5, 7), 16);
-        return `rgba(${r}, ${g}, ${b}, ${opacity})`;
-    }
-    return color.replace(')', `, ${opacity})`).replace('rgb', 'rgba');
-}

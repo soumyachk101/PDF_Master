@@ -1,60 +1,34 @@
-import { useState, useRef, useEffect, useMemo } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { AppBar, Toolbar, Box, Button, IconButton, Typography, useTheme, Card, Grid, Container } from '@mui/material';
-import { alpha } from '@mui/material/styles';
-import { ChevronDown, Moon, Sun, Menu, X, ArrowRight, Sparkles } from 'lucide-react';
-import { AnimatePresence, motion } from 'framer-motion';
-import { CATEGORIES, getToolsByCategory } from '../utils/tools';
-import { useColorMode } from '../contexts/ColorModeContext';
-import { springPhysics } from '../animations/variants';
+'use client';
 
-const Logo = ({ color }) => (
-    <Box sx={{ position: 'relative', width: 36, height: 36, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <svg width="30" height="30" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <motion.rect 
-                x="8" y="4" width="20" height="24" rx="6" 
-                fill={alpha(color, 0.2)} 
-                stroke={color} 
-                strokeWidth="1.5"
-                animate={{ x: [8, 10, 8], y: [4, 2, 4] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            />
-            <motion.rect 
-                x="4" y="8" width="20" height="24" rx="6" 
-                fill={color} 
-                stroke={color} 
-                strokeWidth="1.5"
-                animate={{ x: [4, 2, 4], y: [8, 10, 8] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-            />
-            <path d="M10 16H18" stroke="white" strokeWidth="2" strokeLinecap="round" opacity="0.9" />
-            <path d="M10 20H15" stroke="white" strokeWidth="2" strokeLinecap="round" opacity="0.9" />
-            <path d="M10 24H18" stroke="white" strokeWidth="2" strokeLinecap="round" opacity="0.9" />
-        </svg>
-    </Box>
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { Menu, X, Sun, Moon } from 'lucide-react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useColorMode } from '@/contexts/ColorModeContext';
+import { BauhausButton } from '@/components/ui/BauhausComponents';
+
+const BauhausLogo = () => (
+    <div className="flex items-center gap-2 group">
+        <div className="flex gap-1 items-end">
+            <div className="w-4 h-4 rounded-full bg-bauhaus-red border-2 border-bauhaus-black transition-transform group-hover:scale-110" />
+            <div className="w-5 h-5 bg-bauhaus-blue border-2 border-bauhaus-black transition-transform group-hover:-rotate-12" />
+            <div className="w-0 h-0 border-l-[12px] border-l-transparent border-r-[12px] border-r-transparent border-b-[20px] border-b-bauhaus-yellow relative transition-transform group-hover:translate-y-[-2px]">
+                <div className="absolute top-[2px] left-[-10px] w-0 h-0 border-l-[10px] border-l-transparent border-r-[10px] border-r-transparent border-b-[16px] border-b-bauhaus-black opacity-20" />
+            </div>
+        </div>
+        <span className="font-display font-black text-2xl tracking-tighter uppercase">
+            PDF<span className="text-bauhaus-red">Master</span>
+        </span>
+    </div>
 );
 
 export default function Navbar() {
-    const theme = useTheme();
-    const navigate = useNavigate();
-    const location = useLocation();
+    const router = useRouter();
     const { mode, toggleColorMode } = useColorMode();
     const isDark = mode === 'dark';
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
-    const [hoveredLink, setHoveredLink] = useState(null);
-    const dropdownRef = useRef(null);
-
-    // Primary dynamic color for branding accents
-    const primaryColor = theme.palette.primary.main;
-
-    const categorizedTools = useMemo(() => {
-        return CATEGORIES.filter(c => c.id !== 'all').map(category => ({
-            ...category,
-            tools: getToolsByCategory(category.id)
-        }));
-    }, []);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     useEffect(() => {
         const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -62,431 +36,116 @@ export default function Navbar() {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    useEffect(() => {
-        function handleClickOutside(event) {
-            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-                setIsMenuOpen(false);
-            }
-        }
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => document.removeEventListener("mousedown", handleClickOutside);
-    }, []);
-
     const navLinks = [
+        { name: 'Tools', path: '/#tools' },
         { name: 'Features', path: '/#features' },
         { name: 'About', path: '/#about' }
     ];
 
-    const handleClickLink = (path) => {
+    const handleNav = (path) => {
+        setIsMobileMenuOpen(false);
         if (path.startsWith('/#')) {
-            const el = document.getElementById(path.substring(2));
-            if (el) el.scrollIntoView({ behavior: 'smooth' });
-            else navigate(path);
+            const id = path.substring(2);
+            if (window.location.pathname === '/') {
+                const el = document.getElementById(id);
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                router.push(path);
+            }
         } else {
-            navigate(path);
+            router.push(path);
         }
     };
 
     return (
-        <AppBar
-            position="fixed"
-            elevation={0}
-            sx={{
-                background: 'transparent',
-                pointerEvents: 'none', // Allows clicking through the empty margins
-                zIndex: theme.zIndex.drawer + 1,
-                pt: { xs: 2, md: 3 },
-            }}
-        >
-            <Container maxWidth="xl" sx={{ pointerEvents: 'auto' }}>
-                <Box
-                    sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        height: { xs: '64px', md: scrolled ? '64px' : '76px' },
-                        transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
-                        px: { xs: 2.5, md: 4 },
-                        borderRadius: '100px',
-                        bgcolor: alpha(theme.palette.background.paper, 0.75),
-                        backdropFilter: 'blur(24px) saturate(180%)',
-                        WebkitBackdropFilter: 'blur(24px) saturate(180%)',
-                        border: `1px solid ${alpha(theme.palette.text.primary, isDark ? 0.08 : 0.06)}`,
-                        boxShadow: isDark 
-                            ? '0 12px 32px -12px rgba(0,0,0,0.8)'
-                            : '0 12px 32px -12px rgba(0,0,0,0.08)',
-                    }}
-                >
-                    {/* Logo Section */}
-                    <Box 
-                        component={Link} 
-                        to="/" 
-                        sx={{ 
-                            display: 'flex', 
-                            alignItems: 'center', 
-                            gap: 1.5, 
-                            textDecoration: 'none', 
-                            color: 'inherit',
-                            '&:hover .logo-svg': { scale: 1.05 }
-                        }}
-                    >
-                        <Logo color={primaryColor} />
-                        <Typography
-                            variant="h6"
-                            sx={{
-                                fontWeight: 900,
-                                fontSize: '1.3rem',
-                                letterSpacing: '-0.03em',
-                                color: theme.palette.text.primary,
-                                fontFamily: '"Space Grotesk", sans-serif',
-                                display: { xs: 'none', sm: 'block' }
-                            }}
-                        >
-                            <Box component="span" sx={{ color: primaryColor }}>DOC</Box>-SHIFT
-                        </Typography>
-                    </Box>
+        <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+            scrolled ? 'bg-bauhaus-white border-b-4 border-bauhaus-black' : 'bg-transparent'
+        }`}>
+            <div className="max-w-7xl mx-auto px-4 sm:px-8">
+                <div className="flex items-center justify-between h-20 sm:h-24">
+                    {/* Logo */}
+                    <Link href="/" className="flex-shrink-0">
+                        <BauhausLogo />
+                    </Link>
 
-                    {/* Desktop Menu - Center Links */}
-                    <Box sx={{ display: { xs: 'none', lg: 'flex' }, alignItems: 'center', gap: 1 }}>
-                        <Box ref={dropdownRef} sx={{ position: 'relative' }}>
-                            <Button
-                                onMouseEnter={() => setIsMenuOpen(true)}
-                                onClick={() => setIsMenuOpen(!isMenuOpen)}
-                                endIcon={<motion.div animate={{ rotate: isMenuOpen ? 180 : 0 }}><ChevronDown size={14} /></motion.div>}
-                                sx={{ 
-                                    fontWeight: 700, 
-                                    color: isMenuOpen ? primaryColor : theme.palette.text.primary,
-                                    borderRadius: '100px',
-                                    px: 2.5,
-                                    py: 1,
-                                    fontSize: '0.9rem',
-                                    transition: 'all 0.2s',
-                                    background: isMenuOpen ? alpha(primaryColor, 0.08) : 'transparent',
-                                    '&:hover': { background: alpha(theme.palette.text.primary, 0.04) },
-                                }}
-                            >
-                                All Tools
-                            </Button>
-
-                            {/* Dropdown Menu */}
-                            <AnimatePresence>
-                                {isMenuOpen && (
-                                    <motion.div
-                                        initial={{ opacity: 0, y: 15, scale: 0.98, filter: 'blur(4px)' }}
-                                        animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
-                                        exit={{ opacity: 0, y: 15, scale: 0.98, filter: 'blur(4px)' }}
-                                        onMouseLeave={() => setIsMenuOpen(false)}
-                                        transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                                        style={{ 
-                                            position: 'absolute', 
-                                            top: 'calc(100% + 20px)', 
-                                            left: '50%', 
-                                            transform: 'translateX(-50%)', 
-                                            zIndex: 100 
-                                        }}
-                                    >
-                                        <Card sx={{ 
-                                            width: 'max-content',
-                                            maxWidth: '90vw',
-                                            p: 4, 
-                                            borderRadius: '24px',
-                                            boxShadow: isDark 
-                                                ? '0 40px 100px -20px rgba(0,0,0,1), 0 0 0 1px rgba(255,255,255,0.08)' 
-                                                : '0 40px 100px -20px rgba(0,0,0,0.25), 0 0 0 1px rgba(0,0,0,0.05)',
-                                            border: 'none',
-                                            bgcolor: isDark ? '#14141A' : '#FFFFFF', // Solid color fixes browser backdrop-filter bug
-                                        }}>
-                                            <Box sx={{
-                                                columnCount: { xs: 1, sm: 2, md: 3, lg: 4 },
-                                                columnGap: '40px',
-                                            }}>
-                                                {categorizedTools.map(category => {
-                                                    const catTools = category.tools;
-                                                    const catColor = catTools[0]?.color || primaryColor;
-                                                    
-                                                    return (
-                                                        <Box key={category.id} sx={{ breakInside: 'avoid-column', mb: 4 }}>
-                                                            <Typography 
-                                                                variant="overline" 
-                                                                sx={{ 
-                                                                    fontWeight: 900, 
-                                                                    color: catColor, 
-                                                                    letterSpacing: '0.08em', 
-                                                                    mb: 2, 
-                                                                    display: 'block',
-                                                                    fontSize: '0.75rem'
-                                                                }}
-                                                            >
-                                                                {category.label}
-                                                            </Typography>
-                                                            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
-                                                                {catTools.map(tool => (
-                                                                    <Box 
-                                                                        key={tool.slug} 
-                                                                        onClick={() => { setIsMenuOpen(false); navigate(`/tool/${tool.slug}`); }}
-                                                                        sx={{ 
-                                                                            display: 'flex', 
-                                                                            alignItems: 'center',
-                                                                            cursor: 'pointer',
-                                                                            py: 0.8,
-                                                                            px: 1.5,
-                                                                            mx: -1.5,
-                                                                            borderRadius: '8px',
-                                                                            transition: 'background 0.2s',
-                                                                            '&:hover': {
-                                                                                bgcolor: alpha(catColor, 0.08),
-                                                                                '& .tool-text': { color: catColor, transform: 'translateX(4px)' }
-                                                                            }
-                                                                        }}
-                                                                    >
-                                                                        <Typography
-                                                                            className="tool-text"
-                                                                            sx={{
-                                                                                color: 'text.primary',
-                                                                                fontWeight: 600,
-                                                                                fontSize: '0.88rem',
-                                                                                transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
-                                                                            }}
-                                                                        >
-                                                                            {tool.name}
-                                                                        </Typography>
-                                                                        {tool.isNew && (
-                                                                            <Box sx={{
-                                                                                ml: 1.5, px: 0.8, py: 0.2, borderRadius: '4px',
-                                                                                bgcolor: catColor, color: '#fff', fontSize: '10px', fontWeight: 900,
-                                                                            }}>
-                                                                                NEW
-                                                                            </Box>
-                                                                        )}
-                                                                    </Box>
-                                                                ))}
-                                                            </Box>
-                                                        </Box>
-                                                    );
-                                                })}
-                                            </Box>
-                                        </Card>
-                                    </motion.div>
-                                )}
-                            </AnimatePresence>
-                        </Box>
-
+                    {/* Desktop Menu */}
+                    <div className="hidden lg:flex items-center gap-12">
                         {navLinks.map((link) => (
-                            <Box 
+                            <button
                                 key={link.name}
-                                onMouseEnter={() => setHoveredLink(link.name)}
-                                onMouseLeave={() => setHoveredLink(null)}
-                                sx={{ position: 'relative' }}
+                                onClick={() => handleNav(link.path)}
+                                className="font-display font-bold uppercase tracking-widest text-sm hover:text-bauhaus-red transition-colors relative group"
                             >
-                                <Button 
-                                    onClick={() => handleClickLink(link.path)}
-                                    color="inherit" 
-                                    sx={{ 
-                                        fontWeight: 700, 
-                                        color: theme.palette.text.primary, 
-                                        borderRadius: '100px',
-                                        px: 2.5,
-                                        py: 1,
-                                        fontSize: '0.9rem',
-                                        zIndex: 2,
-                                        '&:hover': { background: 'transparent' }
-                                    }}
+                                {link.name}
+                                <span className="absolute -bottom-1 left-0 w-0 h-1 bg-bauhaus-yellow transition-all group-hover:w-full" />
+                            </button>
+                        ))}
+                    </div>
+
+                    {/* Actions */}
+                    <div className="hidden lg:flex items-center gap-4">
+                        <button
+                            onClick={toggleColorMode}
+                            className="p-3 border-2 border-bauhaus-black bg-white shadow-[2px_2px_0px_0px_black] active:shadow-none active:translate-x-[2px] active:translate-y-[2px] transition-all"
+                        >
+                            {isDark ? <Sun size={20} /> : <Moon size={20} />}
+                        </button>
+                        <BauhausButton
+                            variant="blue"
+                            onClick={() => handleNav('/#tools')}
+                        >
+                            Get Started
+                        </BauhausButton>
+                    </div>
+
+                    {/* Mobile Toggle */}
+                    <div className="flex lg:hidden items-center gap-3">
+                        <button
+                            onClick={toggleColorMode}
+                            className="p-2 border-2 border-bauhaus-black bg-white"
+                        >
+                            {isDark ? <Sun size={20} /> : <Moon size={20} />}
+                        </button>
+                        <button
+                            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                            className="p-2 border-2 border-bauhaus-black bg-white"
+                        >
+                            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            {/* Mobile Menu */}
+            <AnimatePresence>
+                {isMobileMenuOpen && (
+                    <motion.div
+                        initial={{ opacity: 0, y: -20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        className="lg:hidden absolute top-full left-0 right-0 bg-bauhaus-white border-b-4 border-bauhaus-black p-8 shadow-bauhaus-lg"
+                    >
+                        <div className="flex flex-col gap-6">
+                            {navLinks.map((link) => (
+                                <button
+                                    key={link.name}
+                                    onClick={() => handleNav(link.path)}
+                                    className="font-display font-black text-3xl uppercase tracking-tighter text-left hover:text-bauhaus-red"
                                 >
                                     {link.name}
-                                </Button>
-                                {hoveredLink === link.name && (
-                                    <motion.div
-                                        layoutId="nav-pill"
-                                        transition={springPhysics}
-                                        style={{
-                                            position: 'absolute',
-                                            inset: 0,
-                                            borderRadius: '100px',
-                                            background: alpha(theme.palette.text.primary, 0.04),
-                                            zIndex: 0
-                                        }}
-                                    />
-                                )}
-                            </Box>
-                        ))}
-                    </Box>
-
-                    {/* Right side Actions */}
-                    <Box sx={{ display: { xs: 'none', lg: 'flex' }, alignItems: 'center', gap: 2 }}>
-                        <IconButton 
-                            onClick={toggleColorMode} 
-                            aria-label="Toggle Dark Mode"
-                            sx={{ 
-                                color: theme.palette.text.primary, 
-                                bgcolor: alpha(theme.palette.divider, 0.03), 
-                                border: `1px solid ${alpha(theme.palette.divider, 0.08)}`,
-                                '&:hover': { bgcolor: alpha(theme.palette.divider, 0.08) } 
-                            }}
-                        >
-                            {isDark ? <Sun size={18} strokeWidth={2.2} /> : <Moon size={18} strokeWidth={2.2} />}
-                        </IconButton>
-
-                        <Button
-                            variant="contained"
-                            onClick={() => handleClickLink('/#tools')}
-                            sx={{ 
-                                borderRadius: '100px', 
-                                px: 3.5, 
-                                py: 1.2,
-                                fontWeight: 800,
-                                fontSize: '0.95rem',
-                                bgcolor: primaryColor,
-                                color: theme.palette.primary.contrastText,
-                                boxShadow: `0 8px 24px -8px ${alpha(primaryColor, 0.5)}`,
-                                '&:hover': { 
-                                    bgcolor: theme.palette.primary.dark,
-                                    transform: 'translateY(-2px)'
-                                }
-                            }}
-                        >
-                            Start Using <Sparkles size={16} style={{ marginLeft: 8 }} />
-                        </Button>
-                    </Box>
-
-                    {/* Mobile Toggle Icons */}
-                    <Box sx={{ display: { xs: 'flex', lg: 'none' }, alignItems: 'center', gap: 1 }}>
-                        <IconButton 
-                            onClick={toggleColorMode} 
-                            sx={{ color: theme.palette.text.primary }}
-                        >
-                            {isDark ? <Sun size={20} strokeWidth={2.5} /> : <Moon size={20} strokeWidth={2.5} />}
-                        </IconButton>
-                        <IconButton 
-                            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
-                            sx={{ color: theme.palette.text.primary }}
-                        >
-                            {isMobileMenuOpen ? <X size={24} strokeWidth={2.5} /> : <Menu size={24} strokeWidth={2.5} />}
-                        </IconButton>
-                    </Box>
-                </Box>
-            </Container>
-
-            {/* Mobile Menu Backdrop */}
-            <AnimatePresence>
-                {isMobileMenuOpen && (
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        onClick={() => setIsMobileMenuOpen(false)}
-                        style={{
-                            position: 'fixed',
-                            inset: 0,
-                            background: isDark ? 'rgba(0,0,0,0.8)' : 'rgba(255,255,255,0.8)',
-                            backdropFilter: 'blur(12px)',
-                            zIndex: 1999,
-                            pointerEvents: 'auto'
-                        }}
-                    />
-                )}
-            </AnimatePresence>
-
-            {/* Mobile Menu Sidebar */}
-            <AnimatePresence>
-                {isMobileMenuOpen && (
-                    <motion.div
-                        initial={{ x: '100%' }}
-                        animate={{ x: 0 }}
-                        exit={{ x: '100%' }}
-                        transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-                        style={{
-                            position: 'fixed',
-                            top: 0,
-                            right: 0,
-                            bottom: 0,
-                            width: '100%',
-                            maxWidth: '350px',
-                            background: theme.palette.background.default,
-                            zIndex: 2000,
-                            borderLeft: `1px solid ${alpha(theme.palette.divider, 0.1)}`,
-                            padding: '32px',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            pointerEvents: 'auto',
-                            boxShadow: '-20px 0 50px rgba(0,0,0,0.2)'
-                        }}
-                    >
-                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 6 }}>
-                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-                                <Logo color={primaryColor} />
-                                <Typography variant="h6" sx={{ color: theme.palette.text.primary, fontWeight: 900, fontFamily: '"Space Grotesk", sans-serif' }}>DOC-SHIFT</Typography>
-                            </Box>
-                            <IconButton onClick={() => setIsMobileMenuOpen(false)}>
-                                <X size={24} color={theme.palette.text.primary} />
-                            </IconButton>
-                        </Box>
-
-                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-                            {['Home', 'Features', 'About'].map((item) => (
-                                <Button 
-                                    key={item}
-                                    fullWidth 
-                                    onClick={() => { setIsMobileMenuOpen(false); navigate(item === 'Home' ? '/' : `/#${item.toLowerCase()}`); }}
-                                    sx={{ 
-                                        justifyContent: 'flex-start', 
-                                        py: 2, 
-                                        px: 3,
-                                        borderRadius: '12px',
-                                        fontWeight: 700, 
-                                        fontSize: '1.1rem', 
-                                        color: theme.palette.text.primary,
-                                        '&:hover': { background: alpha(primaryColor, 0.08), color: primaryColor }
-                                    }}
-                                >
-                                    {item}
-                                </Button>
+                                </button>
                             ))}
-                            
-                            <Box sx={{ mt: 4 }}>
-                                <Typography variant="overline" sx={{ fontWeight: 800, color: theme.palette.text.secondary, ml: 2, mb: 1.5, display: 'block' }}>CATEGORIES</Typography>
-                                <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 1, px: 2 }}>
-                                    {CATEGORIES.filter(c => c.id !== 'all').map(category => (
-                                        <Button
-                                            key={category.id}
-                                            onClick={() => { 
-                                                setIsMobileMenuOpen(false); 
-                                                navigate('/#tools');
-                                            }}
-                                            sx={{ 
-                                                justifyContent: 'flex-start', 
-                                                py: 1, 
-                                                color: theme.palette.text.secondary,
-                                                fontWeight: 600,
-                                                fontSize: '0.85rem',
-                                                borderRadius: '8px',
-                                            }}
-                                        >
-                                            {category.label}
-                                        </Button>
-                                    ))}
-                                </Box>
-                            </Box>
-                        </Box>
-
-                        <Box sx={{ mt: 'auto', pt: 4 }}>
-                            <Button
-                                variant="contained"
-                                fullWidth
-                                onClick={() => { setIsMobileMenuOpen(false); navigate('/#tools'); }}
-                                sx={{ 
-                                    py: 2.5, 
-                                    borderRadius: '16px', 
-                                    fontWeight: 900, 
-                                    bgcolor: primaryColor,
-                                    color: theme.palette.primary.contrastText,
-                                }}
+                            <BauhausButton
+                                variant="red"
+                                className="w-full text-xl"
+                                onClick={() => handleNav('/#tools')}
                             >
-                                Start Using Docs
-                            </Button>
-                        </Box>
+                                Get Started
+                            </BauhausButton>
+                        </div>
                     </motion.div>
                 )}
             </AnimatePresence>
-        </AppBar>
+        </nav>
     );
 }

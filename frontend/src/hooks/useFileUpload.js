@@ -2,8 +2,6 @@ import { useState, useCallback } from 'react';
 import axios from 'axios';
 import { getToolBySlug } from '../utils/tools';
 
-import API_BASE_URL from '../config/api';
-
 export function useFileUpload(toolSlug) {
     const tool = getToolBySlug(toolSlug);
     const [appState, setAppState] = useState('upload'); // 'upload' | 'processing' | 'success' | 'error'
@@ -40,8 +38,6 @@ export function useFileUpload(toolSlug) {
         });
 
         try {
-            const directBackendUrl = API_BASE_URL.replace(/\/+$/, '');
-
             const axiosConfig = {
                 headers: { 'Content-Type': 'multipart/form-data' },
                 responseType: 'blob',
@@ -52,7 +48,7 @@ export function useFileUpload(toolSlug) {
                 },
             };
 
-            const response = await axios.post(`${directBackendUrl}/api/pdf/${toolSlug}`, formData, axiosConfig);
+            const response = await axios.post(`/api/pdf/${toolSlug}`, formData, axiosConfig);
 
             let fakeProgress = setInterval(() => {
                 setProgress(p => {

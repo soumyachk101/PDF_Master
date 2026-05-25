@@ -1,181 +1,131 @@
-import { Link as RouterLink } from 'react-router-dom';
-import { Box, Container, Grid, Typography, Link, IconButton, useTheme } from '@mui/material';
-import { CATEGORIES } from '../utils/tools';
-import { Twitter, Github, MessageCircle } from 'lucide-react'; // mapped social icons
-import { motion } from 'framer-motion';
-// springPhysics, revealUp removed for lint
+'use client';
+
+import Link from 'next/link';
+import { CATEGORIES } from '@/utils/tools';
+import { Twitter, Github, MessageCircle } from 'lucide-react';
+import { BauhausSection } from '@/components/ui/BauhausComponents';
+
+const BauhausLogo = () => (
+    <div className="flex items-center gap-2 group">
+        <div className="flex gap-1 items-end">
+            <div className="w-4 h-4 rounded-full bg-bauhaus-red border-2 border-bauhaus-black" />
+            <div className="w-5 h-5 bg-bauhaus-blue border-2 border-bauhaus-black" />
+            <div className="w-0 h-0 border-l-[12px] border-l-transparent border-r-[12px] border-r-transparent border-b-[20px] border-b-bauhaus-yellow relative">
+                <div className="absolute top-[2px] left-[-10px] w-0 h-0 border-l-[10px] border-l-transparent border-r-[10px] border-r-transparent border-b-[16px] border-b-bauhaus-black opacity-20" />
+            </div>
+        </div>
+        <span className="font-display font-black text-xl tracking-tighter uppercase">
+            PDF<span className="text-bauhaus-red">Master</span>
+        </span>
+    </div>
+);
 
 export default function Footer() {
-    const theme = useTheme();
     const currentYear = new Date().getFullYear();
 
     return (
-        <Box component="footer" sx={{
-            position: 'relative',
-            bgcolor: 'background.paper',
-            pt: { xs: 8, md: 10 },
-            pb: { xs: 4, md: 5 },
-            transition: 'background-color 0.3s',
-            overflow: 'hidden'
-        }}>
-            {/* Subtle top gradient border effect */}
-            <Box sx={{
-                position: 'absolute', top: 0, left: 0, width: '100%', height: '1px',
-                background: `linear-gradient(90deg, transparent, ${theme.palette.divider}, transparent)`,
-                opacity: 0.5
-            }} />
+        <footer className="bg-bauhaus-white border-t-8 border-bauhaus-black pt-20 pb-10 overflow-hidden relative">
+            {/* Background Decorative Shapes */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-bauhaus-yellow opacity-10 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-96 h-96 bg-bauhaus-red opacity-5 -rotate-12 pointer-events-none" />
 
-            <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 10 }}>
-                <Grid container spacing={{ xs: 6, lg: 4 }} sx={{ mb: { xs: 8, md: 10 } }}>
+            <div className="max-w-7xl mx-auto px-4 sm:px-8 relative z-10">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 mb-20">
 
                     {/* Brand Column */}
-                    <Grid size={{ xs: 12, lg: 4 }}>
-                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-                            <Box component={RouterLink} to="/" sx={{ display: 'flex', alignItems: 'center', gap: 1.5, textDecoration: 'none', width: 'fit-content' }}>
-                                <Box className="logo-icon" sx={{
-                                    width: 40, height: 40, borderRadius: '12px', bgcolor: alpha(theme.palette.primary.main, 0.1),
-                                    display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'primary.main',
-                                    transition: 'all 0.3s ease', boxShadow: theme.shadows[1]
-                                }}>
-                                    <svg width="24" height="24" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <rect x="8" y="4" width="20" height="24" rx="6" fill={alpha(theme.palette.primary.main, 0.2)} stroke={theme.palette.primary.main} strokeWidth="1.5" />
-                                        <rect x="4" y="8" width="20" height="24" rx="6" fill={theme.palette.primary.main} stroke={theme.palette.primary.main} strokeWidth="1.5" />
-                                    </svg>
-                                </Box>
-                                <Typography variant="h5" sx={{ fontWeight: 900, letterSpacing: '-0.04em', color: 'text.primary', fontFamily: '"Space Grotesk", sans-serif' }}>
-                                    <Box component="span" sx={{ color: '#F05B25' }}>DOC</Box>-SHIFT
-                                </Typography>
-                            </Box>
+                    <div className="lg:col-span-4 flex flex-col gap-6">
+                        <Link href="/" className="inline-block">
+                            <BauhausLogo />
+                        </Link>
 
-                            <Typography variant="body2" sx={{ color: 'text.secondary', lineHeight: 1.7, maxWidth: 'sm' }}>
-                                Every PDF tool you'll ever need. <Box component="strong" sx={{ color: 'text.primary' }}>100% Free. No limits. No signup required.</Box> We believe essential document utilities should be accessible, secure, and beautiful to use.
-                            </Typography>
+                        <p className="font-display font-medium text-bauhaus-black/70 leading-relaxed max-w-sm">
+                            Every PDF tool you'll ever need. <span className="font-black text-bauhaus-black">100% Free. No limits. No signup required.</span> We believe essential document utilities should be accessible, secure, and beautiful to use.
+                        </p>
 
-                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 1 }}>
-                                {[
-                                    { icon: Twitter, x: 'https://x.com/soumyachk1', label: 'Twitter' },
-                                    { icon: Github, x: 'https://github.com/soumyachk101', label: 'GitHub' },
-                                    { icon: MessageCircle, x: 'https://discord.com/users/soumya.chk101', label: 'Discord' }
-                                ].map((social, i) => {
-                                    const Icon = social.icon;
-                                    return (
-                                        <IconButton key={i} href={social.x} aria-label={social.label} size="medium" sx={{
-                                            bgcolor: 'background.default', border: `1px solid ${theme.palette.divider}`,
-                                            color: 'text.secondary',
-                                            '&:hover': { color: 'primary.main', borderColor: alpha(theme.palette.primary.main, 0.5), bgcolor: alpha(theme.palette.primary.main, 0.05) },
-                                            transition: 'all 0.2s'
-                                        }}>
-                                            <Icon size={18} />
-                                        </IconButton>
-                                    );
-                                })}
-                            </Box>
-                        </Box>
-                    </Grid>
+                        <div className="flex items-center gap-3">
+                            {[
+                                { icon: Twitter, href: 'https://x.com/soumyachk1', color: 'hover:bg-bauhaus-blue' },
+                                { icon: Github, href: 'https://github.com/soumyachk101', color: 'hover:bg-bauhaus-yellow' },
+                                { icon: MessageCircle, href: 'https://discord.com/users/soumya.chk101', color: 'hover:bg-bauhaus-red' }
+                            ].map((social, i) => {
+                                const Icon = social.icon;
+                                return (
+                                    <a
+                                        key={i}
+                                        href={social.href}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className={`w-12 h-12 flex items-center justify-center border-4 border-bauhaus-black bg-white shadow-bauhaus hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all ${social.color}`}
+                                    >
+                                        <Icon size={20} />
+                                    </a>
+                                );
+                            })}
+                        </div>
+                    </div>
 
-                    {/* Categories Columns */}
-                    <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
-                        <Typography variant="h6" sx={{ fontWeight: 700, mb: 3, color: 'text.primary' }}>Tools</Typography>
-                        <Box component="ul" sx={{ listStyle: 'none', p: 0, m: 0, display: 'flex', flexDirection: 'column', gap: 1.5 }}>
+                    {/* Tools Columns */}
+                    <div className="lg:col-span-3">
+                        <h3 className="font-display font-black text-xl uppercase tracking-tighter mb-8 border-b-4 border-bauhaus-red inline-block">
+                            Popular Tools
+                        </h3>
+                        <ul className="flex flex-col gap-3">
                             {CATEGORIES.filter(c => c.id !== 'all').slice(0, 4).map(cat => (
-                                <Box component="li" key={cat.id}>
-                                    <Link component={RouterLink} to="/" underline="none" sx={{
-                                        position: 'relative', fontWeight: 500, color: 'text.secondary', py: 0.5, display: 'inline-block',
-                                        '&:hover': { color: 'primary.main' },
-                                        '&::after': {
-                                            content: '""', position: 'absolute', bottom: 0, left: 0, width: '100%', height: '2px',
-                                            bgcolor: 'primary.main', transform: 'scaleX(0)', transformOrigin: 'left', transition: 'transform 0.3s ease'
-                                        },
-                                        '&:hover::after': { transform: 'scaleX(1)' }
-                                    }}>
+                                <li key={cat.id}>
+                                    <Link href="/" className="font-display font-bold uppercase text-sm tracking-widest hover:text-bauhaus-red transition-colors flex items-center gap-2 group">
+                                        <span className="w-2 h-2 bg-bauhaus-black group-hover:bg-bauhaus-red transition-colors" />
                                         {cat.label}
                                     </Link>
-                                </Box>
+                                </li>
                             ))}
-                        </Box>
-                    </Grid>
+                        </ul>
+                    </div>
 
-                    <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
-                        <Typography variant="h6" sx={{ fontWeight: 700, mb: 3, color: 'text.primary' }}>More Tools</Typography>
-                        <Box component="ul" sx={{ listStyle: 'none', p: 0, m: 0, display: 'flex', flexDirection: 'column', gap: 1.5 }}>
-                            {CATEGORIES.filter(c => c.id !== 'all').slice(4).map(cat => (
-                                <Box component="li" key={cat.id}>
-                                    <Link component={RouterLink} to="/" underline="none" sx={{
-                                        position: 'relative', fontWeight: 500, color: 'text.secondary', py: 0.5, display: 'inline-block',
-                                        '&:hover': { color: 'primary.main' },
-                                        '&::after': {
-                                            content: '""', position: 'absolute', bottom: 0, left: 0, width: '100%', height: '2px',
-                                            bgcolor: 'primary.main', transform: 'scaleX(0)', transformOrigin: 'left', transition: 'transform 0.3s ease'
-                                        },
-                                        '&:hover::after': { transform: 'scaleX(1)' }
-                                    }}>
+                    <div className="lg:col-span-3">
+                        <h3 className="font-display font-black text-xl uppercase tracking-tighter mb-8 border-b-4 border-bauhaus-blue inline-block">
+                            More Tools
+                        </h3>
+                        <ul className="flex flex-col gap-3">
+                            {CATEGORIES.filter(c => c.id !== 'all').slice(4, 8).map(cat => (
+                                <li key={cat.id}>
+                                    <Link href="/" className="font-display font-bold uppercase text-sm tracking-widest hover:text-bauhaus-blue transition-colors flex items-center gap-2 group">
+                                        <span className="w-2 h-2 bg-bauhaus-black group-hover:bg-bauhaus-blue transition-colors" />
                                         {cat.label}
                                     </Link>
-                                </Box>
+                                </li>
                             ))}
-                        </Box>
-                    </Grid>
+                        </ul>
+                    </div>
 
-                    {/* Legal / Company */}
-                    <Grid size={{ xs: 12, sm: 6, md: 4, lg: 2 }}>
-                        <Typography variant="h6" sx={{ fontWeight: 700, mb: 3, color: 'text.primary' }}>Legal</Typography>
-                        <Box component="ul" sx={{ listStyle: 'none', p: 0, m: 0, display: 'flex', flexDirection: 'column', gap: 1.5 }}>
+                    {/* Legal Column */}
+                    <div className="lg:col-span-2">
+                        <h3 className="font-display font-black text-xl uppercase tracking-tighter mb-8 border-b-4 border-bauhaus-yellow inline-block">
+                            Legal
+                        </h3>
+                        <ul className="flex flex-col gap-3">
                             {['Privacy Policy', 'Terms of Service', 'About Us', 'Contact'].map((item, i) => (
-                                <Box component="li" key={i}>
-                                    <Link component={RouterLink} to="/" underline="none" sx={{
-                                        position: 'relative', fontWeight: 500, color: 'text.secondary', py: 0.5, display: 'inline-block',
-                                        '&:hover': { color: 'primary.main' },
-                                        '&::after': {
-                                            content: '""', position: 'absolute', bottom: 0, left: 0, width: '100%', height: '2px',
-                                            bgcolor: 'primary.main', transform: 'scaleX(0)', transformOrigin: 'left', transition: 'transform 0.3s ease'
-                                        },
-                                        '&:hover::after': { transform: 'scaleX(1)' }
-                                    }}>
+                                <li key={i}>
+                                    <Link href="/" className="font-display font-bold uppercase text-sm tracking-widest hover:text-bauhaus-yellow transition-colors flex items-center gap-2 group">
+                                        <span className="w-2 h-2 bg-bauhaus-black group-hover:bg-bauhaus-yellow transition-colors" />
                                         {item}
                                     </Link>
-                                </Box>
+                                </li>
                             ))}
-                        </Box>
-                    </Grid>
-
-                </Grid>
+                        </ul>
+                    </div>
+                </div>
 
                 {/* Bottom Bar */}
-                <Box sx={{
-                    pt: 4, borderTop: `1px solid ${alpha(theme.palette.divider, 0.5)}`,
-                    display: 'flex', flexDirection: { xs: 'column', md: 'row' }, alignItems: 'center', justifyContent: 'space-between', gap: 3
-                }}>
-                    <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary' }}>
-                        © {currentYear} <Box component="span" sx={{ color: 'text.primary', fontWeight: 700 }}>DocShift</Box>. All rights reserved.
-                    </Typography>
+                <div className="pt-10 border-t-4 border-bauhaus-black flex flex-col md:flex-row items-center justify-between gap-6">
+                    <p className="font-display font-bold uppercase text-sm tracking-widest">
+                        © {currentYear} <span className="font-black text-bauhaus-red">PDFMaster</span>. All rights reserved.
+                    </p>
 
-                    <Typography variant="caption" sx={{
-                        fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', px: 2, py: 0.5,
-                        borderRadius: '99px', bgcolor: alpha(theme.palette.success.main, 0.1), color: theme.palette.success.main,
-                        border: `1px solid ${alpha(theme.palette.success.main, 0.2)}`
-                    }}>
-                        Always Free
-                    </Typography>
-                </Box>
-            </Container>
-
-            {/* Background decorative blob */}
-            <Box sx={{
-                position: 'absolute', top: 0, right: 0, width: 400, height: 400,
-                bgcolor: alpha(theme.palette.primary.main, 0.05), borderRadius: '50%',
-                mixBlendMode: 'multiply', filter: 'blur(100px)', zIndex: 0, pointerEvents: 'none'
-            }} />
-        </Box>
+                    <div className="px-6 py-2 border-4 border-bauhaus-black bg-bauhaus-yellow font-display font-black uppercase text-sm tracking-widest shadow-bauhaus">
+                        Always Free · No Signup
+                    </div>
+                </div>
+            </div>
+        </footer>
     );
-}
-
-function alpha(color, opacity) {
-    if (!color) return `rgba(255, 180, 0, ${opacity})`;
-    if (color.startsWith('#')) {
-        const r = parseInt(color.slice(1, 3), 16);
-        const g = parseInt(color.slice(3, 5), 16);
-        const b = parseInt(color.slice(5, 7), 16);
-        return `rgba(${r}, ${g}, ${b}, ${opacity})`;
-    }
-    return color.replace(')', `, ${opacity})`).replace('rgb', 'rgba');
 }

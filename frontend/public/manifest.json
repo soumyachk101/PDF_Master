@@ -1,0 +1,60 @@
+{
+  "name": "DocShift - Free PDF Tools",
+  "short_name": "DocShift",
+  "description": "30+ free PDF tools that work entirely in your browser. Merge, compress, convert PDFs with 100% privacy. No uploads required.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#F05B25",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "categories": ["productivity", "utilities"],
+  "lang": "en-US",
+  "dir": "ltr",
+  "screenshots": [
+    {
+      "src": "/logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "prefer_related_applications": false,
+  "related_applications": [],
+  "scope": "/",
+  "shortcuts": [
+    {
+      "name": "Merge PDF",
+      "short_name": "Merge",
+      "description": "Combine multiple PDF files into one",
+      "url": "/tool/merge-pdf",
+      "icons": [{"src": "/favicon.svg", "sizes": "any"}]
+    },
+    {
+      "name": "Compress PDF",
+      "short_name": "Compress",
+      "description": "Reduce PDF file size",
+      "url": "/tool/compress-pdf",
+      "icons": [{"src": "/favicon.svg", "sizes": "any"}]
+    },
+    {
+      "name": "PDF to Word",
+      "short_name": "PDF→Word",
+      "description": "Convert PDF to Word document",
+      "url": "/tool/pdf-to-word",
+      "icons": [{"src": "/favicon.svg", "sizes": "any"}]
+    }
+  ]
+}

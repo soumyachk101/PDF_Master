@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { CATEGORIES } from '@/utils/tools';
+
 import { Twitter, Github, MessageCircle } from 'lucide-react';
 import { BauhausSection } from '@/components/ui/BauhausComponents';
 
@@ -70,11 +70,16 @@ export default function Footer() {
                             Popular Tools
                         </h3>
                         <ul className="flex flex-col gap-3">
-                            {CATEGORIES.filter(c => c.id !== 'all').slice(0, 4).map(cat => (
-                                <li key={cat.id}>
-                                    <Link href="/" className="font-display font-bold uppercase text-sm tracking-widest hover:text-bauhaus-red transition-colors flex items-center gap-2 group">
+                            {[
+                                { name: 'Merge PDF', path: '/tool/merge-pdf' },
+                                { name: 'Split PDF', path: '/tool/split-pdf' },
+                                { name: 'Compress PDF', path: '/tool/compress-pdf' },
+                                { name: 'PDF to Word', path: '/tool/pdf-to-word' }
+                            ].map((tool) => (
+                                <li key={tool.path}>
+                                    <Link href={tool.path} className="font-display font-bold uppercase text-sm tracking-widest hover:text-bauhaus-red transition-colors flex items-center gap-2 group">
                                         <span className="w-2 h-2 bg-bauhaus-black group-hover:bg-bauhaus-red transition-colors" />
-                                        {cat.label}
+                                        {tool.name}
                                     </Link>
                                 </li>
                             ))}
@@ -86,11 +91,16 @@ export default function Footer() {
                             More Tools
                         </h3>
                         <ul className="flex flex-col gap-3">
-                            {CATEGORIES.filter(c => c.id !== 'all').slice(4, 8).map(cat => (
-                                <li key={cat.id}>
-                                    <Link href="/" className="font-display font-bold uppercase text-sm tracking-widest hover:text-bauhaus-blue transition-colors flex items-center gap-2 group">
+                            {[
+                                { name: 'JPG to PDF', path: '/tool/jpg-to-pdf' },
+                                { name: 'Edit PDF', path: '/tool/edit-pdf' },
+                                { name: 'Protect PDF', path: '/tool/protect-pdf' },
+                                { name: 'Unlock PDF', path: '/tool/unlock-pdf' }
+                            ].map((tool) => (
+                                <li key={tool.path}>
+                                    <Link href={tool.path} className="font-display font-bold uppercase text-sm tracking-widest hover:text-bauhaus-blue transition-colors flex items-center gap-2 group">
                                         <span className="w-2 h-2 bg-bauhaus-black group-hover:bg-bauhaus-blue transition-colors" />
-                                        {cat.label}
+                                        {tool.name}
                                     </Link>
                                 </li>
                             ))}

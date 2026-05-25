@@ -34,7 +34,7 @@ export default function Footer() {
 
                     {/* Brand Column */}
                     <div className="lg:col-span-4 flex flex-col gap-6">
-                        <Link href="/" className="inline-block">
+                        <Link href="/" className="inline-block" aria-label="DocShift - Home">
                             <BauhausLogo />
                         </Link>
 
@@ -44,9 +44,9 @@ export default function Footer() {
 
                         <div className="flex items-center gap-3">
                             {[
-                                { icon: Twitter, href: 'https://x.com/soumyachk1', color: 'hover:bg-bauhaus-blue' },
-                                { icon: Github, href: 'https://github.com/soumyachk101', color: 'hover:bg-bauhaus-yellow' },
-                                { icon: MessageCircle, href: 'https://discord.com/users/soumya.chk101', color: 'hover:bg-bauhaus-red' }
+                                { icon: Twitter, href: 'https://x.com/soumyachk1', color: 'hover:bg-bauhaus-blue', label: 'Follow us on Twitter' },
+                                { icon: Github, href: 'https://github.com/soumyachk101', color: 'hover:bg-bauhaus-yellow', label: 'View our GitHub' },
+                                { icon: MessageCircle, href: 'https://discord.com/users/soumya.chk101', color: 'hover:bg-bauhaus-red', label: 'Join us on Discord' }
                             ].map((social, i) => {
                                 const Icon = social.icon;
                                 return (
@@ -55,6 +55,7 @@ export default function Footer() {
                                         href={social.href}
                                         target="_blank"
                                         rel="noopener noreferrer"
+                                        aria-label={social.label}
                                         className={`w-12 h-12 flex items-center justify-center border-4 border-bauhaus-black bg-white shadow-bauhaus hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all ${social.color}`}
                                     >
                                         <Icon size={20} />
@@ -131,7 +132,7 @@ export default function Footer() {
                         © {currentYear} <span className="font-black text-bauhaus-red">DocShift</span>. All rights reserved.
                     </p>
 
-                    <div className="px-6 py-2 border-4 border-bauhaus-black bg-bauhaus-yellow font-display font-black uppercase text-sm tracking-widest shadow-bauhaus">
+                    <div className="px-6 py-2 border-4 border-bauhaus-black bg-bauhaus-yellow text-bauhaus-black font-display font-black uppercase text-sm tracking-widest shadow-bauhaus">
                         Always Free · No Signup
                     </div>
                 </div>

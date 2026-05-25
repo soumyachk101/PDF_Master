@@ -178,7 +178,7 @@ function ToolPage({ toolSlug }) {
                         <Typography variant="h3" component="h1" sx={{ fontWeight: 800, mb: 1, color: 'text.primary' }}>
                             {tool.name} Online Free
                         </Typography>
-                        <Typography variant="h6" sx={{ color: 'text.secondary', maxWidth: '600px', mx: 'auto', fontWeight: 400 }}>
+                        <Typography variant="subtitle1" component="p" sx={{ color: 'text.secondary', maxWidth: '600px', mx: 'auto', fontWeight: 400, fontSize: '1.15rem' }}>
                             {tool.desc}
                         </Typography>
                     </motion.div>
@@ -208,6 +208,7 @@ function ToolPage({ toolSlug }) {
                                             <TextField
                                                 fullWidth
                                                 variant="outlined"
+                                                label="Website URL"
                                                 placeholder="ENTER WEBSITE URL (E.G., HTTPS://EXAMPLE.COM)"
                                                 value={url}
                                                 onChange={(e) => setUrl(e.target.value)}

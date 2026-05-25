@@ -62,7 +62,7 @@ export default function DropzoneArea({ onFileSelect, accept, maxSize, selectedFi
                             : 'bg-white shadow-bauhaus-lg'
                     }`}
                 >
-                    <input {...getInputProps()} />
+                    <input {...getInputProps()} aria-label="Upload files" />
 
                     {/* Decorative Corner Shapes */}
                     <div className="absolute top-0 left-0 w-8 h-8 bg-bauhaus-red border-r-4 border-b-4 border-bauhaus-black" />
@@ -91,10 +91,10 @@ export default function DropzoneArea({ onFileSelect, accept, maxSize, selectedFi
                                 </div>
 
                                 <div className="space-y-2">
-                                    <h3 className="font-display font-black text-3xl uppercase tracking-tighter text-bauhaus-black">
+                                    <h2 className="font-display font-black text-3xl uppercase tracking-tighter text-bauhaus-black">
                                         {isDragActive ? "Drop Now" : "Upload PDF"}
-                                    </h3>
-                                    <p className="font-display font-bold uppercase text-xs tracking-widest text-bauhaus-black/60 max-w-[280px] mx-auto">
+                                    </h2>
+                                    <p className="font-display font-bold uppercase text-xs tracking-widest text-bauhaus-black/70 max-w-[280px] mx-auto">
                                         Secure, private, and lightning fast. Your files never leave your browser.
                                     </p>
                                 </div>
@@ -149,7 +149,7 @@ export default function DropzoneArea({ onFileSelect, accept, maxSize, selectedFi
                                                     {file.name}
                                                 </p>
                                                 <div className="flex items-center gap-2">
-                                                    <span className="font-display font-bold text-[10px] uppercase tracking-widest text-bauhaus-black/40">
+                                                    <span className="font-display font-bold text-[10px] uppercase tracking-widest text-bauhaus-black/70">
                                                         {formatSize(file.size)}
                                                     </span>
                                                     <span className="w-1 h-1 bg-bauhaus-black/20 rounded-full" />

@@ -274,19 +274,27 @@ function ToolPage({ toolSlug }) {
                                             textTransform: 'uppercase',
                                             letterSpacing: '0.1em',
                                             boxShadow: '4px 4px 0px 0px #121212',
-                                            transition: 'all 0.2s',
+                                            transition: 'all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                                            '& .MuiButton-endIcon': {
+                                                transition: 'transform 0.2s ease-in-out',
+                                            },
                                             '&:hover': {
                                                 bgcolor: '#B01A1A',
                                                 boxShadow: 'none',
                                                 transform: 'translate(4px, 4px)',
                                             },
+                                            '&:hover .MuiButton-endIcon': {
+                                                transform: 'translateX(6px)',
+                                            },
                                             '&.Mui-disabled': {
-                                                bgcolor: '#E0E0E0',
-                                                color: '#737373',
-                                                border: '4px solid #121212',
+                                                bgcolor: '#F3F4F6',
+                                                color: '#9CA3AF',
+                                                border: '4px solid #9CA3AF',
                                                 boxShadow: 'none',
                                                 transform: 'none',
-                                                opacity: 0.8
+                                                cursor: 'not-allowed',
+                                                pointerEvents: 'auto',
+                                                opacity: 0.7
                                             }
                                         }}
                                     >
@@ -410,7 +418,7 @@ function ToolPage({ toolSlug }) {
                         </Typography>
                     )}
 
-                    <Typography variant="h5" component="h2" sx={{ fontWeight: 700, mb: 2, color: 'text.primary' }}>Why use PDFKit?</Typography>
+                    <Typography variant="h5" component="h2" sx={{ fontWeight: 700, mb: 2, color: 'text.primary' }}>Why use DocShift?</Typography>
                     <Typography variant="body1" sx={{ color: 'text.secondary', mb: 5, lineHeight: 1.8, fontSize: '1.1rem' }}>
                         <strong>100% Private & Secure:</strong> We take your privacy seriously. Files are never stored permanently, ensuring your data remains completely secure. No account or email required to use our tools.
                         <br/><br/>

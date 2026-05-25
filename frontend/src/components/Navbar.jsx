@@ -17,7 +17,7 @@ const BauhausLogo = () => (
             </div>
         </div>
         <span className="font-display font-black text-2xl tracking-tighter uppercase">
-            PDF<span className="text-bauhaus-red">Master</span>
+            Doc<span className="text-bauhaus-red">Shift</span>
         </span>
     </div>
 );

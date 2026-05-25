@@ -15,7 +15,7 @@ const BauhausLogo = () => (
             </div>
         </div>
         <span className="font-display font-black text-xl tracking-tighter uppercase">
-            PDF<span className="text-bauhaus-red">Master</span>
+            Doc<span className="text-bauhaus-red">Shift</span>
         </span>
     </div>
 );
@@ -118,7 +118,7 @@ export default function Footer() {
                 {/* Bottom Bar */}
                 <div className="pt-10 border-t-4 border-bauhaus-black flex flex-col md:flex-row items-center justify-between gap-6">
                     <p className="font-display font-bold uppercase text-sm tracking-widest">
-                        © {currentYear} <span className="font-black text-bauhaus-red">PDFMaster</span>. All rights reserved.
+                        © {currentYear} <span className="font-black text-bauhaus-red">DocShift</span>. All rights reserved.
                     </p>
 
                     <div className="px-6 py-2 border-4 border-bauhaus-black bg-bauhaus-yellow font-display font-black uppercase text-sm tracking-widest shadow-bauhaus">

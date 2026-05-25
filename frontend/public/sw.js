@@ -1,12 +1,11 @@
 /// <reference lib="webworker" />
 
-const CACHE_NAME = 'docshift-v1';
+const CACHE_NAME = 'docshift-v2';
 const STATIC_ASSETS = [
   '/',
   '/manifest.json',
   '/favicon.svg',
   '/logo.png',
-  '/sitemap.xml',
   // Core chunks will be cached dynamically
 ];
 

@@ -3,7 +3,29 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ScrollToHash from '@/components/ScrollToHash';
 import { Suspense } from 'react';
+import { Space_Grotesk, Plus_Jakarta_Sans, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-display',
+  display: 'swap',
+});
+
+const plusJakartaSans = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700', '800'],
+  variable: '--font-body',
+  display: 'swap',
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500'],
+  variable: '--font-mono',
+  display: 'swap',
+});
 
 export const metadata = {
   metadataBase: new URL('https://www.docshift.tech'),
@@ -20,7 +42,7 @@ export const metadata = {
     url: 'https://www.docshift.tech/',
     title: 'Free PDF Tools Online – Merge, Compress, Convert | DocShift',
     description: 'Free online PDF tools that work entirely in your browser. Merge, compress, convert PDF to Word, split and edit PDFs instantly. No uploads, 100% private.',
-    images: [{ url: 'https://www.docshift.tech/logo.png', width: 512, height: 512, alt: 'DocShift - Free PDF Tools Logo' }],
+    images: [{ url: 'https://www.docshift.tech/logo.png', width: 1200, height: 630, alt: 'DocShift - Free PDF Tools' }],
     siteName: 'DocShift',
     locale: 'en_US',
   },
@@ -48,11 +70,6 @@ export default function RootLayout({ children }) {
     '@type': 'WebSite',
     name: 'DocShift',
     url: 'https://www.docshift.tech',
-    potentialAction: {
-      '@type': 'SearchAction',
-      target: 'https://www.docshift.tech/?q={search_term_string}',
-      'query-input': 'required name=search_term_string',
-    },
   };
 
   const organizationSchema = {
@@ -85,20 +102,16 @@ export default function RootLayout({ children }) {
     operatingSystem: 'Web Browser',
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
     description: 'Free browser-based PDF tools. Merge, compress, convert and edit PDFs with 100% privacy.',
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: '4.9',
-      reviewCount: '284',
+    author: {
+      '@type': 'Organization',
+      name: 'DocShift',
+      url: 'https://www.docshift.tech',
     },
   };
 
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className={`${spaceGrotesk.variable} ${plusJakartaSans.variable} ${jetbrainsMono.variable}`}>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-        <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }} />

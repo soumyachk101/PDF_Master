@@ -1,5 +1,6 @@
 import { getToolBySlug, TOOLS } from '@/utils/tools';
 import ToolPage from '@/views/ToolPage';
+import ToolSEOContent from '@/views/ToolSEOContent';
 
 export function generateStaticParams() {
   return TOOLS.map((tool) => ({
@@ -70,11 +71,40 @@ export default async function ToolRoute({ params }) {
       applicationCategory: 'UtilitiesApplication',
       operatingSystem: 'Web Browser',
       offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+      author: {
+        '@type': 'Organization',
+        name: 'DocShift',
+        url: 'https://www.docshift.tech',
+      },
       featureList: [
         '100% private - files processed in browser',
         'No uploads or server storage',
         'Free forever with no limits',
         'Works on any device',
+      ],
+    });
+
+    schemas.push({
+      '@context': 'https://schema.org',
+      '@type': 'HowTo',
+      name: `How to ${tool.name}`,
+      description: tool.shortDesc,
+      step: [
+        {
+          '@type': 'HowToStep',
+          name: 'Upload your file',
+          text: `Upload your ${tool.accept ? 'file' : 'URL'} to the ${tool.name} tool.`,
+        },
+        {
+          '@type': 'HowToStep',
+          name: 'Process',
+          text: `Click the process button to ${tool.name.toLowerCase()} instantly in your browser.`,
+        },
+        {
+          '@type': 'HowToStep',
+          name: 'Download result',
+          text: 'Download your processed file immediately.',
+        },
       ],
     });
   }
@@ -89,6 +119,7 @@ export default async function ToolRoute({ params }) {
         />
       ))}
       <ToolPage toolSlug={toolSlug} />
+      <ToolSEOContent toolSlug={toolSlug} />
     </>
   );
 }

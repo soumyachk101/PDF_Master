@@ -1,4 +1,8 @@
-import HomePage from '@/views/HomePage';
+import dynamic from 'next/dynamic';
+
+const HomePage = dynamic(() => import('@/views/HomePage'), {
+  loading: () => <div style={{ minHeight: '100vh' }} />,
+});
 
 export const metadata = {
   title: 'DocShift – Free & Private PDF Tools | Bauhaus Style',

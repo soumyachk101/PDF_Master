@@ -158,9 +158,10 @@ export default function DropzoneArea({ onFileSelect, accept, maxSize, selectedFi
                                                     </span>
                                                 </div>
                                             </div>
-                                            <button 
-                                                onClick={(e) => handleRemoveFile(i, e)} 
+                                            <button
+                                                onClick={(e) => handleRemoveFile(i, e)}
                                                 className="w-10 h-10 flex items-center justify-center border-2 border-bauhaus-black bg-bauhaus-red text-white shadow-[2px_2px_0px_0px_black] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all"
+                                                aria-label={`Remove ${file.name}`}
                                             >
                                                 <Trash2 size={18} />
                                             </button>

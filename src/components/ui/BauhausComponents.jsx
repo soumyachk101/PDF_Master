@@ -108,7 +108,7 @@ export const BauhausBadge = ({ children, color = 'red', className }) => {
   const colors = {
     red: 'bg-bauhaus-red text-white',
     blue: 'bg-bauhaus-blue text-white',
-    yellow: 'bg-bauhaus-yellow text-black',
+    yellow: 'bg-bauhaus-yellow text-bauhaus-black',
   };
 
   return (

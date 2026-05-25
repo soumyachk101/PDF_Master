@@ -213,7 +213,7 @@ function HomePage() {
                             )}>
                                 <DynamicIcon name={feat.icon} size={24} />
                             </div>
-                            <h4 className="text-xl font-black uppercase tracking-tighter mb-3">{feat.title}</h4>
+                            <h3 className="text-xl font-black uppercase tracking-tighter mb-3">{feat.title}</h3>
                             <p className="text-sm font-medium text-gray-700 leading-relaxed">{feat.desc}</p>
                         </div>
                     ))}

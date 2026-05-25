@@ -19,7 +19,7 @@ const nextConfig = {
     return [
       {
         source: '/api/:path*',
-        destination: 'https://api.pdfkit.fun/api/:path*',
+        destination: 'https://pdf-master-backend-sxvj.onrender.com/api/:path*',
       },
     ];
   },

@@ -87,7 +87,18 @@ function ToolPage({ toolSlug }) {
     const status = appState === 'upload' ? 'idle' : appState;
     const error = errorMsg;
 
+    const needsMoreFiles = files.length > 0 && files.length < (tool?.minFiles || 1);
+    const isPasswordRequired = toolSlug === 'protect-pdf' && !params.password;
+    const isSubmitDisabled = (!files.length && !url) || (isUrlSupported && !url && !files.length) || needsMoreFiles || isPasswordRequired;
+
+    const getButtonText = () => {
+        if (isPasswordRequired) return 'Enter Password';
+        if (needsMoreFiles) return `Upload At Least ${tool.minFiles} Files`;
+        return `Process ${files.length > 1 ? `${files.length} Files` : 'File'}`;
+    };
+
     const handleProcess = () => {
+        if (isSubmitDisabled) return;
         let submissionParams = { ...params };
         if (url && isUrlSupported) {
             submissionParams.url = url;
@@ -125,11 +136,11 @@ function ToolPage({ toolSlug }) {
     if (!tool) {
         return (
             <Box sx={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', p: 3, bgcolor: 'background.default', minHeight: '100vh' }}>
-                <Card sx={{ p: 6, borderRadius: '32px', maxWidth: '500px', width: '100%', textAlign: 'center', boxShadow: theme.shadows[4] }}>
-                    <AlertTriangle size={48} color={theme.palette.warning.main} style={{ margin: '0 auto', marginBottom: '24px' }} />
+                <Card sx={{ p: 6, borderRadius: '0px', border: '4px solid #121212', boxShadow: '8px 8px 0px 0px #121212', maxWidth: '500px', width: '100%', textAlign: 'center' }}>
+                    <AlertTriangle size={48} color="#F0C020" style={{ margin: '0 auto', marginBottom: '24px' }} />
                     <Typography variant="h4" sx={{ fontWeight: 800, mb: 2 }}>Tool Not Found</Typography>
                     <Typography variant="body1" sx={{ color: 'text.secondary', mb: 4 }}>The tool you are looking for doesn't exist or has been moved.</Typography>
-                    <Button component={Link} href="/" variant="contained" size="large" startIcon={<ArrowLeft size={18} />} sx={{ borderRadius: '12px', fontWeight: 700 }}>
+                    <Button component={Link} href="/" variant="contained" size="large" startIcon={<ArrowLeft size={18} />} sx={{ borderRadius: '0px', border: '3px solid #121212', boxShadow: '4px 4px 0px 0px #121212', bgcolor: '#D02020', '&:hover': { bgcolor: '#B01A1A', boxShadow: 'none', transform: 'translate(4px, 4px)' }, fontWeight: 800 }}>
                         Back to Home
                     </Button>
                 </Card>
@@ -146,10 +157,12 @@ function ToolPage({ toolSlug }) {
             <Container maxWidth="md" sx={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', py: { xs: 4, md: 6 }, position: 'relative', zIndex: 10 }}>
                 <Box sx={{ width: '100%', maxWidth: '800px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     {/* Breadcrumb Navigation */}
-                    <Breadcrumbs items={[
-                      { name: 'Home', href: '/', icon: Home },
-                      { name: tool.name, href: `/tool/${tool.slug}`, isCurrent: true }
-                    ]} />
+                    <Box sx={{ alignSelf: 'flex-start' }}>
+                        <Breadcrumbs items={[
+                          { name: 'Home', href: '/', icon: Home },
+                          { name: tool.name, href: `/tool/${tool.slug}`, isCurrent: true }
+                        ]} />
+                    </Box>
 
                     <Box component={Link} href="/#tools" sx={{ alignSelf: 'flex-start', mb: 3, color: 'text.secondary', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 1, fontWeight: 600, '&:hover': { color: 'primary.main' }, transition: 'color 0.2s' }}>
                         <ArrowLeft size={16} /> Back to All Tools
@@ -157,8 +170,8 @@ function ToolPage({ toolSlug }) {
 
                     <motion.div initial="initial" animate="in" exit="out" variants={pageVariants} style={{ width: '100%', textAlign: 'center', marginBottom: '24px' }}>
                         <Box sx={{
-                            display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 64, height: 64, borderRadius: '20px', mb: 2,
-                            bgcolor: `${tool.color}15`, color: tool.color, border: `1px solid ${theme.palette.divider}`
+                            display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 64, height: 64, borderRadius: '0px', mb: 2,
+                            bgcolor: '#ffffff', color: '#121212', border: '3px solid #121212', boxShadow: '4px 4px 0px 0px #121212'
                         }}>
                             <DynamicIcon name={tool.icon} size={32} />
                         </Box>
@@ -248,7 +261,7 @@ function ToolPage({ toolSlug }) {
                                     <AnimatePresence>
                                         {error && (
                                             <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }}>
-                                                <Alert severity="error" sx={{ borderRadius: '16px', mt: 2 }} icon={<AlertCircle size={24} />}>
+                                                <Alert severity="error" sx={{ borderRadius: '0px', mt: 2, border: '3px solid #121212', boxShadow: '4px 4px 0px 0px #121212', bgcolor: '#ffffff', color: '#121212', fontWeight: 700 }} icon={<AlertCircle size={24} color="#D02020" />}>
                                                     {error}
                                                 </Alert>
                                             </motion.div>
@@ -257,7 +270,7 @@ function ToolPage({ toolSlug }) {
 
                                     <Button
                                         onClick={handleProcess}
-                                        disabled={(!files.length && !url) || (isUrlSupported && !url && !files.length)}
+                                        disabled={isSubmitDisabled}
                                         variant="contained"
                                         size="large"
                                         endIcon={<ArrowRight size={20} />}
@@ -298,7 +311,7 @@ function ToolPage({ toolSlug }) {
                                             }
                                         }}
                                     >
-                                        Process {files.length > 1 ? `${files.length} Files` : 'File'}
+                                        {getButtonText()}
                                     </Button>
                                 </motion.div>
                             )}
@@ -328,9 +341,9 @@ function ToolPage({ toolSlug }) {
                                     <Box sx={{ py: 4, display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: 4 }}>
                                         <motion.div initial={{ scale: 0 }} animate={{ scale: 1, rotate: [0, 10, -10, 0] }} transition={{ type: 'spring', stiffness: 200, damping: 15 }}>
                                             <Box sx={{
-                                                width: 96, height: 96, borderRadius: '32px', bgcolor: alpha(theme.palette.success.main, 0.1),
-                                                color: theme.palette.success.main, display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                                border: `1px solid ${alpha(theme.palette.success.main, 0.2)}`, flexShrink: 0
+                                                width: 96, height: 96, borderRadius: '0px', bgcolor: '#ffffff',
+                                                color: '#347B60', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                                border: '4px solid #121212', boxShadow: '6px 6px 0px 0px #121212', flexShrink: 0
                                             }}>
                                                 <CheckCircle size={48} strokeWidth={2.5} />
                                             </Box>
@@ -430,7 +443,7 @@ function ToolPage({ toolSlug }) {
                             <Typography variant="h5" component="h2" sx={{ fontWeight: 700, mb: 4, color: 'text.primary' }}>Frequently Asked Questions</Typography>
                             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
                                 {tool.faqs.map((faq, i) => (
-                                    <Box key={i} sx={{ p: 3, bgcolor: alpha(theme.palette.divider, 0.05), border: `1px solid ${theme.palette.divider}`, borderRadius: '16px' }}>
+                                    <Box key={i} sx={{ p: 3, bgcolor: '#ffffff', border: '3px solid #121212', borderRadius: '0px', boxShadow: '4px 4px 0px 0px #121212' }}>
                                         <Typography variant="h6" component="h3" sx={{ fontWeight: 700, fontSize: '1.1rem', mb: 1, color: 'text.primary' }}>{faq.q}</Typography>
                                         <Typography variant="body2" sx={{ color: 'text.secondary', lineHeight: 1.6, fontSize: '1.05rem' }}>{faq.a}</Typography>
                                     </Box>
@@ -463,27 +476,28 @@ function ToolPage({ toolSlug }) {
                                         href={`/tool/${related.slug}`}
                                         sx={{
                                             p: 3,
-                                            borderRadius: '16px',
-                                            bgcolor: alpha(theme.palette.background.paper, 0.5),
-                                            border: `1px solid ${theme.palette.divider}`,
+                                            borderRadius: '0px',
+                                            bgcolor: '#ffffff',
+                                            border: '3px solid #121212',
+                                            boxShadow: '4px 4px 0px 0px #121212',
                                             textDecoration: 'none',
-                                            transition: 'all 0.2s',
+                                            transition: 'all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
                                             '&:hover': {
-                                                borderColor: theme.palette.primary.main,
-                                                transform: 'translateY(-2px)',
-                                                boxShadow: `0 8px 24px -8px ${alpha(theme.palette.primary.main, 0.2)}`
+                                                transform: 'translate(2px, 2px)',
+                                                boxShadow: '2px 2px 0px 0px #121212'
                                             }
                                         }}
                                     >
                                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
                                             <Box sx={{
                                                 width: 40, height: 40,
-                                                borderRadius: '12px',
-                                                bgcolor: alpha(related.color, 0.1),
+                                                borderRadius: '0px',
+                                                bgcolor: '#ffffff',
+                                                border: '2px solid #121212',
                                                 display: 'flex',
                                                 alignItems: 'center',
                                                 justifyContent: 'center',
-                                                color: related.color
+                                                color: '#121212'
                                             }}>
                                                 <DynamicIcon name={related.icon} size={20} />
                                             </Box>

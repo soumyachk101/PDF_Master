@@ -48,8 +48,8 @@ module.exports = {
                 }
             },
             fontFamily: {
-                display: ['Outfit', 'Inter', 'system-ui', 'sans-serif'],
-                body: ['Outfit', 'Inter', 'system-ui', 'sans-serif'],
+                display: ['"Space Grotesk"', 'Outfit', 'sans-serif'],
+                body: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif'],
                 mono: ['"JetBrains Mono"', 'monospace'],
             },
             borderRadius: {

@@ -159,7 +159,7 @@ export const IndustrialBadge = NeumorphicBadge;
 // ═══ MARQUEE TEXT COMPONENT ═══
 export const MarqueeText = ({ children, className }) => {
   return (
-    <div className={cn('overflow-hidden whitespace-nowrap py-2 px-4 border-t border-b border-[#000000] bg-[#ffffff]', className)}>
+    <div className={cn('w-full max-w-full overflow-hidden whitespace-nowrap py-2 px-4 border-t border-b border-[#000000] bg-[#ffffff]', className)}>
       <div
         className="inline-block animate-[marquee_25s_linear_infinite]"
         style={{
@@ -219,7 +219,7 @@ export const HitCounter = ({ className }) => {
 // ═══ FLAT SHIMMER STRIPE ═══
 export const ConstructionStripe = ({ className }) => {
   return (
-    <div className={cn('relative h-[6px] w-full bg-[#000000]', className)}>
+    <div className={cn('relative h-[6px] w-full bg-[#000000] overflow-hidden', className)}>
       <div className="absolute inset-0 w-[200%] h-full bg-gradient-to-r from-transparent via-[#d1ffca]/40 to-transparent animate-[shimmer_3s_infinite_linear]" 
         style={{
           backgroundSize: '200% 100%',

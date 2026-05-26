@@ -100,7 +100,7 @@ function HomePage() {
     };
 
     return (
-        <div className="min-h-screen bg-[#e5e7eb] pb-16 font-suisseintl">
+        <div className="min-h-screen bg-[#e5e7eb] pb-16 font-suisseintl w-full overflow-x-hidden">
             {/* Hero Section */}
             <HeroSection />
 

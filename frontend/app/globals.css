@@ -4,156 +4,230 @@
 
 @layer base {
   :root {
-    --background: 147 16% 91%; /* #E4EDE8 */
-    --foreground: 147 16% 20%; /* #2A3A31 */
-    --muted: 147 10% 37%;      /* #55685C */
-    --accent: 262 83% 58%;     /* #7C3AED */
-    --accent-light: 262 100% 70%; /* #9F67FF */
-    --accent-secondary: 174 86% 32%; /* #0D9488 */
-    --destructive: 343 79% 49%; /* #E11D48 */
-    --success: 174 86% 32%;    /* #0D9488 */
-    --radius: 16px;
+    /* Dayos Colors */
+    --color-canvas-ice: #e5e7eb;
+    --color-midnight-ink: #000000;
+    --color-paper-white: #ffffff;
+    --color-fog-gray: #979797;
+    --color-ash-gray: #444444;
+    --color-faint-mist: #f3f3f3;
+    --color-deep-smoke: #2f2f2f;
+    --color-action-green: #d1ffca;
+    --color-alert-yellow: #fff100;
+
+    /* Dayos Typography (Font Families) */
+    --font-suisseintl: var(--font-suisseintl), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-suisseintlcond: var(--font-suisseintlcond), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-suisseintlmono: var(--font-suisseintlmono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+    /* Typographic Scale */
+    --text-caption: 12px;
+    --leading-caption: 1.6;
+    --tracking-caption: -0.36px;
+    --text-body-sm: 14px;
+    --leading-body-sm: 1.3;
+    --tracking-body-sm: -0.42px;
+    --text-body: 16px;
+    --leading-body: 1.25;
+    --tracking-body: -0.42px;
+    --text-subheading: 18px;
+    --leading-subheading: 1.2;
+    --tracking-subheading: -0.72px;
+    --text-heading: 28px;
+    --leading-heading: 1.14;
+    --text-heading-lg: 40px;
+    --leading-heading-lg: 1.1;
+    --text-display-sm: 48px;
+    --leading-display-sm: 0.9;
+    --tracking-display-sm: -1.44px;
+    --text-display: 130px;
+    --leading-display: 0.9;
+    --tracking-display: -3.9px;
+
+    /* Font Weights */
+    --font-weight-regular: 400;
+    --font-weight-w450: 450;
+    --font-weight-medium: 500;
+    --font-weight-bold: 700;
+
+    /* Spacing Units */
+    --spacing-unit: 8px;
+    --spacing-8: 8px;
+    --spacing-16: 16px;
+    --spacing-24: 24px;
+    --spacing-40: 40px;
+    --spacing-64: 64px;
+    --spacing-80: 80px;
+    --spacing-96: 96px;
+
+    /* Layout Gaps */
+    --section-gap: 80px;
+    --card-padding: 16px;
+    --element-gap: 24px;
+
+    /* Border Radii */
+    --radius-cards: 32px;
+    --radius-buttons: 8px;
+    --radius-heroelements: 64px;
+    --radius-navigationitems: 12px;
   }
 
   html {
     scroll-behavior: smooth;
+    background-color: var(--color-canvas-ice);
   }
 
   body {
-    font-family: var(--font-body), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background-color: #E4EDE8;
-    color: #2A3A31;
+    font-family: var(--font-suisseintl);
+    background-color: var(--color-canvas-ice);
+    color: var(--color-midnight-ink);
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
   }
 
-  /* Soft Neumorphic Webkit Scrollbar */
+  /* Achromatic Minimal Scrollbar */
   &::-webkit-scrollbar {
-    width: 12px;
-    height: 12px;
+    width: 8px;
+    height: 8px;
   }
 
   &::-webkit-scrollbar-track {
-    background: #E4EDE8;
-    box-shadow: inset 2px 2px 5px rgba(189, 201, 193, 0.5), inset -2px -2px 5px rgba(255, 255, 255, 0.6);
+    background: var(--color-canvas-ice);
   }
 
   &::-webkit-scrollbar-thumb {
-    background: #D5DFD9;
-    border: 3px solid #E4EDE8;
-    border-radius: 9999px;
-    box-shadow: 1px 1px 3px rgba(189, 201, 193, 0.3);
+    background: var(--color-fog-gray);
+    border-radius: 0px;
   }
 
   &::-webkit-scrollbar-thumb:hover {
-    background: #BDC9C1;
+    background: var(--color-ash-gray);
   }
 
+  /* Heading Styles - Bebas Neue Condensed Bold */
   h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-display), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    font-weight: 800;
-    color: #2A3A31;
-    letter-spacing: -0.03em;
+    font-family: var(--font-suisseintlcond);
+    font-weight: 700;
+    color: var(--color-midnight-ink);
+    text-transform: uppercase;
   }
 
   h1 {
-    font-size: 2.75rem;
-    line-height: 1.1;
+    font-size: var(--text-display);
+    line-height: var(--leading-display);
+    letter-spacing: var(--tracking-display);
   }
 
   h2 {
-    font-size: 2rem;
-    line-height: 1.2;
+    font-size: var(--text-display-sm);
+    line-height: var(--leading-display-sm);
+    letter-spacing: var(--tracking-display-sm);
   }
 
   h3 {
-    font-size: 1.35rem;
-    line-height: 1.3;
+    font-size: var(--text-heading-lg);
+    line-height: var(--leading-heading-lg);
   }
 
   p {
-    font-family: var(--font-body), sans-serif;
-    font-size: 15px;
-    line-height: 1.625;
-    color: #55685C;
+    font-family: var(--font-suisseintl);
+    font-size: var(--text-body);
+    line-height: var(--leading-body);
+    letter-spacing: var(--tracking-body);
+    color: var(--color-ash-gray);
   }
 
   a {
-    color: #7C3AED;
-    text-decoration: none;
-    transition: color 0.3s ease;
+    color: var(--color-midnight-ink);
+    text-decoration: underline;
+    transition: opacity 0.2s ease;
   }
 
   a:hover {
-    color: #9F67FF;
+    opacity: 0.8;
   }
 
   ::selection {
-    background: #7C3AED;
-    color: #FFFFFF;
+    background: var(--color-action-green);
+    color: var(--color-midnight-ink);
   }
 }
 
 @layer components {
-  /* ═══ NEUMORPHIC SHADOWS (CUSTOM UTILITY CLASSES) ═══ */
+  /* Flattening Neumorphic styles into Dayos high-contrast border styles */
   .shadow-soft-extruded {
-    box-shadow: 9px 9px 18px rgba(189, 201, 193, 0.75), -9px -9px 18px rgba(255, 255, 255, 0.85);
+    box-shadow: none !important;
+    border: 1px solid var(--color-midnight-ink) !important;
   }
 
   .shadow-soft-extruded-hover {
-    box-shadow: 12px 12px 24px rgba(189, 201, 193, 0.85), -12px -12px 24px rgba(255, 255, 255, 0.95);
+    box-shadow: none !important;
+    transition: all 0.2s ease;
+  }
+  
+  .shadow-soft-extruded-hover:hover {
+    background-color: var(--color-faint-mist) !important;
+    border-color: var(--color-midnight-ink) !important;
   }
 
   .shadow-soft-extruded-sm {
-    box-shadow: 5px 5px 10px rgba(189, 201, 193, 0.75), -5px -5px 10px rgba(255, 255, 255, 0.85);
+    box-shadow: none !important;
+    border: 1px solid var(--color-ash-gray) !important;
   }
 
   .shadow-soft-inset {
-    box-shadow: inset 6px 6px 12px rgba(189, 201, 193, 0.75), inset -6px -6px 12px rgba(255, 255, 255, 0.85);
+    box-shadow: none !important;
+    border: 1px solid var(--color-midnight-ink) !important;
+    background-color: var(--color-paper-white) !important;
   }
 
   .shadow-soft-inset-deep {
-    box-shadow: inset 10px 10px 20px rgba(189, 201, 193, 0.85), inset -10px -10px 20px rgba(255, 255, 255, 0.95);
+    box-shadow: none !important;
+    border: 1px solid var(--color-midnight-ink) !important;
+    background-color: var(--color-paper-white) !important;
   }
 
   .shadow-soft-inset-sm {
-    box-shadow: inset 3px 3px 6px rgba(189, 201, 193, 0.75), inset -3px -3px 6px rgba(255, 255, 255, 0.85);
+    box-shadow: none !important;
+    border: 1px solid var(--color-fog-gray) !important;
+    background-color: var(--color-faint-mist) !important;
   }
 
-  /* ═══ TRANSITION ALIAS ═══ */
   .transition-soft {
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  /* ═══ NEUMORPHIC INPUT WELLS ═══ */
+  /* Input fields */
   .soft-input {
-    background-color: #E4EDE8;
-    color: #2A3A31;
-    border-radius: 16px;
-    box-shadow: inset 6px 6px 12px rgba(189, 201, 193, 0.75), inset -6px -6px 12px rgba(255, 255, 255, 0.85);
+    background-color: var(--color-paper-white);
+    color: var(--color-midnight-ink);
+    border-radius: var(--radius-buttons);
+    border: 1px solid var(--color-midnight-ink);
     outline: none;
-    border: none;
-    padding: 12px 18px;
-    font-size: 14px;
-    transition: all 0.3s ease;
+    padding: 12px 16px;
+    font-size: var(--text-body-sm);
+    font-family: var(--font-suisseintl);
+    transition: all 0.2s ease;
   }
 
   .soft-input:focus {
-    box-shadow: inset 10px 10px 20px rgba(189, 201, 193, 0.85), inset -10px -10px 20px rgba(255, 255, 255, 0.95);
-    ring: 2px solid #7C3AED;
+    border-color: var(--color-midnight-ink);
+    outline: 2px solid var(--color-midnight-ink);
+    outline-offset: -1px;
   }
 
-  /* ═══ NEUMORPHIC BUTTONS ═══ */
+  /* Flat Buttons */
   .soft-btn {
-    background-color: #E4EDE8;
-    color: #2A3A31;
-    border-radius: 16px;
-    box-shadow: 5px 5px 10px rgba(189, 201, 193, 0.75), -5px -5px 10px rgba(255, 255, 255, 0.85);
-    padding: 10px 20px;
-    font-weight: 600;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    background-color: transparent;
+    color: var(--color-midnight-ink);
+    border-radius: var(--radius-buttons);
+    border: 1px solid var(--color-midnight-ink);
+    padding: 10px 16px;
+    font-family: var(--font-suisseintl);
+    font-weight: 500;
+    font-size: var(--text-body-sm);
+    transition: all 0.2s ease;
     cursor: pointer;
-    border: none;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -161,59 +235,45 @@
   }
 
   .soft-btn:hover {
-    transform: translateY(-1px);
-    box-shadow: 8px 8px 16px rgba(189, 201, 193, 0.8), -8px -8px 16px rgba(255, 255, 255, 0.9);
+    background-color: var(--color-faint-mist);
   }
 
   .soft-btn:active {
-    transform: translateY(0.5px);
-    box-shadow: inset 4px 4px 8px rgba(189, 201, 193, 0.8), inset -4px -4px 8px rgba(255, 255, 255, 0.8);
+    background-color: var(--color-canvas-ice);
   }
 
-  .soft-btn:focus-visible {
-    outline: 2px solid #7C3AED;
-    outline-offset: 2px;
-  }
-
-  /* Primary colored button (using accent color) */
+  /* Primary Button (Schedule Demo Style) */
   .soft-btn-primary {
-    background: #7C3AED;
-    color: #FFFFFF;
-    box-shadow: 5px 5px 10px rgba(124, 58, 237, 0.35), -5px -5px 10px rgba(255, 255, 255, 0.6);
+    background-color: var(--color-midnight-ink) !important;
+    color: var(--color-paper-white) !important;
+    border: 1px solid var(--color-midnight-ink) !important;
+    border-radius: var(--radius-buttons) !important;
   }
 
   .soft-btn-primary:hover {
-    background: #8B5CF6;
-    box-shadow: 8px 8px 16px rgba(124, 58, 237, 0.45), -8px -8px 16px rgba(255, 255, 255, 0.7);
+    background-color: var(--color-deep-smoke) !important;
   }
 
   .soft-btn-primary:active {
-    background: #6D28D9;
-    box-shadow: inset 4px 4px 8px rgba(58, 20, 120, 0.5), inset -4px -4px 8px rgba(255, 255, 255, 0.25);
+    background-color: var(--color-ash-gray) !important;
   }
 
-  /* Success/Teal colored button */
+  /* Success Action Button (using Action Green highlights) */
   .soft-btn-success {
-    background: #0D9488;
-    color: #FFFFFF;
-    box-shadow: 5px 5px 10px rgba(13, 148, 136, 0.35), -5px -5px 10px rgba(255, 255, 255, 0.6);
+    background-color: var(--color-action-green) !important;
+    color: var(--color-midnight-ink) !important;
+    border: 1px solid var(--color-midnight-ink) !important;
+    border-radius: var(--radius-buttons) !important;
   }
 
   .soft-btn-success:hover {
-    background: #0F766E;
-    box-shadow: 8px 8px 16px rgba(13, 148, 136, 0.45), -8px -8px 16px rgba(255, 255, 255, 0.7);
+    opacity: 0.9 !important;
   }
 
-  .soft-btn-success:active {
-    background: #115E59;
-    box-shadow: inset 4px 4px 8px rgba(17, 94, 89, 0.5), inset -4px -4px 8px rgba(255, 255, 255, 0.25);
-  }
-
-  /* Decorative Wave rules */
+  /* Divider line */
   .soft-divider {
-    height: 6px;
-    background: #E4EDE8;
-    box-shadow: inset 2px 2px 4px rgba(189, 201, 193, 0.6), inset -2px -2px 4px rgba(255, 255, 255, 0.7);
-    border-radius: 9999px;
+    height: 1px;
+    background-color: var(--color-midnight-ink);
+    opacity: 0.15;
   }
 }

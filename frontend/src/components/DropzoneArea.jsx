@@ -53,10 +53,10 @@ export default function DropzoneArea({ onFileSelect, accept, maxSize, selectedFi
             <motion.div className="relative z-10 w-full">
                 <div
                     {...getRootProps()}
-                    className={`relative p-6 sm:p-8 text-center cursor-pointer min-h-[250px] flex flex-col items-center justify-center rounded-[24px] bg-[#E4EDE8] transition-all duration-300 select-none ${
+                    className={`relative p-6 sm:p-8 text-center cursor-pointer min-h-[250px] flex flex-col items-center justify-center rounded-[32px] bg-[#ffffff] transition-all duration-200 select-none ${
                         isDragActive
-                            ? 'shadow-soft-inset ring-2 ring-[#7C3AED] ring-offset-4 ring-offset-[#E4EDE8]'
-                            : 'shadow-soft-inset-deep hover:shadow-soft-inset'
+                            ? 'border-2 border-[#000000] bg-[#d1ffca]'
+                            : 'border border-dashed border-[#000000] hover:bg-[#f3f3f3]/50'
                     }`}
                 >
                     <input {...getInputProps()} aria-label="Upload files" />
@@ -65,21 +65,21 @@ export default function DropzoneArea({ onFileSelect, accept, maxSize, selectedFi
                         {!selectedFiles || selectedFiles.length === 0 ? (
                             <motion.div
                                 key="upload-prompt"
-                                initial={{ opacity: 0, scale: 0.95 }}
+                                initial={{ opacity: 0, scale: 0.98 }}
                                 animate={{ opacity: 1, scale: 1 }}
-                                exit={{ opacity: 0, scale: 1.05 }}
+                                exit={{ opacity: 0, scale: 1.02 }}
                                 className="flex flex-col items-center w-full gap-5"
                             >
                                 {/* Upload Icon Container */}
-                                <div className="w-16 h-16 rounded-full bg-[#E4EDE8] flex items-center justify-center shadow-soft-extruded hover:scale-105 transition-transform duration-300">
-                                    <FileText size={28} className="text-[#7C3AED]" />
+                                <div className="w-16 h-16 border border-[#000000] bg-[#ffffff] flex items-center justify-center hover:scale-102 transition-transform duration-200">
+                                    <FileText size={28} className="text-[#000000]" />
                                 </div>
 
                                 <div className="space-y-1">
-                                    <h2 className="font-display font-extrabold text-lg uppercase tracking-wider text-[#2A3A31]">
+                                    <h2 className="font-suisseintl font-bold text-base uppercase tracking-wider text-[#000000]">
                                         {isDragActive ? "Drop files here!" : "Load PDF Documents"}
                                     </h2>
-                                    <p className="font-body text-xs text-[#55685C] max-w-[320px] mx-auto">
+                                    <p className="font-suisseintl text-xs text-[#444444] max-w-[320px] mx-auto">
                                         Processing occurs 100% locally. File contents are never transmitted.
                                     </p>
                                 </div>
@@ -95,8 +95,8 @@ export default function DropzoneArea({ onFileSelect, accept, maxSize, selectedFi
                                         { txt: `Max: ${maxSize ? formatSize(maxSize) : '100 MB'}`, icon: HardDrive },
                                         { txt: "Offline Secure", icon: ShieldCheck }
                                     ].map((item, idx) => (
-                                        <div key={idx} className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#E4EDE8] shadow-soft-inset-sm font-mono text-[9px] uppercase tracking-wider text-[#55685C]">
-                                            <item.icon size={10} className="text-[#0D9488]" />
+                                        <div key={idx} className="flex items-center gap-1.5 px-3 py-1 border border-[#000000]/15 bg-[#e5e7eb] font-suisseintlmono text-[9px] uppercase tracking-wider text-[#000000]">
+                                            <item.icon size={10} className="text-[#000000]" />
                                             {item.txt}
                                         </div>
                                     ))}
@@ -105,17 +105,17 @@ export default function DropzoneArea({ onFileSelect, accept, maxSize, selectedFi
                         ) : (
                             <motion.div
                                 key="file-selected"
-                                initial={{ opacity: 0, x: -20 }}
+                                initial={{ opacity: 0, x: -10 }}
                                 animate={{ opacity: 1, x: 0 }}
-                                exit={{ opacity: 0, x: 20 }}
+                                exit={{ opacity: 0, x: 10 }}
                                 className="w-full flex flex-col gap-4"
                             >
-                                <div className="flex items-center justify-between border-b border-[#D5DFD9] pb-3 mb-2">
-                                    <span className="font-mono font-bold text-xs uppercase tracking-widest text-[#7C3AED] flex items-center gap-2">
-                                        <span className="w-2 h-2 rounded-full bg-[#0D9488] animate-pulse inline-block" />
+                                <div className="flex items-center justify-between border-b border-[#000000]/10 pb-3 mb-2">
+                                    <span className="font-suisseintlmono font-bold text-xs uppercase tracking-wider text-[#000000] flex items-center gap-2">
+                                        <span className="w-2 h-2 bg-[#000000] animate-pulse inline-block" />
                                         Files Loaded ({selectedFiles.length})
                                     </span>
-                                    <span className="font-mono font-bold text-[10px] text-[#55685C]">
+                                    <span className="font-suisseintlmono font-bold text-[10px] text-[#444444]">
                                         SYSTEM READY
                                     </span>
                                 </div>
@@ -125,29 +125,29 @@ export default function DropzoneArea({ onFileSelect, accept, maxSize, selectedFi
                                         <motion.div
                                             key={i}
                                             layout
-                                            className="flex items-center gap-3 p-3 rounded-2xl bg-[#F2F6F4] shadow-soft-extruded hover:shadow-soft-extruded-hover transition-all duration-200"
+                                            className="flex items-center gap-3 p-3 border border-[#000000] bg-[#ffffff] hover:bg-[#f3f3f3] transition-all duration-200"
                                         >
-                                            <div className="w-10 h-10 rounded-xl bg-[#F2F6F4] shadow-soft-inset-sm flex items-center justify-center flex-shrink-0">
-                                                <FileText size={18} className="text-[#7C3AED]" />
+                                            <div className="w-10 h-10 border border-[#000000]/10 bg-[#e5e7eb]/20 flex items-center justify-center flex-shrink-0">
+                                                <FileText size={18} className="text-[#000000]" />
                                             </div>
                                             <div className="flex-1 min-w-0 text-left">
-                                                <p className="font-mono font-bold text-sm text-[#2A3A31] truncate">
+                                                <p className="font-suisseintlmono font-bold text-xs text-[#000000] truncate">
                                                     {file.name}
                                                 </p>
-                                                <div className="flex items-center gap-2 mt-0.5 font-mono text-[10px]">
-                                                    <span className="text-[#55685C]">
+                                                <div className="flex items-center gap-2 mt-0.5 font-suisseintlmono text-[10px]">
+                                                    <span className="text-[#444444]">
                                                         {formatSize(file.size)}
                                                     </span>
-                                                    <span className="text-[#D5DFD9]">|</span>
-                                                    <span className="text-[#0D9488] font-bold flex items-center gap-1">
-                                                        <span className="w-1.5 h-1.5 rounded-full bg-[#0D9488] inline-block" />
+                                                    <span className="text-[#000000]/15">|</span>
+                                                    <span className="text-[#000000] font-bold flex items-center gap-1">
+                                                        <span className="w-1.5 h-1.5 bg-[#d1ffca] border border-[#000000] inline-block" />
                                                         READY
                                                     </span>
                                                 </div>
                                             </div>
                                             <button
                                                 onClick={(e) => handleRemoveFile(i, e)}
-                                                className="w-8 h-8 rounded-xl bg-[#F2F6F4] shadow-soft-extruded-sm flex items-center justify-center text-[#E11D48] hover:text-[#E11D48]/80 hover:shadow-soft-extruded active:shadow-soft-inset-sm transition-all focus:outline-none"
+                                                className="w-8 h-8 border border-[#000000] bg-[#ffffff] flex items-center justify-center text-red-600 hover:bg-red-50 hover:text-red-700 transition-all focus:outline-none"
                                                 aria-label={`Remove ${file.name}`}
                                             >
                                                 <Trash2 size={14} />
@@ -158,7 +158,7 @@ export default function DropzoneArea({ onFileSelect, accept, maxSize, selectedFi
 
                                 {multiple && (
                                     <button
-                                        className="mt-2 self-center soft-btn text-xs"
+                                        className="mt-2 self-center soft-btn text-xs hover:bg-[#f3f3f3]"
                                         onClick={(e) => { e.stopPropagation(); document.querySelector('input[type="file"]').click(); }}
                                     >
                                         <Plus size={14} />

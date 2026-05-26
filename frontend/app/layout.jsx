@@ -5,19 +5,28 @@ import Footer from '@/components/Footer';
 import ScrollToHash from '@/components/ScrollToHash';
 import { Suspense } from 'react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
-import { Plus_Jakarta_Sans, DM_Sans } from 'next/font/google';
+import { Inter, Bebas_Neue, IBM_Plex_Mono } from 'next/font/google';
 import IntroOverlay from '@/components/IntroOverlay';
 
-const plusJakartaSans = Plus_Jakarta_Sans({
+const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-display',
+  variable: '--font-suisseintl',
+  weight: ['400', '500'],
 });
 
-const dmSans = DM_Sans({
+const bebasNeue = Bebas_Neue({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-body',
+  variable: '--font-suisseintlcond',
+  weight: ['400'],
+});
+
+const ibmPlexMono = IBM_Plex_Mono({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-suisseintlmono',
+  weight: ['400'],
 });
 
 export const metadata = {
@@ -54,7 +63,7 @@ export const metadata = {
 };
 
 export const viewport = {
-  themeColor: '#E4EDE8',
+  themeColor: '#e5e7eb',
 };
 
 export default function RootLayout({ children }) {
@@ -103,7 +112,7 @@ export default function RootLayout({ children }) {
   };
 
   return (
-    <html lang="en" className={`${plusJakartaSans.variable} ${dmSans.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${inter.variable} ${bebasNeue.variable} ${ibmPlexMono.variable}`} suppressHydrationWarning>
       <head>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }} />

@@ -9,47 +9,47 @@ export default function ToolSEOContent({ toolSlug }) {
     return (
         <>
             {/* SEO Rich Content Section */}
-            <section className="mt-16 mb-8 w-full max-w-3xl text-left">
-                <h2 className="font-display font-extrabold text-xl uppercase mb-4 text-[#2A3A31]">
+            <section className="mb-8 w-full text-left font-suisseintl">
+                <h2 className="font-suisseintlcond font-bold text-xl uppercase mb-4 text-[#000000]">
                     How to {tool.name}
                 </h2>
                 {tool.seoArticle ? (
                     <div
-                        className="text-sm text-[#55685C] leading-relaxed mb-10 space-y-4 [&_a]:text-[#7C3AED] [&_a]:font-bold [&_a]:hover:text-[#9F67FF]"
+                        className="text-xs sm:text-sm text-[#444444] leading-relaxed mb-10 space-y-4 [&_a]:text-[#000000] [&_a]:font-bold [&_a]:underline [&_a]:hover:opacity-80"
                         dangerouslySetInnerHTML={{ __html: tool.seoArticle }}
                     />
                 ) : (
-                    <p className="text-sm text-[#55685C] leading-relaxed mb-10">
+                    <p className="text-xs sm:text-sm text-[#444444] leading-relaxed mb-10">
                         Use our free online tool to {tool.name.toLowerCase()} instantly. Load your file above and let our secure client-side processor execute it locally. No installation required.
                     </p>
                 )}
 
-                <h2 className="font-display font-extrabold text-lg uppercase mb-3 text-[#2A3A31]">
+                <h2 className="font-suisseintlcond font-bold text-lg uppercase mb-3 text-[#000000]">
                     Why use DocShift?
                 </h2>
-                <div className="text-sm text-[#55685C] leading-relaxed mb-10 space-y-3.5">
+                <div className="text-xs sm:text-sm text-[#444444] leading-relaxed mb-10 space-y-3.5">
                     <p>
-                        <strong className="text-[#2A3A31]">100% Private &amp; Secure:</strong> We take your document privacy seriously. Files are never stored or transmitted, ensuring your data remains completely secure on your own local hardware.
+                        <strong className="text-[#000000] font-semibold">100% Private &amp; Secure:</strong> We take your document privacy seriously. Files are never stored or transmitted, ensuring your data remains completely secure on your own local hardware.
                     </p>
                     <p>
-                        <strong className="text-[#2A3A31]">Blazing Fast:</strong> Forget heavy desktop software. Process your documents in absolute seconds directly from your web browser.
+                        <strong className="text-[#000000] font-semibold">Blazing Fast:</strong> Forget heavy desktop software. Process your documents in absolute seconds directly from your web browser.
                     </p>
                     <p>
-                        <strong className="text-[#2A3A31]">Zero Installation:</strong> No downloads, no plugins, no sign-ups. Everything runs right in the browser.
+                        <strong className="text-[#000000] font-semibold">Zero Installation:</strong> No downloads, no plugins, no sign-ups. Everything runs right in the browser.
                     </p>
                 </div>
 
                 {/* FAQ Section */}
                 {tool.faqs && tool.faqs.length > 0 && (
                     <>
-                        <div className="soft-divider my-8" />
-                        <h2 className="font-display font-extrabold text-lg uppercase mb-5 mt-6 text-[#2A3A31]">
+                        <div className="border-t border-[#000000]/10 my-8" />
+                        <h2 className="font-suisseintlcond font-bold text-lg uppercase mb-5 mt-6 text-[#000000]">
                             Frequently Asked Questions
                         </h2>
-                        <div className="space-y-5">
+                        <div className="space-y-4">
                             {tool.faqs.map((faq, index) => (
-                                <NeumorphicCard key={index} title={`Q: ${faq.q}`} hoverEffect={true} className="p-6">
-                                    <p className="text-sm text-[#55685C] leading-relaxed">{faq.a}</p>
+                                <NeumorphicCard key={index} title={`Q: ${faq.q}`} hoverEffect={false} className="p-6 bg-[#ffffff] border border-[#000000] rounded-[32px]">
+                                    <p className="text-xs sm:text-sm text-[#444444] leading-relaxed">{faq.a}</p>
                                 </NeumorphicCard>
                             ))}
                         </div>
@@ -57,18 +57,18 @@ export default function ToolSEOContent({ toolSlug }) {
                 )}
 
                 {/* Related Tools */}
-                <div className="soft-divider my-8" />
-                <h2 className="font-display font-extrabold text-lg uppercase mb-5 mt-6 text-[#2A3A31]">
+                <div className="border-t border-[#000000]/10 my-8" />
+                <h2 className="font-suisseintlcond font-bold text-lg uppercase mb-5 mt-6 text-[#000000]">
                     Related Tools
                 </h2>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                     {TOOLS.filter(t => t.category === tool.category && t.slug !== tool.slug)
-                        .slice(0, 6)
+                        .slice(0, 8)
                         .map((relatedTool) => (
                             <Link
                                 key={relatedTool.slug}
                                 href={`/tool/${relatedTool.slug}`}
-                                className="h-10 rounded-xl bg-[#E4EDE8] shadow-soft-extruded-sm flex items-center justify-center px-3 text-xs font-semibold text-[#55685C] hover:text-[#7C3AED] hover:-translate-y-[0.5px] hover:shadow-soft-extruded transition-all duration-200 truncate focus:outline-none focus:ring-1 focus:ring-[#7C3AED] text-center"
+                                className="h-10 rounded-none border border-[#000000]/15 bg-[#ffffff] flex items-center justify-center px-3 text-xs font-bold text-[#444444] hover:text-[#000000] hover:border-[#000000] hover:bg-[#f3f3f3] transition-all duration-150 truncate text-center"
                             >
                                 {relatedTool.name}
                             </Link>

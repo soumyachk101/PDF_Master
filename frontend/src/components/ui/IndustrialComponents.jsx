@@ -8,33 +8,44 @@ export function cn(...inputs) {
   return twMerge(clsx(inputs));
 }
 
-// ═══ NEUMORPHIC CARD ═══
-// Semantic alias and standard export
+// ═══ FLAT CONTENT CARD ═══
+// Variant: 'paper' (default, bg-white, 24px/32px radius, black border) or 'solid' (bg-black, white text)
 export const NeumorphicCard = ({
   children,
   className,
   title,
   hoverEffect = true,
+  variant = 'paper',
   ...props
 }) => {
+  const isSolid = variant === 'solid' || className?.includes('bg-black') || className?.includes('bg-[#000000]');
+
   return (
     <div
       className={cn(
-        'bg-[#F2F6F4] rounded-[32px] shadow-soft-extruded p-6 sm:p-8 transition-soft duration-300',
-        hoverEffect && 'hover:-translate-y-1 hover:shadow-soft-extruded-hover',
+        isSolid
+          ? 'bg-[#000000] text-[#ffffff] rounded-[32px] p-6 sm:p-8 border border-transparent'
+          : 'bg-[#ffffff] text-[#000000] rounded-[32px] border border-[#000000] p-6 sm:p-8',
+        hoverEffect && 'hover:-translate-y-0.5 transition-all duration-200',
         className
       )}
       {...props}
     >
       {title && (
-        <div className="flex items-center justify-between mb-6 pb-3 shadow-[inset_0_-2px_0_rgba(189,201,193,0.3)]">
-          <h3 className="font-display font-bold text-base uppercase tracking-wider text-[#2A3A31]">
+        <div className={cn(
+          "flex items-center justify-between mb-6 pb-3 border-b",
+          isSolid ? "border-[#ffffff]/20" : "border-[#000000]/15"
+        )}>
+          <h3 className={cn(
+            "font-suisseintl font-bold text-sm uppercase tracking-wider",
+            isSolid ? "text-[#ffffff]" : "text-[#000000]"
+          )}>
             {title}
           </h3>
           <div className="flex gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#F2F6F4] shadow-soft-inset-sm" />
-            <span className="w-2.5 h-2.5 rounded-full bg-[#F2F6F4] shadow-soft-inset-sm" />
-            <span className="w-2.5 h-2.5 rounded-full bg-[#F2F6F4] shadow-soft-inset-sm" />
+            <span className={cn("w-2 h-2 rounded-full", isSolid ? "bg-[#ffffff]/30" : "bg-[#000000]/20")} />
+            <span className={cn("w-2 h-2 rounded-full", isSolid ? "bg-[#ffffff]/30" : "bg-[#000000]/20")} />
+            <span className={cn("w-2 h-2 rounded-full", isSolid ? "bg-[#ffffff]/30" : "bg-[#000000]/20")} />
           </div>
         </div>
       )}
@@ -43,28 +54,37 @@ export const NeumorphicCard = ({
   );
 };
 
-// Map original name to the new styled component
 export const IndustrialCard = NeumorphicCard;
 
-// ═══ NEUMORPHIC BUTTON ═══
+// ═══ FLAT BUTTONS ═══
 export const NeumorphicButton = ({
   children,
   variant = 'primary',
   className,
   ...props
 }) => {
-  const baseStyle = 'soft-btn h-12 px-6 font-semibold uppercase tracking-wider text-xs';
+  const baseStyle = 'h-12 px-6 font-suisseintl font-medium text-xs uppercase tracking-wider transition-all duration-200 inline-flex items-center justify-center gap-2 select-none';
   
   const variants = {
-    primary: 'soft-btn-primary',
-    secondary: 'soft-btn',
-    ghost: 'bg-transparent text-[#7C3AED] hover:bg-[#E4EDE8]/50 active:shadow-soft-inset-sm',
-    red: 'bg-[#E11D48] text-white shadow-soft-extruded-sm hover:bg-[#F43F5E] active:shadow-soft-inset-sm',
-    blue: 'soft-btn-primary',
-    yellow: 'bg-amber-500 text-white shadow-soft-extruded-sm hover:bg-amber-600 active:shadow-soft-inset-sm',
-    outline: 'border border-[#7C3AED] text-[#7C3AED] bg-transparent hover:bg-[#E4EDE8]/50 active:shadow-soft-inset-sm',
-    green: 'soft-btn-success',
-    danger: 'bg-[#E11D48] text-white shadow-soft-extruded-sm hover:bg-[#F43F5E] active:shadow-soft-inset-sm',
+    // Schedule Demo Button Style: background #000000, text #ffffff, 8px border-radius
+    primary: 'bg-[#000000] text-[#ffffff] rounded-[8px] hover:bg-[#2f2f2f] active:bg-[#444444]',
+    blue: 'bg-[#000000] text-[#ffffff] rounded-[8px] hover:bg-[#2f2f2f] active:bg-[#444444]',
+    
+    // Ghost Button Style: Transparent bg, color #979797, paddingRight=16, borderRadius=0px
+    ghost: 'bg-transparent text-[#979797] hover:text-[#000000] rounded-none border-none hover:bg-transparent',
+    secondary: 'bg-transparent text-[#444444] border border-[#979797] rounded-[8px] hover:bg-[#f3f3f3] hover:text-[#000000]',
+    
+    // Action Green highlights (Action green background, black border, 8px border-radius)
+    green: 'bg-[#d1ffca] text-[#000000] border border-[#000000] rounded-[8px] hover:bg-[#b5f5ad]',
+    success: 'bg-[#d1ffca] text-[#000000] border border-[#000000] rounded-[8px] hover:bg-[#b5f5ad]',
+    
+    // Alert Yellow
+    yellow: 'bg-[#fff100] text-[#000000] border border-[#000000] rounded-[8px] hover:bg-yellow-400',
+    
+    // Pill Button with Round Corners Style (generic rounded button): bg transparent, color #000000, 4px border-radius
+    outline: 'bg-transparent text-[#000000] border border-[#000000] rounded-[4px] hover:bg-[#f3f3f3]',
+    danger: 'bg-red-600 text-white rounded-[8px] hover:bg-red-700 active:bg-red-800 border border-[#000000]',
+    red: 'bg-red-600 text-white rounded-[8px] hover:bg-red-700 active:bg-red-800 border border-[#000000]',
   };
 
   return (
@@ -83,7 +103,7 @@ export const NeumorphicButton = ({
 
 export const IndustrialButton = NeumorphicButton;
 
-// ═══ NEUMORPHIC SECTION ═══
+// ═══ FLAT LAYOUT SECTION ═══
 export const NeumorphicSection = ({
   children,
   className,
@@ -94,7 +114,7 @@ export const NeumorphicSection = ({
     <section
       id={id}
       className={cn(
-        'py-20 px-4 relative overflow-hidden bg-[#E4EDE8]',
+        'py-20 px-4 relative overflow-hidden bg-[#e5e7eb]',
         className
       )}
       {...props}
@@ -108,7 +128,7 @@ export const NeumorphicSection = ({
 
 export const IndustrialSection = NeumorphicSection;
 
-// ═══ NEUMORPHIC BADGE / PILL ═══
+// ═══ ACHROMATIC BADGE / PILL ═══
 export const NeumorphicBadge = ({
   children,
   color = 'green',
@@ -116,19 +136,19 @@ export const NeumorphicBadge = ({
   className
 }) => {
   const badgeColors = {
-    green: 'text-[#0D9488]',
-    red: 'text-[#E11D48]',
-    yellow: 'text-amber-600',
-    blue: 'text-[#7C3AED]',
+    green: 'bg-[#d1ffca] text-[#000000] border border-[#000000]',
+    yellow: 'bg-[#fff100] text-[#000000] border border-[#000000]',
+    red: 'bg-[#ffffff] text-[#000000] border border-red-500',
+    blue: 'bg-[#ffffff] text-[#000000] border border-[#000000]',
   };
 
   return (
     <span className={cn(
-      'inline-flex items-center gap-2 px-4 py-1.5 text-[10px] font-mono font-extrabold uppercase tracking-widest rounded-full bg-[#E4EDE8] shadow-soft-inset-sm',
+      'inline-flex items-center gap-2 px-4 py-1.5 text-[10px] font-suisseintlmono font-bold uppercase tracking-wider rounded-none',
       badgeColors[color] || badgeColors.green,
       className
     )}>
-      {led && <span className="w-1.5 h-1.5 rounded-full bg-[#0D9488] animate-pulse-glow" />}
+      {led && <span className="w-1.5 h-1.5 rounded-full bg-[#000000] animate-pulse" />}
       {children}
     </span>
   );
@@ -136,10 +156,10 @@ export const NeumorphicBadge = ({
 
 export const IndustrialBadge = NeumorphicBadge;
 
-// ═══ MARQUEE COMPONENT ═══
+// ═══ MARQUEE TEXT COMPONENT ═══
 export const MarqueeText = ({ children, className }) => {
   return (
-    <div className={cn('overflow-hidden whitespace-nowrap py-1.5 px-4 rounded-full bg-[#E4EDE8] shadow-soft-inset-sm', className)}>
+    <div className={cn('overflow-hidden whitespace-nowrap py-2 px-4 border-t border-b border-[#000000] bg-[#ffffff]', className)}>
       <div
         className="inline-block animate-[marquee_25s_linear_infinite]"
         style={{
@@ -161,40 +181,46 @@ export const MarqueeText = ({ children, className }) => {
   );
 };
 
-// ═══ DECORATIVE COLOR DOTS (NEUMORPHIC STYLE) ═══
+// ═══ DECORATIVE SWATCHES (ACHROMATIC / SYSTEM HIGHLIGHTS) ═══
 export const ColorSquares = ({ className }) => {
-  // Beautiful pastel/neumorphic palette: Purple, Teal, Sage, Emerald, Rose, Amber
-  const colors = ['bg-[#7C3AED]', 'bg-[#0D9488]', 'bg-[#10B981]', 'bg-[#F43F5E]', 'bg-[#F59E0B]', 'bg-[#6366F1]'];
+  const colors = [
+    'bg-[#000000]', // Midnight Ink
+    'bg-[#e5e7eb]', // Canvas Ice
+    'bg-[#ffffff]', // Paper White
+    'bg-[#979797]', // Fog Gray
+    'bg-[#d1ffca]', // Action Green
+    'bg-[#fff100]'  // Alert Yellow
+  ];
   return (
-    <div className={cn('flex gap-2 items-center justify-center p-2 rounded-full bg-[#E4EDE8] shadow-soft-inset-sm w-fit', className)}>
+    <div className={cn('flex gap-2 items-center justify-center p-1.5 bg-[#ffffff] border border-[#000000] w-fit', className)}>
       {colors.map((color, i) => (
         <div
           key={i}
-          className={cn('w-4 h-4 rounded-full shadow-soft-extruded-sm hover:scale-110 transition-transform duration-200 cursor-pointer', color)}
+          className={cn('w-4 h-4 border border-[#000000] hover:scale-105 transition-transform duration-200 cursor-pointer', color)}
         />
       ))}
     </div>
   );
 };
 
-// ═══ DIGITAL TICKER / VISITORS COUNTER ═══
+// ═══ METADATA INDICATOR ═══
 export const HitCounter = ({ className }) => {
   return (
     <div className={cn(
-      'inline-flex items-center px-4 py-2 rounded-2xl bg-[#E4EDE8] shadow-soft-inset-deep font-mono text-[11px] font-bold text-[#7C3AED] tracking-wider uppercase',
+      'inline-flex items-center px-4 py-2 border border-[#000000] bg-[#ffffff] font-suisseintlmono text-[11px] font-bold text-[#000000] tracking-wider uppercase',
       className
     )}>
-      <span className="w-1.5 h-1.5 rounded-full bg-[#7C3AED] animate-pulse mr-2" />
+      <span className="w-1.5 h-1.5 rounded-full bg-[#000000] animate-pulse mr-2" />
       Secure Sandbox Active
     </div>
   );
 };
 
-// ═══ WAVE HIGHLIGHT / STRIPE ═══
+// ═══ FLAT SHIMMER STRIPE ═══
 export const ConstructionStripe = ({ className }) => {
   return (
-    <div className={cn('relative h-[6px] w-full overflow-hidden bg-gradient-to-r from-[#7C3AED]/20 via-[#0D9488]/20 to-[#7C3AED]/20', className)}>
-      <div className="absolute inset-0 w-[200%] h-full bg-gradient-to-r from-transparent via-[#7C3AED]/30 to-transparent animate-[shimmer_3s_infinite_linear]" 
+    <div className={cn('relative h-[6px] w-full bg-[#000000]', className)}>
+      <div className="absolute inset-0 w-[200%] h-full bg-gradient-to-r from-transparent via-[#d1ffca]/40 to-transparent animate-[shimmer_3s_infinite_linear]" 
         style={{
           backgroundSize: '200% 100%',
           animation: 'shimmer 4s infinite linear'
@@ -210,7 +236,7 @@ export const ConstructionStripe = ({ className }) => {
   );
 };
 
-// ═══ GROOVE HR ═══
+// ═══ FLAT LINE ═══
 export const GrooveHr = ({ className }) => {
   return <div className={cn('soft-divider my-8 max-w-7xl mx-auto', className)} />;
 };

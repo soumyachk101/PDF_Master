@@ -218,7 +218,7 @@ function HomePage() {
                                                     {/* Flat Paper Card style */}
                                                     <button
                                                         onClick={() => handleToolClick(tool.slug)}
-                                                        className="bg-[#ffffff] border border-[#000000] rounded-[32px] p-5 flex flex-col gap-4 group transition-all duration-200 hover:border-[#000000] hover:bg-[#f3f3f3] text-left w-full relative overflow-hidden focus:outline-none focus:ring-2 focus:ring-[#000000] focus:ring-offset-2 focus:ring-offset-[#e5e7eb]"
+                                                        className="bg-[#ffffff] border border-[#000000] rounded-[20px] sm:rounded-[32px] p-4 sm:p-5 flex flex-col gap-4 group transition-all duration-200 hover:border-[#000000] hover:bg-[#f3f3f3] text-left w-full relative overflow-hidden focus:outline-none focus:ring-2 focus:ring-[#000000] focus:ring-offset-2 focus:ring-offset-[#e5e7eb]"
                                                     >
                                                         <div className="flex items-center justify-between w-full">
                                                             <span className="text-[9px] font-suisseintlmono tracking-widest text-[#444444] font-bold uppercase">
@@ -256,7 +256,7 @@ function HomePage() {
                                 animate={{ opacity: 1 }}
                                 className="text-center py-16"
                             >
-                                <div className="bg-[#ffffff] border border-[#000000] rounded-[32px] max-w-sm mx-auto p-8">
+                                <div className="bg-[#ffffff] border border-[#000000] rounded-[20px] sm:rounded-[32px] max-w-sm mx-auto p-6 sm:p-8">
                                     <p className="font-suisseintl text-xs uppercase tracking-wider text-[#444444] font-bold">No tools found matching &quot;{searchQuery}&quot;</p>
                                 </div>
                             </motion.div>
@@ -323,7 +323,7 @@ function HomePage() {
                             }
                         ].map((feature, i) => (
                             <motion.div key={i} variants={cardVariants}>
-                                <NeumorphicCard className="flex flex-col items-start gap-4 h-full bg-[#ffffff] border border-[#000000] rounded-[32px]">
+                                <NeumorphicCard className="flex flex-col items-start gap-4 h-full bg-[#ffffff] border border-[#000000]">
                                     <div className="w-14 h-14 border border-[#000000] bg-[#e5e7eb]/20 flex items-center justify-center">
                                         {feature.icon}
                                     </div>
@@ -353,7 +353,7 @@ function HomePage() {
                         viewport={{ once: true, margin: "-100px" }}
                         variants={sectionVariants}
                     >
-                        <NeumorphicCard className="p-8 sm:p-12 bg-[#ffffff] border border-[#000000] rounded-[32px]">
+                        <NeumorphicCard className="p-6 sm:p-12 bg-[#ffffff] border border-[#000000]">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                                 <div>
                                     <h2 className="font-suisseintlcond font-bold text-2xl sm:text-3xl uppercase text-[#000000] mb-4">
@@ -396,7 +396,7 @@ function HomePage() {
                     viewport={{ once: true, margin: "-100px" }}
                     variants={sectionVariants}
                     // Solid Card: Content card with a dark background. backgroundColor=#000000, borderRadius=32px, no boxShadow
-                    className="max-w-3xl mx-auto text-center bg-[#000000] rounded-[32px] text-white p-8 sm:p-16 relative overflow-hidden"
+                    className="max-w-3xl mx-auto text-center bg-[#000000] rounded-[20px] sm:rounded-[32px] text-white p-6 sm:p-16 relative overflow-hidden"
                 >
                     <h2 className="font-suisseintlcond font-bold text-3xl sm:text-5xl uppercase tracking-tight text-[#ffffff] mb-4 relative z-10">
                         Ready to Convert?

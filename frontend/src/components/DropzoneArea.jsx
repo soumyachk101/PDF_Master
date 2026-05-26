@@ -53,7 +53,7 @@ export default function DropzoneArea({ onFileSelect, accept, maxSize, selectedFi
             <motion.div className="relative z-10 w-full">
                 <div
                     {...getRootProps()}
-                    className={`relative p-4 sm:p-8 text-center cursor-pointer min-h-[250px] flex flex-col items-center justify-center rounded-[20px] sm:rounded-[32px] bg-[#ffffff] transition-all duration-200 select-none ${
+                    className={`relative p-6 sm:p-8 text-center cursor-pointer min-h-[250px] flex flex-col items-center justify-center rounded-[32px] bg-[#ffffff] transition-all duration-200 select-none ${
                         isDragActive
                             ? 'border-2 border-[#000000] bg-[#d1ffca]'
                             : 'border border-dashed border-[#000000] hover:bg-[#f3f3f3]/50'

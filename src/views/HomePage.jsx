@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo, useDeferredValue, useCallback, memo } from 'react';
+import React, { useState, useMemo, useCallback, memo } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, X, ArrowUpRight, ShieldCheck, Zap, ServerCrash, HeartHandshake, Gift, MonitorSmartphone } from 'lucide-react';
@@ -58,7 +58,6 @@ const sectionVariants = {
 function HomePage() {
     const [activeCategory, setActiveCategory] = useState('all');
     const [searchQuery, setSearchQuery] = useState('');
-    const deferredSearchQuery = useDeferredValue(searchQuery);
     const router = useRouter();
 
     // Map tools to their categories
@@ -81,15 +80,15 @@ function HomePage() {
     // Filter tools based on search query
     const getFilteredToolsForCategory = useCallback((catId) => {
         const catTools = TOOLS.filter(tool => tool.category === catId);
-        if (!deferredSearchQuery.trim()) return catTools;
+        if (!searchQuery.trim()) return catTools;
         
-        const q = deferredSearchQuery.toLowerCase();
+        const q = searchQuery.toLowerCase();
         return catTools.filter(tool =>
             tool.name.toLowerCase().includes(q) ||
             tool.shortDesc.toLowerCase().includes(q) ||
             tool.desc.toLowerCase().includes(q)
         );
-    }, [deferredSearchQuery]);
+    }, [searchQuery]);
 
     // Check if there are any results
     const hasResults = useMemo(() => {

@@ -12,20 +12,6 @@ export default function Providers({ children }) {
     document.documentElement.classList.remove('dark');
   }, []);
 
-  useEffect(() => {
-    if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
-          .then((registration) => {
-            console.log('[Service Worker] Registered:', registration.scope);
-          })
-          .catch((error) => {
-            console.log('[Service Worker] Registration failed:', error);
-          });
-      });
-    }
-  }, []);
-
   const colorMode = useMemo(() => ({
     mode: 'light',
     toggleColorMode: () => {},

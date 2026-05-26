@@ -1,5 +1,8 @@
+const path = require('path');
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  outputFileTracingRoot: path.join(__dirname, './'),
   transpilePackages: ['@mui/material', '@mui/icons-material', '@emotion/react', '@emotion/styled'],
   reactStrictMode: true,
   poweredByHeader: false,

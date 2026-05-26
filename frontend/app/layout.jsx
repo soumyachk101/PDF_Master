@@ -1,4 +1,3 @@
-import { Inter, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 import Providers from './providers';
 import Navbar from '@/components/Navbar';
@@ -6,26 +5,19 @@ import Footer from '@/components/Footer';
 import ScrollToHash from '@/components/ScrollToHash';
 import { Suspense } from 'react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import { Plus_Jakarta_Sans, DM_Sans } from 'next/font/google';
+import IntroOverlay from '@/components/IntroOverlay';
 
-const interDisplay = Inter({
+const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700', '800'],
+  display: 'swap',
   variable: '--font-display',
-  display: 'swap',
 });
 
-const interBody = Inter({
+const dmSans = DM_Sans({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700', '800'],
+  display: 'swap',
   variable: '--font-body',
-  display: 'swap',
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ['latin'],
-  weight: ['400', '500'],
-  variable: '--font-mono',
-  display: 'swap',
 });
 
 export const metadata = {
@@ -62,7 +54,7 @@ export const metadata = {
 };
 
 export const viewport = {
-  themeColor: '#e0e5ec',
+  themeColor: '#E4EDE8',
 };
 
 export default function RootLayout({ children }) {
@@ -111,16 +103,16 @@ export default function RootLayout({ children }) {
   };
 
   return (
-    <html lang="en" suppressHydrationWarning className={`${interDisplay.variable} ${interBody.variable} ${jetbrainsMono.variable}`}>
+    <html lang="en" className={`${plusJakartaSans.variable} ${dmSans.variable}`} suppressHydrationWarning>
       <head>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }} />
       </head>
       <body>
+        <IntroOverlay />
         <SpeedInsights />
         <Providers>
-          <div className="noise-overlay" />
           <Suspense>
             <ScrollToHash />
           </Suspense>

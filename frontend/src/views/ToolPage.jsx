@@ -10,496 +10,393 @@ import DropzoneArea from '@/components/DropzoneArea';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { Home, ArrowLeft, ArrowRight, Download, CheckCircle, AlertCircle, AlertTriangle, Link as LinkIcon, FileCheck2, Files, ShieldCheck } from 'lucide-react';
 import { getIcon } from '@/utils/icons';
-import { Screw, VentSlots } from '@/components/ui/IndustrialComponents';
+import { NeumorphicCard, NeumorphicButton, GrooveHr, cn } from '@/components/ui/IndustrialComponents';
 
 const DynamicIcon = memo(({ name, color, size = 24, className = "" }) => {
     const IconComponent = getIcon(name);
+    if (!IconComponent) return null;
     return React.createElement(IconComponent, { size, color, className });
 });
 
+DynamicIcon.displayName = 'DynamicIcon';
+
 const pageVariants = {
-    initial: { opacity: 0, y: 20 },
+    initial: { opacity: 0, y: 12 },
     in: { opacity: 1, y: 0, transition: { duration: 0.3 } },
-    out: { opacity: 0, y: -20, transition: { duration: 0.2 } }
+    out: { opacity: 0, y: -12, transition: { duration: 0.2 } }
 };
 
 const stateVariants = {
     initial: { opacity: 0, scale: 0.98 },
-    animate: { opacity: 1, scale: 1, transition: { duration: 0.3 } },
-    exit: { opacity: 0, scale: 1.02, transition: { duration: 0.2 } }
+    animate: { opacity: 1, scale: 1, transition: { duration: 0.25 } },
+    exit: { opacity: 0, scale: 0.98, transition: { duration: 0.2 } }
 };
 
-const industrialInputStyle = {
+const neumorphicInputStyle = {
     '& .MuiOutlinedInput-root': {
-        borderRadius: '8px',
-        bgcolor: '#e0e5ec',
-        fontFamily: 'var(--font-mono), monospace',
-        fontWeight: 600,
-        letterSpacing: '0.02em',
-        color: '#2d3436',
-        boxShadow: 'inset 2px 2px 5px #babecc, inset -2px -2px 5px #ffffff',
+        borderRadius: '16px',
+        bgcolor: '#E4EDE8',
+        fontFamily: 'var(--font-body), sans-serif',
+        fontWeight: 500,
+        color: '#2A3A31',
+        boxShadow: 'inset 4px 4px 8px rgba(189, 201, 193, 0.75), inset -4px -4px 8px rgba(255, 255, 255, 0.85)',
         '& .MuiOutlinedInput-notchedOutline': { border: 'none' },
         '&:hover .MuiOutlinedInput-notchedOutline': { border: 'none' },
         '&.Mui-focused': {
-            boxShadow: 'inset 2px 2px 5px #babecc, inset -2px -2px 5px #ffffff, 0 0 0 2px #ff4757',
+            boxShadow: 'inset 6px 6px 12px rgba(189, 201, 193, 0.85), inset -6px -6px 12px rgba(255, 255, 255, 0.95)',
+            ring: '2px solid #7C3AED',
         },
-        '&.Mui-focused .MuiOutlinedInput-notchedOutline': { border: 'none' },
     },
     '& .MuiInputLabel-root': {
-        color: '#4a5568',
-        fontFamily: '"Inter", sans-serif',
+        fontFamily: 'var(--font-body), sans-serif',
         fontWeight: 600,
-        textTransform: 'uppercase',
-        letterSpacing: '0.05em',
-        '&.Mui-focused': {
-            color: '#ff4757',
-        }
-    }
+        color: '#55685C',
+        '&.Mui-focused': { color: '#7C3AED' },
+    },
+    '& .MuiFormHelperText-root': {
+        fontFamily: 'monospace',
+        fontSize: '10px',
+        color: '#55685C',
+    },
 };
 
-function ToolPage({ toolSlug }) {
+export default function ToolPage({ toolSlug }) {
     const tool = getToolBySlug(toolSlug);
-
-    const [files, setFiles] = useState([]);
-    const [url, setUrl] = useState('');
-    const [params, setParams] = useState({});
-
     const {
-        appState,
-        progress,
-        resultUrl,
-        resultFilename,
-        errorMsg,
-        resetState,
-        processFiles
+        appState, progress, resultUrl, resultFilename,
+        errorMsg, resetState, processFiles
     } = useFileUpload(toolSlug);
 
-    const isUrlSupported = tool?.type === 'html' || tool?.urlInput || false;
-    const status = appState === 'upload' ? 'idle' : appState;
-    const error = errorMsg;
-
-    const needsMoreFiles = files.length > 0 && files.length < (tool?.minFiles || 1);
-    const isPasswordRequired = toolSlug === 'protect-pdf' && !params.password;
-    const isSubmitDisabled = (!files.length && !url) || (isUrlSupported && !url && !files.length) || needsMoreFiles || isPasswordRequired;
-    const selectedFileLabel = files.length > 1 ? `${files.length} files` : files[0]?.name || (url ? 'web page' : 'your file');
-    const outputLabel = resultFilename || `${toolSlug}-result${tool?.outputExt || '.pdf'}`;
-    const processingStep = progress < 35 ? 'Loading source file' : progress < 75 ? 'Processing document' : progress < 100 ? 'Packaging download' : 'Finalizing file';
-
-    const getButtonText = () => {
-        if (isPasswordRequired) return 'Enter Password';
-        if (needsMoreFiles) return `Upload At Least ${tool.minFiles} Files`;
-        return `Process ${files.length > 1 ? `${files.length} Files` : 'File'}`;
-    };
-
-    const handleProcess = () => {
-        if (isSubmitDisabled) return;
-        let submissionParams = { ...params };
-        if (url && isUrlSupported) {
-            submissionParams.url = url;
-        }
-
-        if (files.length > 0) {
-            processFiles(files, submissionParams);
-        } else if (url) {
-            processFiles([], submissionParams);
-        }
-    };
-
-    const handleDownload = () => {
-        if (resultUrl) {
-            const link = document.createElement('a');
-            link.href = resultUrl;
-            link.setAttribute('download', resultFilename || `${toolSlug}-result${tool.outputExt || '.pdf'}`);
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-    };
-
-    const handleReset = () => {
-        setFiles([]);
-        setUrl('');
-        setParams({});
-        resetState();
-    };
-
-    const handleParamChange = (key, value) => {
-        setParams(prev => ({ ...prev, [key]: value }));
-    };
+    const [selectedFiles, setSelectedFiles] = useState([]);
+    const [splitRanges, setSplitRanges] = useState('');
+    const [watermarkText, setWatermarkText] = useState('');
+    const [rotateDegrees, setRotateDegrees] = useState('90');
+    const [pageNumberStart, setpageNumberStart] = useState('1');
+    const [signText, setSignText] = useState('');
+    const [protectPassword, setProtectPassword] = useState('');
+    const [unlockPassword, setUnlockPassword] = useState('');
+    const [translateLang, setTranslateLang] = useState('es');
+    const [urlInput, setUrlInput] = useState('');
+    const [outputFormat, setOutputFormat] = useState('');
 
     if (!tool) {
         return (
-            <Box sx={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', p: 3, bgcolor: 'background.default', minHeight: '100vh' }}>
-                <Card sx={{ p: 6, borderRadius: '16px', border: '1px solid rgba(255,255,255,0.4)', boxShadow: '9px 9px 16px #babecc, -9px -9px 16px #ffffff', maxWidth: '500px', width: '100%', textAlign: 'center', bgcolor: '#e0e5ec' }}>
-                    <AlertTriangle size={48} color="#ff4757" style={{ margin: '0 auto', marginBottom: '24px' }} />
-                    <Typography variant="h4" sx={{ fontWeight: 800, mb: 2, color: '#2d3436' }}>Tool Not Found</Typography>
-                    <Typography variant="body1" sx={{ color: '#4a5568', mb: 4 }}>The tool you are looking for doesn't exist or has been moved.</Typography>
-                    <Button component={Link} href="/" variant="contained" size="large" startIcon={<ArrowLeft size={18} />} sx={{ borderRadius: '8px', bgcolor: '#ff4757', '&:hover': { bgcolor: '#ff2e44', transform: 'translateY(-2px)' }, fontWeight: 800, px: 4, py: 1.5 }}>
-                        Back to Home
-                    </Button>
-                </Card>
-            </Box>
+            <div className="min-h-screen flex items-center justify-center bg-[#E4EDE8] px-4 pt-24 pb-20">
+                <NeumorphicCard className="max-w-md w-full text-center">
+                    <AlertCircle size={48} className="text-[#E11D48] mx-auto mb-4" />
+                    <h2 className="font-display font-extrabold text-xl uppercase mb-3 text-[#2A3A31]">Tool Not Found</h2>
+                    <p className="text-sm text-[#55685C] mb-6">
+                        The requested tool does not exist or has been moved.
+                    </p>
+                    <Link href="/" className="soft-btn soft-btn-primary inline-flex items-center gap-2 text-xs">
+                        <ArrowLeft size={14} /> Return Home
+                    </Link>
+                </NeumorphicCard>
+            </div>
         );
     }
 
+    const iconComponent = getIcon(tool.icon);
+    const hasMultipleOutputs = tool.slug === 'pdf-to-jpg';
+    const hasUrlInput = tool.urlInput;
+
+    const handleSubmit = async () => {
+        const additionalData = {};
+        if (tool.slug === 'split-pdf' && splitRanges) additionalData.ranges = splitRanges;
+        if (tool.slug === 'add-watermark' && watermarkText) additionalData.text = watermarkText;
+        if (tool.slug === 'rotate-pdf') additionalData.degrees = rotateDegrees;
+        if (tool.slug === 'add-page-numbers') additionalData.start = pageNumberStart;
+        if (tool.slug === 'sign-pdf' && signText) additionalData.text = signText;
+        if (tool.slug === 'protect-pdf' && protectPassword) additionalData.password = protectPassword;
+        if (tool.slug === 'unlock-pdf' && unlockPassword) additionalData.password = unlockPassword;
+        if (tool.slug === 'translate-pdf') additionalData.targetLang = translateLang;
+        if (hasUrlInput && urlInput) additionalData.url = urlInput;
+        if (outputFormat) additionalData.format = outputFormat;
+        await processFiles(selectedFiles, additionalData);
+    };
+
+    const handleDownload = () => {
+        if (!resultUrl) return;
+        const a = document.createElement('a');
+        a.href = resultUrl;
+        a.download = resultFilename || `${tool.slug}-result${tool.outputExt || '.pdf'}`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+    };
+
+    const resetAll = () => {
+        resetState();
+        setSelectedFiles([]);
+        setSplitRanges('');
+        setWatermarkText('');
+        setRotateDegrees('90');
+        setpageNumberStart('1');
+        setSignText('');
+        setProtectPassword('');
+        setUnlockPassword('');
+        setTranslateLang('es');
+        setUrlInput('');
+        setOutputFormat('');
+    };
+
+    const breadcrumbItems = [
+        { name: 'HOME', href: '/', icon: Home },
+        { name: tool.name.toUpperCase(), href: `/tool/${tool.slug}` }
+    ];
+
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%', minHeight: '100vh', bgcolor: 'background.default', position: 'relative', overflow: 'hidden' }}>
-            {/* Ambient Radial Lights */}
-            <Box sx={{ position: 'absolute', top: 0, right: 0, width: 500, height: 500, bgcolor: 'rgba(255, 71, 87, 0.04)', borderRadius: '50%', filter: 'blur(150px)', pointerEvents: 'none' }} />
-            <Box sx={{ position: 'absolute', top: '20%', left: '-10%', width: 400, height: 400, bgcolor: 'rgba(34, 197, 94, 0.03)', borderRadius: '50%', filter: 'blur(150px)', pointerEvents: 'none' }} />
+        <div className="min-h-screen bg-[#E4EDE8] pt-6 pb-16 px-4">
+            <motion.div
+                variants={pageVariants}
+                initial="initial"
+                animate="in"
+                exit="out"
+                className="max-w-3xl mx-auto"
+            >
+                <Breadcrumbs items={breadcrumbItems} />
 
-            <Container maxWidth="md" sx={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', py: { xs: 4, md: 6 }, position: 'relative', zIndex: 10 }}>
-                <Box sx={{ width: '100%', maxWidth: '800px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    {/* Breadcrumb Navigation */}
-                    <Box sx={{ alignSelf: 'flex-start' }}>
-                        <Breadcrumbs items={[
-                          { name: 'Home', href: '/', icon: Home },
-                          { name: tool.name, href: `/tool/${tool.slug}`, isCurrent: true }
-                        ]} />
-                    </Box>
-
-                    <Box component={Link} href="/#tools" sx={{ alignSelf: 'flex-start', mb: 3, color: 'text.secondary', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 1, fontMono: true, fontWeight: 700, fontSize: '0.8rem', textTransform: 'uppercase', tracking: 'wider', '&:hover': { color: 'primary.main' }, transition: 'color 0.2s' }}>
-                        <ArrowLeft size={14} /> Back to All Tools
-                    </Box>
-
-                    <motion.div initial="initial" animate="in" exit="out" variants={pageVariants} style={{ width: '100%', textAlign: 'center', marginBottom: '32px' }}>
-                        <Box sx={{
-                            display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 64, height: 64, borderRadius: '50%', mb: 2,
-                            bgcolor: '#e0e5ec', color: '#ff4757', border: '1px solid rgba(255,255,255,0.4)',
-                            boxShadow: '4px 4px 10px #babecc, -4px -4px 10px #ffffff'
-                        }}>
-                            <DynamicIcon name={tool.icon} size={32} color="#ff4757" />
-                        </Box>
-                        <Typography variant="h3" component="h1" sx={{ fontWeight: 800, mb: 1, color: 'text.primary', fontSize: { xs: '2rem', md: '2.5rem' } }}>
-                            {tool.name}
-                        </Typography>
-                        <Typography variant="subtitle1" component="p" sx={{ color: 'text.secondary', maxWidth: '600px', mx: 'auto', fontWeight: 500, fontSize: '0.95rem' }}>
-                            {tool.desc}
-                        </Typography>
-                    </motion.div>
-
-                    <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15, duration: 0.4 }} style={{ width: '100%' }}>
-                    <Card className="screw-corners relative overflow-hidden" sx={{
-                        p: { xs: 4, md: 6 },
-                        borderRadius: '16px',
-                        bgcolor: '#e0e5ec',
-                        border: '1px solid rgba(255,255,255,0.4)',
-                        boxShadow: '9px 9px 16px #babecc, -9px -9px 16px #ffffff',
-                        minHeight: { xs: '380px', md: '420px' },
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'center'
-                    }}>
-                        {/* Screws and vent slots details */}
-                        <Screw className="top-3 left-3" />
-                        <Screw className="top-3 right-3" />
-                        <Screw className="bottom-3 left-3" />
-                        <Screw className="bottom-3 right-3" />
-                        <div className="absolute top-2.5 right-8 pointer-events-none z-10">
-                            <VentSlots />
+                {/* Tool Header */}
+                <div className="mb-6 text-center">
+                    <div className="inline-flex items-center gap-4 mb-4">
+                        <div className="w-14 h-14 rounded-2xl bg-[#E4EDE8] flex items-center justify-center shadow-soft-extruded hover:scale-105 transition-transform duration-300">
+                            {iconComponent && React.createElement(iconComponent, { size: 26, className: "text-[#7C3AED]" })}
                         </div>
+                        <h1 className="font-display font-extrabold text-3xl sm:text-4xl uppercase tracking-tight text-[#2A3A31]">
+                            {tool.name}
+                        </h1>
+                    </div>
+                    <p className="text-sm text-[#55685C] max-w-xl mx-auto leading-relaxed">
+                        {tool.desc}
+                    </p>
+                </div>
 
-                        <AnimatePresence>
-                            {(status === 'idle' || status === 'error') && (
-                                <motion.div key="upload" variants={stateVariants} initial="initial" animate="animate" exit="exit" style={{ display: 'flex', flexDirection: 'column', gap: '24px', paddingTop: '8px' }}>
+                <GrooveHr />
 
-                                    {isUrlSupported && (
-                                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                {/* Main Tool Window (Neumorphic Card) */}
+                <NeumorphicCard className="mt-6 p-0 sm:p-0 overflow-hidden" hoverEffect={false}>
+                    {/* Header */}
+                    <div className="px-6 py-4 border-b border-[#D5DFD9] flex justify-between items-center bg-[#F2F6F4]">
+                        <span className="font-mono text-xs font-bold text-[#2A3A31] tracking-wider">
+                            {tool.name.toUpperCase()} - DOCSHIFT
+                        </span>
+                        <div className="flex gap-1.5">
+                            <span className="w-2.5 h-2.5 rounded-full bg-[#F2F6F4] shadow-soft-inset-sm" />
+                            <span className="w-2.5 h-2.5 rounded-full bg-[#F2F6F4] shadow-soft-inset-sm" />
+                            <span className="w-2.5 h-2.5 rounded-full bg-[#F2F6F4] shadow-soft-inset-sm" />
+                        </div>
+                    </div>
+
+                    <div className="p-6 sm:p-8 bg-[#F2F6F4]">
+                        <AnimatePresence mode="wait">
+                            {/* ── UPLOAD STATE ── */}
+                            {appState === 'upload' && (
+                                <motion.div key="upload" variants={stateVariants} initial="initial" animate="animate" exit="exit">
+                                    {hasUrlInput && (
+                                        <div className="mb-6">
                                             <TextField
                                                 fullWidth
-                                                variant="outlined"
                                                 label="Website URL"
-                                                placeholder="Enter website URL (e.g., https://example.com)"
-                                                value={url}
-                                                onChange={(e) => setUrl(e.target.value)}
-                                                sx={industrialInputStyle}
+                                                placeholder="https://example.com"
+                                                value={urlInput}
+                                                onChange={(e) => setUrlInput(e.target.value)}
+                                                size="small"
+                                                sx={neumorphicInputStyle}
                                                 InputProps={{
-                                                    startAdornment: (
-                                                        <InputAdornment position="start">
-                                                            <LinkIcon size={18} color="#4a5568" />
-                                                        </InputAdornment>
-                                                    ),
+                                                    startAdornment: <InputAdornment position="start"><LinkIcon size={16} className="text-[#7C3AED] mr-1" /></InputAdornment>,
                                                 }}
                                             />
-                                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                                                <Box sx={{ flex: 1, height: '1px', bgcolor: 'rgba(0,0,0,0.05)' }} />
-                                                <Typography variant="caption" sx={{ fontWeight: 750, color: 'text.secondary', fontFamily: 'monospace', letterSpacing: 1.5 }}>OR</Typography>
-                                                <Box sx={{ flex: 1, height: '1px', bgcolor: 'rgba(0,0,0,0.05)' }} />
-                                            </Box>
-                                        </Box>
+                                            <p className="font-mono text-[10px] text-[#55685C]/70 mt-1.5 ml-2.5">
+                                                OR upload an HTML file below:
+                                            </p>
+                                        </div>
                                     )}
 
                                     <DropzoneArea
-                                        onFileSelect={setFiles}
+                                        onFileSelect={setSelectedFiles}
+                                        selectedFiles={selectedFiles}
                                         accept={tool.accept}
-                                        maxSize={100 * 1024 * 1024} // 100MB
-                                        selectedFiles={files}
-                                        hasUrl={!!url}
+                                        maxSize={100 * 1024 * 1024}
+                                        hasUrl={hasUrlInput && !!urlInput}
                                         multiple={tool.multiple}
                                     />
 
-                                    {/* Additional Tool Parameters */}
-                                    {files.length > 0 && toolSlug === 'split-pdf' && (
-                                        <TextField fullWidth label="Page Ranges (e.g., 1-3,5)" variant="outlined" value={params.ranges || ''} onChange={(e) => handleParamChange('ranges', e.target.value)} sx={industrialInputStyle} />
-                                    )}
-                                    {files.length > 0 && toolSlug === 'extract-pages' && (
-                                        <TextField fullWidth label="Page Ranges to Extract (e.g., 2,4-6)" variant="outlined" value={params.ranges || ''} onChange={(e) => handleParamChange('ranges', e.target.value)} sx={industrialInputStyle} />
-                                    )}
-                                    {files.length > 0 && toolSlug === 'remove-pages' && (
-                                        <TextField fullWidth label="Page Numbers to Remove (e.g., 1,3)" variant="outlined" value={params.pages || ''} onChange={(e) => handleParamChange('pages', e.target.value)} sx={industrialInputStyle} />
-                                    )}
-                                    {files.length > 0 && toolSlug === 'rotate-pdf' && (
-                                        <TextField fullWidth label="Degrees (e.g., 90, 180, 270)" type="number" variant="outlined" value={params.degrees || '90'} onChange={(e) => handleParamChange('degrees', e.target.value)} sx={industrialInputStyle} />
-                                    )}
-                                    {files.length > 0 && (toolSlug === 'protect-pdf' || toolSlug === 'unlock-pdf') && (
-                                        <TextField fullWidth label="Password" type="password" variant="outlined" value={params.password || ''} onChange={(e) => handleParamChange('password', e.target.value)} sx={industrialInputStyle} />
-                                    )}
-                                    {files.length > 0 && (toolSlug === 'add-watermark' || toolSlug === 'sign-pdf') && (
-                                        <TextField fullWidth label="Text" variant="outlined" value={params.text || ''} onChange={(e) => handleParamChange('text', e.target.value)} sx={industrialInputStyle} />
+                                    {/* Tool-specific options */}
+                                    {tool.slug === 'split-pdf' && (
+                                        <div className="mt-5">
+                                            <TextField fullWidth size="small" label="Page ranges" placeholder="e.g., 1-3, 5, 7-10" value={splitRanges} onChange={(e) => setSplitRanges(e.target.value)} sx={neumorphicInputStyle} helperText="Leave blank to split into individual pages" />
+                                        </div>
                                     )}
 
-                                    <AnimatePresence>
-                                        {error && (
-                                            <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }}>
-                                                <Alert severity="error" sx={{ borderRadius: '8px', mt: 2, border: '1px solid rgba(255, 71, 87, 0.2)', bgcolor: '#e0e5ec', boxShadow: 'inset 2px 2px 5px #babecc, inset -2px -2px 5px #ffffff', color: '#ff4757', fontWeight: 600 }} icon={<AlertCircle size={24} color="#ff4757" />}>
-                                                    {error}
-                                                </Alert>
-                                            </motion.div>
-                                        )}
-                                    </AnimatePresence>
+                                    {tool.slug === 'add-watermark' && (
+                                        <div className="mt-5">
+                                            <TextField fullWidth size="small" label="Watermark text" placeholder="CONFIDENTIAL" value={watermarkText} onChange={(e) => setWatermarkText(e.target.value)} sx={neumorphicInputStyle} />
+                                        </div>
+                                    )}
 
-                                    <Button
-                                        onClick={handleProcess}
-                                        disabled={isSubmitDisabled}
-                                        variant="contained"
-                                        size="large"
-                                        endIcon={<ArrowRight size={20} />}
-                                        sx={{
-                                            width: '100%',
-                                            mt: '16px',
-                                            padding: '18px',
-                                            borderRadius: '8px',
-                                            bgcolor: '#ff4757',
-                                            color: '#ffffff',
-                                            fontSize: '1.1rem',
-                                            fontWeight: 800,
-                                            textTransform: 'uppercase',
-                                            letterSpacing: '0.08em',
-                                            boxShadow: '4px 4px 10px rgba(255, 71, 87, 0.3), -4px -4px 10px rgba(255, 255, 255, 0.8)',
-                                            transition: 'all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
-                                            '& .MuiButton-endIcon': {
-                                                transition: 'transform 0.2s ease-in-out',
-                                            },
-                                            '&:hover': {
-                                                bgcolor: '#ff2e44',
-                                                boxShadow: '6px 6px 14px rgba(255, 71, 87, 0.4), -6px -6px 14px rgba(255, 255, 255, 0.8)',
-                                                transform: 'translateY(-2px)',
-                                            },
-                                            '&:hover .MuiButton-endIcon': {
-                                                transform: 'translateX(6px)',
-                                            },
-                                            '&:active': {
-                                                bgcolor: '#cc3946',
-                                                transform: 'translateY(1px)',
-                                                boxShadow: 'inset 3px 3px 6px rgba(0, 0, 0, 0.2)',
-                                            },
-                                            '&.Mui-disabled': {
-                                                bgcolor: '#d1d9e6',
-                                                color: '#a3b1c6',
-                                                boxShadow: 'none',
-                                                transform: 'none',
-                                                cursor: 'not-allowed',
-                                                opacity: 0.7
-                                            }
-                                        }}
-                                    >
-                                        {getButtonText()}
-                                    </Button>
+                                    {tool.slug === 'rotate-pdf' && (
+                                        <div className="mt-5">
+                                            <TextField fullWidth size="small" label="Rotation degrees" type="number" value={rotateDegrees} onChange={(e) => setRotateDegrees(e.target.value)} sx={neumorphicInputStyle} helperText="90, 180, or 270" />
+                                        </div>
+                                    )}
+
+                                    {tool.slug === 'add-page-numbers' && (
+                                        <div className="mt-5">
+                                            <TextField fullWidth size="small" label="Start number" type="number" value={pageNumberStart} onChange={(e) => setpageNumberStart(e.target.value)} sx={neumorphicInputStyle} />
+                                        </div>
+                                    )}
+
+                                    {tool.slug === 'sign-pdf' && (
+                                        <div className="mt-5">
+                                            <TextField fullWidth size="small" label="Signature text" placeholder="Your Name" value={signText} onChange={(e) => setSignText(e.target.value)} sx={neumorphicInputStyle} />
+                                        </div>
+                                    )}
+
+                                    {tool.slug === 'protect-pdf' && (
+                                        <div className="mt-5">
+                                            <TextField fullWidth size="small" label="Set password" type="password" value={protectPassword} onChange={(e) => setProtectPassword(e.target.value)} sx={neumorphicInputStyle} />
+                                        </div>
+                                    )}
+
+                                    {tool.slug === 'unlock-pdf' && (
+                                        <div className="mt-5">
+                                            <TextField fullWidth size="small" label="PDF password" type="password" value={unlockPassword} onChange={(e) => setUnlockPassword(e.target.value)} sx={neumorphicInputStyle} />
+                                        </div>
+                                    )}
+
+                                    {tool.slug === 'translate-pdf' && (
+                                        <div className="mt-5">
+                                            <TextField fullWidth size="small" label="Target language code" placeholder="es, fr, de..." value={translateLang} onChange={(e) => setTranslateLang(e.target.value)} sx={neumorphicInputStyle} helperText="ISO 639-1 code (es, fr, de, ja, etc.)" />
+                                        </div>
+                                    )}
+
+                                    {hasMultipleOutputs && (
+                                        <div className="mt-5 flex flex-wrap gap-3">
+                                            {['.png', '.jpg', '.webp'].map(fmt => {
+                                                const isSelected = outputFormat === fmt;
+                                                return (
+                                                    <button
+                                                        key={fmt}
+                                                        className={cn(
+                                                            'h-8 px-4 text-xs font-bold rounded-xl transition-all duration-200 focus:outline-none',
+                                                            isSelected
+                                                                ? 'bg-[#E4EDE8] text-[#7C3AED] shadow-soft-inset-sm font-bold'
+                                                                : 'bg-[#E4EDE8] text-[#55685C] shadow-soft-extruded-sm hover:-translate-y-[0.5px] hover:shadow-soft-extruded'
+                                                        )}
+                                                        onClick={() => setOutputFormat(fmt)}
+                                                    >
+                                                        {fmt.toUpperCase()}
+                                                    </button>
+                                                );
+                                            })}
+                                        </div>
+                                    )}
+
+                                    {/* Submit */}
+                                    <div className="mt-8">
+                                        <NeumorphicButton
+                                            onClick={handleSubmit}
+                                            disabled={(!selectedFiles || selectedFiles.length === 0) && !(hasUrlInput && urlInput)}
+                                            variant="primary"
+                                            className="w-full h-12 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none"
+                                        >
+                                            <ArrowRight size={16} />
+                                            Process {tool.name}
+                                        </NeumorphicButton>
+                                    </div>
                                 </motion.div>
                             )}
 
-                            {status === 'processing' && (
-                                <motion.div key="processing" variants={stateVariants} initial="initial" animate="animate" exit="exit">
-                                    <Box sx={{ py: { xs: 3, md: 5 }, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 4 }}>
-                                        <Box sx={{ width: '100%', maxWidth: 560, p: { xs: 3, sm: 4 }, borderRadius: '16px', bgcolor: '#e0e5ec', border: '1px solid rgba(255,255,255,0.45)', boxShadow: 'inset 3px 3px 8px #babecc, inset -3px -3px 8px #ffffff' }}>
-                                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2.5, mb: 3 }}>
-                                                <Box sx={{ width: 52, height: 52, borderRadius: '14px', bgcolor: '#e0e5ec', color: '#ff4757', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '4px 4px 10px #babecc, -4px -4px 10px #ffffff', border: '1px solid rgba(255,255,255,0.45)', flexShrink: 0 }}>
-                                                    <Files size={24} />
-                                                </Box>
-                                                <Box sx={{ minWidth: 0, textAlign: 'left' }}>
-                                                    <Typography variant="overline" sx={{ display: 'block', color: '#ff4757', fontFamily: 'var(--font-mono), monospace', fontWeight: 900, letterSpacing: '0.12em', lineHeight: 1.2 }}>
-                                                        Processing file
-                                                    </Typography>
-                                                    <Typography title={selectedFileLabel} sx={{ color: '#2d3436', fontWeight: 850, fontSize: { xs: '1rem', sm: '1.15rem' }, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                                                        {selectedFileLabel}
-                                                    </Typography>
-                                                </Box>
-                                            </Box>
-
-                                            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 2, mb: 1.5 }}>
-                                                <Typography sx={{ color: '#4a5568', fontFamily: 'var(--font-mono), monospace', fontWeight: 800, fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
-                                                    {processingStep}
-                                                </Typography>
-                                                <Typography sx={{ color: '#2d3436', fontFamily: 'var(--font-mono), monospace', fontWeight: 900, fontSize: '0.9rem' }}>
-                                                    {Math.round(progress)}%
-                                                </Typography>
-                                            </Box>
-
-                                            <LinearProgress
-                                                variant="determinate"
-                                                value={progress}
-                                                aria-label={`Processing progress ${Math.round(progress)} percent`}
-                                                sx={{
-                                                    height: 12,
-                                                    borderRadius: 999,
-                                                    bgcolor: 'rgba(45, 52, 54, 0.08)',
-                                                    boxShadow: 'inset 2px 2px 4px rgba(0,0,0,0.12), inset -2px -2px 4px rgba(255,255,255,0.9)',
-                                                    '& .MuiLinearProgress-bar': {
-                                                        borderRadius: 999,
-                                                        bgcolor: '#ff4757',
-                                                        boxShadow: '0 0 12px rgba(255, 71, 87, 0.45)',
-                                                    }
-                                                }}
+                            {/* ── PROCESSING STATE ── */}
+                            {appState === 'processing' && (
+                                <motion.div key="processing" variants={stateVariants} initial="initial" animate="animate" exit="exit" className="text-center py-10">
+                                    <div className="w-12 h-12 rounded-full border-[3px] border-[#D5DFD9] border-t-[#7C3AED] animate-spin mx-auto mb-5" />
+                                    <h3 className="font-display font-extrabold text-lg uppercase text-[#2A3A31] mb-2">Processing...</h3>
+                                    <p className="font-body text-xs text-[#55685C] mb-6">Please wait while your document is being processed.</p>
+                                    <div className="mt-4 max-w-xs mx-auto">
+                                        <div className="rounded-full bg-[#E4EDE8] shadow-soft-inset h-5 relative overflow-hidden p-1">
+                                            <div
+                                                className="h-full bg-gradient-to-r from-[#7C3AED] to-[#9F67FF] rounded-full transition-all duration-300"
+                                                style={{ width: `${progress}%` }}
                                             />
-
-                                            <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(3, 1fr)' }, gap: 1.5, mt: 3 }}>
-                                                {[
-                                                    { label: 'Secure', icon: ShieldCheck },
-                                                    { label: 'Working', icon: FileCheck2 },
-                                                    { label: 'Download next', icon: Download },
-                                                ].map((item) => (
-                                                    <Box key={item.label} sx={{ minHeight: 44, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1, px: 1.5, borderRadius: '10px', bgcolor: '#e0e5ec', color: '#4a5568', border: '1px solid rgba(255,255,255,0.35)', boxShadow: '2px 2px 6px #babecc, -2px -2px 6px #ffffff', fontFamily: 'var(--font-mono), monospace', fontSize: '0.68rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.08em', whiteSpace: 'nowrap' }}>
-                                                        <item.icon size={14} color="#ff4757" />
-                                                        {item.label}
-                                                    </Box>
-                                                ))}
-                                            </Box>
-                                        </Box>
-
-                                        <Box sx={{ position: 'relative', display: 'inline-flex' }}>
-                                            <CircularProgress variant="determinate" value={100} size={118} thickness={2} sx={{ color: 'rgba(0,0,0,0.04)' }} />
-                                            <CircularProgress variant="determinate" value={progress} size={118} thickness={4} sx={{ color: '#ff4757', position: 'absolute', left: 0, filter: 'drop-shadow(0 0 10px rgba(255, 71, 87, 0.4))', strokeLinecap: 'round' }} />
-                                            <Box sx={{ top: 0, left: 0, bottom: 0, right: 0, position: 'absolute', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                                <Typography variant="h4" component="div" sx={{ fontWeight: 900, color: '#2d3436', fontFamily: 'monospace' }}>
-                                                    {Math.round(progress)}%
-                                                </Typography>
-                                            </Box>
-                                        </Box>
-                                        <Box sx={{ textAlign: 'center' }}>
-                                            <Typography variant="h5" sx={{ fontWeight: 850, mb: 1, color: 'text.primary' }}>Preparing your download</Typography>
-                                            <Typography variant="body1" sx={{ color: 'text.secondary' }}>Keep this tab open while DocShift finishes the file.</Typography>
-                                        </Box>
-                                    </Box>
+                                        </div>
+                                        <p className="font-mono text-xs font-bold text-[#7C3AED] mt-2">{Math.round(progress)}%</p>
+                                    </div>
                                 </motion.div>
                             )}
 
-                            {status === 'success' && (
-                                <motion.div key="success" variants={stateVariants} initial="initial" animate="animate" exit="exit">
-                                    <Box sx={{ py: 4, display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: 4 }}>
-                                        <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: 'spring', stiffness: 200, damping: 15 }}>
-                                            <Box sx={{
-                                                width: 96, height: 96, borderRadius: '50%', bgcolor: '#e0e5ec',
-                                                color: '#22c55e', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                                border: '1px solid rgba(255,255,255,0.4)', boxShadow: '4px 4px 10px #babecc, -4px -4px 10px #ffffff', flexShrink: 0
-                                            }}>
-                                                <CheckCircle size={48} strokeWidth={2} />
-                                            </Box>
-                                        </motion.div>
-                                        <Box>
-                                            <Typography variant="h4" sx={{ fontWeight: 850, mb: 1, color: 'text.primary' }}>File ready</Typography>
-                                            <Typography variant="body1" sx={{ color: 'text.secondary', fontSize: '1.05rem' }}>Your processed file is packaged and ready to save.</Typography>
-                                        </Box>
-                                        <Box sx={{ width: '100%', maxWidth: 560, px: 2.5, py: 2, borderRadius: '12px', bgcolor: '#e0e5ec', border: '1px solid rgba(255,255,255,0.45)', boxShadow: 'inset 2px 2px 5px #babecc, inset -2px -2px 5px #ffffff', display: 'flex', alignItems: 'center', gap: 1.5 }}>
-                                            <FileCheck2 size={20} color="#22c55e" style={{ flexShrink: 0 }} />
-                                            <Typography title={outputLabel} sx={{ minWidth: 0, flex: 1, color: '#2d3436', fontFamily: 'var(--font-mono), monospace', fontWeight: 850, fontSize: '0.86rem', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', textAlign: 'left' }}>
-                                                {outputLabel}
-                                            </Typography>
-                                        </Box>
-                                        <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: 3, width: '100%', mt: 2 }}>
-                                            <Button
-                                                onClick={handleDownload}
-                                                variant="contained"
-                                                size="large"
-                                                startIcon={<Download size={22} />}
-                                                disabled={!resultUrl}
-                                                sx={{
-                                                    flex: 1,
-                                                    minHeight: 58,
-                                                    py: 2,
-                                                    borderRadius: '8px',
-                                                    bgcolor: '#22c55e',
-                                                    color: '#ffffff',
-                                                    fontSize: { xs: '0.92rem', sm: '1rem' },
-                                                    fontWeight: 900,
-                                                    textTransform: 'uppercase',
-                                                    letterSpacing: '0.05em',
-                                                    boxShadow: '4px 4px 10px rgba(34, 197, 94, 0.3), -4px -4px 10px rgba(255, 255, 255, 0.8)',
-                                                    transition: 'all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
-                                                    '& .MuiButton-startIcon': {
-                                                        transition: 'transform 0.2s ease-in-out',
-                                                    },
-                                                    '&:hover': {
-                                                        bgcolor: '#16a34a',
-                                                        boxShadow: '6px 6px 14px rgba(34, 197, 94, 0.4), -6px -6px 14px rgba(255, 255, 255, 0.8)',
-                                                        transform: 'translateY(-2px)',
-                                                    },
-                                                    '&:hover .MuiButton-startIcon': {
-                                                        transform: 'translateY(2px)',
-                                                    },
-                                                    '&:active': {
-                                                        transform: 'translateY(1px)',
-                                                        boxShadow: 'inset 3px 3px 6px rgba(0, 0, 0, 0.2)',
-                                                    },
-                                                    '&.Mui-disabled': {
-                                                        bgcolor: '#d1d9e6',
-                                                        color: '#a3b1c6',
-                                                        boxShadow: 'none',
-                                                    }
-                                                }}
-                                            >
-                                                Download File
-                                            </Button>
-                                            <Button
-                                                onClick={handleReset}
-                                                variant="outlined"
-                                                size="large"
-                                                sx={{
-                                                    flex: 1,
-                                                    py: 2,
-                                                    borderRadius: '8px',
-                                                    border: 'none',
-                                                    bgcolor: '#e0e5ec',
-                                                    color: '#2d3436',
-                                                    fontSize: '1rem',
-                                                    fontWeight: 800,
-                                                    textTransform: 'uppercase',
-                                                    letterSpacing: '0.05em',
-                                                    boxShadow: '4px 4px 10px #babecc, -4px -4px 10px #ffffff',
-                                                    transition: 'all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
-                                                    '&:hover': {
-                                                        bgcolor: '#e0e5ec',
-                                                        boxShadow: '6px 6px 14px #babecc, -6px -6px 14px #ffffff',
-                                                        transform: 'translateY(-2px)',
-                                                    },
-                                                    '&:active': {
-                                                        transform: 'translateY(1px)',
-                                                        boxShadow: 'inset 3px 3px 6px #babecc, inset -3px -3px 6px #ffffff',
-                                                    }
-                                                }}
-                                            >
-                                                Start Over
-                                            </Button>
-                                        </Box>
-                                    </Box>
+                            {/* ── SUCCESS STATE ── */}
+                            {appState === 'success' && (
+                                <motion.div key="success" variants={stateVariants} initial="initial" animate="animate" exit="exit" className="text-center py-8">
+                                    <div className="w-16 h-16 rounded-full bg-[#F2F6F4] shadow-soft-extruded mx-auto mb-5 flex items-center justify-center">
+                                        <CheckCircle size={32} className="text-[#0D9488]" />
+                                    </div>
+                                    <h3 className="font-display font-extrabold text-lg uppercase text-[#2A3A31] mb-2">Complete!</h3>
+                                    <p className="font-body text-xs text-[#55685C] mb-8">Your file has been processed successfully.</p>
+
+                                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                                        <NeumorphicButton onClick={handleDownload} variant="green" className="h-12 px-6 flex items-center justify-center gap-2">
+                                            <Download size={16} /> Download Result
+                                        </NeumorphicButton>
+                                        <NeumorphicButton onClick={resetAll} variant="secondary" className="h-12 px-6 flex items-center justify-center gap-2">
+                                            <ArrowLeft size={16} /> Process Another
+                                        </NeumorphicButton>
+                                    </div>
+                                </motion.div>
+                            )}
+
+                            {/* ── ERROR STATE ── */}
+                            {appState === 'error' && (
+                                <motion.div key="error" variants={stateVariants} initial="initial" animate="animate" exit="exit" className="text-center py-8">
+                                    <div className="w-16 h-16 rounded-full bg-[#F2F6F4] shadow-soft-extruded mx-auto mb-5 flex items-center justify-center">
+                                        <AlertCircle size={32} className="text-[#E11D48]" />
+                                    </div>
+                                    <h3 className="font-display font-extrabold text-lg uppercase text-[#2A3A31] mb-2">Error</h3>
+                                    <div className="rounded-2xl bg-[#E4EDE8] shadow-soft-inset p-4 mb-6 max-w-md mx-auto border border-red-500/10">
+                                        <p className="font-mono text-xs text-[#E11D48]">{errorMsg || 'An unexpected error occurred.'}</p>
+                                    </div>
+                                    <NeumorphicButton onClick={resetAll} variant="danger" className="h-12 px-6 flex items-center justify-center gap-2 mx-auto">
+                                        <ArrowLeft size={16} /> Try Again
+                                    </NeumorphicButton>
                                 </motion.div>
                             )}
                         </AnimatePresence>
-                    </Card>
-                    </motion.div>
-                </Box>
-            </Container>
-        </Box>
+
+                        {/* Status Bar */}
+                        <div className="rounded-2xl bg-[#E4EDE8] shadow-soft-inset-sm p-3.5 flex items-center justify-between mt-8">
+                            <div className="flex items-center gap-3 font-mono text-[10px] text-[#55685C]">
+                                <span className="flex items-center gap-1.5 font-bold">
+                                    <span className={`w-2.5 h-2.5 rounded-full inline-block ${appState === 'processing' ? 'bg-amber-500 animate-pulse' : appState === 'success' ? 'bg-[#0D9488]' : appState === 'error' ? 'bg-[#E11D48]' : 'bg-[#0D9488]'}`} />
+                                    {appState === 'upload' ? 'READY' : appState === 'processing' ? 'BUSY' : appState === 'success' ? 'DONE' : 'ERROR'}
+                                </span>
+                                <span className="text-[#D5DFD9]">|</span>
+                                <span className="font-bold">{tool.name.toUpperCase()}</span>
+                            </div>
+                            <span className="font-mono text-[10px] text-[#55685C]/60 hidden sm:inline tracking-wider">
+                                DOCSHIFT SECURE
+                            </span>
+                        </div>
+                    </div>
+                </NeumorphicCard>
+
+                {/* Security Badge */}
+                <div className="flex justify-center mt-6">
+                    <div className="flex items-center gap-2 font-mono text-[10px] text-[#55685C]">
+                        <ShieldCheck size={14} className="text-[#0D9488]" />
+                        Files processed locally in your browser. Never uploaded to any server.
+                    </div>
+                </div>
+
+                {/* SEO Content */}
+                <div className="mt-12">
+                    <ToolSEOContentWrapper toolSlug={toolSlug} />
+                </div>
+            </motion.div>
+        </div>
     );
 }
 
-export default memo(ToolPage);
+function ToolSEOContentWrapper({ toolSlug }) {
+    const ToolSEOContent = require('@/views/ToolSEOContent').default;
+    return <ToolSEOContent toolSlug={toolSlug} />;
+}

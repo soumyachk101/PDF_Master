@@ -1,112 +1,117 @@
 import { createTheme } from '@mui/material/styles';
 
-// Industrial Skeuomorphism Design principles:
-// - Primary Accent: #ff4757 (Safety orange-red)
-// - Chassis: #e0e5ec (Tactile grey background)
-// - Recessed: #d1d9e6 (Input wells and recessed shadows)
-// - Ink: #2d3436 (Primary text ink)
-// - Muted Ink: #4a5568 (Secondary text labels)
-// - Shadow Light: #ffffff (Neumorphic diffuse highlight)
-// - Shadow Dark: #babecc (Neumorphic soft shadow)
+// Neumorphic Soft UI Design Tokens (Sea Green Light + Cloudy White)
+// - Background/Base: #E4EDE8 (Sea Green Light)
+// - Paper/Card Surface: #F2F6F4 (Cloudy White)
+// - Text Primary: #2A3A31 (Deep forest sea green)
+// - Text Secondary: #55685C (Medium sea green grey)
+// - Accent Primary: #7C3AED (Purple)
 
-const getModernTokens = (mode) => ({
+const getNeumorphicTokens = () => ({
     palette: {
-        mode,
+        mode: 'light',
         primary: {
-            main: '#ff4757',
-            light: '#ff6b7b',
-            dark: '#cc3946',
+            main: '#7C3AED',
+            light: '#9F67FF',
+            dark: '#6D28D9',
             contrastText: '#FFFFFF',
         },
         secondary: {
-            main: '#e0e5ec',
-            contrastText: '#2d3436',
+            main: '#E4EDE8',
+            contrastText: '#2A3A31',
         },
         background: {
-            default: '#e0e5ec',
-            paper: '#e0e5ec',
+            default: '#E4EDE8',
+            paper: '#F2F6F4',
         },
         text: {
-            primary: '#2d3436',
-            secondary: '#4a5568',
+            primary: '#2A3A31',
+            secondary: '#55685C',
         },
-        divider: '#a3b1c6',
+        error: {
+            main: '#E11D48',
+            contrastText: '#FFFFFF',
+        },
+        divider: 'rgba(189, 201, 193, 0.4)',
     },
     typography: {
-        fontFamily: '"Inter", "JetBrains Mono", "Roboto", sans-serif',
-        h1: { fontWeight: 800, letterSpacing: '-0.04em' },
-        h2: { fontWeight: 800, letterSpacing: '-0.03em' },
-        h3: { fontWeight: 700, letterSpacing: '-0.02em' },
+        fontFamily: 'var(--font-body), sans-serif',
+        h1: { fontFamily: 'var(--font-display), sans-serif', fontWeight: 800 },
+        h2: { fontFamily: 'var(--font-display), sans-serif', fontWeight: 800 },
+        h3: { fontFamily: 'var(--font-display), sans-serif', fontWeight: 700 },
         h4: { fontWeight: 700 },
-        h5: { fontWeight: 600 },
-        h6: { fontWeight: 600 },
-        button: { textTransform: 'uppercase', fontWeight: 700, letterSpacing: '0.05em' },
+        h5: { fontWeight: 700 },
+        h6: { fontWeight: 700 },
+        button: { textTransform: 'uppercase', fontWeight: 600, letterSpacing: '0.05em' },
     },
-    shape: { borderRadius: 8 },
+    shape: { borderRadius: 16 },
     components: {
         MuiCssBaseline: {
             styleOverrides: {
                 body: {
-                    backgroundColor: '#e0e5ec',
-                    color: '#2d3436',
+                    backgroundColor: '#E4EDE8',
+                    color: '#2A3A31',
                 }
             }
         },
         MuiButton: {
             styleOverrides: {
                 root: {
-                    borderRadius: '8px',
-                    padding: '12px 28px',
-                    fontWeight: 700,
+                    borderRadius: '16px',
+                    padding: '10px 22px',
+                    fontWeight: 600,
                     textTransform: 'uppercase',
                     letterSpacing: '0.05em',
-                    boxShadow: '4px 4px 10px #babecc, -4px -4px 10px #ffffff',
-                    transition: 'all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+                    boxShadow: '5px 5px 10px rgba(189, 201, 193, 0.75), -5px -5px 10px rgba(255, 255, 255, 0.85)',
+                    transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+                    backgroundColor: '#E4EDE8',
+                    color: '#2A3A31',
                     border: 'none',
                     '&:hover': {
-                        transform: 'translateY(-2px)',
-                        boxShadow: '6px 6px 14px #babecc, -6px -6px 14px #ffffff',
+                        backgroundColor: '#E4EDE8',
+                        transform: 'translateY(-1px)',
+                        boxShadow: '8px 8px 16px rgba(189, 201, 193, 0.8), -8px -8px 16px rgba(255, 255, 255, 0.9)',
                     },
                     '&:active': {
-                        transform: 'translateY(1px)',
-                        boxShadow: 'inset 3px 3px 6px #babecc, inset -3px -3px 6px #ffffff',
+                        transform: 'translateY(0.5px)',
+                        boxShadow: 'inset 4px 4px 8px rgba(189, 201, 193, 0.8), inset -4px -4px 8px rgba(255, 255, 255, 0.8)',
                     },
                 },
                 contained: {
-                    background: '#ff4757',
+                    background: '#7C3AED',
                     color: '#FFFFFF',
-                    boxShadow: '4px 4px 10px rgba(255, 71, 87, 0.3), -4px -4px 10px rgba(255, 255, 255, 0.8)',
+                    boxShadow: '5px 5px 10px rgba(124, 58, 237, 0.35), -5px -5px 10px rgba(255, 255, 255, 0.6)',
                     '&:hover': {
-                        background: '#ff2e44',
-                        boxShadow: '6px 6px 14px rgba(255, 71, 87, 0.4), -6px -6px 14px rgba(255, 255, 255, 0.8)',
+                        background: '#8B5CF6',
+                        boxShadow: '8px 8px 16px rgba(124, 58, 237, 0.45), -8px -8px 16px rgba(255, 255, 255, 0.7)',
                     },
                     '&:active': {
-                        background: '#cc3946',
-                        boxShadow: 'inset 3px 3px 6px rgba(0, 0, 0, 0.2)',
+                        background: '#6D28D9',
+                        boxShadow: 'inset 4px 4px 8px rgba(58, 20, 120, 0.5), inset -4px -4px 8px rgba(255, 255, 255, 0.25)',
                     }
                 },
                 outlined: {
-                    border: 'none',
-                    color: '#2d3436',
-                    background: '#e0e5ec',
-                    boxShadow: '4px 4px 10px #babecc, -4px -4px 10px #ffffff',
+                    color: '#7C3AED',
+                    background: 'transparent',
+                    border: '1px solid #7C3AED',
+                    boxShadow: 'none',
                     '&:hover': {
-                        background: '#e0e5ec',
-                        border: 'none',
-                        boxShadow: '6px 6px 14px #babecc, -6px -6px 14px #ffffff',
+                        background: 'rgba(124, 58, 237, 0.05)',
+                        border: '1px solid #8B5CF6',
+                        boxShadow: 'none',
                     },
                     '&:active': {
-                        boxShadow: 'inset 3px 3px 6px #babecc, inset -3px -3px 6px #ffffff',
+                        background: 'rgba(124, 58, 237, 0.1)',
                     }
                 },
                 text: {
-                    color: '#2d3436',
-                    border: 'none',
+                    color: '#2A3A31',
                     boxShadow: 'none',
+                    background: 'transparent',
                     '&:hover': {
-                        background: 'rgba(45, 52, 70, 0.05)',
-                        transform: 'none',
+                        background: 'rgba(42, 58, 49, 0.05)',
                         boxShadow: 'none',
+                        transform: 'none',
                     },
                 },
             },
@@ -114,15 +119,10 @@ const getModernTokens = (mode) => ({
         MuiCard: {
             styleOverrides: {
                 root: {
-                    borderRadius: '16px',
-                    background: '#e0e5ec',
+                    borderRadius: '24px',
+                    background: '#F2F6F4', // Cloudy White
+                    boxShadow: '9px 9px 18px rgba(189, 201, 193, 0.65), -9px -9px 18px rgba(255, 255, 255, 0.95)',
                     border: 'none',
-                    boxShadow: '9px 9px 16px #babecc, -9px -9px 16px #ffffff',
-                    transition: 'all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
-                    '&:hover': {
-                        transform: 'translateY(-4px)',
-                        boxShadow: '14px 14px 24px #babecc, -14px -14px 24px #ffffff',
-                    },
                 },
             },
         },
@@ -130,19 +130,19 @@ const getModernTokens = (mode) => ({
             styleOverrides: {
                 root: {
                     backgroundImage: 'none',
-                    background: '#e0e5ec',
-                    borderRadius: '16px',
+                    background: '#F2F6F4', // Cloudy White
+                    borderRadius: '24px',
+                    boxShadow: '9px 9px 18px rgba(189, 201, 193, 0.65), -9px -9px 18px rgba(255, 255, 255, 0.95)',
                     border: 'none',
-                    boxShadow: '9px 9px 16px #babecc, -9px -9px 16px #ffffff',
                 },
             },
         },
         MuiAppBar: {
             styleOverrides: {
                 root: {
-                    background: '#e0e5ec',
-                    color: '#2d3436',
-                    boxShadow: '0 4px 12px rgba(186, 190, 204, 0.5)',
+                    background: '#E4EDE8',
+                    color: '#2A3A31',
+                    boxShadow: '9px 9px 18px rgba(189, 201, 193, 0.75), -9px -9px 18px rgba(255, 255, 255, 0.85)',
                     borderBottom: 'none',
                 },
             },
@@ -150,18 +150,19 @@ const getModernTokens = (mode) => ({
         MuiInputBase: {
             styleOverrides: {
                 root: {
-                    borderRadius: '8px',
+                    borderRadius: '16px',
                 }
             }
         },
         MuiOutlinedInput: {
             styleOverrides: {
                 root: {
-                    borderRadius: '8px',
-                    fontFamily: 'var(--font-mono), monospace',
-                    background: '#e0e5ec',
-                    boxShadow: 'inset 2px 2px 5px #babecc, inset -2px -2px 5px #ffffff',
-                    transition: 'all 0.2s ease',
+                    borderRadius: '16px',
+                    fontFamily: 'var(--font-body), sans-serif',
+                    background: '#E4EDE8', // Sea Green Light inset
+                    color: '#2A3A31',
+                    boxShadow: 'inset 4px 4px 8px rgba(189, 201, 193, 0.75), inset -4px -4px 8px rgba(255, 255, 255, 0.85)',
+                    transition: 'all 0.3s ease',
                     '& .MuiOutlinedInput-notchedOutline': {
                         border: 'none',
                     },
@@ -169,7 +170,10 @@ const getModernTokens = (mode) => ({
                         border: 'none',
                     },
                     '&.Mui-focused': {
-                        boxShadow: 'inset 2px 2px 5px #babecc, inset -2px -2px 5px #ffffff, 0 0 0 2px #ff4757',
+                        boxShadow: 'inset 6px 6px 12px rgba(189, 201, 193, 0.85), inset -6px -6px 12px rgba(255, 255, 255, 0.95)',
+                        '& .MuiOutlinedInput-notchedOutline': {
+                            border: '1.5px solid #7C3AED',
+                        }
                     },
                 },
                 notchedOutline: {
@@ -180,5 +184,5 @@ const getModernTokens = (mode) => ({
     },
 });
 
-export const lightTheme = createTheme(getModernTokens('light'));
-export const darkTheme = createTheme(getModernTokens('light')); // Force Light Mode globally
+export const lightTheme = createTheme(getNeumorphicTokens());
+export const darkTheme = createTheme(getNeumorphicTokens()); // Light mode globally in this design system

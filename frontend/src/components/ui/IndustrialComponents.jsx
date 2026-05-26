@@ -8,45 +8,69 @@ export function cn(...inputs) {
   return twMerge(clsx(inputs));
 }
 
-// Skeuomorphic Screw Detail
-export const Screw = ({ className }) => (
-  <div className={cn("absolute w-3.5 h-3.5 rounded-full bg-chassis shadow-neu-pressed flex items-center justify-center pointer-events-none z-10", className)}>
-    <div className="w-2.5 h-2.5 rounded-full bg-gradient-to-br from-gray-400 via-gray-300 to-gray-500 flex items-center justify-center shadow-inner">
-      <div className="w-1.5 h-[2px] bg-gray-600 rotate-45 transform"></div>
-    </div>
-  </div>
-);
-
-// Skeuomorphic Ventilation Slots
-export const VentSlots = ({ className }) => (
-  <div className={cn("flex space-x-1", className)}>
-    {[1, 2, 3].map((i) => (
-      <div key={i} className="w-1 h-5 rounded-full bg-black/20 shadow-[inset_1px_1px_2px_rgba(0,0,0,0.3)] border-t border-l border-white/40" />
-    ))}
-  </div>
-);
-
-export const IndustrialButton = ({ 
-  children, 
-  variant = 'primary', 
-  className, 
-  ...props 
+// ═══ NEUMORPHIC CARD ═══
+// Semantic alias and standard export
+export const NeumorphicCard = ({
+  children,
+  className,
+  title,
+  hoverEffect = true,
+  ...props
 }) => {
+  return (
+    <div
+      className={cn(
+        'bg-[#F2F6F4] rounded-[32px] shadow-soft-extruded p-6 sm:p-8 transition-soft duration-300',
+        hoverEffect && 'hover:-translate-y-1 hover:shadow-soft-extruded-hover',
+        className
+      )}
+      {...props}
+    >
+      {title && (
+        <div className="flex items-center justify-between mb-6 pb-3 shadow-[inset_0_-2px_0_rgba(189,201,193,0.3)]">
+          <h3 className="font-display font-bold text-base uppercase tracking-wider text-[#2A3A31]">
+            {title}
+          </h3>
+          <div className="flex gap-2">
+            <span className="w-2.5 h-2.5 rounded-full bg-[#F2F6F4] shadow-soft-inset-sm" />
+            <span className="w-2.5 h-2.5 rounded-full bg-[#F2F6F4] shadow-soft-inset-sm" />
+            <span className="w-2.5 h-2.5 rounded-full bg-[#F2F6F4] shadow-soft-inset-sm" />
+          </div>
+        </div>
+      )}
+      <div>{children}</div>
+    </div>
+  );
+};
+
+// Map original name to the new styled component
+export const IndustrialCard = NeumorphicCard;
+
+// ═══ NEUMORPHIC BUTTON ═══
+export const NeumorphicButton = ({
+  children,
+  variant = 'primary',
+  className,
+  ...props
+}) => {
+  const baseStyle = 'soft-btn h-12 px-6 font-semibold uppercase tracking-wider text-xs';
+  
   const variants = {
-    primary: 'bg-accent text-white shadow-neu hover:-translate-y-0.5 active:translate-y-0 active:shadow-neu-pressed border border-accent/20',
-    secondary: 'bg-chassis text-ink shadow-neu hover:-translate-y-0.5 active:translate-y-0 active:shadow-neu-pressed border border-white/50',
-    ghost: 'bg-transparent text-ink hover:bg-black/5 active:bg-black/10 shadow-none border border-transparent',
-    // Mappings for Bauhaus components compatibility
-    red: 'bg-accent text-white shadow-neu hover:-translate-y-0.5 active:translate-y-0 active:shadow-neu-pressed border border-accent/20',
-    blue: 'bg-chassis text-ink shadow-neu hover:-translate-y-0.5 active:translate-y-0 active:shadow-neu-pressed border border-white/50',
-    yellow: 'bg-accent text-white shadow-neu hover:-translate-y-0.5 active:translate-y-0 active:shadow-neu-pressed border border-accent/20',
-    outline: 'bg-chassis text-ink shadow-neu hover:-translate-y-0.5 active:translate-y-0 active:shadow-neu-pressed border border-white/50',
+    primary: 'soft-btn-primary',
+    secondary: 'soft-btn',
+    ghost: 'bg-transparent text-[#7C3AED] hover:bg-[#E4EDE8]/50 active:shadow-soft-inset-sm',
+    red: 'bg-[#E11D48] text-white shadow-soft-extruded-sm hover:bg-[#F43F5E] active:shadow-soft-inset-sm',
+    blue: 'soft-btn-primary',
+    yellow: 'bg-amber-500 text-white shadow-soft-extruded-sm hover:bg-amber-600 active:shadow-soft-inset-sm',
+    outline: 'border border-[#7C3AED] text-[#7C3AED] bg-transparent hover:bg-[#E4EDE8]/50 active:shadow-soft-inset-sm',
+    green: 'soft-btn-success',
+    danger: 'bg-[#E11D48] text-white shadow-soft-extruded-sm hover:bg-[#F43F5E] active:shadow-soft-inset-sm',
   };
 
   return (
     <button
       className={cn(
-        'h-12 px-6 font-bold uppercase tracking-wider transition-all duration-150 rounded-lg flex items-center justify-center gap-2 select-none font-display text-sm',
+        baseStyle,
         variants[variant] || variants.primary,
         className
       )}
@@ -57,105 +81,136 @@ export const IndustrialButton = ({
   );
 };
 
-export const IndustrialCard = ({ 
-  children, 
-  className, 
-  screws = true,
-  ventSlots = true,
-  hoverEffect = true,
-  ...props 
+export const IndustrialButton = NeumorphicButton;
+
+// ═══ NEUMORPHIC SECTION ═══
+export const NeumorphicSection = ({
+  children,
+  className,
+  id,
+  ...props
 }) => {
-  return (
-    <div
-      className={cn(
-        'relative p-8 bg-chassis rounded-2xl shadow-neu-card border border-white/30 overflow-hidden',
-        hoverEffect && 'hover:-translate-y-1 hover:shadow-neu-float transition-all duration-300',
-        className
-      )}
-      {...props}
-    >
-      {screws && (
-        <>
-          <Screw className="top-3 left-3" />
-          <Screw className="top-3 right-3" />
-          <Screw className="bottom-3 left-3" />
-          <Screw className="bottom-3 right-3" />
-        </>
-      )}
-      
-      {ventSlots && (
-        <div className="absolute top-2.5 right-8 pointer-events-none z-10">
-          <VentSlots />
-        </div>
-      )}
-
-      <div className={cn((screws || ventSlots) ? 'pt-2' : '')}>
-        {children}
-      </div>
-    </div>
-  );
-};
-
-export const IndustrialSection = ({ 
-  children, 
-  className, 
-  bgVariant = 'chassis',
-  ...props 
-}) => {
-  const bgs = {
-    chassis: 'bg-chassis text-ink',
-    dark: 'bg-[#2d3436] text-white bg-blueprint-dark',
-    accent: 'bg-chassis text-ink bg-blueprint',
-    // Mappings for Bauhaus components compatibility
-    white: 'bg-chassis text-ink',
-    red: 'bg-[#2d3436] text-white bg-blueprint-dark',
-    blue: 'bg-chassis text-ink',
-    yellow: 'bg-chassis text-ink bg-blueprint',
-    black: 'bg-[#2d3436] text-white bg-blueprint-dark',
-  };
-
   return (
     <section
+      id={id}
       className={cn(
-        'py-20 px-6 border-b border-border-dark/50 relative overflow-hidden',
-        bgs[bgVariant] || bgs.chassis,
+        'py-20 px-4 relative overflow-hidden bg-[#E4EDE8]',
         className
       )}
       {...props}
     >
-      <div className="max-w-7xl mx-auto relative z-10">
+      <div className="max-w-5xl mx-auto relative z-10">
         {children}
       </div>
     </section>
   );
 };
 
-export const IndustrialBadge = ({ 
-  children, 
-  color = 'green', 
-  led = true, 
-  className 
-}) => {
-  const colors = {
-    green: 'bg-chassis text-ink shadow-neu-sharp',
-    red: 'bg-chassis text-ink shadow-neu-sharp',
-    yellow: 'bg-chassis text-ink shadow-neu-sharp',
-  };
+export const IndustrialSection = NeumorphicSection;
 
-  const ledColors = {
-    green: 'led-green',
-    red: 'led-red',
-    yellow: 'led-red',
+// ═══ NEUMORPHIC BADGE / PILL ═══
+export const NeumorphicBadge = ({
+  children,
+  color = 'green',
+  led = false,
+  className
+}) => {
+  const badgeColors = {
+    green: 'text-[#0D9488]',
+    red: 'text-[#E11D48]',
+    yellow: 'text-amber-600',
+    blue: 'text-[#7C3AED]',
   };
 
   return (
     <span className={cn(
-      'inline-flex items-center gap-2 px-3 py-1 text-xs font-mono font-bold uppercase tracking-wider rounded-full border border-white/40',
-      colors[color] || colors.green,
+      'inline-flex items-center gap-2 px-4 py-1.5 text-[10px] font-mono font-extrabold uppercase tracking-widest rounded-full bg-[#E4EDE8] shadow-soft-inset-sm',
+      badgeColors[color] || badgeColors.green,
       className
     )}>
-      {led && <span className={cn('led-indicator flex-shrink-0', ledColors[color] || 'led-green')} />}
+      {led && <span className="w-1.5 h-1.5 rounded-full bg-[#0D9488] animate-pulse-glow" />}
       {children}
     </span>
   );
+};
+
+export const IndustrialBadge = NeumorphicBadge;
+
+// ═══ MARQUEE COMPONENT ═══
+export const MarqueeText = ({ children, className }) => {
+  return (
+    <div className={cn('overflow-hidden whitespace-nowrap py-1.5 px-4 rounded-full bg-[#E4EDE8] shadow-soft-inset-sm', className)}>
+      <div
+        className="inline-block animate-[marquee_25s_linear_infinite]"
+        style={{
+          animation: 'marquee 25s linear infinite',
+        }}
+      >
+        {children}
+      </div>
+      <style>{`
+        @keyframes marquee {
+          0% { transform: translateX(100%); }
+          100% { transform: translateX(-100%); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          [style*="marquee"] { animation: none !important; }
+        }
+      `}</style>
+    </div>
+  );
+};
+
+// ═══ DECORATIVE COLOR DOTS (NEUMORPHIC STYLE) ═══
+export const ColorSquares = ({ className }) => {
+  // Beautiful pastel/neumorphic palette: Purple, Teal, Sage, Emerald, Rose, Amber
+  const colors = ['bg-[#7C3AED]', 'bg-[#0D9488]', 'bg-[#10B981]', 'bg-[#F43F5E]', 'bg-[#F59E0B]', 'bg-[#6366F1]'];
+  return (
+    <div className={cn('flex gap-2 items-center justify-center p-2 rounded-full bg-[#E4EDE8] shadow-soft-inset-sm w-fit', className)}>
+      {colors.map((color, i) => (
+        <div
+          key={i}
+          className={cn('w-4 h-4 rounded-full shadow-soft-extruded-sm hover:scale-110 transition-transform duration-200 cursor-pointer', color)}
+        />
+      ))}
+    </div>
+  );
+};
+
+// ═══ DIGITAL TICKER / VISITORS COUNTER ═══
+export const HitCounter = ({ className }) => {
+  return (
+    <div className={cn(
+      'inline-flex items-center px-4 py-2 rounded-2xl bg-[#E4EDE8] shadow-soft-inset-deep font-mono text-[11px] font-bold text-[#7C3AED] tracking-wider uppercase',
+      className
+    )}>
+      <span className="w-1.5 h-1.5 rounded-full bg-[#7C3AED] animate-pulse mr-2" />
+      Secure Sandbox Active
+    </div>
+  );
+};
+
+// ═══ WAVE HIGHLIGHT / STRIPE ═══
+export const ConstructionStripe = ({ className }) => {
+  return (
+    <div className={cn('relative h-[6px] w-full overflow-hidden bg-gradient-to-r from-[#7C3AED]/20 via-[#0D9488]/20 to-[#7C3AED]/20', className)}>
+      <div className="absolute inset-0 w-[200%] h-full bg-gradient-to-r from-transparent via-[#7C3AED]/30 to-transparent animate-[shimmer_3s_infinite_linear]" 
+        style={{
+          backgroundSize: '200% 100%',
+          animation: 'shimmer 4s infinite linear'
+        }}
+      />
+      <style>{`
+        @keyframes shimmer {
+          0% { background-position: -200% 0; }
+          100% { background-position: 200% 0; }
+        }
+      `}</style>
+    </div>
+  );
+};
+
+// ═══ GROOVE HR ═══
+export const GrooveHr = ({ className }) => {
+  return <div className={cn('soft-divider my-8 max-w-7xl mx-auto', className)} />;
 };

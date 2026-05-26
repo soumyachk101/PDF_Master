@@ -1,5 +1,6 @@
 import { getToolBySlug, TOOLS } from '@/utils/tools';
 import Link from 'next/link';
+import { NeumorphicCard } from '@/components/ui/IndustrialComponents';
 
 export default function ToolSEOContent({ toolSlug }) {
     const tool = getToolBySlug(toolSlug);
@@ -8,81 +9,72 @@ export default function ToolSEOContent({ toolSlug }) {
     return (
         <>
             {/* SEO Rich Content Section */}
-            <section className="mt-20 mb-8 w-full max-w-3xl text-left">
-                <h2 className="font-display font-extrabold text-2xl mb-4 text-ink drop-shadow-[0_1px_1px_rgba(255,255,255,1)]">
+            <section className="mt-16 mb-8 w-full max-w-3xl text-left">
+                <h2 className="font-display font-extrabold text-xl uppercase mb-4 text-[#2A3A31]">
                     How to {tool.name}
                 </h2>
                 {tool.seoArticle ? (
                     <div
-                        className="font-mono text-xs text-ink-secondary leading-relaxed mb-10 space-y-4"
+                        className="text-sm text-[#55685C] leading-relaxed mb-10 space-y-4 [&_a]:text-[#7C3AED] [&_a]:font-bold [&_a]:hover:text-[#9F67FF]"
                         dangerouslySetInnerHTML={{ __html: tool.seoArticle }}
                     />
                 ) : (
-                    <p className="font-mono text-xs text-ink-secondary leading-relaxed mb-10">
+                    <p className="text-sm text-[#55685C] leading-relaxed mb-10">
                         Use our free online tool to {tool.name.toLowerCase()} instantly. Load your file above and let our secure client-side processor execute it locally. No installation required.
                     </p>
                 )}
 
-                <h2 className="font-display font-extrabold text-lg mb-2 text-ink drop-shadow-[0_1px_1px_rgba(255,255,255,1)]">
+                <h2 className="font-display font-extrabold text-lg uppercase mb-3 text-[#2A3A31]">
                     Why use DocShift?
                 </h2>
-                <div className="font-mono text-xs text-ink-secondary leading-relaxed mb-10 space-y-3">
+                <div className="text-sm text-[#55685C] leading-relaxed mb-10 space-y-3.5">
                     <p>
-                        <strong>100% Private &amp; Secure:</strong> We take your document privacy seriously. Files are never stored or transmitted, ensuring your data remains completely secure on your own local hardware.
+                        <strong className="text-[#2A3A31]">100% Private &amp; Secure:</strong> We take your document privacy seriously. Files are never stored or transmitted, ensuring your data remains completely secure on your own local hardware.
                     </p>
                     <p>
-                        <strong>Blazing Fast:</strong> Forget heavy desktop software. Process your documents in absolute seconds directly from your web browser with zero server latency.
+                        <strong className="text-[#2A3A31]">Blazing Fast:</strong> Forget heavy desktop software. Process your documents in absolute seconds directly from your web browser.
+                    </p>
+                    <p>
+                        <strong className="text-[#2A3A31]">Zero Installation:</strong> No downloads, no plugins, no sign-ups. Everything runs right in the browser.
                     </p>
                 </div>
 
+                {/* FAQ Section */}
                 {tool.faqs && tool.faqs.length > 0 && (
-                    <div className="mt-8">
-                        <h2 className="font-display font-extrabold text-lg mb-4 text-ink drop-shadow-[0_1px_1px_rgba(255,255,255,1)]">
+                    <>
+                        <div className="soft-divider my-8" />
+                        <h2 className="font-display font-extrabold text-lg uppercase mb-5 mt-6 text-[#2A3A31]">
                             Frequently Asked Questions
                         </h2>
-                        <div className="flex flex-col gap-4">
-                            {tool.faqs.map((faq, i) => (
-                                <div key={i} className="p-5 rounded-2xl bg-chassis border border-white/40 shadow-neu">
-                                    <h3 className="font-mono font-bold text-xs text-ink mb-1.5 uppercase tracking-wide">{faq.q}</h3>
-                                    <p className="font-mono text-[11px] leading-relaxed text-ink-secondary">{faq.a}</p>
-                                </div>
+                        <div className="space-y-5">
+                            {tool.faqs.map((faq, index) => (
+                                <NeumorphicCard key={index} title={`Q: ${faq.q}`} hoverEffect={true} className="p-6">
+                                    <p className="text-sm text-[#55685C] leading-relaxed">{faq.a}</p>
+                                </NeumorphicCard>
                             ))}
                         </div>
-                    </div>
+                    </>
                 )}
+
+                {/* Related Tools */}
+                <div className="soft-divider my-8" />
+                <h2 className="font-display font-extrabold text-lg uppercase mb-5 mt-6 text-[#2A3A31]">
+                    Related Tools
+                </h2>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                    {TOOLS.filter(t => t.category === tool.category && t.slug !== tool.slug)
+                        .slice(0, 6)
+                        .map((relatedTool) => (
+                            <Link
+                                key={relatedTool.slug}
+                                href={`/tool/${relatedTool.slug}`}
+                                className="h-10 rounded-xl bg-[#E4EDE8] shadow-soft-extruded-sm flex items-center justify-center px-3 text-xs font-semibold text-[#55685C] hover:text-[#7C3AED] hover:-translate-y-[0.5px] hover:shadow-soft-extruded transition-all duration-200 truncate focus:outline-none focus:ring-1 focus:ring-[#7C3AED] text-center"
+                            >
+                                {relatedTool.name}
+                            </Link>
+                        ))}
+                </div>
             </section>
-
-            {/* Related Tools */}
-            <RelatedToolsSection currentSlug={tool.slug} currentCategory={tool.category} />
         </>
-    );
-}
-
-function RelatedToolsSection({ currentSlug, currentCategory }) {
-    const relatedTools = TOOLS.filter(t => t.slug !== currentSlug && t.category === currentCategory).slice(0, 4);
-    if (relatedTools.length === 0) return null;
-
-    return (
-        <section className="mt-12 pt-8 border-t border-black/5 w-full max-w-3xl">
-            <h2 className="font-display font-extrabold text-lg mb-6 text-center text-ink drop-shadow-[0_1px_1px_rgba(255,255,255,1)]">
-                Related Tools
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-                {relatedTools.map(related => (
-                    <Link
-                        key={related.slug}
-                        href={`/tool/${related.slug}`}
-                        className="p-4 rounded-xl bg-chassis border border-white/40 shadow-neu hover:-translate-y-0.5 hover:shadow-neu-float active:shadow-neu-pressed transition-all duration-150 block text-decoration-none"
-                    >
-                        <p className="font-mono font-bold text-[10px] text-ink uppercase tracking-wider mb-1">
-                            {related.name}
-                        </p>
-                        <p className="font-mono text-[9px] text-ink-secondary leading-normal">
-                            {related.shortDesc}
-                        </p>
-                    </Link>
-                ))}
-            </div>
-        </section>
     );
 }

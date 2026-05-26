@@ -1,8 +1,6 @@
-import { Box, Typography } from '@mui/material';
-
 export default function Loading() {
   return (
-    <Box sx={{
+    <div style={{
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'center',
@@ -13,27 +11,24 @@ export default function Loading() {
       top: 0,
       left: 0,
       zIndex: 9999,
-      bgcolor: 'background.default',
-      gap: 3
+      backgroundColor: '#C0C0C0',
+      backgroundImage: 'linear-gradient(45deg, #b8b8b8 25%, transparent 25%), linear-gradient(-45deg, #b8b8b8 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #b8b8b8 75%), linear-gradient(-45deg, transparent 75%, #b8b8b8 75%)',
+      backgroundSize: '4px 4px',
+      backgroundPosition: '0 0, 0 2px, 2px -2px, -2px 0px',
+      gap: '12px'
     }}>
-      <div className="loader" />
-      <Typography variant="body2" sx={{
-        color: 'text.secondary',
-        fontWeight: 600,
-        letterSpacing: '2px',
+      <div className="win95-loader" />
+      <p style={{
+        fontFamily: '"Arial Black", Impact, sans-serif',
+        fontWeight: 900,
         textTransform: 'uppercase',
-        fontSize: '0.75rem',
-        opacity: 0.8,
-        animation: 'pulseText 1.5s ease-in-out infinite'
+        fontSize: '12px',
+        letterSpacing: '2px',
+        color: '#000000',
+        animation: 'pulseGlow 1.5s ease-in-out infinite'
       }}>
-        Preparing PDFs
-      </Typography>
-      <style>{`
-        @keyframes pulseText {
-          0%, 100% { opacity: 0.5; }
-          50% { opacity: 1; }
-        }
-      `}</style>
-    </Box>
+        Loading...
+      </p>
+    </div>
   );
 }

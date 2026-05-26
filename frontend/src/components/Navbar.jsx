@@ -5,18 +5,14 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { IndustrialButton } from '@/components/ui/IndustrialComponents';
+import { NeumorphicButton } from './ui/IndustrialComponents';
 
-const IndustrialLogo = () => (
-    <div className="flex items-center gap-3 group select-none">
-        <span className="font-mono font-black text-2xl tracking-tight flex items-center gap-1.5">
-            <span className="text-ink">DOC</span>
-            <span className="text-accent bg-accent/10 px-2 py-0.5 rounded shadow-neu-pressed border border-accent/20">SHIFT</span>
+const NeumorphicLogo = () => (
+    <div className="flex items-center gap-2 select-none">
+        <span className="font-display font-black text-xl sm:text-2xl tracking-tight flex items-center gap-1.5">
+            <span className="text-[#2A3A31]">DOC</span>
+            <span className="bg-gradient-to-r from-[#7C3AED] to-[#9F67FF] text-white px-2.5 py-0.5 rounded-xl shadow-soft-extruded-sm text-sm sm:text-base font-extrabold">SHIFT</span>
         </span>
-        <div className="flex items-center gap-1.5 bg-black/5 px-2.5 py-1 rounded-full border border-white/30 shadow-[inset_1px_1px_2px_rgba(0,0,0,0.1)]">
-            <span className="led-indicator led-green" />
-            <span className="text-[10px] font-mono font-bold tracking-wider text-ink-secondary">SYS_OK</span>
-        </div>
     </div>
 );
 
@@ -53,50 +49,51 @@ export default function Navbar() {
     };
 
     return (
-        <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-            scrolled ? 'bg-chassis/90 backdrop-blur-md shadow-neu border-b border-white/20' : 'bg-transparent'
-        }`}>
-            <div className="max-w-7xl mx-auto px-4 sm:px-8">
-                <div className="flex items-center justify-between h-20 sm:h-24">
-                    {/* Logo */}
-                    <Link href="/" className="flex-shrink-0" aria-label="DocShift - Home">
-                        <IndustrialLogo />
-                    </Link>
+        <nav className="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+            <div
+                className={`w-full transition-all duration-300 ${
+                    scrolled
+                        ? 'bg-[#E4EDE8]/90 backdrop-blur-md shadow-soft-extruded py-2'
+                        : 'bg-[#E4EDE8]/70 backdrop-blur-sm py-4'
+                }`}
+            >
+                <div className="max-w-5xl mx-auto px-4 sm:px-8">
+                    <div className="flex items-center justify-between h-14">
+                        {/* Logo */}
+                        <Link href="/" className="flex-shrink-0 focus:outline-none" aria-label="DocShift - Home">
+                            <NeumorphicLogo />
+                        </Link>
 
-                    {/* Desktop Menu */}
-                    <div className="hidden lg:flex items-center gap-10">
-                        {navLinks.map((link) => (
-                            <button
-                                key={link.name}
-                                onClick={() => handleNav(link.path)}
-                                className="font-mono font-bold uppercase tracking-widest text-xs text-ink-secondary hover:text-accent transition-colors relative group py-2"
+                        {/* Desktop Menu */}
+                        <div className="hidden lg:flex items-center gap-8">
+                            {navLinks.map((link) => (
+                                <button
+                                    key={link.name}
+                                    onClick={() => handleNav(link.path)}
+                                    className="text-[#2A3A31] font-semibold text-xs uppercase tracking-wider hover:text-[#7C3AED] transition-colors duration-200 py-1 focus:outline-none focus:text-[#7C3AED]"
+                                >
+                                    {link.name}
+                                </button>
+                            ))}
+                            <NeumorphicButton
+                                onClick={() => handleNav('/#tools')}
+                                variant="primary"
+                                className="h-9 px-5 text-[10px] font-bold tracking-wider"
                             >
-                                {link.name}
-                                <span className="absolute -bottom-0.5 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-accent transition-all group-hover:w-8 rounded-full" />
+                                Get Started
+                            </NeumorphicButton>
+                        </div>
+
+                        {/* Mobile Toggle */}
+                        <div className="flex lg:hidden items-center">
+                            <button
+                                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                                className="w-10 h-10 rounded-xl bg-[#E4EDE8] shadow-soft-extruded-sm flex items-center justify-center text-[#2A3A31] hover:text-[#7C3AED] active:shadow-soft-inset-sm focus:outline-none"
+                                aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
+                            >
+                                {isMobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
                             </button>
-                        ))}
-                    </div>
-
-                    {/* Actions */}
-                    <div className="hidden lg:flex items-center gap-4">
-                        <IndustrialButton
-                            variant="primary"
-                            onClick={() => handleNav('/#tools')}
-                            className="text-xs tracking-wider"
-                        >
-                            Get Started
-                        </IndustrialButton>
-                    </div>
-
-                    {/* Mobile Toggle */}
-                    <div className="flex lg:hidden items-center gap-3">
-                        <button
-                            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                            className="p-2.5 rounded-lg bg-chassis border border-white/40 shadow-neu hover:shadow-neu-sharp active:shadow-neu-pressed transition-all duration-150 text-ink"
-                            aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
-                        >
-                            {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
-                        </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -108,25 +105,26 @@ export default function Navbar() {
                         initial={{ opacity: 0, y: -20 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -20 }}
-                        className="lg:hidden absolute top-full left-4 right-4 bg-chassis border border-white/40 p-6 rounded-2xl shadow-neu-float mt-2 z-50"
+                        transition={{ duration: 0.2 }}
+                        className="lg:hidden px-4 py-4"
                     >
-                        <div className="flex flex-col gap-5">
+                        <div className="bg-[#E4EDE8] rounded-[24px] shadow-soft-extruded p-4 border border-white/20 flex flex-col gap-2">
                             {navLinks.map((link) => (
                                 <button
                                     key={link.name}
                                     onClick={() => handleNav(link.path)}
-                                    className="font-mono font-bold text-base uppercase tracking-wider text-left text-ink hover:text-accent py-2 border-b border-white/10"
+                                    className="w-full text-left font-semibold text-sm py-3 px-4 rounded-xl text-[#2A3A31] hover:bg-[#D5DFD9]/50 hover:text-[#7C3AED] transition-all focus:outline-none"
                                 >
                                     {link.name}
                                 </button>
                             ))}
-                            <IndustrialButton
-                                variant="primary"
-                                className="w-full text-xs tracking-wider mt-2"
+                            <NeumorphicButton
                                 onClick={() => handleNav('/#tools')}
+                                variant="primary"
+                                className="w-full text-center text-xs mt-2"
                             >
                                 Get Started
-                            </IndustrialButton>
+                            </NeumorphicButton>
                         </div>
                     </motion.div>
                 )}

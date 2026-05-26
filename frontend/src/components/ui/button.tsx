@@ -5,24 +5,25 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-lg text-sm font-medium transition-colors outline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring/70 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0",
+  "inline-flex items-center justify-center whitespace-nowrap text-sm font-bold uppercase tracking-wider border-2 select-none disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 focus-visible:outline-dotted focus-visible:outline-2 focus-visible:outline-black focus-visible:outline-offset-2",
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground shadow-sm shadow-black/5 hover:bg-primary/90",
+        default:
+          "bg-[#0000FF] text-white border-[#5555ff_#000080_#000080_#5555ff] shadow-[inset_-1px_-1px_0_#0000aa,inset_1px_1px_0_#6666ff] hover:bg-[#2222FF] active:border-[#000080_#5555ff_#5555ff_#000080] active:shadow-[inset_1px_1px_0_#0000aa,inset_-1px_-1px_0_#6666ff] active:translate-x-[1px] active:translate-y-[1px]",
         destructive:
-          "bg-destructive text-destructive-foreground shadow-sm shadow-black/5 hover:bg-destructive/90",
+          "bg-[#FF0000] text-white border-[#ff5555_#800000_#800000_#ff5555] shadow-[inset_-1px_-1px_0_#aa0000,inset_1px_1px_0_#ff6666] hover:bg-[#FF2222] active:border-[#800000_#ff5555_#ff5555_#800000] active:shadow-[inset_1px_1px_0_#aa0000,inset_-1px_-1px_0_#ff6666] active:translate-x-[1px] active:translate-y-[1px]",
         outline:
-          "border border-input bg-background shadow-sm shadow-black/5 hover:bg-accent hover:text-accent-foreground",
+          "bg-[#C0C0C0] text-black border-[#fff_#808080_#808080_#fff] shadow-[inset_-1px_-1px_0_#404040,inset_1px_1px_0_#dfdfdf] hover:bg-[#d0d0d0] active:border-[#808080_#fff_#fff_#808080] active:shadow-[inset_1px_1px_0_#404040,inset_-1px_-1px_0_#dfdfdf] active:translate-x-[1px] active:translate-y-[1px]",
         secondary:
-          "bg-secondary text-secondary-foreground shadow-sm shadow-black/5 hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
-        link: "text-primary underline-offset-4 hover:underline",
+          "bg-[#C0C0C0] text-black border-[#fff_#808080_#808080_#fff] shadow-[inset_-1px_-1px_0_#404040,inset_1px_1px_0_#dfdfdf] hover:bg-[#d0d0d0] active:border-[#808080_#fff_#fff_#808080] active:shadow-[inset_1px_1px_0_#404040,inset_-1px_-1px_0_#dfdfdf] active:translate-x-[1px] active:translate-y-[1px]",
+        ghost: "border-transparent shadow-none hover:bg-black/5",
+        link: "border-transparent shadow-none text-[#0000FF] underline hover:text-[#FF0000]",
       },
       size: {
-        default: "h-9 px-4 py-2",
-        sm: "h-8 rounded-lg px-3 text-xs",
-        lg: "h-10 rounded-lg px-8",
+        default: "h-10 px-4 py-2",
+        sm: "h-8 px-3 text-xs",
+        lg: "h-12 px-8",
         icon: "h-9 w-9",
       },
     },

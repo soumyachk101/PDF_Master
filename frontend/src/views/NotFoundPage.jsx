@@ -1,106 +1,62 @@
 'use client';
 
 import Link from 'next/link';
-import { Box, Typography, Button, Container, Card } from '@mui/material';
-import { Search, Home, ShieldCheck } from 'lucide-react';
+import { Search, Home } from 'lucide-react';
+import { NeumorphicCard, NeumorphicButton } from '@/components/ui/IndustrialComponents';
 
 const POPULAR_TOOLS = [
-    { name: 'Merge PDF', slug: 'merge-pdf', icon: 'Combine' },
-    { name: 'Compress PDF', slug: 'compress-pdf', icon: 'Minimize2' },
-    { name: 'Word to PDF', slug: 'word-to-pdf', icon: 'FileText' },
-    { name: 'PDF to Word', slug: 'pdf-to-word', icon: 'FileOutput' },
+    { name: 'Merge PDF', slug: 'merge-pdf' },
+    { name: 'Compress PDF', slug: 'compress-pdf' },
+    { name: 'Word to PDF', slug: 'word-to-pdf' },
+    { name: 'PDF to Word', slug: 'pdf-to-word' },
 ];
 
 function NotFoundPage() {
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', bgcolor: 'background.default' }}>
-
-            <Container maxWidth="md" sx={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', py: { xs: 6, md: 10 }, textAlign: 'center' }}>
-                <Typography variant="h1" sx={{ fontSize: { xs: '6rem', md: '10rem' }, fontWeight: 900, color: 'primary.main', lineHeight: 1, mb: 2 }}>
+        <div className="min-h-screen bg-[#E4EDE8] flex flex-col items-center justify-center px-4 pt-24 pb-16">
+            <div className="max-w-2xl w-full text-center flex flex-col items-center">
+                {/* Big 404 */}
+                <h1 className="font-display font-extrabold text-[7rem] sm:text-[10rem] leading-none bg-gradient-to-r from-[#7C3AED] to-[#9F67FF] bg-clip-text text-transparent mb-2">
                     404
-                </Typography>
-                <Typography variant="h3" sx={{ fontWeight: 800, mb: 2, color: 'text.primary', fontSize: { xs: '1.5rem', md: '2rem' } }}>
+                </h1>
+                <h2 className="font-display font-extrabold text-2xl uppercase text-[#2A3A31] mb-3">
                     Page Not Found
-                </Typography>
-                <Typography variant="body1" sx={{ color: 'text.secondary', maxWidth: '500px', mx: 'auto', mb: 6, fontSize: '1.1rem', lineHeight: 1.6 }}>
-                    The page you're looking for doesn't exist or may have been moved. We offer 30+ free tools that are just a click away.
-                </Typography>
+                </h2>
+                <p className="text-sm text-[#55685C] max-w-md mx-auto mb-10 leading-relaxed">
+                    The page you're looking for doesn't exist or may have been moved.
+                    We offer 30+ free tools that are just a click away.
+                </p>
 
-                <Box sx={{ display: 'flex', gap: 3, mb: 8, flexWrap: 'wrap', justifyContent: 'center' }}>
-                    <Button
-                        component={Link}
-                        href="/"
-                        variant="contained"
-                        size="large"
-                        startIcon={<Home size={18} />}
-                        sx={{ borderRadius: '14px', fontWeight: 700, px: 4, py: 1.5, fontSize: '1.05rem', bgcolor: 'primary.main' }}
-                    >
-                        Back to Home
-                    </Button>
-                    <Button
-                        component={Link}
-                        href="/#tools"
-                        variant="outlined"
-                        size="large"
-                        startIcon={<Search size={18} />}
-                        sx={{ borderRadius: '14px', fontWeight: 700, px: 4, py: 1.5, fontSize: '1.05rem' }}
-                    >
-                        Browse All Tools
-                    </Button>
-                </Box>
+                {/* Buttons */}
+                <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12 w-full sm:w-auto">
+                    <Link href="/" passHref className="w-full sm:w-auto">
+                        <NeumorphicButton variant="primary" className="w-full h-12 flex items-center justify-center gap-2">
+                            <Home size={16} /> Back to Home
+                        </NeumorphicButton>
+                    </Link>
+                    <Link href="/#tools" passHref className="w-full sm:w-auto">
+                        <NeumorphicButton variant="secondary" className="w-full h-12 flex items-center justify-center gap-2">
+                            <Search size={16} /> Browse All Tools
+                        </NeumorphicButton>
+                    </Link>
+                </div>
 
-                {/* Popular Tools Section - SEO benefit: internal linking */}
-                <Typography variant="h5" sx={{ fontWeight: 800, mb: 4, color: 'text.primary' }}>
-                    Popular PDF Tools
-                </Typography>
-                <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr', md: 'repeat(4, 1fr)' }, gap: 3, mb: 8, width: '100%', maxWidth: '900px' }}>
-                    {POPULAR_TOOLS.map((tool) => (
-                        <Card
-                            key={tool.slug}
-                            component={Link}
-                            href={`/tool/${tool.slug}`}
-                            sx={{
-                                p: 3, textAlign: 'center', textDecoration: 'none',
-                                cursor: 'pointer', transition: 'transform 0.2s, box-shadow 0.2s',
-                                borderRadius: '16px',
-                                '&:hover': { transform: 'translateY(-4px)', boxShadow: 6 },
-                            }}
-                        >
-                            <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
-                                <ShieldCheck size={32} color="#F05B25" strokeWidth={1.5} />
-                            </Box>
-                            <Typography variant="h6" sx={{ fontWeight: 700, fontSize: '1rem', color: 'text.primary', mb: 1 }}>
+                {/* Popular Tools */}
+                <NeumorphicCard className="w-full p-6" title="POPULAR TOOLS" hoverEffect={false}>
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-2">
+                        {POPULAR_TOOLS.map((tool) => (
+                            <Link
+                                key={tool.slug}
+                                href={`/tool/${tool.slug}`}
+                                className="h-10 rounded-xl bg-[#E4EDE8] shadow-soft-extruded-sm flex items-center justify-center px-3 text-xs font-semibold text-[#55685C] hover:text-[#7C3AED] hover:-translate-y-[0.5px] hover:shadow-soft-extruded transition-all duration-200 truncate focus:outline-none"
+                            >
                                 {tool.name}
-                            </Typography>
-                            <Typography variant="body2" sx={{ color: 'text.secondary', fontSize: '0.85rem', lineHeight: 1.4 }}>
-                                Free & secure online tool
-                            </Typography>
-                        </Card>
-                    ))}
-                </Box>
-
-                {/* SEO Article Content */}
-                <Box sx={{
-                    textAlign: 'left', maxWidth: '700px', mt: 4, p: { xs: 3, md: 5 },
-                    bgcolor: 'background.paper', borderRadius: '20px',
-                    border: '1px solid', borderColor: 'divider'
-                }}>
-                    <Typography variant="h6" sx={{ fontWeight: 800, mb: 2, color: 'text.primary' }}>
-                        Why Use DocShift for PDF Processing?
-                    </Typography>
-                    <Typography variant="body1" sx={{ color: 'text.secondary', lineHeight: 1.8, fontSize: '1.05rem' }}>
-                        DocShift offers a comprehensive suite of free PDF tools that run entirely in your browser.
-                        Whether you need to <Link href="/#tools" style={{ color: 'inherit', fontWeight: 600 }}>merge PDF files</Link>,{' '}
-                        <Link href="/#tools" style={{ color: 'inherit', fontWeight: 600 }}>compress large documents</Link>, or{' '}
-                        <Link href="/#tools" style={{ color: 'inherit', fontWeight: 600 }}>convert between formats</Link>,
-                        all processing happens locally on your device — ensuring 100% privacy and security.
-                        <br /><br />
-                        No uploads, no accounts, and no limitations. Our browser-based approach means instant results
-                        with zero waiting time for file transfers to remote servers.
-                    </Typography>
-                </Box>
-            </Container>
-        </Box>
+                            </Link>
+                        ))}
+                    </div>
+                </NeumorphicCard>
+            </div>
+        </div>
     );
 }
 

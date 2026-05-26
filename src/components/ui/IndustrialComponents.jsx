@@ -24,8 +24,8 @@ export const NeumorphicCard = ({
     <div
       className={cn(
         isSolid
-          ? 'bg-[#000000] text-[#ffffff] rounded-[32px] p-6 sm:p-8 border border-transparent'
-          : 'bg-[#ffffff] text-[#000000] rounded-[32px] border border-[#000000] p-6 sm:p-8',
+          ? 'bg-[#000000] text-[#ffffff] rounded-[20px] sm:rounded-[32px] p-4 sm:p-8 border border-transparent'
+          : 'bg-[#ffffff] text-[#000000] rounded-[20px] sm:rounded-[32px] border border-[#000000] p-4 sm:p-8',
         hoverEffect && 'hover:-translate-y-0.5 transition-all duration-200',
         className
       )}

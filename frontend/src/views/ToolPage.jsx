@@ -187,7 +187,7 @@ export default function ToolPage({ toolSlug }) {
                                 </div>
                             </div>
 
-                            <div className="p-6 sm:p-8 bg-[#ffffff]">
+                            <div className="p-4 sm:p-8 bg-[#ffffff]">
                                 <AnimatePresence mode="wait">
                                     {/* ── UPLOAD STATE ── */}
                                     {appState === 'upload' && (
@@ -386,7 +386,7 @@ export default function ToolPage({ toolSlug }) {
                     {/* Right Column: Sidebar (How-to, Security Details, Related utilities) */}
                     <div className="lg:col-span-5 space-y-6">
                         {/* Security Notice Callout (Action Green accent background) */}
-                        <div className="bg-[#d1ffca] border border-[#000000] p-6 rounded-[32px] text-left">
+                        <div className="bg-[#d1ffca] border border-[#000000] p-4 sm:p-6 rounded-[20px] sm:rounded-[32px] text-left">
                             <h3 className="font-suisseintl font-bold text-xs uppercase tracking-wider text-[#000000] mb-3 flex items-center gap-2">
                                 <ShieldCheck size={16} /> 100% In-Browser Secure
                             </h3>
@@ -396,7 +396,7 @@ export default function ToolPage({ toolSlug }) {
                         </div>
 
                         {/* Interactive Steps card */}
-                        <div className="bg-[#ffffff] border border-[#000000] p-6 rounded-[32px] text-left">
+                        <div className="bg-[#ffffff] border border-[#000000] p-4 sm:p-6 rounded-[20px] sm:rounded-[32px] text-left">
                             <h3 className="font-suisseintl font-bold text-xs uppercase tracking-wider text-[#000000] mb-3 flex items-center gap-2">
                                 <HelpCircle size={16} /> Quick Instructions
                             </h3>
@@ -409,7 +409,7 @@ export default function ToolPage({ toolSlug }) {
                         </div>
 
                         {/* Sidebar Related Utilities */}
-                        <div className="bg-[#ffffff] border border-[#000000] p-6 rounded-[32px] text-left">
+                        <div className="bg-[#ffffff] border border-[#000000] p-4 sm:p-6 rounded-[20px] sm:rounded-[32px] text-left">
                             <h3 className="font-suisseintl font-bold text-xs uppercase tracking-wider text-[#000000] mb-3 flex items-center gap-2">
                                 <Files size={15} /> Related Utilities
                             </h3>

@@ -75,6 +75,7 @@
   html {
     scroll-behavior: smooth;
     background-color: var(--color-canvas-ice);
+    overflow-x: hidden;
   }
 
   body {

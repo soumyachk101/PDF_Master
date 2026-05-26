@@ -13,6 +13,13 @@ export const metadata = {
   },
 };
 
+export const viewport = {
+  themeColor: '#e5e7eb',
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+};
+
 export default function Page() {
   return <HomePage />;
 }

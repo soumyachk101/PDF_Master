@@ -50,19 +50,19 @@ export function useFileUpload(toolSlug) {
 
             const response = await axios.post(`/api/pdf/${toolSlug}`, formData, axiosConfig);
 
-            let fakeProgress = setInterval(() => {
-                setProgress(p => {
-                    if (p >= 99) {
-                        clearInterval(fakeProgress);
-                        return 99;
-                    }
-                    return p + 2;
-                });
-            }, 300);
-
-            // Handle blob response
-            clearInterval(fakeProgress);
-            setProgress(100);
+            // Animate progress from current (up to 50%) to 95% smoothly
+            await new Promise((resolve) => {
+                const fakeProgress = setInterval(() => {
+                    setProgress(p => {
+                        if (p >= 95) {
+                            clearInterval(fakeProgress);
+                            resolve();
+                            return 95;
+                        }
+                        return p + 2;
+                    });
+                }, 200);
+            });
 
             // Extract filename from Content-Disposition header if available
             let filename = `${toolSlug}-result${tool?.outputExt || '.pdf'}`;
@@ -85,6 +85,10 @@ export function useFileUpload(toolSlug) {
 
             setResultUrl(downloadUrl);
             setResultFilename(filename);
+            setProgress(100);
+
+            // Brief pause so user sees 100% before success state
+            await new Promise(r => setTimeout(r, 400));
             setAppState('success');
 
         } catch (error) {

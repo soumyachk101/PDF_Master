@@ -103,10 +103,15 @@ export default function Footer() {
                             Legal
                         </h3>
                         <ul className="flex flex-col gap-2.5">
-                            {['Privacy Policy', 'Terms of Service', 'About Us', 'Contact'].map((item, i) => (
-                                <li key={i}>
-                                    <Link href="/" className="inline-block text-xs text-[#444444] font-suisseintl hover:text-[#000000] hover:underline transition-all duration-200">
-                                        {item}
+                            {[
+                                { name: 'Privacy Policy', path: '/privacy' },
+                                { name: 'Terms of Service', path: '/terms' },
+                                { name: 'About Us', path: '/about' },
+                                { name: 'Contact', path: '/contact' }
+                            ].map((item) => (
+                                <li key={item.path}>
+                                    <Link href={item.path} className="inline-block text-xs text-[#444444] font-suisseintl hover:text-[#000000] hover:underline transition-all duration-200">
+                                        {item.name}
                                     </Link>
                                 </li>
                             ))}

@@ -12,23 +12,27 @@ export default function Loading() {
       left: 0,
       zIndex: 9999,
       backgroundColor: '#C0C0C0',
-      backgroundImage: 'linear-gradient(45deg, #b8b8b8 25%, transparent 25%), linear-gradient(-45deg, #b8b8b8 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #b8b8b8 75%), linear-gradient(-45deg, transparent 75%, #b8b8b8 75%)',
-      backgroundSize: '4px 4px',
-      backgroundPosition: '0 0, 0 2px, 2px -2px, -2px 0px',
       gap: '12px'
     }}>
-      <div className="win95-loader" />
+      <div style={{
+        width: '32px',
+        height: '32px',
+        border: '3px solid #000000',
+        borderTopColor: 'transparent',
+        borderRadius: '50%',
+        animation: 'spin 0.8s linear infinite'
+      }} />
       <p style={{
         fontFamily: '"Arial Black", Impact, sans-serif',
         fontWeight: 900,
         textTransform: 'uppercase',
         fontSize: '12px',
         letterSpacing: '2px',
-        color: '#000000',
-        animation: 'pulseGlow 1.5s ease-in-out infinite'
+        color: '#000000'
       }}>
         Loading...
       </p>
+      <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
     </div>
   );
 }

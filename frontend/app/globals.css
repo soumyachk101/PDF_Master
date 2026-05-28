@@ -113,23 +113,6 @@
     text-transform: uppercase;
   }
 
-  h1 {
-    font-size: var(--text-display);
-    line-height: var(--leading-display);
-    letter-spacing: var(--tracking-display);
-  }
-
-  h2 {
-    font-size: var(--text-display-sm);
-    line-height: var(--leading-display-sm);
-    letter-spacing: var(--tracking-display-sm);
-  }
-
-  h3 {
-    font-size: var(--text-heading-lg);
-    line-height: var(--leading-heading-lg);
-  }
-
   p {
     font-family: var(--font-suisseintl);
     font-size: var(--text-body);

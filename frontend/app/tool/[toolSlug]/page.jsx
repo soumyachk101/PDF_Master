@@ -68,7 +68,7 @@ export default async function ToolRoute({ params }) {
       name: `${tool.name} - DocShift`,
       url: `https://www.docshift.tech/tool/${tool.slug}`,
       description: tool.shortDesc,
-      applicationCategory: 'UtilitiesApplication',
+      applicationCategory: 'Utility',
       operatingSystem: 'Web Browser',
       offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
       author: {

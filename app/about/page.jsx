@@ -1,9 +1,14 @@
 export const metadata = {
   title: 'About Us',
   description: 'Learn about DocShift – Free browser-based PDF tools built for privacy. No uploads, no signups, 100% local processing.',
+  keywords: 'about docshift, pdf tools, free pdf editor, browser pdf, privacy pdf tools',
+  alternates: {
+    canonical: 'https://www.docshift.tech/about',
+  },
   openGraph: {
     title: 'About Us | DocShift',
     description: 'Learn about DocShift – Free browser-based PDF tools built for privacy.',
+    url: 'https://www.docshift.tech/about',
   },
 };
 

@@ -31,14 +31,14 @@ export async function generateMetadata({ params }) {
       url: `https://www.docshift.tech/tool/${tool.slug}`,
       title: tool.seoTitle || `${tool.name} Online Free – DocShift`,
       description: tool.seoDesc || tool.shortDesc,
-      images: [{ url: 'https://www.docshift.tech/logo.png' }],
+      images: [{ url: `https://www.docshift.tech/api/og?title=${encodeURIComponent(tool.name)}&desc=${encodeURIComponent(tool.shortDesc)}`, width: 1200, height: 630 }],
     },
     twitter: {
       card: 'summary_large_image',
       url: `https://www.docshift.tech/tool/${tool.slug}`,
       title: tool.seoTitle || `${tool.name} Online Free – DocShift`,
       description: tool.seoDesc || tool.shortDesc,
-      images: ['https://www.docshift.tech/logo.png'],
+      images: [`https://www.docshift.tech/api/og?title=${encodeURIComponent(tool.name)}&desc=${encodeURIComponent(tool.shortDesc)}`],
     },
   };
 }

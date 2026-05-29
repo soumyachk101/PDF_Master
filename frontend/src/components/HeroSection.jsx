@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { ArrowRight, ShieldCheck, Zap, Globe } from 'lucide-react';
 import { NeumorphicButton, NeumorphicBadge, HitCounter, ConstructionStripe, MarqueeText } from './ui/IndustrialComponents';
@@ -119,9 +120,12 @@ const HeroSection = () => {
                     >
                         {/* Rounded Hero Graphic - Radius 64px as per heroElements radius token */}
                         <div className="relative w-full aspect-square max-w-[400px] bg-[#ffffff] border-2 border-[#000000] rounded-[32px] sm:rounded-[64px] overflow-hidden shadow-none flex items-center justify-center p-2">
-                            <img 
-                                src="/hero_graphic.png" 
-                                alt="Modular 3D construction graphic suggesting construction and precision" 
+                            <Image
+                                src="/hero_graphic.webp"
+                                alt="Modular 3D construction graphic suggesting construction and precision"
+                                width={400}
+                                height={400}
+                                priority
                                 className="w-full h-full object-cover rounded-[24px] sm:rounded-[56px]"
                             />
                         </div>

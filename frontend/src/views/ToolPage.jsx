@@ -44,6 +44,16 @@ const dayosInputStyle = {
         '& .MuiOutlinedInput-notchedOutline': { border: '1px solid #000000' },
         '&:hover .MuiOutlinedInput-notchedOutline': { border: '1px solid #000000' },
         '&.Mui-focused .MuiOutlinedInput-notchedOutline': { border: '2px solid #000000' },
+        '& input': {
+            color: '#000000',
+            bgcolor: '#ffffff',
+            '&::placeholder': { color: '#979797', opacity: 1 },
+        },
+        '& input[type="password"]': {
+            color: '#000000',
+            bgcolor: '#ffffff',
+            letterSpacing: '0.15em',
+        },
     },
     '& .MuiInputLabel-root': {
         fontFamily: 'var(--font-suisseintl), sans-serif',

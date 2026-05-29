@@ -173,6 +173,54 @@ exports.ocrPdf = async (filePath) => {
     throw new Error('OCR functionality coming soon.');
 };
 
+exports.translatePdf = async (filePath, sourceLang, targetLang) => {
+    const fs = require('fs').promises;
+    const axios = require('axios');
+    const pdfParse = require('pdf-parse');
+
+    try {
+        const dataBuffer = await fs.readFile(filePath);
+        const data = await pdfParse(dataBuffer);
+        const textData = data.text;
+
+        // Chunk text to avoid hitting URL length limits for GET requests
+        const chunks = textData.match(/.{1,450}(\s|$)/g) || [];
+
+        let translatedText = '';
+        const apiUrl = process.env.TRANSLATE_URL || 'https://api.mymemory.translated.net/get';
+        const langpair = `${sourceLang}|${targetLang}`;
+        const apiKey = process.env.TRANSLATE_API_KEY || '';
+
+        for (const chunk of chunks) {
+            if (!chunk.trim()) {
+                translatedText += chunk;
+                continue;
+            }
+            try {
+                const response = await axios.get(apiUrl, {
+                    params: {
+                        q: chunk.trim(),
+                        langpair: langpair,
+                        key: apiKey
+                    }
+                });
+                if (response.data && response.data.responseData && response.data.responseData.translatedText) {
+                    translatedText += response.data.responseData.translatedText + ' ';
+                } else {
+                    translatedText += chunk + ' ';
+                }
+            } catch (err) {
+                console.error('Translation error for chunk:', err.message);
+                translatedText += chunk + ' ';
+            }
+        }
+
+        return Buffer.from(translatedText);
+    } catch (e) {
+        throw new Error('Failed to translate PDF. ' + e.message);
+    }
+};
+
 exports.jpgToPdf = async (filePaths) => {
     const sharp = require('sharp');
     const newPdf = await PDFDocument.create();

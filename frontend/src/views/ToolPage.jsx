@@ -422,7 +422,7 @@ export default function ToolPage({ toolSlug }) {
                         <div className="bg-[#ffffff] border border-[#000000] p-6 rounded-[32px] text-left">
                             <h2 className="font-suisseintl font-bold text-xs uppercase tracking-wider text-[#000000] mb-3 flex items-center gap-2">
                                 <Files size={15} /> Related Utilities
-                            </h3>
+                            </h2>
                             <div className="grid grid-cols-2 gap-2 mt-1">
                                 {TOOLS.filter(t => t.category === tool.category && t.slug !== tool.slug)
                                     .slice(0, 4)

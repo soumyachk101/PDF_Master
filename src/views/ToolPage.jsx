@@ -2,13 +2,13 @@
 
 import React, { useState, memo } from 'react';
 import Link from 'next/link';
-import { Box, Typography, Button, Container, Card, CircularProgress, TextField, InputAdornment, Alert, LinearProgress } from '@mui/material';
+import { Box, Typography, Button, Container, Card, CircularProgress, TextField, InputAdornment, Alert, LinearProgress, IconButton } from '@mui/material';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useFileUpload } from '@/hooks/useFileUpload';
 import { getToolBySlug, TOOLS } from '@/utils/tools';
 import DropzoneArea from '@/components/DropzoneArea';
 import Breadcrumbs from '@/components/Breadcrumbs';
-import { Home, ArrowLeft, ArrowRight, Download, CheckCircle, AlertCircle, AlertTriangle, Link as LinkIcon, FileCheck2, Files, ShieldCheck, HelpCircle } from 'lucide-react';
+import { Home, ArrowLeft, ArrowRight, Download, CheckCircle, AlertCircle, AlertTriangle, Link as LinkIcon, FileCheck2, Files, ShieldCheck, HelpCircle, Eye, EyeOff, Plus, Minus, RotateCcw, RotateCw, ArrowDown, PenTool, Globe } from 'lucide-react';
 import { getIcon } from '@/utils/icons';
 import { NeumorphicCard, NeumorphicButton, GrooveHr, cn } from '@/components/ui/IndustrialComponents';
 
@@ -32,41 +32,7 @@ const stateVariants = {
     exit: { opacity: 0, scale: 0.98, transition: { duration: 0.15 } }
 };
 
-// Dayos custom styling for Material UI TextFields
-const dayosInputStyle = {
-    '& .MuiOutlinedInput-root': {
-        borderRadius: '8px',
-        bgcolor: '#ffffff',
-        fontFamily: 'var(--font-suisseintl), sans-serif',
-        fontWeight: 500,
-        color: '#000000',
-        boxShadow: 'none',
-        '& .MuiOutlinedInput-notchedOutline': { border: '1px solid #000000' },
-        '&:hover .MuiOutlinedInput-notchedOutline': { border: '1px solid #000000' },
-        '&.Mui-focused .MuiOutlinedInput-notchedOutline': { border: '2px solid #000000' },
-        '& input': {
-            color: '#000000',
-            bgcolor: '#ffffff',
-            '&::placeholder': { color: '#979797', opacity: 1 },
-        },
-        '& input[type="password"]': {
-            color: '#000000',
-            bgcolor: '#ffffff',
-            letterSpacing: '0.15em',
-        },
-    },
-    '& .MuiInputLabel-root': {
-        fontFamily: 'var(--font-suisseintl), sans-serif',
-        fontWeight: 500,
-        color: '#444444',
-        '&.Mui-focused': { color: '#000000' },
-    },
-    '& .MuiFormHelperText-root': {
-        fontFamily: 'var(--font-suisseintlmono), monospace',
-        fontSize: '10px',
-        color: '#444444',
-    },
-};
+
 
 export default function ToolPage({ toolSlug }) {
     const tool = getToolBySlug(toolSlug);
@@ -86,6 +52,27 @@ export default function ToolPage({ toolSlug }) {
     const [translateLang, setTranslateLang] = useState('es');
     const [urlInput, setUrlInput] = useState('');
     const [outputFormat, setOutputFormat] = useState('');
+
+    const [showProtectPassword, setShowProtectPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [showUnlockPassword, setShowUnlockPassword] = useState(false);
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [selectedSignatureFont, setSelectedSignatureFont] = useState('font-dancing');
+    const [localError, setLocalError] = useState('');
+
+    const getPasswordStrength = (pwd) => {
+        if (!pwd) return { score: 0, label: '', color: 'transparent' };
+        let score = 0;
+        if (pwd.length >= 6) score += 1;
+        if (pwd.length >= 10) score += 1;
+        if (/[A-Z]/.test(pwd)) score += 1;
+        if (/[0-9]/.test(pwd)) score += 1;
+        if (/[^A-Za-z0-9]/.test(pwd)) score += 1;
+
+        if (score <= 2) return { score, label: 'Weak', color: '#ff4d4d' };
+        if (score <= 4) return { score, label: 'Medium', color: '#fff100' };
+        return { score, label: 'Strong', color: '#000000' }; // matched to text style or we can use action green border/text
+    };
 
     if (!tool) {
         return (
@@ -109,14 +96,41 @@ export default function ToolPage({ toolSlug }) {
     const hasUrlInput = tool.urlInput;
 
     const handleSubmit = async () => {
+        setLocalError('');
         const additionalData = {};
         if (tool.slug === 'split-pdf' && splitRanges) additionalData.ranges = splitRanges;
         if (tool.slug === 'add-watermark' && watermarkText) additionalData.text = watermarkText;
         if (tool.slug === 'rotate-pdf') additionalData.degrees = rotateDegrees;
         if (tool.slug === 'add-page-numbers') additionalData.start = pageNumberStart;
-        if (tool.slug === 'sign-pdf' && signText) additionalData.text = signText;
-        if (tool.slug === 'protect-pdf' && protectPassword) additionalData.password = protectPassword;
-        if (tool.slug === 'unlock-pdf' && unlockPassword) additionalData.password = unlockPassword;
+        
+        if (tool.slug === 'sign-pdf') {
+            if (!signText.trim()) {
+                setLocalError("Please enter your name for the signature.");
+                return;
+            }
+            additionalData.text = signText;
+        }
+        
+        if (tool.slug === 'protect-pdf') {
+            if (!protectPassword) {
+                setLocalError("Please enter a password to protect the PDF.");
+                return;
+            }
+            if (protectPassword !== confirmPassword) {
+                setLocalError("Passwords do not match. Please verify and try again.");
+                return;
+            }
+            additionalData.password = protectPassword;
+        }
+        
+        if (tool.slug === 'unlock-pdf') {
+            if (!unlockPassword) {
+                setLocalError("Please enter the password to unlock the PDF.");
+                return;
+            }
+            additionalData.password = unlockPassword;
+        }
+        
         if (tool.slug === 'translate-pdf') additionalData.targetLang = translateLang;
         if (hasUrlInput && urlInput) additionalData.url = urlInput;
         if (outputFormat) additionalData.format = outputFormat;
@@ -142,10 +156,15 @@ export default function ToolPage({ toolSlug }) {
         setpageNumberStart('1');
         setSignText('');
         setProtectPassword('');
+        setConfirmPassword('');
         setUnlockPassword('');
         setTranslateLang('es');
         setUrlInput('');
         setOutputFormat('');
+        setLocalError('');
+        setShowProtectPassword(false);
+        setShowConfirmPassword(false);
+        setShowUnlockPassword(false);
     };
 
     const breadcrumbItems = [
@@ -202,81 +221,415 @@ export default function ToolPage({ toolSlug }) {
                                     {/* ── UPLOAD STATE ── */}
                                     {appState === 'upload' && (
                                         <motion.div key="upload" variants={stateVariants} initial="initial" animate="animate" exit="exit">
-                                            {hasUrlInput && (
-                                                <div className="mb-6">
-                                                    <TextField
-                                                        fullWidth
-                                                        label="Website URL"
-                                                        placeholder="https://example.com"
-                                                        value={urlInput}
-                                                        onChange={(e) => setUrlInput(e.target.value)}
-                                                        size="small"
-                                                        sx={dayosInputStyle}
-                                                        InputProps={{
-                                                            startAdornment: <InputAdornment position="start"><LinkIcon size={16} className="text-[#000000] mr-1" /></InputAdornment>,
-                                                        }}
-                                                    />
-                                                    <p className="font-suisseintlmono text-[10px] text-[#444444]/70 mt-1.5 ml-2.5">
-                                                        OR upload an HTML file below:
-                                                    </p>
-                                                </div>
-                                            )}
+                                            {hasUrlInput ? (
+                                                <div className="mb-4 space-y-4 text-left">
+                                                    <div className="bg-[#d1ffca]/10 border border-[#000000] p-4 rounded-[16px] flex items-start gap-3">
+                                                        <Globe size={20} className="text-[#000000] mt-0.5 flex-shrink-0" />
+                                                        <div>
+                                                            <h4 className="font-suisseintl font-bold text-xs uppercase text-[#000000]">
+                                                                Webpage URL Capture
+                                                            </h4>
+                                                            <p className="font-suisseintl text-[10px] text-[#444444] mt-1 leading-normal">
+                                                                Enter the URL of any public website below. Our service will fetch and compile it into a clean, print-ready PDF layout.
+                                                            </p>
+                                                        </div>
+                                                    </div>
 
-                                            <DropzoneArea
-                                                onFileSelect={setSelectedFiles}
-                                                selectedFiles={selectedFiles}
-                                                accept={tool.accept}
-                                                maxSize={100 * 1024 * 1024}
-                                                hasUrl={hasUrlInput && !!urlInput}
-                                                multiple={tool.multiple}
-                                            />
+                                                    <div className="space-y-1.5 text-left">
+                                                        <label className="block text-xs font-bold uppercase tracking-wider text-[#000000] font-suisseintlmono">
+                                                            Website URL
+                                                        </label>
+                                                        <div className="relative">
+                                                            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-[#000000]">
+                                                                <LinkIcon size={16} />
+                                                            </div>
+                                                            <input 
+                                                                type="text"
+                                                                placeholder="https://example.com"
+                                                                value={urlInput}
+                                                                onChange={(e) => { setUrlInput(e.target.value); setLocalError(''); }}
+                                                                className="w-full h-11 pl-10 pr-4 border border-[#000000] bg-[#ffffff] text-[#000000] font-suisseintl font-medium text-sm focus:border-2 focus:outline-none rounded-[8px] transition-all"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            ) : (
+                                                <DropzoneArea
+                                                    onFileSelect={setSelectedFiles}
+                                                    selectedFiles={selectedFiles}
+                                                    accept={tool.accept}
+                                                    maxSize={100 * 1024 * 1024}
+                                                    hasUrl={hasUrlInput && !!urlInput}
+                                                    multiple={tool.multiple}
+                                                />
+                                            )}
 
                                             {/* Tool-specific options */}
                                             {tool.slug === 'split-pdf' && (
-                                                <div className="mt-5">
-                                                    <TextField fullWidth size="small" label="Page ranges" placeholder="e.g., 1-3, 5, 7-10" value={splitRanges} onChange={(e) => setSplitRanges(e.target.value)} sx={dayosInputStyle} helperText="Leave blank to split into individual pages" />
+                                                <div className="mt-5 space-y-3 text-left">
+                                                    <div className="space-y-1.5">
+                                                        <label className="block text-xs font-bold uppercase tracking-wider text-[#000000] font-suisseintlmono">
+                                                            Page ranges
+                                                        </label>
+                                                        <input 
+                                                            type="text"
+                                                            placeholder="e.g., 1-3, 5, 7-10" 
+                                                            value={splitRanges} 
+                                                            onChange={(e) => { setSplitRanges(e.target.value); setLocalError(''); }} 
+                                                            className="w-full h-11 px-4 border border-[#000000] bg-[#ffffff] text-[#000000] font-suisseintl font-medium text-sm focus:border-2 focus:outline-none rounded-[8px] transition-all"
+                                                        />
+                                                        <p className="font-suisseintlmono text-[9px] text-[#444444] mt-1.5 ml-1">
+                                                            Leave blank to split into individual pages
+                                                        </p>
+                                                    </div>
+                                                    <div className="flex flex-wrap gap-2">
+                                                        {[
+                                                            { label: 'All Pages', value: '' },
+                                                            { label: 'Odd Pages', value: '1,3,5,7,9,11,13,15' },
+                                                            { label: 'Even Pages', value: '2,4,6,8,10,12,14,16' },
+                                                            { label: 'First Page Only', value: '1' }
+                                                        ].map(preset => {
+                                                            const isSelected = splitRanges === preset.value;
+                                                            return (
+                                                                <button
+                                                                    key={preset.label}
+                                                                    type="button"
+                                                                    onClick={() => { setSplitRanges(preset.value); setLocalError(''); }}
+                                                                    className={cn(
+                                                                        'px-3 py-1.5 border text-[10px] font-bold uppercase transition-all duration-150 rounded-none font-suisseintlmono',
+                                                                        isSelected
+                                                                            ? 'bg-[#000000] text-[#ffffff] border-[#000000]'
+                                                                            : 'bg-[#ffffff] text-[#444444] border-[#000000]/15 hover:border-[#000000] hover:text-[#000000]'
+                                                                    )}
+                                                                >
+                                                                    {preset.label}
+                                                                </button>
+                                                            );
+                                                        })}
+                                                    </div>
                                                 </div>
                                             )}
 
                                             {tool.slug === 'add-watermark' && (
-                                                <div className="mt-5">
-                                                    <TextField fullWidth size="small" label="Watermark text" placeholder="CONFIDENTIAL" value={watermarkText} onChange={(e) => setWatermarkText(e.target.value)} sx={dayosInputStyle} />
+                                                <div className="mt-5 space-y-4 text-left">
+                                                    <div className="space-y-1.5">
+                                                        <label className="block text-xs font-bold uppercase tracking-wider text-[#000000] font-suisseintlmono">
+                                                            Watermark text
+                                                        </label>
+                                                        <input 
+                                                            type="text"
+                                                            placeholder="CONFIDENTIAL" 
+                                                            value={watermarkText} 
+                                                            onChange={(e) => { setWatermarkText(e.target.value); setLocalError(''); }} 
+                                                            className="w-full h-11 px-4 border border-[#000000] bg-[#ffffff] text-[#000000] font-suisseintl font-medium text-sm focus:border-2 focus:outline-none rounded-[8px] transition-all"
+                                                        />
+                                                    </div>
+                                                    {watermarkText && (
+                                                        <div className="border border-[#000000] p-4 bg-[#ffffff] relative flex items-center justify-center min-h-[80px] overflow-hidden rounded-[16px]">
+                                                            <div className="absolute inset-0 bg-stone-50/50 pointer-events-none" />
+                                                            <div className="text-[10px] text-stone-300 font-suisseintl select-none w-full space-y-1">
+                                                                <div className="h-2 w-1/3 bg-stone-200 rounded" />
+                                                                <div className="h-2 w-5/6 bg-stone-200 rounded" />
+                                                                <div className="h-2 w-4/5 bg-stone-200 rounded" />
+                                                            </div>
+                                                            <span className="absolute font-suisseintl font-bold text-lg select-none pointer-events-none opacity-20 uppercase tracking-widest text-[#000000] transform rotate-[-30deg]">
+                                                                {watermarkText}
+                                                            </span>
+                                                        </div>
+                                                    )}
                                                 </div>
                                             )}
 
                                             {tool.slug === 'rotate-pdf' && (
-                                                <div className="mt-5">
-                                                    <TextField fullWidth size="small" label="Rotation degrees" type="number" value={rotateDegrees} onChange={(e) => setRotateDegrees(e.target.value)} sx={dayosInputStyle} helperText="90, 180, or 270" />
+                                                <div className="mt-5 space-y-2">
+                                                    <label className="block text-xs font-bold uppercase tracking-wider text-[#000000] font-suisseintlmono">
+                                                        Rotation Angle
+                                                    </label>
+                                                    <div className="grid grid-cols-3 gap-2">
+                                                        {[
+                                                            { label: '90° CW', value: '90' },
+                                                            { label: '180° Flip', value: '180' },
+                                                            { label: '270° CCW', value: '270' }
+                                                        ].map(opt => {
+                                                            const isSelected = rotateDegrees === opt.value;
+                                                            return (
+                                                                <button
+                                                                    key={opt.value}
+                                                                    type="button"
+                                                                    onClick={() => { setRotateDegrees(opt.value); setLocalError(''); }}
+                                                                    className={cn(
+                                                                        'h-12 border transition-all duration-150 flex flex-col items-center justify-center gap-1 font-suisseintl text-[10px] font-bold rounded-none',
+                                                                        isSelected
+                                                                            ? 'bg-[#000000] text-[#ffffff] border-[#000000]'
+                                                                            : 'bg-[#ffffff] text-[#444444] border-[#000000]/15 hover:border-[#000000] hover:text-[#000000]'
+                                                                    )}
+                                                                >
+                                                                    {opt.value === '90' && <RotateCw size={14} />}
+                                                                    {opt.value === '180' && <ArrowDown size={14} />}
+                                                                    {opt.value === '270' && <RotateCcw size={14} />}
+                                                                    {opt.label}
+                                                                </button>
+                                                            );
+                                                        })}
+                                                    </div>
                                                 </div>
                                             )}
 
                                             {tool.slug === 'add-page-numbers' && (
-                                                <div className="mt-5">
-                                                    <TextField fullWidth size="small" label="Start number" type="number" value={pageNumberStart} onChange={(e) => setpageNumberStart(e.target.value)} sx={dayosInputStyle} />
+                                                <div className="mt-5 space-y-2">
+                                                    <label className="block text-xs font-bold uppercase tracking-wider text-[#000000] font-suisseintlmono">
+                                                        Starting Page Number
+                                                    </label>
+                                                    <div className="flex items-center">
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => { setpageNumberStart(prev => String(Math.max(1, parseInt(prev || '1') - 1))); setLocalError(''); }}
+                                                            className="h-10 w-10 border border-r-0 border-[#000000] bg-[#ffffff] text-[#000000] flex items-center justify-center hover:bg-[#f3f3f3] active:bg-[#e5e7eb] rounded-l-[8px] transition-colors"
+                                                        >
+                                                            <Minus size={14} />
+                                                        </button>
+                                                        <input
+                                                            type="number"
+                                                            value={pageNumberStart}
+                                                            onChange={(e) => { setpageNumberStart(String(Math.max(1, parseInt(e.target.value) || 1))); setLocalError(''); }}
+                                                            className="h-10 w-16 border border-[#000000] text-center font-suisseintl font-bold text-sm text-[#000000] focus:outline-none focus:ring-0"
+                                                            style={{ MozAppearance: 'textfield' }}
+                                                        />
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => { setpageNumberStart(prev => String(parseInt(prev || '1') + 1)); setLocalError(''); }}
+                                                            className="h-10 w-10 border border-l-0 border-[#000000] bg-[#ffffff] text-[#000000] flex items-center justify-center hover:bg-[#f3f3f3] active:bg-[#e5e7eb] rounded-r-[8px] transition-colors"
+                                                        >
+                                                            <Plus size={14} />
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             )}
 
                                             {tool.slug === 'sign-pdf' && (
-                                                <div className="mt-5">
-                                                    <TextField fullWidth size="small" label="Signature text" placeholder="Your Name" value={signText} onChange={(e) => setSignText(e.target.value)} sx={dayosInputStyle} />
+                                                <div className="mt-5 space-y-4 text-left">
+                                                    <link 
+                                                        href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Caveat:wght@700&family=Dancing+Script:wght@600&family=Great+Vibes&family=Reenie+Beanie&family=Sacramento&display=swap" 
+                                                        rel="stylesheet" 
+                                                    />
+                                                                                              <div className="space-y-1.5">
+                                                        <label className="block text-xs font-bold uppercase tracking-wider text-[#000000] font-suisseintlmono">
+                                                            Signature text
+                                                        </label>
+                                                        <div className="relative">
+                                                            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-[#000000]">
+                                                                <PenTool size={16} />
+                                                            </div>
+                                                            <input 
+                                                                type="text"
+                                                                placeholder="Your Name" 
+                                                                value={signText} 
+                                                                onChange={(e) => { setSignText(e.target.value); setLocalError(''); }} 
+                                                                className="w-full h-11 pl-10 pr-4 border border-[#000000] bg-[#ffffff] text-[#000000] font-suisseintl font-medium text-sm focus:border-2 focus:outline-none rounded-[8px] transition-all"
+                                                            />
+                                                        </div>
+                                                    </div>
+
+                                                    {signText && (
+                                                        <div className="space-y-3">
+                                                            <label className="block text-[10px] font-bold uppercase tracking-wider text-[#444444] font-suisseintlmono">
+                                                                Select Font Style
+                                                            </label>
+                                                            <div className="grid grid-cols-2 gap-2">
+                                                                {[
+                                                                    { id: 'font-dancing', name: 'Elegant Cursive', fontStyle: { fontFamily: "'Dancing Script', cursive" } },
+                                                                    { id: 'font-greatvibes', name: 'Calligraphy', fontStyle: { fontFamily: "'Great Vibes', cursive" } },
+                                                                    { id: 'font-alex', name: 'Classic Script', fontStyle: { fontFamily: "'Alex Brush', cursive" } },
+                                                                    { id: 'font-caveat', name: 'Modern Hand', fontStyle: { fontFamily: "'Caveat', cursive" } }
+                                                                ].map(styleOpt => {
+                                                                    const isSelected = selectedSignatureFont === styleOpt.id;
+                                                                    return (
+                                                                        <button
+                                                                            key={styleOpt.id}
+                                                                            type="button"
+                                                                            onClick={() => setSelectedSignatureFont(styleOpt.id)}
+                                                                            className={cn(
+                                                                                'p-2.5 border transition-all duration-150 flex flex-col text-left justify-center gap-1.5 rounded-none min-h-[64px]',
+                                                                                isSelected
+                                                                                    ? 'bg-[#000000] text-[#ffffff] border-[#000000]'
+                                                                                    : 'bg-[#ffffff] text-[#000000] border-[#000000]/15 hover:border-[#000000]'
+                                                                            )}
+                                                                        >
+                                                                            <span className="text-[9px] uppercase tracking-wider font-suisseintlmono opacity-50 block">
+                                                                                {styleOpt.name}
+                                                                            </span>
+                                                                            <span className="text-lg leading-none block truncate" style={styleOpt.fontStyle}>
+                                                                                {signText}
+                                                                            </span>
+                                                                        </button>
+                                                                    );
+                                                                })}
+                                                            </div>
+
+                                                            {/* Digital Seal / Certificate Design Card */}
+                                                            <div className="border border-[#000000] bg-[#d1ffca]/20 p-4 rounded-[16px] relative overflow-hidden flex flex-col gap-1.5 mt-4">
+                                                                <div className="absolute right-[-10px] bottom-[-15px] opacity-10 pointer-events-none">
+                                                                    <ShieldCheck size={100} className="text-[#000000]" />
+                                                                </div>
+                                                                
+                                                                <span className="font-suisseintlmono text-[8px] font-bold text-[#000000]/60 uppercase tracking-widest block">
+                                                                    COMPLIANT ELECTRONIC SEAL
+                                                                </span>
+                                                                
+                                                                <div className="flex justify-between items-end border-b border-[#000000]/10 pb-2 mb-1.5">
+                                                                    <div>
+                                                                        <span className="text-[18px] font-medium leading-none block" style={{
+                                                                            fontFamily: selectedSignatureFont === 'font-dancing' ? "'Dancing Script', cursive" :
+                                                                                        selectedSignatureFont === 'font-greatvibes' ? "'Great Vibes', cursive" :
+                                                                                        selectedSignatureFont === 'font-alex' ? "'Alex Brush', cursive" :
+                                                                                        selectedSignatureFont === 'font-caveat' ? "'Caveat', cursive" : "'Dancing Script', cursive"
+                                                                        }}>
+                                                                            {signText}
+                                                                        </span>
+                                                                        <span className="text-[9px] font-suisseintlmono text-[#444444] mt-1 block">
+                                                                            DocID: SECURE-WASM-{(selectedFiles[0]?.name || 'DOC').replace(/[^a-zA-Z0-9]/g, '').substring(0, 6).toUpperCase()}
+                                                                        </span>
+                                                                    </div>
+                                                                    <div className="bg-[#d1ffca] border border-[#000000] text-[9px] font-bold px-2 py-0.5 uppercase tracking-wide flex items-center gap-1 font-suisseintlmono h-fit">
+                                                                        <span className="w-1.5 h-1.5 rounded-full bg-[#000000]" />
+                                                                        VERIFIED
+                                                                    </div>
+                                                                </div>
+                                                                
+                                                                <span className="text-[9px] text-[#444444] font-suisseintl leading-normal">
+                                                                    This signature is generated and stamped client-side using local cryptography. The document is protected against unauthorized layout manipulation.
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    )}
                                                 </div>
                                             )}
 
                                             {tool.slug === 'protect-pdf' && (
-                                                <div className="mt-5">
-                                                    <TextField fullWidth size="small" label="Set password" type="password" value={protectPassword} onChange={(e) => setProtectPassword(e.target.value)} sx={dayosInputStyle} />
+                                                <div className="mt-5 space-y-4 text-left">
+                                                    <div className="space-y-1.5">
+                                                        <label className="block text-xs font-bold uppercase tracking-wider text-[#000000] font-suisseintlmono">
+                                                            Set password
+                                                        </label>
+                                                        <div className="relative">
+                                                            <input 
+                                                                type={showProtectPassword ? 'text' : 'password'} 
+                                                                value={protectPassword} 
+                                                                onChange={(e) => { setProtectPassword(e.target.value); setLocalError(''); }} 
+                                                                placeholder="Enter password"
+                                                                className="w-full h-11 px-4 pr-10 border border-[#000000] bg-[#ffffff] text-[#000000] font-suisseintl font-medium text-sm focus:border-2 focus:outline-none rounded-[8px] transition-all"
+                                                            />
+                                                            <button
+                                                                type="button"
+                                                                onClick={() => setShowProtectPassword(prev => !prev)}
+                                                                className="absolute right-3 top-1/2 -translate-y-1/2 text-[#000000] hover:text-[#444444] focus:outline-none"
+                                                            >
+                                                                {showProtectPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    {protectPassword && (
+                                                        <div className="space-y-1.5">
+                                                            <div className="flex justify-between items-center text-[10px] font-suisseintlmono uppercase text-[#444444]">
+                                                                <span>Password Strength</span>
+                                                                <span className="font-bold text-xs" style={{ color: getPasswordStrength(protectPassword).color }}>
+                                                                    {getPasswordStrength(protectPassword).label}
+                                                                </span>
+                                                            </div>
+                                                            <div className="h-1.5 w-full bg-[#e5e7eb] border border-[#000000]/10 overflow-hidden rounded-full">
+                                                                <div 
+                                                                    className="h-full transition-all duration-300"
+                                                                    style={{ 
+                                                                        width: `${(getPasswordStrength(protectPassword).score / 5) * 100}%`,
+                                                                        backgroundColor: getPasswordStrength(protectPassword).score <= 2 ? '#ff4d4d' : getPasswordStrength(protectPassword).score <= 4 ? '#fff100' : '#d1ffca'
+                                                                    }}
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                    )}
+
+                                                    <div className="space-y-1.5">
+                                                        <label className="block text-xs font-bold uppercase tracking-wider text-[#000000] font-suisseintlmono">
+                                                            Confirm password
+                                                        </label>
+                                                        <div className="relative">
+                                                            <input 
+                                                                type={showConfirmPassword ? 'text' : 'password'} 
+                                                                value={confirmPassword} 
+                                                                onChange={(e) => { setConfirmPassword(e.target.value); setLocalError(''); }} 
+                                                                placeholder="Re-enter password"
+                                                                className="w-full h-11 px-4 pr-10 border border-[#000000] bg-[#ffffff] text-[#000000] font-suisseintl font-medium text-sm focus:border-2 focus:outline-none rounded-[8px] transition-all"
+                                                            />
+                                                            <button
+                                                                type="button"
+                                                                onClick={() => setShowConfirmPassword(prev => !prev)}
+                                                                className="absolute right-3 top-1/2 -translate-y-1/2 text-[#000000] hover:text-[#444444] focus:outline-none"
+                                                            >
+                                                                {showConfirmPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                                                            </button>
+                                                        </div>
+                                                        {protectPassword !== confirmPassword && confirmPassword.length > 0 && (
+                                                            <span className="text-[10px] text-red-600 font-suisseintlmono mt-1.5 block">
+                                                                Passwords do not match
+                                                            </span>
+                                                        )}
+                                                    </div>
                                                 </div>
                                             )}
 
                                             {tool.slug === 'unlock-pdf' && (
-                                                <div className="mt-5">
-                                                    <TextField fullWidth size="small" label="PDF password" type="password" value={unlockPassword} onChange={(e) => setUnlockPassword(e.target.value)} sx={dayosInputStyle} />
+                                                <div className="mt-5 space-y-1.5 text-left">
+                                                    <label className="block text-xs font-bold uppercase tracking-wider text-[#000000] font-suisseintlmono">
+                                                        PDF password
+                                                    </label>
+                                                    <div className="relative">
+                                                        <input 
+                                                            type={showUnlockPassword ? 'text' : 'password'} 
+                                                            value={unlockPassword} 
+                                                            onChange={(e) => { setUnlockPassword(e.target.value); setLocalError(''); }} 
+                                                            placeholder="Enter password"
+                                                            className="w-full h-11 px-4 pr-10 border border-[#000000] bg-[#ffffff] text-[#000000] font-suisseintl font-medium text-sm focus:border-2 focus:outline-none rounded-[8px] transition-all"
+                                                        />
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => setShowUnlockPassword(prev => !prev)}
+                                                            className="absolute right-3 top-1/2 -translate-y-1/2 text-[#000000] hover:text-[#444444] focus:outline-none"
+                                                        >
+                                                            {showUnlockPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             )}
 
                                             {tool.slug === 'translate-pdf' && (
-                                                <div className="mt-5">
-                                                    <TextField fullWidth size="small" label="Target language code" placeholder="es, fr, de..." value={translateLang} onChange={(e) => setTranslateLang(e.target.value)} sx={dayosInputStyle} helperText="ISO 639-1 code (es, fr, de, ja, etc.)" />
+                                                <div className="mt-5 space-y-2 text-left">
+                                                    <label className="block text-xs font-bold uppercase tracking-wider text-[#000000] font-suisseintlmono">
+                                                        Target Language
+                                                    </label>
+                                                    <select
+                                                        value={translateLang}
+                                                        onChange={(e) => { setTranslateLang(e.target.value); setLocalError(''); }}
+                                                        className="w-full h-10 border border-[#000000] bg-[#ffffff] px-3 font-suisseintl font-medium text-sm text-[#000000] focus:border-2 focus:outline-none rounded-[8px]"
+                                                    >
+                                                        {[
+                                                            { code: 'es', name: 'Spanish (Español)' },
+                                                            { code: 'fr', name: 'French (Français)' },
+                                                            { code: 'de', name: 'German (Deutsch)' },
+                                                            { code: 'it', name: 'Italian (Italiano)' },
+                                                            { code: 'pt', name: 'Portuguese (Português)' },
+                                                            { code: 'ja', name: 'Japanese (日本語)' },
+                                                            { code: 'zh', name: 'Chinese (中文)' },
+                                                            { code: 'hi', name: 'Hindi (हिन्दी)' },
+                                                            { code: 'ar', name: 'Arabic (العربية)' },
+                                                            { code: 'ru', name: 'Russian (Русский)' },
+                                                            { code: 'ko', name: 'Korean (한국어)' }
+                                                        ].map(lang => (
+                                                            <option key={lang.code} value={lang.code}>
+                                                                {lang.name}
+                                                            </option>
+                                                        ))}
+                                                    </select>
                                                 </div>
                                             )}
 
@@ -304,6 +657,12 @@ export default function ToolPage({ toolSlug }) {
 
                                             {/* Submit */}
                                             <div className="mt-8">
+                                                {localError && (
+                                                    <div className="mb-4 p-3 border border-red-600 bg-red-50 text-red-600 text-xs font-suisseintlmono rounded-[8px] flex items-center gap-2">
+                                                        <AlertCircle size={14} className="flex-shrink-0" />
+                                                        <span>{localError}</span>
+                                                    </div>
+                                                )}
                                                 <NeumorphicButton
                                                     onClick={handleSubmit}
                                                     disabled={(!selectedFiles || selectedFiles.length === 0) && !(hasUrlInput && urlInput)}

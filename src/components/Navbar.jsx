@@ -3,9 +3,10 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Search } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { NeumorphicButton } from './ui/IndustrialComponents';
+import { TOOLS } from '@/utils/tools';
 
 const DayosLogo = () => (
     <div className="flex items-center gap-2 select-none">
@@ -21,6 +22,8 @@ export default function Navbar() {
     const [scrolled, setScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [activeHash, setActiveHash] = useState('');
+    const [searchQuery, setSearchQuery] = useState('');
+    const [isSearchDropdownOpen, setIsSearchDropdownOpen] = useState(false);
 
     useEffect(() => {
         const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -125,6 +128,55 @@ export default function Navbar() {
                                 })}
                             </div>
 
+                            {/* Search option */}
+                            <div className="relative">
+                                <div className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[#444444] pointer-events-none">
+                                    <Search size={14} />
+                                </div>
+                                <input
+                                    type="text"
+                                    placeholder="Search tools..."
+                                    value={searchQuery}
+                                    onChange={(e) => { setSearchQuery(e.target.value); setIsSearchDropdownOpen(true); }}
+                                    onFocus={() => setIsSearchDropdownOpen(true)}
+                                    onBlur={() => setTimeout(() => setIsSearchDropdownOpen(false), 200)}
+                                    className="h-9 w-36 pl-8 pr-3 border border-[#000000]/30 hover:border-[#000000] focus:border-[#000000] bg-[#ffffff] text-[#000000] font-suisseintl font-medium text-xs focus:outline-none rounded-[8px] focus:w-44 transition-all duration-200"
+                                />
+                                {isSearchDropdownOpen && searchQuery.trim() && (
+                                    <div className="absolute right-0 mt-2 w-64 bg-[#ffffff] border border-[#000000] rounded-[16px] shadow-lg py-1.5 z-50 max-h-72 overflow-y-auto">
+                                        {TOOLS.filter(t => 
+                                            t.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                                            t.shortDesc.toLowerCase().includes(searchQuery.toLowerCase())
+                                        ).slice(0, 5).map(t => (
+                                            <Link
+                                                key={t.slug}
+                                                href={`/tool/${t.slug}`}
+                                                onClick={() => {
+                                                    setSearchQuery('');
+                                                    setIsSearchDropdownOpen(false);
+                                                }}
+                                                className="flex flex-col px-4 py-2 hover:bg-[#f3f3f3] transition-colors text-left focus:outline-none"
+                                            >
+                                                <span className="font-suisseintl font-bold text-xs text-[#000000] truncate">
+                                                    {t.name}
+                                                </span>
+                                                <span className="text-[10px] text-[#979797] font-suisseintl truncate mt-0.5">
+                                                    {t.shortDesc}
+                                                </span>
+                                            </Link>
+                                        ))}
+                                        {TOOLS.filter(t => 
+                                            t.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                                            t.shortDesc.toLowerCase().includes(searchQuery.toLowerCase())
+                                        ).length === 0 && (
+                                            <div className="px-4 py-3 text-center text-xs font-suisseintl text-[#979797]">
+                                                No tools found
+                                            </div>
+                                        )}
+                                    </div>
+                                )}
+                            </div>
+
                             {/* Schedule Demo Button: Background #000000, text #ffffff, 8px border-radius, paddingRight=16px */}
                             <button
                                 onClick={() => handleNav('/#tools')}
@@ -158,7 +210,54 @@ export default function Navbar() {
                         transition={{ duration: 0.2 }}
                         className="lg:hidden px-4 py-4"
                     >
-                        <div className="bg-[#ffffff] border border-[#000000] rounded-[24px] p-4 flex flex-col gap-2">
+                        <div className="bg-[#ffffff] border border-[#000000] rounded-[24px] p-4 flex flex-col gap-2 relative z-50">
+                            {/* Mobile Search */}
+                            <div className="relative mb-2">
+                                <div className="absolute left-3 top-1/2 -translate-y-1/2 text-[#444444] pointer-events-none">
+                                    <Search size={14} />
+                                </div>
+                                <input
+                                    type="text"
+                                    placeholder="Search tools..."
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                    className="w-full h-10 pl-9 pr-3 border border-[#000000]/30 focus:border-[#000000] bg-[#e5e7eb]/40 text-[#000000] font-suisseintl font-medium text-xs focus:outline-none rounded-[8px]"
+                                />
+                                {searchQuery.trim() && (
+                                    <div className="mt-1 bg-[#ffffff] border border-[#000000] rounded-[12px] py-1 max-h-48 overflow-y-auto shadow-inner">
+                                        {TOOLS.filter(t => 
+                                            t.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                                            t.shortDesc.toLowerCase().includes(searchQuery.toLowerCase())
+                                        ).slice(0, 5).map(t => (
+                                            <Link
+                                                key={t.slug}
+                                                href={`/tool/${t.slug}`}
+                                                onClick={() => {
+                                                    setSearchQuery('');
+                                                    setIsMobileMenuOpen(false);
+                                                }}
+                                                className="flex justify-between items-center px-4 py-2.5 hover:bg-[#f3f3f3]"
+                                            >
+                                                <span className="font-suisseintl font-bold text-xs text-[#000000]">
+                                                    {t.name}
+                                                </span>
+                                                <span className="text-[9px] text-[#979797] font-suisseintl font-bold uppercase">
+                                                    {t.category}
+                                                </span>
+                                            </Link>
+                                        ))}
+                                        {TOOLS.filter(t => 
+                                            t.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                                            t.shortDesc.toLowerCase().includes(searchQuery.toLowerCase())
+                                        ).length === 0 && (
+                                            <div className="px-4 py-2 text-center text-xs font-suisseintl text-[#979797]">
+                                                No tools found
+                                            </div>
+                                        )}
+                                    </div>
+                                )}
+                            </div>
+                            
                             {navLinks.map((link) => (
                                 <button
                                     key={link.name}

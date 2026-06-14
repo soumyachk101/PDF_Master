@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { Twitter, Github, MessageCircle } from 'lucide-react';
 import { HitCounter } from '@/components/ui/IndustrialComponents';
+import { TOOLS } from '@/utils/tools';
 
 const DayosFooterLogo = () => (
     <div className="flex items-center gap-2 select-none">
@@ -12,6 +13,39 @@ const DayosFooterLogo = () => (
         </span>
     </div>
 );
+
+const CATEGORY_LINKS = [
+    {
+        title: 'Organize PDF',
+        slugs: ['merge-pdf', 'split-pdf', 'remove-pages', 'extract-pages', 'organize-pdf', 'scan-to-pdf'],
+    },
+    {
+        title: 'Optimize PDF',
+        slugs: ['compress-pdf', 'repair-pdf', 'ocr-pdf'],
+    },
+    {
+        title: 'Convert to PDF',
+        slugs: ['jpg-to-pdf', 'word-to-pdf', 'pptx-to-pdf', 'excel-to-pdf', 'html-to-pdf'],
+    },
+    {
+        title: 'Convert from PDF',
+        slugs: ['pdf-to-jpg', 'pdf-to-word', 'pdf-to-pptx', 'pdf-to-excel', 'pdf-to-pdfa'],
+    },
+    {
+        title: 'Edit PDF',
+        slugs: ['rotate-pdf', 'page-numbers', 'add-watermark', 'crop-pdf', 'edit-pdf'],
+    },
+    {
+        title: 'PDF Security',
+        slugs: ['unlock-pdf', 'protect-pdf', 'sign-pdf', 'redact-pdf', 'compare-pdf'],
+    },
+    {
+        title: 'PDF Intelligence',
+        slugs: ['translate-pdf'],
+    },
+];
+
+const toolBySlug = Object.fromEntries(TOOLS.map(t => [t.slug, t]));
 
 export default function Footer() {
     const currentYear = new Date().getFullYear();
@@ -65,7 +99,11 @@ export default function Footer() {
                                 { name: 'Merge PDF', path: '/tool/merge-pdf' },
                                 { name: 'Split PDF', path: '/tool/split-pdf' },
                                 { name: 'Compress PDF', path: '/tool/compress-pdf' },
-                                { name: 'PDF to Word', path: '/tool/pdf-to-word' }
+                                { name: 'PDF to Word', path: '/tool/pdf-to-word' },
+                                { name: 'JPG to PDF', path: '/tool/jpg-to-pdf' },
+                                { name: 'Edit PDF', path: '/tool/edit-pdf' },
+                                { name: 'Sign PDF', path: '/tool/sign-pdf' },
+                                { name: 'OCR PDF', path: '/tool/ocr-pdf' }
                             ].map((tool) => (
                                 <li key={tool.path}>
                                     <Link href={tool.path} className="inline-block text-xs text-[#444444] font-suisseintl hover:text-[#000000] hover:underline transition-all duration-200">
@@ -76,29 +114,40 @@ export default function Footer() {
                         </ul>
                     </div>
 
-                    {/* More Tools */}
-                    <div>
+                    {/* Sitemap-Style All Tools */}
+                    <div className="lg:col-span-2">
                         <h3 className="font-suisseintl font-bold text-xs uppercase tracking-wider mb-4 text-[#000000] border-b border-[#000000]/10 pb-2">
-                            More Tools
+                            All PDF Tools (Sitemap)
                         </h3>
-                        <ul className="flex flex-col gap-2.5">
-                            {[
-                                { name: 'JPG to PDF', path: '/tool/jpg-to-pdf' },
-                                { name: 'Edit PDF', path: '/tool/edit-pdf' },
-                                { name: 'Protect PDF', path: '/tool/protect-pdf' },
-                                { name: 'Unlock PDF', path: '/tool/unlock-pdf' }
-                            ].map((tool) => (
-                                <li key={tool.path}>
-                                    <Link href={tool.path} className="inline-block text-xs text-[#444444] font-suisseintl hover:text-[#000000] hover:underline transition-all duration-200">
-                                        {tool.name}
-                                    </Link>
-                                </li>
+                        <div className="grid grid-cols-2 gap-x-6 gap-y-4">
+                            {CATEGORY_LINKS.map((cat) => (
+                                <div key={cat.title}>
+                                    <h4 className="font-suisseintlmono text-[10px] uppercase tracking-widest text-[#000000]/60 mb-2 font-bold">
+                                        {cat.title}
+                                    </h4>
+                                    <ul className="flex flex-col gap-1.5">
+                                        {cat.slugs.map((slug) => {
+                                            const t = toolBySlug[slug];
+                                            if (!t) return null;
+                                            return (
+                                                <li key={slug}>
+                                                    <Link
+                                                        href={`/tool/${slug}`}
+                                                        className="inline-block text-[11px] text-[#444444] font-suisseintl hover:text-[#000000] hover:underline transition-all duration-200"
+                                                    >
+                                                        {t.name}
+                                                    </Link>
+                                                </li>
+                                            );
+                                        })}
+                                    </ul>
+                                </div>
                             ))}
-                        </ul>
+                        </div>
                     </div>
 
                     {/* Legal */}
-                    <div>
+                    <div className="lg:col-start-1">
                         <h3 className="font-suisseintl font-bold text-xs uppercase tracking-wider mb-4 text-[#000000] border-b border-[#000000]/10 pb-2">
                             Legal
                         </h3>

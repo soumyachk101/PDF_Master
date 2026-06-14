@@ -24,9 +24,15 @@ export default function Page() {
     itemListElement: TOOLS.map((tool, index) => ({
       '@type': 'ListItem',
       position: index + 1,
-      name: tool.name,
-      url: `https://www.docshift.tech/tool/${tool.slug}`,
-      description: tool.shortDesc,
+      item: {
+        '@type': 'WebApplication',
+        name: tool.name,
+        url: `https://www.docshift.tech/tool/${tool.slug}`,
+        description: tool.shortDesc,
+        applicationCategory: 'UtilityApplication',
+        operatingSystem: 'Any',
+        offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+      },
     })),
   };
 

@@ -3,27 +3,30 @@ import { TOOLS } from '@/utils/tools';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://www.docshift.tech';
-  const now = new Date();
+
+  // Use a static build-time date so lastmod is deterministic and stable
+  // across crawls (changing it on every request signals instability).
+  const lastModified = new Date('2026-06-14');
 
   const home = {
     url: `${baseUrl}/`,
-    lastModified: now,
+    lastModified,
     changeFrequency: 'weekly' as const,
     priority: 1.0,
   };
 
   const toolPages = TOOLS.map((tool) => ({
     url: `${baseUrl}/tool/${tool.slug}`,
-    lastModified: now,
+    lastModified,
     changeFrequency: 'monthly' as const,
     priority: 0.9,
   }));
 
   const staticPages = [
-    { url: `${baseUrl}/about`, lastModified: now, changeFrequency: 'monthly' as const, priority: 0.6 },
-    { url: `${baseUrl}/privacy`, lastModified: now, changeFrequency: 'yearly' as const, priority: 0.3 },
-    { url: `${baseUrl}/terms`, lastModified: now, changeFrequency: 'yearly' as const, priority: 0.3 },
-    { url: `${baseUrl}/contact`, lastModified: now, changeFrequency: 'monthly' as const, priority: 0.5 },
+    { url: `${baseUrl}/about`, lastModified, changeFrequency: 'monthly' as const, priority: 0.6 },
+    { url: `${baseUrl}/privacy`, lastModified, changeFrequency: 'yearly' as const, priority: 0.3 },
+    { url: `${baseUrl}/terms`, lastModified, changeFrequency: 'yearly' as const, priority: 0.3 },
+    { url: `${baseUrl}/contact`, lastModified, changeFrequency: 'monthly' as const, priority: 0.5 },
   ];
 
   return [home, ...toolPages, ...staticPages];

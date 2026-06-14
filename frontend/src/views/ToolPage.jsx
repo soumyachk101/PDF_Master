@@ -101,7 +101,7 @@ export default function ToolPage({ toolSlug }) {
         if (tool.slug === 'split-pdf' && splitRanges) additionalData.ranges = splitRanges;
         if (tool.slug === 'add-watermark' && watermarkText) additionalData.text = watermarkText;
         if (tool.slug === 'rotate-pdf') additionalData.degrees = rotateDegrees;
-        if (tool.slug === 'add-page-numbers') additionalData.start = pageNumberStart;
+        if (tool.slug === 'page-numbers') additionalData.start = pageNumberStart;
         
         if (tool.slug === 'sign-pdf') {
             if (!signText.trim()) {
@@ -375,7 +375,7 @@ export default function ToolPage({ toolSlug }) {
                                                 </div>
                                             )}
 
-                                            {tool.slug === 'add-page-numbers' && (
+                                            {tool.slug === 'page-numbers' && (
                                                 <div className="mt-5 space-y-2">
                                                     <label className="block text-xs font-bold uppercase tracking-wider text-[#000000] font-suisseintlmono">
                                                         Starting Page Number

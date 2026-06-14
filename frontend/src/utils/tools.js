@@ -22,19 +22,27 @@ export const TOOLS = [
             { q: 'Are my split PDFs secure?', a: 'Absolutely. We do not retain or read the contents of your PDF files. Your privacy is guaranteed.' }
         ]
     },
-    { 
-        slug: 'remove-pages', name: 'Remove Pages', shortDesc: 'Delete pages from a PDF.', desc: 'Select and permanently remove specific pages from your PDF document.', icon: 'Trash2', category: 'organize', color: '#F05B25', accept: { 'application/pdf': ['.pdf'] }, multiple: false, minFiles: 1, urlInput: false, outputExt: '.pdf', outputMime: 'application/pdf', hasThumbnails: true,
+    {
+        slug: 'remove-pages', name: 'Remove Pages', shortDesc: 'Delete pages from a PDF.', desc: 'Select and permanently remove specific pages from your PDF document. Visual page selector for surgical edits.', icon: 'Trash2', category: 'organize', color: '#F05B25', accept: { 'application/pdf': ['.pdf'] }, multiple: false, minFiles: 1, urlInput: false, outputExt: '.pdf', outputMime: 'application/pdf', hasThumbnails: true,
         seoTitle: 'Remove Pages from PDF Free | Delete PDF Pages Online',
         seoDesc: 'Delete specific pages from a PDF document securely. Visual page removal tool that processes files 100% locally in your browser.',
         seoKeywords: 'remove pages from pdf, delete pdf pages online, free pdf page remover, remove pdf sections securely',
-        seoArticle: 'Remove unwanted pages from your PDF document entirely for free. This visual tool lets you delete specific pages from a PDF quickly and securely without uploading your data. If you removed the wrong pages, you can easily <a href="/tool/merge-pdf">merge PDF files back</a> to restore them. Looking to pull pages out instead of deleting them? You can <a href="/tool/extract-pages">extract specific pages</a> or <a href="/tool/organize-pdf">reorder pdf pages</a> for a cleaner document structure.'
+        seoArticle: 'Remove unwanted pages from your PDF document entirely for free. This visual tool lets you delete specific pages from a PDF quickly and securely without uploading your data. Unlike "split" (which exports pages into new files) or "extract" (which copies pages out), remove-pages surgically deletes the pages you select from the original document, preserving page numbering, headers, and footers for the rest of the file. If you removed the wrong pages, you can easily <a href="/tool/merge-pdf">merge PDF files back</a> to restore them. Looking to pull pages out instead of deleting them? You can <a href="/tool/extract-pages">extract specific pages</a> or <a href="/tool/organize-pdf">reorder pdf pages</a> for a cleaner document structure.',
+        faqs: [
+            { q: 'Does removing a page change the remaining page numbers?', a: 'No. When you delete a page, the other pages retain their original numbers. If you need renumbering, use the <a href="/tool/page-numbers">Add Page Numbers</a> tool afterward.' },
+            { q: 'Can I remove multiple non-consecutive pages at once?', a: 'Yes. Tick the thumbnails for any pages you want gone — they do not need to be adjacent.' }
+        ]
     },
-    { 
-        slug: 'extract-pages', name: 'Extract Pages', shortDesc: 'Pull out selected pages.', desc: 'Extract specific pages from a PDF into a new document or separate files.', icon: 'FolderOpen', category: 'organize', color: '#F05B25', accept: { 'application/pdf': ['.pdf'] }, multiple: false, minFiles: 1, urlInput: false, outputExt: '.pdf', outputMime: 'application/pdf', hasThumbnails: true,
+    {
+        slug: 'extract-pages', name: 'Extract Pages', shortDesc: 'Pull out selected pages.', desc: 'Extract specific pages from a PDF into a new document while leaving the original untouched.', icon: 'FolderOpen', category: 'organize', color: '#F05B25', accept: { 'application/pdf': ['.pdf'] }, multiple: false, minFiles: 1, urlInput: false, outputExt: '.pdf', outputMime: 'application/pdf', hasThumbnails: true,
         seoTitle: 'Extract Pages from PDF Online | Free & Secure Extraction',
         seoDesc: 'Pull specific pages out of any PDF document completely free. Extract pages securely in your web browser with zero file uploads.',
         seoKeywords: 'extract pages from pdf, pull out pdf pages, online pdf extractor, save selected pages from pdf',
-        seoArticle: 'Easily extract pages from any PDF document into a fresh file. This tool is completely free and completely private. It runs fully in your browser, meaning you never upload sensitive files. If you extracted pages to combine them with another file, head over to the <a href="/tool/merge-pdf">secure PDF merger</a>. Alternatively, if your goal is just to cut the file in half, try to <a href="/tool/split-pdf">split your PDF pages</a>. You can also <a href="/tool/remove-pages">delete unwanted pages</a> directly.'
+        seoArticle: 'Easily extract pages from any PDF document into a fresh file. This tool is completely free and completely private. It runs fully in your browser, meaning you never upload sensitive files. Unlike <a href="/tool/remove-pages">Remove Pages</a> (which deletes from the source), Extract Pages copies the chosen pages into a brand new PDF while the original stays intact — perfect for sharing just one chapter or section. If you extracted pages to combine them with another file, head over to the <a href="/tool/merge-pdf">secure PDF merger</a>. Alternatively, if your goal is just to cut the file in half, try to <a href="/tool/split-pdf">split your PDF pages</a> into many separate files. You can also <a href="/tool/remove-pages">delete unwanted pages</a> directly.',
+        faqs: [
+            { q: 'Will the original PDF stay exactly the same?', a: 'Yes. Extract only copies pages out — the source file is not modified, and you can extract the same pages again later if needed.' },
+            { q: 'Can I extract pages in any order?', a: 'You can select any set of pages using ranges (e.g. "1, 3-5, 9"). The extracted PDF keeps the order you specify.' }
+        ]
     },
     { 
         slug: 'organize-pdf', name: 'Organize PDF', shortDesc: 'Sort and reorder pages visually.', desc: 'Drag to reorder pages, rotate individual pages, and delete unwanted ones.', icon: 'LayoutGrid', category: 'organize', color: '#F05B25', accept: { 'application/pdf': ['.pdf'] }, multiple: false, minFiles: 1, urlInput: false, outputExt: '.pdf', outputMime: 'application/pdf', hasThumbnails: true,
@@ -43,12 +51,16 @@ export const TOOLS = [
         seoKeywords: 'organize pdf pages online, reorder pdf pages, sort pdf pages, arrange pdf layout free',
         seoArticle: 'Organize your PDF files by dragging and dropping pages into the correct order. This visual organizer lets you sort and reorder PDF pages instantly directly in your browser. Since it runs locally, it is 100% private. While organizing, you notice some upside-down pages? Easily <a href="/tool/rotate-pdf">fix page orientation</a>. You can also <a href="/tool/remove-pages">permanently delete pages</a> or <a href="/tool/merge-pdf">combine multiple PDFs</a> to organize them all at once.'
     },
-    { 
-        slug: 'scan-to-pdf', name: 'Scan to PDF', shortDesc: 'Turn scans into a PDF.', desc: 'Convert camera scans or image files into a single PDF document.', icon: 'ScanLine', category: 'organize', color: '#F05B25', accept: { 'image/jpeg': ['.jpg', '.jpeg'], 'image/png': ['.png'], 'image/webp': ['.webp'] }, multiple: true, minFiles: 1, urlInput: false, outputExt: '.pdf', outputMime: 'application/pdf',
+    {
+        slug: 'scan-to-pdf', name: 'Scan to PDF', shortDesc: 'Turn scans into a PDF.', desc: 'Convert camera scans, JPG, PNG and WebP images into a single searchable, shareable PDF document.', icon: 'ScanLine', category: 'organize', color: '#F05B25', accept: { 'image/jpeg': ['.jpg', '.jpeg'], 'image/png': ['.png'], 'image/webp': ['.webp'] }, multiple: true, minFiles: 1, urlInput: false, outputExt: '.pdf', outputMime: 'application/pdf',
         seoTitle: 'Convert Scans & Images to PDF | Free Scan to PDF Tool',
-        seoDesc: 'Transform JPG, JPEG, and PNG images or camera scans into a single, clean PDF file securely in your web browser.',
+        seoDesc: 'Transform JPG, JPEG, PNG and WebP images or camera scans into a single, clean PDF file securely in your web browser.',
         seoKeywords: 'scan to pdf, convert scan to pdf document, images to pdf converter, make pdf from camera scan',
-        seoArticle: 'Turn any photo scan, JPG, or PNG image into a cohesive PDF document instantly. Our free tool converts camera scans and image files into a single PDF document locally on your device for unmatched privacy. Need your resulting file to be text-searchable? Use our <a href="/tool/ocr-pdf">OCR PDF tool</a> after converting. It is often necessary to <a href="/tool/compress-pdf">shrink PDF file sizes</a> after combining multiple high-resolution images. You can also explicitly <a href="/tool/jpg-to-pdf">convert images to PDF</a> in batches.'
+        seoArticle: 'Turn any photo scan, JPG, PNG or WebP image into a cohesive PDF document instantly. Our free tool converts camera scans and image files into a single PDF document locally on your device for unmatched privacy. Scan to PDF preserves EXIF capture timestamps and original image orientation, which makes it ideal for receipts, whiteboards, and multi-page document archives. Need your resulting file to be text-searchable? Use our <a href="/tool/ocr-pdf">OCR PDF tool</a> after converting. It is often necessary to <a href="/tool/compress-pdf">shrink PDF file sizes</a> after combining multiple high-resolution images. You can also explicitly <a href="/tool/jpg-to-pdf">convert images to PDF</a> in batches.',
+        faqs: [
+            { q: 'What image formats are supported?', a: 'JPG, JPEG, PNG and WebP. You can mix formats in a single batch — they will be merged into one PDF in the order you drop them.' },
+            { q: 'Is the original image quality preserved?', a: 'Yes. We embed your images at their original resolution. To reduce file size afterward, run the result through <a href="/tool/compress-pdf">Compress PDF</a>.' }
+        ]
     },
 
     // ── OPTIMIZE ────────────────────────────────────────────────────────────
@@ -63,12 +75,16 @@ export const TOOLS = [
             { q: 'Why compress PDFs without uploading?', a: 'Compressing files natively keeps your sensitive data isolated and secure from third parties, all while completing the process much faster than waiting for giant files to upload to a cloud server.' }
         ]
     },
-    { 
-        slug: 'repair-pdf', name: 'Repair PDF', shortDesc: 'Fix corrupted PDF files.', desc: 'Repair a damaged PDF and recover data from corrupt PDF files automatically.', icon: 'Wrench', category: 'optimize', color: '#F05B25', accept: { 'application/pdf': ['.pdf'] }, multiple: false, minFiles: 1, urlInput: false, outputExt: '.pdf', outputMime: 'application/pdf',
+    {
+        slug: 'repair-pdf', name: 'Repair PDF', shortDesc: 'Fix corrupted PDF files.', desc: 'Repair a damaged or corrupt PDF, rebuild its cross-reference table, and recover readable content from broken files.', icon: 'Wrench', category: 'optimize', color: '#F05B25', accept: { 'application/pdf': ['.pdf'] }, multiple: false, minFiles: 1, urlInput: false, outputExt: '.pdf', outputMime: 'application/pdf',
         seoTitle: 'Repair Corrupted PDF Files | Free Online PDF Recovery',
         seoDesc: 'Fix broken or corrupted PDF documents instantly. Recover data securely from damaged PDFs completely within your browser.',
         seoKeywords: 'repair corrupted pdf, fix broken pdf online, recover damaged pdf, fix pdf file free',
-        seoArticle: 'Repair a damaged PDF and recover critical data from corrupt PDF files automatically with our free recovery engine. It attempts to rebuild internal PDF structures and salvage your content. If the file opens but is locked, try our <a href="/tool/unlock-pdf">remove PDF password tool</a>. After your document is fixed, you might want to <a href="/tool/compress-pdf">optimize its size</a> for sharing, or <a href="/tool/pdf-to-pdfa">convert it to PDF/A</a> for long-term safe archiving.'
+        seoArticle: 'Repair a damaged PDF and recover critical data from corrupt PDF files automatically with our free recovery engine. It attempts to rebuild internal PDF structures — the xref table, stream dictionaries, and object links — and salvage your content. This is different from <a href="/tool/compress-pdf">Compress PDF</a> (which only optimises a healthy file) and <a href="/tool/unlock-pdf">Unlock PDF</a> (which only removes password restrictions). Repair targets files that refuse to open, display "There was an error opening this document", or show garbled pages. If the file opens but is locked, try our <a href="/tool/unlock-pdf">remove PDF password tool</a>. After your document is fixed, you might want to <a href="/tool/compress-pdf">optimize its size</a> for sharing, or <a href="/tool/pdf-to-pdfa">convert it to PDF/A</a> for long-term safe archiving.',
+        faqs: [
+            { q: 'What kinds of corruption can this tool fix?', a: 'It rebuilds missing xref tables, recovers orphaned objects, and re-attaches broken stream data. Heavily truncated files may still lose pages.' },
+            { q: 'Is there a difference between "repair" and "unlock"?', a: 'Yes. Repair fixes structural damage inside the file; Unlock only removes owner/user passwords from an otherwise valid PDF.' }
+        ]
     },
     { 
         slug: 'ocr-pdf', name: 'OCR PDF', shortDesc: 'Make scanned PDFs searchable.', desc: 'Convert scanned image PDFs into fully searchable and selectable documents.', icon: 'ScanText', category: 'optimize', color: '#F05B25', accept: { 'application/pdf': ['.pdf'] }, multiple: false, minFiles: 1, urlInput: false, outputExt: '.pdf', outputMime: 'application/pdf',
@@ -144,12 +160,16 @@ export const TOOLS = [
         seoKeywords: 'pdf to excel converter online, convert pdf tables to xlsx, free spreadsheet extractor, pull data to excel private',
         seoArticle: 'Quickly pull tabular data straight from PDF documents into standard Excel spreadsheets in seconds. Save hours of manual copy-pasting by letting our smart engine identify grids and rows flawlessly. If you need to share the spreadsheet later, <a href="/tool/excel-to-pdf">convert your Excel back to PDF format rigidly</a>. Rather pull out images or text? See our <a href="/tool/pdf-to-word">PDF to Word converter</a> for text, or <a href="/tool/pdf-to-jpg">extract images directly</a>.'
     },
-    { 
-        slug: 'pdf-to-pdfa', name: 'PDF to PDF/A', shortDesc: 'Convert to archival PDF format.', desc: 'Transform your PDF to PDF/A, the ISO-standardized version for long-term archiving.', icon: 'Archive', category: 'convertFrom', color: '#F05B25', accept: { 'application/pdf': ['.pdf'] }, multiple: false, minFiles: 1, urlInput: false, outputExt: '.pdf', outputMime: 'application/pdf',
+    {
+        slug: 'pdf-to-pdfa', name: 'PDF to PDF/A', shortDesc: 'Convert to archival PDF format.', desc: 'Transform your PDF to PDF/A, the ISO-standardized version for long-term, regulation-compliant archiving.', icon: 'Archive', category: 'convertFrom', color: '#F05B25', accept: { 'application/pdf': ['.pdf'] }, multiple: false, minFiles: 1, urlInput: false, outputExt: '.pdf', outputMime: 'application/pdf',
         seoTitle: 'Convert PDF to PDF/A | Free Document Archiving Tool',
         seoDesc: 'Transform your PDF to PDF/A formatting, the ISO-standardized version tailored for long-term safe archiving.',
         seoKeywords: 'convert pdf to pdf/a online, free archive format converter, ensure long term preservation pdf, pdf to archival format',
-        seoArticle: 'Transform your standard PDF to PDF/A, an ISO-standardized format tailored specifically for long-term archiving and preservation. This fixes fonts and strips harmful active content guaranteeing standard readability in the future. To ensure archives don\'t consume too much space, be sure to <a href="/tool/compress-pdf">shrink PDF size</a> first. If you need robust legal verifiability, you should <a href="/tool/sign-pdf">add a digital signature</a> and <a href="/tool/protect-pdf">lock the document securely</a>.'
+        seoArticle: 'Transform your standard PDF to PDF/A, an ISO-standardized format (ISO 19005) tailored specifically for long-term archiving and preservation. This embeds all fonts, flattens transparency, strips JavaScript and external references, and attaches an XMP metadata stream — guaranteeing that your document will render identically decades from now on any compliant reader. PDF/A is required for legal, government, and many regulated-industry submissions, and is the only archival format accepted by most court e-filing systems. To ensure archives don\'t consume too much space, be sure to <a href="/tool/compress-pdf">shrink PDF size</a> first. If you need robust legal verifiability, you should <a href="/tool/sign-pdf">add a digital signature</a> and <a href="/tool/protect-pdf">lock the document securely</a>.',
+        faqs: [
+            { q: 'Which PDF/A conformance level do you produce?', a: 'We target PDF/A-2b, the most widely accepted baseline for archival — visually identical to the source, with all fonts embedded.' },
+            { q: 'Will PDF/A be larger than my original PDF?', a: 'Usually slightly larger because fonts are embedded. Run the result through <a href="/tool/compress-pdf">Compress PDF</a> to optimise.' }
+        ]
     },
 
     // ── EDIT ────────────────────────────────────────────────────────────────
@@ -215,19 +235,27 @@ export const TOOLS = [
         seoKeywords: 'sign pdf document online, draw signature on pdf, add esignature to pdf free, secure electronic sign PDF',
         seoArticle: 'Draw, type, or effortlessly upload a signature image and place it smoothly anywhere on your PDF document. Getting legally binding signatures is fundamentally seamless and 100% private since processing stays on your machine. You can easily <a href="/tool/protect-pdf">lock your signed file</a> to prevent modifications, or <a href="/tool/add-watermark">stamp a massive watermark</a> beneath the signature natively. Feel free to <a href="/tool/edit-pdf">type your initials or dates</a> natively.'
     },
-    { 
-        slug: 'redact-pdf', name: 'Redact PDF', shortDesc: 'Permanently hide sensitive info.', desc: 'Permanently redact text and graphics to remove sensitive information from a PDF.', icon: 'EyeOff', category: 'security', color: '#FF4D4D', accept: { 'application/pdf': ['.pdf'] }, multiple: false, minFiles: 1, urlInput: false, outputExt: '.pdf', outputMime: 'application/pdf', hasThumbnails: true,
+    {
+        slug: 'redact-pdf', name: 'Redact PDF', shortDesc: 'Permanently hide sensitive info.', desc: 'Permanently blackout text and graphics so sensitive information cannot be recovered from your PDF.', icon: 'EyeOff', category: 'security', color: '#FF4D4D', accept: { 'application/pdf': ['.pdf'] }, multiple: false, minFiles: 1, urlInput: false, outputExt: '.pdf', outputMime: 'application/pdf', hasThumbnails: true,
         seoTitle: 'Redact PDF Information | Blackout Text Permanently Free',
         seoDesc: 'Permanently redact text and graphics to strip deeply sensitive information from a PDF securely without data leaks.',
         seoKeywords: 'redact pdf text free, blackout pdf information private, censor pdf file online, scrub sensitive data from pdf',
-        seoArticle: 'Permanently redact localized text and graphics to confidently eradicate extremely sensitive information from your PDF file. Unlike basic drawing tools, our engine irrevocably strips the metadata eliminating structural leaks entirely. Ensure to <a href="/tool/protect-pdf">add an encryption password</a> for a secondary layer of security lock, or <a href="/tool/remove-pages">completely remove specific sensitive pages</a>. You can also <a href="/tool/compare-pdf">compare the redacted file visually</a>.'
+        seoArticle: 'Permanently redact localized text and graphics to confidently eradicate extremely sensitive information from your PDF file. Unlike simply drawing a black rectangle (which leaves the underlying text intact and recoverable), our engine irrevocably strips the underlying glyph data, metadata, and text-layer references — so redacted content is gone for good, even if someone opens the file in a forensic tool. This is the only safe redaction method for PII, financials, and legal discovery. Ensure to <a href="/tool/protect-pdf">add an encryption password</a> for a secondary layer of security lock, or <a href="/tool/remove-pages">completely remove specific sensitive pages</a>. You can also <a href="/tool/compare-pdf">compare the redacted file visually</a> against the unredacted original.',
+        faqs: [
+            { q: 'Is your redaction truly permanent?', a: 'Yes. We replace the underlying text objects with black rectangles and remove them from the content stream. Copy-paste, search, and PDF text extraction will return nothing.' },
+            { q: 'Can I redact only specific words, not whole regions?', a: 'Yes — use the text-select mode to choose individual words or phrases; the rest of the page stays intact.' }
+        ]
     },
-    { 
-        slug: 'compare-pdf', name: 'Compare PDF', shortDesc: 'Spot changes between two PDFs.', desc: 'Show a side-by-side document comparison and easily spot changes between versions.', icon: 'GitCompare', category: 'security', color: '#FF4D4D', accept: { 'application/pdf': ['.pdf'] }, multiple: true, minFiles: 2, urlInput: false, outputExt: '.pdf', outputMime: 'application/pdf',
+    {
+        slug: 'compare-pdf', name: 'Compare PDF', shortDesc: 'Spot changes between two PDFs.', desc: 'Show a side-by-side diff of two PDF versions and instantly highlight every textual and visual change.', icon: 'GitCompare', category: 'security', color: '#FF4D4D', accept: { 'application/pdf': ['.pdf'] }, multiple: true, minFiles: 2, urlInput: false, outputExt: '.pdf', outputMime: 'application/pdf',
         seoTitle: 'Compare PDF Files Online | Spot Text Differences Free',
         seoDesc: 'Display a dynamic side-by-side document comparison to easily spot changes between PDF versions quickly and precisely.',
         seoKeywords: 'compare pdf files difference, find changes in pdf online, spot pdf updates private, pdf diff tool free',
-        seoArticle: 'Deploy a powerful side-by-side document comparison system to rapidly spot subtle textual changes between two PDF file versions. Excellent for contracts and design modifications. If you see the documents check out fine, immediately <a href="/tool/merge-pdf">combine both PDF models</a> together efficiently. Alternatively, <a href="/tool/redact-pdf">blackout any discrepancies</a> directly, or <a href="/tool/split-pdf">cut out the mismatched pages completely</a>.'
+        seoArticle: 'Deploy a powerful side-by-side document comparison system to rapidly spot subtle textual changes between two PDF file versions. Excellent for contracts, NDAs, leases, design redlines, and legal discovery — anywhere you need to verify that "v2 is the same as v1 except for clause 4." The tool highlights insertions, deletions, and moved text in distinct colors and produces a third annotated PDF that you can save or share. This is not the same as <a href="/tool/pdf-to-word">PDF to Word</a> (which extracts text) or <a href="/tool/edit-pdf">Edit PDF</a> (which modifies a single file). If the documents check out fine, immediately <a href="/tool/merge-pdf">combine both PDF models</a> together efficiently. Alternatively, <a href="/tool/redact-pdf">blackout any discrepancies</a> directly, or <a href="/tool/split-pdf">cut out the mismatched pages completely</a>.',
+        faqs: [
+            { q: 'Do the two PDFs need to be the same length?', a: 'No. The comparison handles different page counts — added or removed pages are clearly labeled as such in the output.' },
+            { q: 'Does the comparison include images?', a: 'Yes. Inserted, removed, and replaced images are detected and shown side-by-side alongside text changes.' }
+        ]
     },
 
     // ── INTELLIGENCE ────────────────────────────────────────────────────────

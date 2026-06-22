@@ -17,12 +17,13 @@ const nextConfig = {
     return [
       {
         source: '/:path*',
-        has: [{ type: 'host', value: 'www.docshift.tech' }],
-        destination: 'https://docshift.tech/:path*',
+        has: [{ type: 'host', value: 'docshift.tech' }],
+        destination: 'https://www.docshift.tech/:path*',
         permanent: true,
       },
     ];
   },
+
 
   async headers() {
     return [

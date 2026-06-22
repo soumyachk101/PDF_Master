@@ -104,6 +104,21 @@ export default async function ToolRoute({ params }) {
         },
       ],
     });
+
+    if (tool.faqs && tool.faqs.length > 0) {
+      schemas.push({
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: tool.faqs.map((faq) => ({
+          '@type': 'Question',
+          name: faq.q,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: faq.a,
+          },
+        })),
+      });
+    }
   }
 
   return (

@@ -13,6 +13,17 @@ const nextConfig = {
   experimental: {
     optimizePackageImports: ['@mui/material', '@mui/icons-material', '@emotion/react', '@emotion/styled', 'lucide-react'],
   },
+  async redirects() {
+    return [
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'www.docshift.tech' }],
+        destination: 'https://docshift.tech/:path*',
+        permanent: true,
+      },
+    ];
+  },
+
   async headers() {
     return [
       {

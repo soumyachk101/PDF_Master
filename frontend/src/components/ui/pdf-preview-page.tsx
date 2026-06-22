@@ -3,6 +3,7 @@ import { useState, useRef } from "react";
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Alert } from '@/components/ui/alert'
+import Image from 'next/image'
 
 interface Screenshot {
   id: string
@@ -125,8 +126,8 @@ export const FileUpload = ({
                   <div className="win95-titlebar text-[10px] py-0.5 px-2">
                     <span>Page {shot.pageNumber}</span>
                   </div>
-                  <div className="p-1 bg-white">
-                    <img src={shot.dataUrl} alt={`Page ${shot.pageNumber}`} className="w-full h-auto" />
+                  <div className="p-1 bg-white relative w-full" style={{ aspectRatio: '3 / 4' }}>
+                    <Image src={shot.dataUrl} alt={`Page ${shot.pageNumber}`} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-contain" unoptimized />
                   </div>
                 </div>
               ))}

@@ -3,7 +3,7 @@ export const metadata = {
   description: 'DocShift Terms of Service – Read the terms and conditions for using our free, browser-based PDF tools.',
   keywords: 'docshift terms, pdf tool terms of service, free pdf tools conditions',
   alternates: {
-    canonical: 'https://www.docshift.tech/terms',
+    canonical: '/terms',
   },
   openGraph: {
     title: 'Terms of Service | DocShift',

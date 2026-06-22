@@ -24,18 +24,17 @@ export async function generateMetadata({ params }) {
     description: tool.seoDesc || tool.shortDesc,
     keywords: tool.seoKeywords || undefined,
     alternates: {
-      canonical: `https://www.docshift.tech/tool/${tool.slug}`,
+      canonical: `/tool/${tool.slug}`,
     },
     openGraph: {
       type: 'website',
       url: `https://www.docshift.tech/tool/${tool.slug}`,
       title: tool.seoTitle || `${tool.name} Online Free – DocShift`,
       description: tool.seoDesc || tool.shortDesc,
-      images: [{ url: `https://www.docshift.tech/api/og?title=${encodeURIComponent(tool.name)}&desc=${encodeURIComponent(tool.shortDesc)}`, width: 1200, height: 630 }],
+      images: [{ url: `/api/og?title=${encodeURIComponent(tool.name)}&desc=${encodeURIComponent(tool.shortDesc)}`, width: 1200, height: 630 }],
     },
     twitter: {
       card: 'summary_large_image',
-      url: `https://www.docshift.tech/tool/${tool.slug}`,
       title: tool.seoTitle || `${tool.name} Online Free – DocShift`,
       description: tool.seoDesc || tool.shortDesc,
       images: [`https://www.docshift.tech/api/og?title=${encodeURIComponent(tool.name)}&desc=${encodeURIComponent(tool.shortDesc)}`],
@@ -49,18 +48,6 @@ export default async function ToolRoute({ params }) {
 
   const schemas = [];
 
-  if (tool?.faqs && tool.faqs.length > 0) {
-    schemas.push({
-      '@context': 'https://schema.org',
-      '@type': 'FAQPage',
-      mainEntity: tool.faqs.map(faq => ({
-        '@type': 'Question',
-        name: faq.q,
-        acceptedAnswer: { '@type': 'Answer', text: faq.a },
-      })),
-    });
-  }
-
   if (tool) {
     schemas.push({
       '@context': 'https://schema.org',
@@ -68,7 +55,7 @@ export default async function ToolRoute({ params }) {
       name: `${tool.name} - DocShift`,
       url: `https://www.docshift.tech/tool/${tool.slug}`,
       description: tool.shortDesc,
-      applicationCategory: 'Utility',
+      applicationCategory: 'UtilitiesApplication',
       operatingSystem: 'Web Browser',
       offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
       author: {
@@ -84,26 +71,36 @@ export default async function ToolRoute({ params }) {
       ],
     });
 
+    const categoryLabels = {
+      organize: 'Organize PDF',
+      optimize: 'Optimize PDF',
+      convertTo: 'Convert to PDF',
+      convertFrom: 'Convert from PDF',
+      edit: 'Edit PDF',
+      security: 'PDF Security',
+      intelligence: 'PDF Intelligence',
+    };
     schemas.push({
       '@context': 'https://schema.org',
-      '@type': 'HowTo',
-      name: `How to ${tool.name}`,
-      description: tool.shortDesc,
-      step: [
+      '@type': 'BreadcrumbList',
+      itemListElement: [
         {
-          '@type': 'HowToStep',
-          name: 'Upload your file',
-          text: `Upload your ${tool.accept ? 'file' : 'URL'} to the ${tool.name} tool.`,
+          '@type': 'ListItem',
+          position: 1,
+          name: 'Home',
+          item: 'https://www.docshift.tech/',
         },
         {
-          '@type': 'HowToStep',
-          name: 'Process',
-          text: `Click the process button to ${tool.name.toLowerCase()} instantly in your browser.`,
+          '@type': 'ListItem',
+          position: 2,
+          name: categoryLabels[tool.category] || 'Tools',
+          item: `https://www.docshift.tech/#${tool.category}`,
         },
         {
-          '@type': 'HowToStep',
-          name: 'Download result',
-          text: 'Download your processed file immediately.',
+          '@type': 'ListItem',
+          position: 3,
+          name: tool.name,
+          item: `https://www.docshift.tech/tool/${tool.slug}`,
         },
       ],
     });

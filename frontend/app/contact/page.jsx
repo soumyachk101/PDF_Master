@@ -5,7 +5,7 @@ export const metadata = {
   description: 'Get in touch with DocShift – Reach out for support, feedback, or collaboration.',
   keywords: 'contact docshift, pdf tool support, feedback, bug report',
   alternates: {
-    canonical: 'https://www.docshift.tech/contact',
+    canonical: '/contact',
   },
   openGraph: {
     title: 'Contact | DocShift',

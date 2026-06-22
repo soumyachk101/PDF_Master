@@ -3,7 +3,7 @@ export const metadata = {
   description: 'DocShift Privacy Policy – Learn how we protect your data. All PDF processing happens locally in your browser. No files are uploaded or stored on our servers.',
   keywords: 'docshift privacy policy, pdf tool privacy, data protection, no upload pdf',
   alternates: {
-    canonical: 'https://www.docshift.tech/privacy',
+    canonical: '/privacy',
   },
   openGraph: {
     title: 'Privacy Policy | DocShift',

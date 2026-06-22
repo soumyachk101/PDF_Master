@@ -6,7 +6,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   // Use a static build-time date so lastmod is deterministic and stable
   // across crawls (changing it on every request signals instability).
-  const lastModified = new Date('2026-06-14');
+  const lastModified = new Date('2026-06-22');
 
   const home = {
     url: `${baseUrl}/`,

@@ -9,13 +9,13 @@ export default function IntroOverlay() {
 
     useEffect(() => {
         if (!sessionStorage.getItem('docshift_intro_run')) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setIsVisible(true);
         }
     }, []);
 
     useEffect(() => {
         if (!isVisible) return;
-        // eslint-disable-next-line react-hooks/set-state-in-effect
 
         const interval = setInterval(() => {
             setProgress((prev) => {
@@ -41,7 +41,7 @@ export default function IntroOverlay() {
             clearTimeout(timeout);
             clearTimeout(removeTimeout);
         };
-    }, []);
+    }, [isVisible]);
 
     if (!isVisible) return null;
 

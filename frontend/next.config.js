@@ -39,10 +39,11 @@ const nextConfig = {
     ];
   },
   async rewrites() {
+    const backendUrl = process.env.BACKEND_URL || 'https://pdf-master-backend-sxvj.onrender.com';
     return [
       {
         source: '/api/:path*',
-        destination: 'https://pdf-master-backend-sxvj.onrender.com/api/:path*',
+        destination: `${backendUrl}/api/:path*`,
       },
     ];
   },

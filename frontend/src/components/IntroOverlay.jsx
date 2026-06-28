@@ -3,12 +3,15 @@
 import { useState, useEffect } from 'react';
 
 export default function IntroOverlay() {
-    const [isVisible, setIsVisible] = useState(() => {
-        if (typeof window === 'undefined') return false;
-        return !sessionStorage.getItem('docshift_intro_run');
-    });
+    const [isVisible, setIsVisible] = useState(false);
     const [isExiting, setIsExiting] = useState(false);
     const [progress, setProgress] = useState(0);
+
+    useEffect(() => {
+        if (!sessionStorage.getItem('docshift_intro_run')) {
+            setIsVisible(true);
+        }
+    }, []);
 
     useEffect(() => {
         if (!isVisible) return;

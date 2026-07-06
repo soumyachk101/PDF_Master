@@ -87,7 +87,7 @@ export const TOOLS = [
         ]
     },
     { 
-        slug: 'ocr-pdf', name: 'OCR PDF', shortDesc: 'Make scanned PDFs searchable.', desc: 'Convert scanned image PDFs into fully searchable and selectable documents.', icon: 'ScanText', category: 'optimize', color: '#F05B25', accept: { 'application/pdf': ['.pdf'] }, multiple: false, minFiles: 1, urlInput: false, outputExt: '.pdf', outputMime: 'application/pdf',
+        slug: 'ocr-pdf', name: 'OCR PDF', shortDesc: 'Extract text from scanned PDFs.', desc: 'Run text recognition on scanned image PDFs and extract all readable text.', icon: 'ScanText', category: 'optimize', color: '#F05B25', accept: { 'application/pdf': ['.pdf'] }, multiple: false, minFiles: 1, urlInput: false, outputExt: '.txt', outputMime: 'text/plain',
         seoTitle: 'OCR PDF Online | Make PDF Text Searchable Free',
         seoDesc: 'Run Optical Character Recognition (OCR) on scanned PDFs to make text fully searchable and selectable without uploading files.',
         seoKeywords: 'ocr pdf online, make pdf searchable, convert scan to text, text recognition pdf free',
@@ -247,7 +247,7 @@ export const TOOLS = [
         ]
     },
     {
-        slug: 'compare-pdf', name: 'Compare PDF', shortDesc: 'Spot changes between two PDFs.', desc: 'Show a side-by-side diff of two PDF versions and instantly highlight every textual and visual change.', icon: 'GitCompare', category: 'security', color: '#FF4D4D', accept: { 'application/pdf': ['.pdf'] }, multiple: true, minFiles: 2, urlInput: false, outputExt: '.pdf', outputMime: 'application/pdf',
+        slug: 'compare-pdf', name: 'Compare PDF', shortDesc: 'Spot changes between two PDFs.', desc: 'Compare the text of two PDF versions and get a report of every added and removed line.', icon: 'GitCompare', category: 'security', color: '#FF4D4D', accept: { 'application/pdf': ['.pdf'] }, multiple: true, minFiles: 2, urlInput: false, outputExt: '.txt', outputMime: 'text/plain',
         seoTitle: 'Compare PDF Files Online | Spot Text Differences Free',
         seoDesc: 'Display a dynamic side-by-side document comparison to easily spot changes between PDF versions quickly and precisely.',
         seoKeywords: 'compare pdf files difference, find changes in pdf online, spot pdf updates private, pdf diff tool free',

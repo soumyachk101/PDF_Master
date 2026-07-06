@@ -12,7 +12,7 @@
 ### Optimize PDF
 - ✅ **Compress PDF** - `/compress-pdf` - Reduce file size
 - ✅ **Repair PDF** - `/repair-pdf` - Fix corrupted files
-- ✅ **OCR PDF** - `/ocr-pdf` - Make scanned PDFs searchable
+- ✅ **OCR PDF** - `/ocr-pdf` - Real Tesseract OCR, 12 languages, text output (first 30 pages)
 
 ### Convert TO PDF
 - ✅ **JPG to PDF** - `/jpg-to-pdf` - Convert images
@@ -29,18 +29,18 @@
 - ✅ **PDF to PDF/A** - `/pdf-to-pdfa` - Archival format
 
 ### Edit PDF
-- ✅ **Rotate PDF** - `/rotate-pdf` - Fix orientation
-- ✅ **Add Page Numbers** - `/page-numbers` - Number pages
-- ✅ **Add Watermark** - `/add-watermark` - Stamp text
-- ⚠️ **Crop PDF** - Mapped to compress (placeholder)
+- ✅ **Rotate PDF** - `/rotate-pdf` - Fix orientation (additive, preserves existing rotation)
+- ✅ **Add Page Numbers** - `/page-numbers` - Number pages (custom start, 6 positions, 2 formats)
+- ✅ **Add Watermark** - `/add-watermark` - Stamp text (position, opacity, auto-fit size)
+- ✅ **Crop PDF** - `/crop-pdf` - Real crop box with per-side margins
 - ⚠️ **Edit PDF** - Mapped to watermark (placeholder)
 
 ### Security
 - ✅ **Unlock PDF** - `/unlock-pdf` - Remove password
 - ✅ **Protect PDF** - `/protect-pdf` - Lock with password
-- ✅ **Sign PDF** - `/sign-pdf` - Add signature
+- ✅ **Sign PDF** - `/sign-pdf` - Add signature (font styles, position, date stamp)
 - ⚠️ **Redact PDF** - Mapped to protect (placeholder)
-- ⚠️ **Compare PDF** - Mapped to merge (placeholder)
+- ✅ **Compare PDF** - `/compare-pdf` - Text diff report (added/removed lines)
 
 ### Intelligence
 - ⚠️ **Translate PDF** - Mapped to OCR (placeholder)
@@ -52,11 +52,8 @@
 
 | Feature | Currently Maps To | Proper Implementation Needed |
 |---------|------------------|------------------------------|
-| Crop PDF | Compress PDF | Actual cropping with pdf-lib or qpdf |
 | Edit PDF | Watermark PDF | Full annotation editor with canvas |
 | Redact PDF | Protect PDF | Actual redaction with content removal |
-| Compare PDF | Merge PDF | Side-by-side comparison tool |
-| Translate PDF | OCR PDF | AI translation API integration |
 | Organize PDF | Rotate PDF | Visual page organizer |
 
 ---
@@ -131,21 +128,17 @@ Use the checklist below to verify each tool works.
 ## 🐛 **KNOWN LIMITATIONS (MVP)**
 
 ### Currently Working But Basic:
-1. **Watermark**: Fixed position only ("CONFIDENTIAL" at center)
-2. **Sign PDF**: Text signature only at bottom-left
-3. **Page Numbers**: Fixed position at bottom-right
-4. **Rotate**: Applies to all pages (no per-page selection yet)
-5. **Crop**: Uses compression instead of actual cropping
+1. **Sign PDF**: Typed text signature (italic standard fonts); no drawn/uploaded signatures yet
+2. **Rotate**: Applies to all pages (no per-page selection yet)
+3. **OCR / Compare**: Output is a text report, not a rebuilt searchable/annotated PDF
+4. **Compare**: Text-level diff only; no visual/image comparison
 
 ### To Be Implemented Later:
-- Custom watermark positioning
 - Draw/upload signatures
-- Flexible page number placement
 - Per-page rotation controls
-- True PDF cropping functionality
 - Visual page organizer UI
 - Content redaction tools
-- Document comparison engine
+- Searchable-PDF OCR output (embed text layer)
 - AI-powered translation
 
 ---

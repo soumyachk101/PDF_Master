@@ -44,8 +44,14 @@ export default function ToolPage({ toolSlug }) {
     const [selectedFiles, setSelectedFiles] = useState([]);
     const [splitRanges, setSplitRanges] = useState('');
     const [watermarkText, setWatermarkText] = useState('');
+    const [watermarkPosition, setWatermarkPosition] = useState('diagonal');
+    const [watermarkOpacity, setWatermarkOpacity] = useState('0.3');
     const [rotateDegrees, setRotateDegrees] = useState('90');
     const [pageNumberStart, setpageNumberStart] = useState('1');
+    const [pageNumberPosition, setPageNumberPosition] = useState('bottom-right');
+    const [pageNumberFormat, setPageNumberFormat] = useState('full');
+    const [cropMargins, setCropMargins] = useState({ top: '30', right: '30', bottom: '30', left: '30' });
+    const [ocrLang, setOcrLang] = useState('eng');
     const [signText, setSignText] = useState('');
     const [protectPassword, setProtectPassword] = useState('');
     const [unlockPassword, setUnlockPassword] = useState('');
@@ -99,16 +105,37 @@ export default function ToolPage({ toolSlug }) {
         setLocalError('');
         const additionalData = {};
         if (tool.slug === 'split-pdf' && splitRanges) additionalData.ranges = splitRanges;
-        if (tool.slug === 'add-watermark' && watermarkText) additionalData.text = watermarkText;
+        if (tool.slug === 'add-watermark') {
+            if (watermarkText) additionalData.text = watermarkText;
+            additionalData.position = watermarkPosition;
+            additionalData.opacity = watermarkOpacity;
+        }
         if (tool.slug === 'rotate-pdf') additionalData.degrees = rotateDegrees;
-        if (tool.slug === 'page-numbers') additionalData.start = pageNumberStart;
-        
+        if (tool.slug === 'page-numbers') {
+            additionalData.start = pageNumberStart;
+            additionalData.position = pageNumberPosition;
+            additionalData.format = pageNumberFormat;
+        }
+        if (tool.slug === 'crop-pdf') {
+            const { top, right, bottom, left } = cropMargins;
+            if ([top, right, bottom, left].every(v => !parseFloat(v))) {
+                setLocalError("Please set at least one crop margin greater than zero.");
+                return;
+            }
+            additionalData.top = top;
+            additionalData.right = right;
+            additionalData.bottom = bottom;
+            additionalData.left = left;
+        }
+        if (tool.slug === 'ocr-pdf') additionalData.lang = ocrLang;
+
         if (tool.slug === 'sign-pdf') {
             if (!signText.trim()) {
                 setLocalError("Please enter your name for the signature.");
                 return;
             }
             additionalData.text = signText;
+            additionalData.font = selectedSignatureFont;
         }
         
         if (tool.slug === 'protect-pdf') {
@@ -152,8 +179,14 @@ export default function ToolPage({ toolSlug }) {
         setSelectedFiles([]);
         setSplitRanges('');
         setWatermarkText('');
+        setWatermarkPosition('diagonal');
+        setWatermarkOpacity('0.3');
         setRotateDegrees('90');
         setpageNumberStart('1');
+        setPageNumberPosition('bottom-right');
+        setPageNumberFormat('full');
+        setCropMargins({ top: '30', right: '30', bottom: '30', left: '30' });
+        setOcrLang('eng');
         setSignText('');
         setProtectPassword('');
         setConfirmPassword('');
@@ -332,11 +365,68 @@ export default function ToolPage({ toolSlug }) {
                                                                 <div className="h-2 w-5/6 bg-stone-200 rounded" />
                                                                 <div className="h-2 w-4/5 bg-stone-200 rounded" />
                                                             </div>
-                                                            <span className="absolute font-suisseintl font-bold text-lg select-none pointer-events-none opacity-20 uppercase tracking-widest text-[#000000] transform rotate-[-30deg]">
+                                                            <span
+                                                                className={cn(
+                                                                    'absolute font-suisseintl font-bold text-lg select-none pointer-events-none uppercase tracking-widest text-[#000000]',
+                                                                    watermarkPosition === 'diagonal' && 'transform rotate-[-30deg]',
+                                                                    watermarkPosition === 'top' && 'top-1',
+                                                                    watermarkPosition === 'bottom' && 'bottom-1'
+                                                                )}
+                                                                style={{ opacity: parseFloat(watermarkOpacity) || 0.3 }}
+                                                            >
                                                                 {watermarkText}
                                                             </span>
                                                         </div>
                                                     )}
+                                                    <div className="space-y-1.5">
+                                                        <label className="block text-xs font-bold uppercase tracking-wider text-[#000000] font-suisseintlmono">
+                                                            Position
+                                                        </label>
+                                                        <div className="grid grid-cols-4 gap-2">
+                                                            {[
+                                                                { label: 'Diagonal', value: 'diagonal' },
+                                                                { label: 'Center', value: 'center' },
+                                                                { label: 'Top', value: 'top' },
+                                                                { label: 'Bottom', value: 'bottom' }
+                                                            ].map(opt => {
+                                                                const isSelected = watermarkPosition === opt.value;
+                                                                return (
+                                                                    <button
+                                                                        key={opt.value}
+                                                                        type="button"
+                                                                        onClick={() => { setWatermarkPosition(opt.value); setLocalError(''); }}
+                                                                        className={cn(
+                                                                            'h-9 border text-[10px] font-bold uppercase transition-all duration-150 rounded-none font-suisseintlmono',
+                                                                            isSelected
+                                                                                ? 'bg-[#000000] text-[#ffffff] border-[#000000]'
+                                                                                : 'bg-[#ffffff] text-[#444444] border-[#000000]/15 hover:border-[#000000] hover:text-[#000000]'
+                                                                        )}
+                                                                    >
+                                                                        {opt.label}
+                                                                    </button>
+                                                                );
+                                                            })}
+                                                        </div>
+                                                    </div>
+                                                    <div className="space-y-1.5">
+                                                        <div className="flex justify-between items-center">
+                                                            <label className="block text-xs font-bold uppercase tracking-wider text-[#000000] font-suisseintlmono">
+                                                                Opacity
+                                                            </label>
+                                                            <span className="font-suisseintlmono text-[10px] font-bold text-[#444444]">
+                                                                {Math.round((parseFloat(watermarkOpacity) || 0.3) * 100)}%
+                                                            </span>
+                                                        </div>
+                                                        <input
+                                                            type="range"
+                                                            min="0.1"
+                                                            max="1"
+                                                            step="0.05"
+                                                            value={watermarkOpacity}
+                                                            onChange={(e) => { setWatermarkOpacity(e.target.value); setLocalError(''); }}
+                                                            className="w-full accent-[#000000]"
+                                                        />
+                                                    </div>
                                                 </div>
                                             )}
 
@@ -403,6 +493,156 @@ export default function ToolPage({ toolSlug }) {
                                                             <Plus size={14} />
                                                         </button>
                                                     </div>
+
+                                                    <label className="block text-xs font-bold uppercase tracking-wider text-[#000000] font-suisseintlmono pt-2">
+                                                        Position
+                                                    </label>
+                                                    <div className="grid grid-cols-3 gap-2">
+                                                        {[
+                                                            { label: 'Top Left', value: 'top-left' },
+                                                            { label: 'Top Center', value: 'top-center' },
+                                                            { label: 'Top Right', value: 'top-right' },
+                                                            { label: 'Bottom Left', value: 'bottom-left' },
+                                                            { label: 'Bottom Center', value: 'bottom-center' },
+                                                            { label: 'Bottom Right', value: 'bottom-right' }
+                                                        ].map(opt => {
+                                                            const isSelected = pageNumberPosition === opt.value;
+                                                            return (
+                                                                <button
+                                                                    key={opt.value}
+                                                                    type="button"
+                                                                    onClick={() => { setPageNumberPosition(opt.value); setLocalError(''); }}
+                                                                    className={cn(
+                                                                        'h-9 border text-[9px] font-bold uppercase transition-all duration-150 rounded-none font-suisseintlmono',
+                                                                        isSelected
+                                                                            ? 'bg-[#000000] text-[#ffffff] border-[#000000]'
+                                                                            : 'bg-[#ffffff] text-[#444444] border-[#000000]/15 hover:border-[#000000] hover:text-[#000000]'
+                                                                    )}
+                                                                >
+                                                                    {opt.label}
+                                                                </button>
+                                                            );
+                                                        })}
+                                                    </div>
+
+                                                    <label className="block text-xs font-bold uppercase tracking-wider text-[#000000] font-suisseintlmono pt-2">
+                                                        Number Style
+                                                    </label>
+                                                    <div className="grid grid-cols-2 gap-2">
+                                                        {[
+                                                            { label: '"Page 1 of 10"', value: 'full' },
+                                                            { label: '"1"', value: 'simple' }
+                                                        ].map(opt => {
+                                                            const isSelected = pageNumberFormat === opt.value;
+                                                            return (
+                                                                <button
+                                                                    key={opt.value}
+                                                                    type="button"
+                                                                    onClick={() => { setPageNumberFormat(opt.value); setLocalError(''); }}
+                                                                    className={cn(
+                                                                        'h-9 border text-[10px] font-bold transition-all duration-150 rounded-none font-suisseintlmono',
+                                                                        isSelected
+                                                                            ? 'bg-[#000000] text-[#ffffff] border-[#000000]'
+                                                                            : 'bg-[#ffffff] text-[#444444] border-[#000000]/15 hover:border-[#000000] hover:text-[#000000]'
+                                                                    )}
+                                                                >
+                                                                    {opt.label}
+                                                                </button>
+                                                            );
+                                                        })}
+                                                    </div>
+                                                </div>
+                                            )}
+
+                                            {tool.slug === 'crop-pdf' && (
+                                                <div className="mt-5 space-y-3 text-left">
+                                                    <label className="block text-xs font-bold uppercase tracking-wider text-[#000000] font-suisseintlmono">
+                                                        Crop Margins (points, 72 pt = 1 inch)
+                                                    </label>
+                                                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                                                        {['top', 'right', 'bottom', 'left'].map(side => (
+                                                            <div key={side} className="space-y-1">
+                                                                <span className="block text-[9px] font-bold uppercase tracking-wider text-[#444444] font-suisseintlmono">
+                                                                    {side}
+                                                                </span>
+                                                                <input
+                                                                    type="number"
+                                                                    min="0"
+                                                                    value={cropMargins[side]}
+                                                                    onChange={(e) => {
+                                                                        setCropMargins(prev => ({ ...prev, [side]: e.target.value }));
+                                                                        setLocalError('');
+                                                                    }}
+                                                                    className="w-full h-10 px-3 border border-[#000000] bg-[#ffffff] text-[#000000] font-suisseintl font-bold text-sm text-center focus:border-2 focus:outline-none rounded-[8px]"
+                                                                />
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                    <div className="flex flex-wrap gap-2">
+                                                        {[
+                                                            { label: 'Thin (15pt)', value: '15' },
+                                                            { label: 'Standard (30pt)', value: '30' },
+                                                            { label: 'Wide (60pt)', value: '60' }
+                                                        ].map(preset => {
+                                                            const isSelected = ['top', 'right', 'bottom', 'left'].every(s => cropMargins[s] === preset.value);
+                                                            return (
+                                                                <button
+                                                                    key={preset.value}
+                                                                    type="button"
+                                                                    onClick={() => {
+                                                                        setCropMargins({ top: preset.value, right: preset.value, bottom: preset.value, left: preset.value });
+                                                                        setLocalError('');
+                                                                    }}
+                                                                    className={cn(
+                                                                        'px-3 py-1.5 border text-[10px] font-bold uppercase transition-all duration-150 rounded-none font-suisseintlmono',
+                                                                        isSelected
+                                                                            ? 'bg-[#000000] text-[#ffffff] border-[#000000]'
+                                                                            : 'bg-[#ffffff] text-[#444444] border-[#000000]/15 hover:border-[#000000] hover:text-[#000000]'
+                                                                    )}
+                                                                >
+                                                                    {preset.label}
+                                                                </button>
+                                                            );
+                                                        })}
+                                                    </div>
+                                                    <p className="font-suisseintlmono text-[9px] text-[#444444] ml-1">
+                                                        Margins are trimmed from each side of every page
+                                                    </p>
+                                                </div>
+                                            )}
+
+                                            {tool.slug === 'ocr-pdf' && (
+                                                <div className="mt-5 space-y-2 text-left">
+                                                    <label className="block text-xs font-bold uppercase tracking-wider text-[#000000] font-suisseintlmono">
+                                                        Document Language
+                                                    </label>
+                                                    <select
+                                                        value={ocrLang}
+                                                        onChange={(e) => { setOcrLang(e.target.value); setLocalError(''); }}
+                                                        className="w-full h-10 border border-[#000000] bg-[#ffffff] px-3 font-suisseintl font-medium text-sm text-[#000000] focus:border-2 focus:outline-none rounded-[8px]"
+                                                    >
+                                                        {[
+                                                            { code: 'eng', name: 'English' },
+                                                            { code: 'spa', name: 'Spanish (Español)' },
+                                                            { code: 'fra', name: 'French (Français)' },
+                                                            { code: 'deu', name: 'German (Deutsch)' },
+                                                            { code: 'ita', name: 'Italian (Italiano)' },
+                                                            { code: 'por', name: 'Portuguese (Português)' },
+                                                            { code: 'hin', name: 'Hindi (हिन्दी)' },
+                                                            { code: 'rus', name: 'Russian (Русский)' },
+                                                            { code: 'jpn', name: 'Japanese (日本語)' },
+                                                            { code: 'chi_sim', name: 'Chinese Simplified (简体中文)' },
+                                                            { code: 'ara', name: 'Arabic (العربية)' },
+                                                            { code: 'kor', name: 'Korean (한국어)' }
+                                                        ].map(lang => (
+                                                            <option key={lang.code} value={lang.code}>
+                                                                {lang.name}
+                                                            </option>
+                                                        ))}
+                                                    </select>
+                                                    <p className="font-suisseintlmono text-[9px] text-[#444444] ml-1">
+                                                        Recognition works on the first 30 pages per run
+                                                    </p>
                                                 </div>
                                             )}
 

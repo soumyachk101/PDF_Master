@@ -49,21 +49,8 @@ export default function Breadcrumbs({ items = [] }) {
     return defaultItems;
   })();
 
-  const breadcrumbSchema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": breadcrumbItems.map((item, index) => ({
-      "@type": "ListItem",
-      "position": index + 1,
-      "name": item.name,
-      "item": `https://www.docshift.tech${item.href}`
-    }))
-  };
-
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
-
       <nav aria-label="Breadcrumb" className="mb-8 overflow-x-auto whitespace-nowrap py-2">
         <ol className="flex items-center gap-2 list-none p-0 m-0">
           {breadcrumbItems.map((item, index) => {

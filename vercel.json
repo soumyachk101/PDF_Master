@@ -5,8 +5,8 @@
   "framework": "nextjs",
   "redirects": [
     {
-      "source": "/(.*)",
-      "destination": "https://www.docshift.tech/$1",
+      "source": "/tool/add-page-numbers",
+      "destination": "https://www.docshift.tech/tool/page-numbers",
       "permanent": true
     }
   ]

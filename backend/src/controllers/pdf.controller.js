@@ -37,7 +37,6 @@ exports.splitPdf = async (req, res, next) => {
 
         const ranges = req.body.ranges; // e.g., "1-3,5"
         const splitBuffer = await pdfService.splitPdf(req.file.path, ranges);
-        console.log(`[split-pdf] Generated zip buffer: size=${splitBuffer.length} bytes`);
 
         fs.unlinkSync(req.file.path);
 
@@ -112,7 +111,8 @@ exports.flattenPdf = async (req, res, next) => {
 exports.ocrPdf = async (req, res, next) => {
     try {
         if (!req.file) return res.status(400).json({ error: { message: 'Please upload a PDF file for OCR.' } });
-        const textBuffer = await pdfService.ocrPdf(req.file.path);
+        const lang = req.body.lang || 'eng';
+        const textBuffer = await pdfService.ocrPdf(req.file.path, lang);
         fs.unlinkSync(req.file.path);
         res.setHeader('Content-Type', 'text/plain');
         res.setHeader('Content-Disposition', 'attachment; filename="ocr-result.txt"');
@@ -176,20 +176,19 @@ exports.powerpointToPdf = async (req, res, next) => {
 exports.pdfToJpg = async (req, res, next) => {
     try {
         if (!req.file) return res.status(400).json({ error: { message: 'Please upload a PDF Document.' } });
-        const resultBuffer = await pdfService.pdfToJpg(req.file.path);
+        const { buffer: resultBuffer, format } = await pdfService.pdfToJpg(req.file.path, req.body.format);
         try { fs.unlinkSync(req.file.path); } catch (e) { }
 
         // If it's a zip (multiple pages), it has a magic number signature 'PK' (50 4B)
         const isZip = resultBuffer[0] === 0x50 && resultBuffer[1] === 0x4B;
 
         if (isZip) {
-            console.log(`[pdf-to-jpg] Generated zip buffer: size=${resultBuffer.length} bytes`);
             res.setHeader('Content-Type', 'application/zip');
             res.setHeader('Content-Disposition', 'attachment; filename="converted-images.zip"');
         } else {
-            console.log(`[pdf-to-jpg] Generated jpg buffer: size=${resultBuffer.length} bytes`);
-            res.setHeader('Content-Type', 'image/jpeg');
-            res.setHeader('Content-Disposition', 'attachment; filename="converted-image.jpg"');
+            const mimeByFormat = { jpg: 'image/jpeg', png: 'image/png', webp: 'image/webp' };
+            res.setHeader('Content-Type', mimeByFormat[format] || 'image/jpeg');
+            res.setHeader('Content-Disposition', `attachment; filename="converted-image.${format}"`);
         }
         res.send(resultBuffer);
     } catch (error) { next(error); }
@@ -248,8 +247,8 @@ exports.protectPdf = async (req, res, next) => {
 exports.watermarkPdf = async (req, res, next) => {
     try {
         if (!req.file) return res.status(400).json({ error: { message: 'Please upload a PDF Document.' } });
-        const { text } = req.body;
-        const pdfBuffer = await pdfService.watermarkPdf(req.file.path, text);
+        const { text, position, opacity, fontSize } = req.body;
+        const pdfBuffer = await pdfService.watermarkPdf(req.file.path, text, { position, opacity, fontSize });
         try { fs.unlinkSync(req.file.path); } catch (e) { }
         res.setHeader('Content-Type', 'application/pdf');
         res.setHeader('Content-Disposition', 'attachment; filename="watermarked.pdf"');
@@ -260,8 +259,8 @@ exports.watermarkPdf = async (req, res, next) => {
 exports.signPdf = async (req, res, next) => {
     try {
         if (!req.file) return res.status(400).json({ error: { message: 'Please upload a PDF Document.' } });
-        const { text } = req.body;
-        const pdfBuffer = await pdfService.signPdf(req.file.path, text);
+        const { text, font, position, allPages } = req.body;
+        const pdfBuffer = await pdfService.signPdf(req.file.path, text, { font, position, allPages });
         try { fs.unlinkSync(req.file.path); } catch (e) { }
         res.setHeader('Content-Type', 'application/pdf');
         res.setHeader('Content-Disposition', 'attachment; filename="signed.pdf"');
@@ -344,10 +343,37 @@ exports.rotatePdf = async (req, res, next) => {
 exports.addPageNumbers = async (req, res, next) => {
     try {
         if (!req.file) return res.status(400).json({ error: { message: 'Please upload a PDF Document.' } });
-        const pdfBuffer = await pdfService.addPageNumbers(req.file.path);
+        const { start, position, format } = req.body;
+        const pdfBuffer = await pdfService.addPageNumbers(req.file.path, { start, position, format });
         try { fs.unlinkSync(req.file.path); } catch (e) { }
         res.setHeader('Content-Type', 'application/pdf');
         res.setHeader('Content-Disposition', 'attachment; filename="numbered.pdf"');
         res.send(pdfBuffer);
+    } catch (error) { next(error); }
+};
+
+exports.cropPdf = async (req, res, next) => {
+    try {
+        if (!req.file) return res.status(400).json({ error: { message: 'Please upload a PDF Document.' } });
+        const { top, right, bottom, left } = req.body;
+        const pdfBuffer = await pdfService.cropPdf(req.file.path, { top, right, bottom, left });
+        try { fs.unlinkSync(req.file.path); } catch (e) { }
+        res.setHeader('Content-Type', 'application/pdf');
+        res.setHeader('Content-Disposition', 'attachment; filename="cropped.pdf"');
+        res.send(pdfBuffer);
+    } catch (error) { next(error); }
+};
+
+exports.comparePdf = async (req, res, next) => {
+    try {
+        if (!req.files || req.files.length !== 2) {
+            return res.status(400).json({ error: { message: 'Please upload exactly two PDF files to compare.' } });
+        }
+        const [fileA, fileB] = req.files;
+        const reportBuffer = await pdfService.comparePdfs(fileA.path, fileB.path);
+        req.files.forEach(f => { try { fs.unlinkSync(f.path); } catch (e) { } });
+        res.setHeader('Content-Type', 'text/plain');
+        res.setHeader('Content-Disposition', 'attachment; filename="comparison-report.txt"');
+        res.send(reportBuffer);
     } catch (error) { next(error); }
 };

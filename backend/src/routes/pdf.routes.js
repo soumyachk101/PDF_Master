@@ -3,6 +3,16 @@ const router = express.Router();
 const { upload } = require('../middleware/upload');
 const pdfController = require('../controllers/pdf.controller');
 
+// Health check for API proxying (useful for /api/pdf/health checks)
+router.get('/health', (req, res) => {
+  res.json({
+    status: 'ok',
+    scope: 'pdf',
+    uptime: process.uptime(),
+    timestamp: new Date().toISOString(),
+  });
+});
+
 // ─── ORGANIZE ────────────────────────────────────────────────────────────────
 router.post('/merge-pdf', upload.array('files', 20), pdfController.mergePdf);
 router.post('/split-pdf', upload.single('files'), pdfController.splitPdf);
@@ -43,7 +53,7 @@ router.post('/pdf-to-pdfa', upload.single('files'), pdfController.pdfToPdfa);
 router.post('/rotate-pdf', upload.single('files'), pdfController.rotatePdf);
 router.post('/page-numbers', upload.single('files'), pdfController.addPageNumbers);
 router.post('/add-watermark', upload.single('files'), pdfController.watermarkPdf);
-router.post('/crop-pdf', upload.single('files'), pdfController.compressPdf); // MVP: Use compress as placeholder
+router.post('/crop-pdf', upload.single('files'), pdfController.cropPdf);
 router.post('/edit-pdf', upload.single('files'), pdfController.watermarkPdf); // MVP: Use watermark as placeholder
 
 // ─── SECURITY ────────────────────────────────────────────────────────────────
@@ -52,7 +62,7 @@ router.post('/protect-pdf', upload.single('files'), pdfController.protectPdf);
 router.post('/lock-pdf', upload.single('files'), pdfController.protectPdf); // Alias
 router.post('/sign-pdf', upload.single('files'), pdfController.signPdf);
 router.post('/redact-pdf', upload.single('files'), pdfController.protectPdf); // MVP: Use protect as placeholder
-router.post('/compare-pdf', upload.array('files', 2), pdfController.mergePdf); // MVP: Use merge as placeholder
+router.post('/compare-pdf', upload.array('files', 2), pdfController.comparePdf);
 
 // ─── INTELLIGENCE ────────────────────────────────────────────────────────────
 router.post('/translate-pdf', upload.single('files'), pdfController.translatePdf);

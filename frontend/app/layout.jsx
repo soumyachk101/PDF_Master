@@ -38,7 +38,17 @@ export const metadata = {
   description: 'Free online PDF tools that work entirely in your browser. Merge, compress, convert PDF to Word, split and edit PDFs instantly. No uploads, 100% private.',
   keywords: 'pdf tools, merge pdf without uploading, compress pdf in browser, completely free pdf tools online',
   authors: [{ name: 'DocShift' }],
-  robots: 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+      'max-video-preview': -1,
+    },
+  },
   openGraph: {
     type: 'website',
     url: 'https://www.docshift.tech/',
@@ -103,7 +113,7 @@ export default function RootLayout({ children }) {
     '@type': 'SoftwareApplication',
     name: 'DocShift PDF Tools',
     url: 'https://www.docshift.tech',
-    applicationCategory: 'Utility',
+    applicationCategory: 'UtilitiesApplication',
     operatingSystem: 'Web Browser',
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
     description: 'Free browser-based PDF tools. Merge, compress, convert and edit PDFs with 100% privacy.',
@@ -117,6 +127,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${inter.variable} ${bebasNeue.variable} ${ibmPlexMono.variable}`} suppressHydrationWarning>
       <head>
+        <link rel="alternate" type="text/plain" href="https://www.docshift.tech/llms.txt" title="LLM-readable site summary" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }} />

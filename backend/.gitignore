@@ -3,3 +3,8 @@ node_modules/
 .DS_Store
 uploads/
 npm-debug.log*
+.claude/
+.next/
+.python_deps/
+temp/
+*.traineddata

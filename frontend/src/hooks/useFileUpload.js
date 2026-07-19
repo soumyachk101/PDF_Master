@@ -1,9 +1,15 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import axios from 'axios';
 import { getToolBySlug } from '../utils/tools';
 
 export function useFileUpload(toolSlug) {
     const tool = getToolBySlug(toolSlug);
+
+    // Wake the backend (free-tier host spins down when idle) as soon as the
+    // tool page opens, so it's warm by the time the user submits a file.
+    useEffect(() => {
+        axios.get('/api/pdf/health', { timeout: 90000 }).catch(() => { });
+    }, []);
     const [appState, setAppState] = useState('upload'); // 'upload' | 'processing' | 'success' | 'error'
     const [progress, setProgress] = useState(0);
     const [resultUrl, setResultUrl] = useState(null);
@@ -48,7 +54,22 @@ export function useFileUpload(toolSlug) {
                 },
             };
 
-            const response = await axios.post(`/api/pdf/${toolSlug}`, formData, axiosConfig);
+            // Retry on gateway errors: the free-tier backend 502s while it
+            // cold-boots (~30-60s), so spaced retries usually succeed.
+            const RETRY_DELAYS_MS = [8000, 25000];
+            let response;
+            for (let attempt = 0; ; attempt++) {
+                try {
+                    response = await axios.post(`/api/pdf/${toolSlug}`, formData, axiosConfig);
+                    break;
+                } catch (err) {
+                    const status = err.response?.status;
+                    const retryable = [502, 503, 504].includes(status);
+                    if (!retryable || attempt >= RETRY_DELAYS_MS.length) throw err;
+                    console.warn(`[upload] Got ${status}, backend may be waking up — retry ${attempt + 1} in ${RETRY_DELAYS_MS[attempt] / 1000}s`);
+                    await new Promise(r => setTimeout(r, RETRY_DELAYS_MS[attempt]));
+                }
+            }
 
             // Animate progress from current (up to 50%) to 95% smoothly
             await new Promise((resolve) => {
@@ -97,7 +118,9 @@ export function useFileUpload(toolSlug) {
 
             // When responseType is 'blob', error.response.data is a Blob — parse it
             let message = 'An error occurred during file processing.';
-            if (error.code === 'ECONNABORTED' || error.message?.includes('timeout')) {
+            if ([502, 503, 504].includes(error.response?.status)) {
+                message = 'The processing server is waking up from sleep. Please wait about a minute and try again.';
+            } else if (error.code === 'ECONNABORTED' || error.message?.includes('timeout')) {
                 message = 'Request timed out. The file might be too large or the connection is slow. Please try again with a smaller file or better connection.';
             } else if (error.response?.data instanceof Blob) {
                 try {

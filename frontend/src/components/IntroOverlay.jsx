@@ -3,16 +3,22 @@
 import { useState, useEffect } from 'react';
 
 export default function IntroOverlay() {
-    const [isVisible, setIsVisible] = useState(() => {
-        if (typeof window === 'undefined') return false;
-        return !sessionStorage.getItem('docshift_intro_run');
-    });
+    const [isVisible, setIsVisible] = useState(false);
     const [isExiting, setIsExiting] = useState(false);
     const [progress, setProgress] = useState(0);
 
     useEffect(() => {
+        // localStorage (not sessionStorage): show the intro once per browser,
+        // not once per tab/session. The overlay delays LCP while it covers the
+        // page, so it must stay under ~1s and never re-fire for returning users.
+        if (!localStorage.getItem('docshift_intro_run')) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect
+            setIsVisible(true);
+        }
+    }, []);
+
+    useEffect(() => {
         if (!isVisible) return;
-        // eslint-disable-next-line react-hooks/set-state-in-effect
 
         const interval = setInterval(() => {
             setProgress((prev) => {
@@ -20,25 +26,25 @@ export default function IntroOverlay() {
                     clearInterval(interval);
                     return 100;
                 }
-                return prev + 2.5;
+                return prev + 5;
             });
         }, 25);
 
         const timeout = setTimeout(() => {
             setIsExiting(true);
-            sessionStorage.setItem('docshift_intro_run', 'true');
-        }, 1500);
+            localStorage.setItem('docshift_intro_run', 'true');
+        }, 600);
 
         const removeTimeout = setTimeout(() => {
             setIsVisible(false);
-        }, 2150);
+        }, 1250);
 
         return () => {
             clearInterval(interval);
             clearTimeout(timeout);
             clearTimeout(removeTimeout);
         };
-    }, []);
+    }, [isVisible]);
 
     if (!isVisible) return null;
 

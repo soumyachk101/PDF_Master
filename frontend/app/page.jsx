@@ -10,7 +10,20 @@ export const metadata = {
   description: 'Access 30+ PDF tools in your browser. Merge, compress, and convert PDFs securely without uploading files to any server. 100% private and free.',
   keywords: 'pdf tools, merge pdf, split pdf, free online pdf tools, secure pdf editor, convert pdf',
   alternates: {
-    canonical: 'https://www.docshift.tech/',
+    canonical: '/',
+  },
+  openGraph: {
+    type: 'website',
+    url: 'https://www.docshift.tech/',
+    title: 'DocShift – Free & Private PDF Tools',
+    description: 'Access 30+ PDF tools in your browser. Merge, compress, and convert PDFs securely without uploading files to any server. 100% private and free.',
+    images: [{ url: '/logo.png', width: 1200, height: 630, alt: 'DocShift – Free PDF Tools' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'DocShift – Free & Private PDF Tools',
+    description: 'Access 30+ PDF tools in your browser. Merge, compress, and convert PDFs securely without uploading files to any server. 100% private and free.',
+    images: ['/logo.png'],
   },
 };
 
@@ -24,9 +37,15 @@ export default function Page() {
     itemListElement: TOOLS.map((tool, index) => ({
       '@type': 'ListItem',
       position: index + 1,
-      name: tool.name,
-      url: `https://www.docshift.tech/tool/${tool.slug}`,
-      description: tool.shortDesc,
+      item: {
+        '@type': 'WebApplication',
+        name: tool.name,
+        url: `https://www.docshift.tech/tool/${tool.slug}`,
+        description: tool.shortDesc,
+        applicationCategory: 'UtilitiesApplication',
+        operatingSystem: 'Web Browser',
+        offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+      },
     })),
   };
 

@@ -9,7 +9,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date('2026-06-22');
 
   const home = {
-    url: `${baseUrl}/`,
+    // No trailing slash — must match the homepage canonical tag exactly.
+    url: baseUrl,
     lastModified,
     changeFrequency: 'weekly' as const,
     priority: 1.0,

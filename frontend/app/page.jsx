@@ -43,7 +43,7 @@ export default function Page() {
         url: `https://www.docshift.tech/tool/${tool.slug}`,
         description: tool.shortDesc,
         applicationCategory: 'UtilitiesApplication',
-        operatingSystem: 'Any',
+        operatingSystem: 'Web Browser',
         offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
       },
     })),

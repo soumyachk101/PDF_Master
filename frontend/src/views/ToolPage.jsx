@@ -1010,10 +1010,10 @@ export default function ToolPage({ toolSlug }) {
                                 <HelpCircle size={16} /> Quick Instructions
                             </h2>
                             <div className="font-suisseintl text-xs text-[#444444] space-y-2.5 leading-relaxed">
-                                <p>1. Drag-and-drop or select your PDF document in the workspace.</p>
-                                <p>2. Configure variables (e.g. signature labels, passwords) if available.</p>
-                                <p>3. Select target formats and click the <strong>"Process"</strong> action.</p>
-                                <p>4. Wait for local compilation and download the output asset.</p>
+                                <p>1. Drag-and-drop or select your file in the workspace above.</p>
+                                <p>2. Adjust any options this tool shows for your document.</p>
+                                <p>3. Click <strong>"Process {tool.name}"</strong> to run it locally in your browser.</p>
+                                <p>4. Download the finished file — nothing is uploaded to a server.</p>
                             </div>
                         </div>
 
@@ -1039,16 +1039,7 @@ export default function ToolPage({ toolSlug }) {
                     </div>
                 </div>
 
-                {/* SEO Rich Content, FAQ lists, and related tools (Bottom full width) */}
-                <div className="mt-12 border-t border-[#000000]/10 pt-8">
-                    <ToolSEOContentWrapper toolSlug={toolSlug} />
-                </div>
             </motion.div>
         </div>
     );
-}
-
-function ToolSEOContentWrapper({ toolSlug }) {
-    const ToolSEOContent = require('@/views/ToolSEOContent').default;
-    return <ToolSEOContent toolSlug={toolSlug} />;
 }

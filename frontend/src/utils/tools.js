@@ -49,7 +49,12 @@ export const TOOLS = [
         seoTitle: 'Organize & Reorder PDF Pages Free | Visual PDF Sorter',
         seoDesc: 'Drag and drop to sort, reorder, and organize your PDF pages. Free browser-based tool to visually rearrange PDF documents.',
         seoKeywords: 'organize pdf pages online, reorder pdf pages, sort pdf pages, arrange pdf layout free',
-        seoArticle: 'Organize your PDF files by dragging and dropping pages into the correct order. This visual organizer lets you sort and reorder PDF pages instantly directly in your browser. Since it runs locally, it is 100% private. While organizing, you notice some upside-down pages? Easily <a href="/tool/rotate-pdf">fix page orientation</a>. You can also <a href="/tool/remove-pages">permanently delete pages</a> or <a href="/tool/merge-pdf">combine multiple PDFs</a> to organize them all at once.'
+        seoArticle: 'Organize your PDF files by dragging and dropping pages into the correct order. This visual organizer lets you sort and reorder PDF pages instantly directly in your browser. Since it runs locally, it is 100% private. While organizing, you notice some upside-down pages? Easily <a href="/tool/rotate-pdf">fix page orientation</a>. You can also <a href="/tool/remove-pages">permanently delete pages</a> or <a href="/tool/merge-pdf">combine multiple PDFs</a> to organize them all at once.',
+        faqs: [
+            { q: 'How do I rearrange pages in a PDF for free?', a: 'Drag the page thumbnails into any order and download the reorganized PDF — free, in your browser, with no upload.' },
+            { q: 'Can I organize a PDF on my phone?', a: 'Yes. The visual organizer works in any mobile browser, so you can reorder pages by touch and save instantly.' },
+            { q: 'Will reordering pages change the file quality?', a: 'No. Pages are moved, not re-rendered, so text and images stay identical to the original.' }
+        ]
     },
     {
         slug: 'scan-to-pdf', name: 'Scan to PDF', shortDesc: 'Turn scans into a PDF.', desc: 'Convert camera scans, JPG, PNG and WebP images into a single searchable, shareable PDF document.', icon: 'ScanLine', category: 'organize', color: '#F05B25', accept: { 'image/jpeg': ['.jpg', '.jpeg'], 'image/png': ['.png'], 'image/webp': ['.webp'] }, multiple: true, minFiles: 1, urlInput: false, outputExt: '.pdf', outputMime: 'application/pdf',
@@ -91,7 +96,12 @@ export const TOOLS = [
         seoTitle: 'OCR PDF Online | Make PDF Text Searchable Free',
         seoDesc: 'Run Optical Character Recognition (OCR) on scanned PDFs to make text fully searchable and selectable without uploading files.',
         seoKeywords: 'ocr pdf online, make pdf searchable, convert scan to text, text recognition pdf free',
-        seoArticle: 'Convert scanned image PDFs into fully searchable and selectable text documents securely. Our OCR engine runs directly inside your browser, turning invisible image text into highly accurate selectable metadata. If you\'d rather extract all that text into a document editor, try to <a href="/tool/pdf-to-word">convert PDF to editable Word</a>. Have raw photos? First <a href="/tool/scan-to-pdf">create a PDF from your scans</a>, then run OCR, or <a href="/tool/translate-pdf">translate the PDF text</a> after recognition.'
+        seoArticle: 'Convert scanned image PDFs into fully searchable and selectable text documents securely. Our OCR engine runs directly inside your browser, turning invisible image text into highly accurate selectable metadata. If you\'d rather extract all that text into a document editor, try to <a href="/tool/pdf-to-word">convert PDF to editable Word</a>. Have raw photos? First <a href="/tool/scan-to-pdf">create a PDF from your scans</a>, then run OCR, or <a href="/tool/translate-pdf">translate the PDF text</a> after recognition.',
+        faqs: [
+            { q: 'How do I make a scanned PDF searchable?', a: 'OCR reads the text in your scanned pages and adds a selectable text layer, turning image-only PDFs into searchable, copyable documents.' },
+            { q: 'Is the OCR free and private?', a: 'Yes. Text recognition runs in your browser with no upload and no watermark on the result.' },
+            { q: 'Which languages does the OCR support?', a: 'It recognizes standard Latin-script languages like English and most European languages. After OCR you can <a href="/tool/translate-pdf">translate the text</a>.' }
+        ]
     },
 
     // ── CONVERT TO PDF ──────────────────────────────────────────────────────
@@ -124,21 +134,36 @@ export const TOOLS = [
         seoTitle: 'PowerPoint to PDF Converter | Convert PPT & PPTX Free',
         seoDesc: 'Convert PPT and PPTX slideshows into clean PDF files. Secure browser-conversion ensures your presentations stay private.',
         seoKeywords: 'powerpoint to pdf, convert pptx to pdf online, ppt to pdf completely free, secure presentation converter',
-        seoArticle: 'Make your PPT and PPTX slideshows incredibly easy to view and share by converting them to PDF format. This prevents formatting issues and ensures anyone can read your presentation without needing Office installed. Check out our reverse tool if you ever need to <a href="/tool/pdf-to-pptx">turn PDFs back to slide decks</a>. You might also want to <a href="/tool/add-watermark">add a watermark</a> to protect your presentation, or <a href="/tool/merge-pdf">combine multiple presentations</a>.'
+        seoArticle: 'Make your PPT and PPTX slideshows incredibly easy to view and share by converting them to PDF format. This prevents formatting issues and ensures anyone can read your presentation without needing Office installed. Check out our reverse tool if you ever need to <a href="/tool/pdf-to-pptx">turn PDFs back to slide decks</a>. You might also want to <a href="/tool/add-watermark">add a watermark</a> to protect your presentation, or <a href="/tool/merge-pdf">combine multiple presentations</a>.',
+        faqs: [
+            { q: 'How do I convert PowerPoint to PDF for free?', a: 'Drop your PPT or PPTX file and download a PDF that preserves every slide, layout and font — free and without signup.' },
+            { q: 'Does converting PPTX to PDF keep my slide layout?', a: 'Yes. Each slide is rendered exactly as designed, so fonts, images and positioning stay intact.' },
+            { q: 'Can I convert PowerPoint to PDF on my phone?', a: 'Yes — it runs in any browser with no app to install and nothing is uploaded.' }
+        ]
     },
     { 
         slug: 'excel-to-pdf', name: 'Excel to PDF', shortDesc: 'Convert spreadsheets to PDF.', desc: 'Make Excel spreadsheets easy to read by converting them to PDF format.', icon: 'Table', category: 'convertTo', color: '#F05B25', accept: { 'application/vnd.ms-excel': ['.xls'], 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': ['.xlsx'] }, multiple: false, minFiles: 1, urlInput: false, outputExt: '.pdf', outputMime: 'application/pdf',
         seoTitle: 'Excel to PDF Converter | Free XLSX Worksheet Conversion',
         seoDesc: 'Convert Excel spreadsheets (XLS, XLSX) into perfectly scaled PDF documents. 100% private and rapid financial document processing.',
         seoKeywords: 'excel to pdf converter, convert xlsx to pdf online, free spreadsheet to pdf, turn xls into pdf',
-        seoArticle: 'Make complex Excel spreadsheets easy to read by securely converting them to rigid PDF format. This locks your data layout in place so your invoices and financial sheets print perfectly. Need to extract tabular data from a previously converted file? <a href="/tool/pdf-to-excel">Convert PDF back to Excel</a> in seconds. Once you have a PDF, you can easily <a href="/tool/protect-pdf">add a password</a> or <a href="/tool/redact-pdf">permanently hide sensitive financial data</a>.'
+        seoArticle: 'Make complex Excel spreadsheets easy to read by securely converting them to rigid PDF format. This locks your data layout in place so your invoices and financial sheets print perfectly. Need to extract tabular data from a previously converted file? <a href="/tool/pdf-to-excel">Convert PDF back to Excel</a> in seconds. Once you have a PDF, you can easily <a href="/tool/protect-pdf">add a password</a> or <a href="/tool/redact-pdf">permanently hide sensitive financial data</a>.',
+        faqs: [
+            { q: 'How do I convert Excel to PDF without losing columns?', a: 'DocShift renders your XLS or XLSX sheets to PDF keeping columns, rows and formatting readable on any device.' },
+            { q: 'Is converting Excel to PDF free and private?', a: 'Yes. Conversion happens in your browser with no upload, signup or watermark.' },
+            { q: 'Can I hide sensitive cells before converting?', a: 'Remove confidential data first, then convert — or <a href="/tool/redact-pdf">redact the PDF</a> afterward.' }
+        ]
     },
     { 
         slug: 'html-to-pdf', name: 'HTML to PDF', shortDesc: 'Convert any webpage to PDF.', desc: 'Convert webpages to PDF by entering a URL. Preserves layout and styles.', icon: 'Globe', category: 'convertTo', color: '#F05B25', accept: null, multiple: false, minFiles: 0, urlInput: true, outputExt: '.pdf', outputMime: 'application/pdf',
         seoTitle: 'Save Webpage to PDF Online | Convert HTML URL to PDF Free',
         seoDesc: 'Convert any public webpage to an exact PDF replica. Just paste a URL to capture the site layout and styles securely.',
         seoKeywords: 'html to pdf online, convert webpage to pdf, save website as pdf file, secure URL to pdf',
-        seoArticle: 'Convert entire webpages to high-quality PDF files simply by entering a URL. Our tool fetches the site and renders the exact layout and styles securely. Once you\'ve captured a webpage, you may want to <a href="/tool/compress-pdf">shrink the final document</a> since modern sites render large PDFs. Alternatively, you can <a href="/tool/pdf-to-jpg">save the webpage PDF as image snapshots</a> or <a href="/tool/crop-pdf">trim away unnecessary margins</a>.'
+        seoArticle: 'Convert entire webpages to high-quality PDF files simply by entering a URL. Our tool fetches the site and renders the exact layout and styles securely. Once you\'ve captured a webpage, you may want to <a href="/tool/compress-pdf">shrink the final document</a> since modern sites render large PDFs. Alternatively, you can <a href="/tool/pdf-to-jpg">save the webpage PDF as image snapshots</a> or <a href="/tool/crop-pdf">trim away unnecessary margins</a>.',
+        faqs: [
+            { q: 'How do I convert a webpage to PDF?', a: 'Paste a URL or HTML and DocShift renders the page into a clean, shareable PDF.' },
+            { q: 'Can I save a website as PDF for free?', a: 'Yes, free and with no watermark. The page is captured to PDF right in your browser.' },
+            { q: 'Will the PDF keep the page styling?', a: 'Layout, images and CSS styling are preserved so the PDF looks like the live page.' }
+        ]
     },
 
     // ── CONVERT FROM PDF ────────────────────────────────────────────────────
@@ -171,14 +196,24 @@ export const TOOLS = [
         seoTitle: 'Convert PDF to PowerPoint (PPTX) | Slideshow Generator Free',
         seoDesc: 'Turn your PDF documents into easy-to-edit PPTX slideshow presentations. Free secure conversion done on your device entirely.',
         seoKeywords: 'pdf to powerpoint converter, convert pdf to pptx online, free pdf to slide deck private, editable pdf to ppt',
-        seoArticle: 'Turn your PDF files into easy to edit PPT and PPTX slideshows. This tool converts each PDF page into a PowerPoint slide seamlessly, retaining vectors and text so you can present like a pro. Need to finalize a finished PowerPoint? Instantly <a href="/tool/pptx-to-pdf">convert it back into a PDF</a> format. You can also quickly <a href="/tool/pdf-to-jpg">save slides as individual images</a> or <a href="/tool/edit-pdf">add annotations to slides</a> natively before conversion.'
+        seoArticle: 'Turn your PDF files into easy to edit PPT and PPTX slideshows. This tool converts each PDF page into a PowerPoint slide seamlessly, retaining vectors and text so you can present like a pro. Need to finalize a finished PowerPoint? Instantly <a href="/tool/pptx-to-pdf">convert it back into a PDF</a> format. You can also quickly <a href="/tool/pdf-to-jpg">save slides as individual images</a> or <a href="/tool/edit-pdf">add annotations to slides</a> natively before conversion.',
+        faqs: [
+            { q: 'How do I convert a PDF to editable PowerPoint?', a: 'DocShift turns each PDF page into an editable slide so you can reuse the content in PowerPoint.' },
+            { q: 'Is PDF to PowerPoint conversion free?', a: 'Yes — free, no signup, and your file never leaves your device.' },
+            { q: 'Can I edit the slides after converting?', a: 'Yes. Each page becomes a slide you can edit, restyle or reorder in your presentation software.' }
+        ]
     },
     { 
         slug: 'pdf-to-excel', name: 'PDF to Excel', shortDesc: 'Extract PDF tables to XLSX.', desc: 'Pull data straight from PDFs into Excel spreadsheets in seconds.', icon: 'Sheet', category: 'convertFrom', color: '#F05B25', accept: { 'application/pdf': ['.pdf'] }, multiple: false, minFiles: 1, urlInput: false, outputExt: '.xlsx', outputMime: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
         seoTitle: 'Convert PDF to Excel (XLSX) | Extract Tables Free',
         seoDesc: 'Pull table data straight from PDFs into Excel spreadsheets. Instant, secure, and private PDF to XLSX conversion online.',
         seoKeywords: 'pdf to excel converter online, convert pdf tables to xlsx, free spreadsheet extractor, pull data to excel private',
-        seoArticle: 'Quickly pull tabular data straight from PDF documents into standard Excel spreadsheets in seconds. Save hours of manual copy-pasting by letting our smart engine identify grids and rows flawlessly. If you need to share the spreadsheet later, <a href="/tool/excel-to-pdf">convert your Excel back to PDF format rigidly</a>. Rather pull out images or text? See our <a href="/tool/pdf-to-word">PDF to Word converter</a> for text, or <a href="/tool/pdf-to-jpg">extract images directly</a>.'
+        seoArticle: 'Quickly pull tabular data straight from PDF documents into standard Excel spreadsheets in seconds. Save hours of manual copy-pasting by letting our smart engine identify grids and rows flawlessly. If you need to share the spreadsheet later, <a href="/tool/excel-to-pdf">convert your Excel back to PDF format rigidly</a>. Rather pull out images or text? See our <a href="/tool/pdf-to-word">PDF to Word converter</a> for text, or <a href="/tool/pdf-to-jpg">extract images directly</a>.',
+        faqs: [
+            { q: 'How do I extract a table from PDF to Excel?', a: 'DocShift detects tabular data and exports it to an editable Excel (.xlsx) spreadsheet.' },
+            { q: 'Is converting PDF to Excel free and private?', a: 'Yes. It runs in your browser with no upload, account or watermark.' },
+            { q: 'Why are some cells misaligned after conversion?', a: 'PDFs store no true table structure, so complex or borderless tables may need minor cleanup after export.' }
+        ]
     },
     {
         slug: 'pdf-to-pdfa', name: 'PDF to PDF/A', shortDesc: 'Convert to archival PDF format.', desc: 'Transform your PDF to PDF/A, the ISO-standardized version for long-term, regulation-compliant archiving.', icon: 'Archive', category: 'convertFrom', color: '#F05B25', accept: { 'application/pdf': ['.pdf'] }, multiple: false, minFiles: 1, urlInput: false, outputExt: '.pdf', outputMime: 'application/pdf',
@@ -209,21 +244,36 @@ export const TOOLS = [
         seoTitle: 'Add Page Numbers to PDF | Free PDF Pagination Tool',
         seoDesc: 'Insert custom page numbers into a PDF document. Select font size, placement, and numbering styles efficiently in-browser.',
         seoKeywords: 'add page numbers to pdf, number pdf pages online, free pdf pagination, paginate pdf fast private',
-        seoArticle: 'Insert clear, consistent page numbers across your entire PDF document. Setup custom positions, font sizing, and staring digits natively without complex desktop software. After numbering, you can easily <a href="/tool/edit-pdf">draw more highlights or text</a> dynamically. If you split a numbered document, try to <a href="/tool/extract-pages">export just the chapter pages</a> you need, or <a href="/tool/add-watermark">apply a bold watermark</a> to finalize the copy.'
+        seoArticle: 'Insert clear, consistent page numbers across your entire PDF document. Setup custom positions, font sizing, and staring digits natively without complex desktop software. After numbering, you can easily <a href="/tool/edit-pdf">draw more highlights or text</a> dynamically. If you split a numbered document, try to <a href="/tool/extract-pages">export just the chapter pages</a> you need, or <a href="/tool/add-watermark">apply a bold watermark</a> to finalize the copy.',
+        faqs: [
+            { q: 'How do I add page numbers to a PDF for free?', a: 'Choose a position and style, and DocShift stamps sequential page numbers onto every page — free and in-browser.' },
+            { q: 'Can I start numbering from a specific page?', a: 'Yes. Set the start page and starting number so numbering begins exactly where you want.' },
+            { q: 'Will adding page numbers change my content?', a: 'No. Numbers are overlaid without altering the existing text or layout.' }
+        ]
     },
     { 
         slug: 'add-watermark', name: 'Add Watermark', shortDesc: 'Stamp text over your PDF.', desc: 'Stamp a text watermark over your PDF pages with custom opacity and position.', icon: 'Droplets', category: 'edit', color: '#D7263D', accept: { 'application/pdf': ['.pdf'] }, multiple: false, minFiles: 1, urlInput: false, outputExt: '.pdf', outputMime: 'application/pdf',
         seoTitle: 'Add Watermark to PDF | Free Stamp & Transparency Tool',
         seoDesc: 'Stamp text or logo watermarks over your PDF pages. Fully customizable opacity and position entirely within your browser.',
         seoKeywords: 'add watermark to pdf free, stamp pdf text online, overlay pdf with watermark, secure watermark pdf',
-        seoArticle: 'Stamp a bold text watermark over your PDF pages with custom opacity, color, and positioning. Perfect for tagging documents as "CONFIDENTIAL" or "DRAFT" safely. For ultimate verification, you can follow this up and <a href="/tool/sign-pdf">insert your signature</a> directly. Need to lock the watermark in place? <a href="/tool/protect-pdf">Secure the file with a password</a> so the watermark isn\'t removed. You can also <a href="/tool/edit-pdf">annotate the file</a> before stamping.'
+        seoArticle: 'Stamp a bold text watermark over your PDF pages with custom opacity, color, and positioning. Perfect for tagging documents as "CONFIDENTIAL" or "DRAFT" safely. For ultimate verification, you can follow this up and <a href="/tool/sign-pdf">insert your signature</a> directly. Need to lock the watermark in place? <a href="/tool/protect-pdf">Secure the file with a password</a> so the watermark isn\'t removed. You can also <a href="/tool/edit-pdf">annotate the file</a> before stamping.',
+        faqs: [
+            { q: 'How do I add a watermark to a PDF for free?', a: 'Add a text or image watermark, set opacity and position, and download the stamped PDF — free with no signup.' },
+            { q: 'Can I watermark every page at once?', a: 'Yes. The watermark applies across all pages in a single step.' },
+            { q: 'Is the watermark tool private?', a: 'Yes. Your file is watermarked locally in your browser and never uploaded.' }
+        ]
     },
     { 
         slug: 'crop-pdf', name: 'Crop PDF', shortDesc: 'Trim PDF margins.', desc: 'Crop the margins of a PDF or select specific areas to keep per page.', icon: 'Crop', category: 'edit', color: '#D7263D', accept: { 'application/pdf': ['.pdf'] }, multiple: false, minFiles: 1, urlInput: false, outputExt: '.pdf', outputMime: 'application/pdf',
         seoTitle: 'Crop PDF Pages Online | Free PDF Margin Trimmer',
         seoDesc: 'Crop the margins of a PDF document visually. Adjust bounding boxes to keep specific areas and remove empty blank space.',
         seoKeywords: 'crop pdf online free, trim pdf margins, snip pdf borders, adjust pdf visible area size private',
-        seoArticle: 'Crop the margins of a PDF or select specific visual areas to keep using our intuitive drag interface. Trim out frustrating printer margins and oversized borders instantly completely for free. Once trimmed, it\'s a great idea to <a href="/tool/organize-pdf">reorder the newly cropped pages</a> safely, or use <a href="/tool/remove-pages">delete pages</a> if you see entirely blank ones. Do you want to modify orientation? <a href="/tool/rotate-pdf">Rotate pages swiftly</a> instead.'
+        seoArticle: 'Crop the margins of a PDF or select specific visual areas to keep using our intuitive drag interface. Trim out frustrating printer margins and oversized borders instantly completely for free. Once trimmed, it\'s a great idea to <a href="/tool/organize-pdf">reorder the newly cropped pages</a> safely, or use <a href="/tool/remove-pages">delete pages</a> if you see entirely blank ones. Do you want to modify orientation? <a href="/tool/rotate-pdf">Rotate pages swiftly</a> instead.',
+        faqs: [
+            { q: 'How do I crop the margins of a PDF?', a: 'Drag the crop box to trim unwanted margins or white space, then download the cropped PDF.' },
+            { q: 'Can I crop all pages to the same size?', a: 'Yes. Apply one crop area across every page for a consistent result.' },
+            { q: 'Does cropping delete the trimmed content?', a: 'Cropping reduces the visible page size without re-rendering your content — the outer area is hidden from view.' }
+        ]
     },
     { 
         slug: 'edit-pdf', name: 'Edit PDF', shortDesc: 'Add text, shapes, and images.', desc: 'Add text, images, shapes or freehand annotations directly onto a PDF document.', icon: 'PenLine', category: 'edit', color: '#D7263D', accept: { 'application/pdf': ['.pdf'] }, multiple: false, minFiles: 1, urlInput: false, outputExt: '.pdf', outputMime: 'application/pdf', hasCanvas: true,
@@ -244,14 +294,24 @@ export const TOOLS = [
         seoTitle: 'Unlock PDF Password Restrictions | Remove Password Free',
         seoDesc: 'Remove file passwords and security restrictions from your PDFs, granting you freedom to use your document without friction.',
         seoKeywords: 'unlock pdf password online, remove pdf security free, clear pdf password completely private, unprotect pdf',
-        seoArticle: 'Remove PDF password security and printing restrictions frictionlessly. Our unlocking utility strips out protection natively granting you total freedom over your file instantly. Conversely, if you want to lock an unprotected file, use our <a href="/tool/protect-pdf">secure PDF password tool</a>. If the file is still structurally broken after unlocking, our <a href="/tool/repair-pdf">expert PDF repair suite</a> can salvage the data. You can also <a href="/tool/redact-pdf">blackout sensitive info</a>.'
+        seoArticle: 'Remove PDF password security and printing restrictions frictionlessly. Our unlocking utility strips out protection natively granting you total freedom over your file instantly. Conversely, if you want to lock an unprotected file, use our <a href="/tool/protect-pdf">secure PDF password tool</a>. If the file is still structurally broken after unlocking, our <a href="/tool/repair-pdf">expert PDF repair suite</a> can salvage the data. You can also <a href="/tool/redact-pdf">blackout sensitive info</a>.',
+        faqs: [
+            { q: 'How do I remove a password from a PDF?', a: 'Enter the current password and DocShift produces an unlocked copy with the restriction removed.' },
+            { q: 'Is it legal to unlock a PDF?', a: 'Only unlock PDFs you own or have permission to access. DocShift never stores your file or password.' },
+            { q: 'Can I unlock a PDF without the password?', a: 'No. You must know the password — this tool removes protection only from documents you can already open.' }
+        ]
     },
     { 
         slug: 'protect-pdf', name: 'Protect PDF', shortDesc: 'Lock PDF with a password.', desc: 'Protect PDF files with AES-256 encryption and custom access permissions.', icon: 'Lock', category: 'security', color: '#FF4D4D', accept: { 'application/pdf': ['.pdf'] }, multiple: false, minFiles: 1, urlInput: false, outputExt: '.pdf', outputMime: 'application/pdf',
         seoTitle: 'Protect PDF with Password | Secure Encryption Free',
         seoDesc: 'Protect PDF files using powerful AES encryption. Add strong passwords to prevent viewing, printing, or modification easily.',
         seoKeywords: 'protect pdf with password, encrypt pdf file online, secure pdf from copying private, add password lock to pdf free',
-        seoArticle: 'Protect highly-sensitive PDF files with industry-standard AES encryption and completely customizable access permissions. Lockdown viewing and block text-copying securely without installing heavy apps. Got the wrong password set? Quickly <a href="/tool/unlock-pdf">remove the PDF password restrictions</a>. Often before encrypting, professionals prefer to <a href="/tool/sign-pdf">sign the document</a> or <a href="/tool/redact-pdf">permanently blackout text</a> from public view entirely.'
+        seoArticle: 'Protect highly-sensitive PDF files with industry-standard AES encryption and completely customizable access permissions. Lockdown viewing and block text-copying securely without installing heavy apps. Got the wrong password set? Quickly <a href="/tool/unlock-pdf">remove the PDF password restrictions</a>. Often before encrypting, professionals prefer to <a href="/tool/sign-pdf">sign the document</a> or <a href="/tool/redact-pdf">permanently blackout text</a> from public view entirely.',
+        faqs: [
+            { q: 'How do I password-protect a PDF for free?', a: 'Set a password and DocShift encrypts your PDF so only people with the password can open it — free and in-browser.' },
+            { q: 'What encryption is used?', a: 'The PDF is secured with standard AES encryption applied locally on your device.' },
+            { q: 'Can I remove the password later?', a: 'Yes, with the <a href="/tool/unlock-pdf">Unlock PDF</a> tool if you know the password.' }
+        ]
     },
     { 
         slug: 'sign-pdf', name: 'Sign PDF', shortDesc: 'Add your signature to a PDF.', desc: 'Draw, type, or upload a signature and place it anywhere on your PDF.', icon: 'Pen', category: 'security', color: '#FF4D4D', accept: { 'application/pdf': ['.pdf'] }, multiple: false, minFiles: 1, urlInput: false, outputExt: '.pdf', outputMime: 'application/pdf', hasThumbnails: true,
@@ -294,7 +354,12 @@ export const TOOLS = [
         seoTitle: 'Translate PDF Online Free | Private AI Document Translator',
         seoDesc: 'Easily translate PDF files natively. Maintains fonts, layout matrices, and formatting completely intact while converting languages.',
         seoKeywords: 'translate pdf document free, ai pdf translator online, keep formatting translate pdf private, language change pdf',
-        seoArticle: 'Smoothly translate whole PDF files using advanced embedded AI technology. Keeps your complex fonts, document layouts, and standard formatting perfectly intact without breaking rows. Need to manually adjust the translation output? Utilize our built in <a href="/tool/edit-pdf">PDF text annotator</a> immediately. If you need searchability alongside translation, <a href="/tool/ocr-pdf">run our OCR toolkit natively</a>, or easily <a href="/tool/word-to-pdf">convert it from Word formats</a> dynamically.'
+        seoArticle: 'Smoothly translate whole PDF files using advanced embedded AI technology. Keeps your complex fonts, document layouts, and standard formatting perfectly intact without breaking rows. Need to manually adjust the translation output? Utilize our built in <a href="/tool/edit-pdf">PDF text annotator</a> immediately. If you need searchability alongside translation, <a href="/tool/ocr-pdf">run our OCR toolkit natively</a>, or easily <a href="/tool/word-to-pdf">convert it from Word formats</a> dynamically.',
+        faqs: [
+            { q: 'How do I translate a PDF to another language?', a: 'Upload the PDF, pick the target language, and DocShift returns a translated version keeping the layout.' },
+            { q: 'Is translating a PDF free?', a: 'Yes — free to translate with no signup required.' },
+            { q: 'Does translation keep the original formatting?', a: 'The tool preserves the page structure so the translated PDF stays readable and close to the original.' }
+        ]
     }
 ];
 

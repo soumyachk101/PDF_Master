@@ -100,14 +100,24 @@ export const TOOLS = [
         seoTitle: 'JPG to PDF Converter Free | Convert JPG & PNG to PDF',
         seoDesc: 'Combine multiple images into a single PDF document. Free, secure converter for JPG and PNG to PDF running in your browser.',
         seoKeywords: 'jpg to pdf converter, convert png to pdf, image to pdf online, combine images to pdf free',
-        seoArticle: 'Convert JPG and PNG images to a portable PDF format with ease. Adjust orientation and margins to create a stunning customized PDF album or document from raw images. Because our tool runs locally, your sensitive photos are 100% private. Want to pull images out of a PDF instead? Run our <a href="/tool/pdf-to-jpg">export PDF pages as images tool</a>. If your images result in a huge file, use our <a href="/tool/compress-pdf">file size shrinker</a>, or take pictures using the <a href="/tool/scan-to-pdf">Scan to PDF feature</a>.'
+        seoArticle: 'Convert JPG and PNG images to a portable PDF format with ease. Adjust orientation and margins to create a stunning customized PDF album or document from raw images. Because our tool runs locally, your sensitive photos are 100% private. Want to pull images out of a PDF instead? Run our <a href="/tool/pdf-to-jpg">export PDF pages as images tool</a>. If your images result in a huge file, use our <a href="/tool/compress-pdf">file size shrinker</a>, or take pictures using the <a href="/tool/scan-to-pdf">Scan to PDF feature</a>.',
+        faqs: [
+            { q: 'How do I convert JPG to PDF without losing quality?', a: 'DocShift embeds every image at its original resolution, so your PDF keeps full JPG quality. To shrink the file afterward, run it through <a href="/tool/compress-pdf">Compress PDF</a>.' },
+            { q: 'Can I combine multiple JPG or PNG images into one PDF?', a: 'Yes. Drop several JPG, JPEG or PNG files and they merge into a single PDF in the order you arrange them — no watermark, completely free.' },
+            { q: 'How do I convert JPG to PDF on my phone?', a: 'DocShift runs in any mobile browser. Open the tool, pick photos from your camera roll, and download the PDF — no app to install and nothing is uploaded.' }
+        ]
     },
     { 
         slug: 'word-to-pdf', name: 'Word to PDF', shortDesc: 'Convert DOCX files to PDF.', desc: 'Make DOC and DOCX files easy to read by converting them to PDF.', icon: 'FileText', category: 'convertTo', color: '#F05B25', accept: { 'application/msword': ['.doc'], 'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ['.docx'] }, multiple: false, minFiles: 1, urlInput: false, outputExt: '.pdf', outputMime: 'application/pdf',
         seoTitle: 'Convert Word DOCX to PDF Online | Free Private Converter',
         seoDesc: 'Convert Word documents (DOC, DOCX) to PDF format seamlessly. Free, quick, and secure without sharing your sensitive documents.',
         seoKeywords: 'word to pdf converter, convert docx to pdf, doc to pdf free online, secure word to pdf',
-        seoArticle: 'Make DOC and DOCX files perfectly readable on any device by converting them into PDF formatting. Our converter ensures your documents look exactly the same across different software platforms. If you need to go in the opposite direction later, you can <a href="/tool/pdf-to-word">convert PDF back to Word</a> easily. Once converted to PDF, you can securely <a href="/tool/sign-pdf">add your signature</a> or <a href="/tool/protect-pdf">lock it with a password</a> before sending.'
+        seoArticle: 'Make DOC and DOCX files perfectly readable on any device by converting them into PDF formatting. Our converter ensures your documents look exactly the same across different software platforms. If you need to go in the opposite direction later, you can <a href="/tool/pdf-to-word">convert PDF back to Word</a> easily. Once converted to PDF, you can securely <a href="/tool/sign-pdf">add your signature</a> or <a href="/tool/protect-pdf">lock it with a password</a> before sending.',
+        faqs: [
+            { q: 'How do I convert Word to PDF without losing formatting?', a: 'DocShift renders your DOC or DOCX exactly as written, keeping fonts, spacing and layout intact in the PDF.' },
+            { q: 'Can I convert Word to PDF on my phone for free?', a: 'Yes — it runs in any browser, desktop or mobile, free and with no software to install.' },
+            { q: 'Can I protect the PDF after converting?', a: 'Yes. After converting, <a href="/tool/protect-pdf">add a password</a> before sharing the file.' }
+        ]
     },
     { 
         slug: 'pptx-to-pdf', name: 'PowerPoint to PDF', shortDesc: 'Convert presentations to PDF.', desc: 'Make PPT and PPTX slideshows easy to view by converting them to PDF.', icon: 'Presentation', category: 'convertTo', color: '#F05B25', accept: { 'application/vnd.ms-powerpoint': ['.ppt'], 'application/vnd.openxmlformats-officedocument.presentationml.presentation': ['.pptx'] }, multiple: false, minFiles: 1, urlInput: false, outputExt: '.pdf', outputMime: 'application/pdf',
@@ -137,14 +147,24 @@ export const TOOLS = [
         seoTitle: 'Convert PDF to JPG Free | Extract PDF Images Online',
         seoDesc: 'Export all PDF pages as high-quality JPG images or extract embedded photos. Free and entirely private in your browser.',
         seoKeywords: 'pdf to jpg converter, convert pdf pages to image, extract images from pdf free, save pdf as pictures',
-        seoArticle: 'Convert PDF documents into high-resolution JPG images. You can choose to export every single page as a separate JPG or instruct the tool to extract original embedded images directly. Need to go the other way? <a href="/tool/jpg-to-pdf">Convert standard images into a smooth PDF</a>. If you only want an image of specific areas, you can <a href="/tool/extract-pages">export specific pages</a> first, or even <a href="/tool/html-to-pdf">save raw websites as PDFs</a> before conversion.'
+        seoArticle: 'Convert PDF documents into high-resolution JPG images. You can choose to export every single page as a separate JPG or instruct the tool to extract original embedded images directly. Need to go the other way? <a href="/tool/jpg-to-pdf">Convert standard images into a smooth PDF</a>. If you only want an image of specific areas, you can <a href="/tool/extract-pages">export specific pages</a> first, or even <a href="/tool/html-to-pdf">save raw websites as PDFs</a> before conversion.',
+        faqs: [
+            { q: 'How do I convert each PDF page to a separate JPG?', a: 'DocShift exports every page as its own high-resolution JPG image and packages them for a single download.' },
+            { q: 'Is converting PDF to JPG free and private?', a: 'Yes. Pages render to images locally in your browser — nothing is uploaded to a server and there is no watermark.' },
+            { q: 'What resolution are the exported images?', a: 'Pages export at high resolution suitable for printing or sharing. Larger PDFs simply take a moment longer to render.' }
+        ]
     },
     { 
         slug: 'pdf-to-word', name: 'PDF to Word', shortDesc: 'Convert PDF to editable DOCX.', desc: 'Easily convert PDF files into editable DOC and DOCX documents.', icon: 'FileOutput', category: 'convertFrom', color: '#F05B25', accept: { 'application/pdf': ['.pdf'] }, multiple: false, minFiles: 1, urlInput: false, outputExt: '.docx', outputMime: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
         seoTitle: 'Convert PDF to Word DOCX | Editable Private Converter',
         seoDesc: 'Easily convert PDF files into editable DOC and DOCX Word documents. Highly accurate text extraction processed securely.',
         seoKeywords: 'pdf to word converter online, convert pdf to docx free, editable pdf to word private, extract text to word',
-        seoArticle: 'Easily convert static PDF files into completely editable DOC and DOCX Word documents. Our robust extraction accurately matches formatting, paragraphs, and tables completely within your browser. Once your Word doc is edited, you can quickly <a href="/tool/word-to-pdf">convert it back to PDF securely</a>. Need more direct editing without Word? Try our in-browser <a href="/tool/edit-pdf">PDF annotation tool</a>, or run <a href="/tool/ocr-pdf">OCR for scanned documents</a> before converting to Word.'
+        seoArticle: 'Easily convert static PDF files into completely editable DOC and DOCX Word documents. Our robust extraction accurately matches formatting, paragraphs, and tables completely within your browser. Once your Word doc is edited, you can quickly <a href="/tool/word-to-pdf">convert it back to PDF securely</a>. Need more direct editing without Word? Try our in-browser <a href="/tool/edit-pdf">PDF annotation tool</a>, or run <a href="/tool/ocr-pdf">OCR for scanned documents</a> before converting to Word.',
+        faqs: [
+            { q: 'Can I convert PDF to Word for free without signup?', a: 'Yes. DocShift converts PDF to an editable Word (.docx) file for free with no email, account, or watermark.' },
+            { q: 'Why does my PDF to Word conversion lose formatting?', a: 'Complex layouts like columns and tables can shift because PDF stores no reflow data. DocShift preserves text, fonts and basic structure as closely as possible.' },
+            { q: 'Can I convert a scanned PDF to editable Word?', a: 'Scanned pages are images. Run them through <a href="/tool/ocr-pdf">OCR PDF</a> first to make the text selectable, then convert to Word.' }
+        ]
     },
     { 
         slug: 'pdf-to-pptx', name: 'PDF to PowerPoint', shortDesc: 'Turn PDFs into slide decks.', desc: 'Turn your PDF files into easy to edit PPT and PPTX slideshows.', icon: 'MonitorPlay', category: 'convertFrom', color: '#F05B25', accept: { 'application/pdf': ['.pdf'] }, multiple: false, minFiles: 1, urlInput: false, outputExt: '.pptx', outputMime: 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
@@ -210,7 +230,12 @@ export const TOOLS = [
         seoTitle: 'Edit PDF Online Free | Draw, Add Text & Annotate Private',
         seoDesc: 'A fully-featured PDF editor in your browser. Add text, images, shapes or freehand annotations directly onto a PDF document.',
         seoKeywords: 'edit pdf online free, add text to pdf private, draw on pdf browser, annotate pdf completely free without software',
-        seoArticle: 'Our flagship editor allows you to add text, images, shapes, or freehand annotations directly onto any PDF document smoothly. No clunky software installations just rapid, private editing right in your web browser. Try to <a href="/tool/add-watermark">overlay a global watermark</a> on top of your edits, or <a href="/tool/page-numbers">paginate the file</a> quickly. If you need a legal finish, simply <a href="/tool/sign-pdf">affix your digital signature</a>.'
+        seoArticle: 'Our flagship editor allows you to add text, images, shapes, or freehand annotations directly onto any PDF document smoothly. No clunky software installations just rapid, private editing right in your web browser. Try to <a href="/tool/add-watermark">overlay a global watermark</a> on top of your edits, or <a href="/tool/page-numbers">paginate the file</a> quickly. If you need a legal finish, simply <a href="/tool/sign-pdf">affix your digital signature</a>.',
+        faqs: [
+            { q: 'How do I edit text in a PDF without Adobe?', a: 'DocShift lets you add text, shapes, images and annotations to a PDF free in your browser — no Acrobat or install required.' },
+            { q: 'Is there a free PDF editor with no watermark?', a: 'Yes. DocShift never adds a watermark and has no paywall — your edited PDF downloads clean.' },
+            { q: 'Can I edit a PDF on my phone?', a: 'The editor runs in any browser, so you can edit PDFs on mobile or desktop without an app.' }
+        ]
     },
 
     // ── SECURITY ────────────────────────────────────────────────────────────
@@ -233,7 +258,12 @@ export const TOOLS = [
         seoTitle: 'Sign PDF Documents Online | Free eSignature Maker',
         seoDesc: 'Draw, type, or upload a signature and stamp it securely anywhere on your PDF. Powerful, fast, and completely free signing.',
         seoKeywords: 'sign pdf document online, draw signature on pdf, add esignature to pdf free, secure electronic sign PDF',
-        seoArticle: 'Draw, type, or effortlessly upload a signature image and place it smoothly anywhere on your PDF document. Getting legally binding signatures is fundamentally seamless and 100% private since processing stays on your machine. You can easily <a href="/tool/protect-pdf">lock your signed file</a> to prevent modifications, or <a href="/tool/add-watermark">stamp a massive watermark</a> beneath the signature natively. Feel free to <a href="/tool/edit-pdf">type your initials or dates</a> natively.'
+        seoArticle: 'Draw, type, or effortlessly upload a signature image and place it smoothly anywhere on your PDF document. Getting legally binding signatures is fundamentally seamless and 100% private since processing stays on your machine. You can easily <a href="/tool/protect-pdf">lock your signed file</a> to prevent modifications, or <a href="/tool/add-watermark">stamp a massive watermark</a> beneath the signature natively. Feel free to <a href="/tool/edit-pdf">type your initials or dates</a> natively.',
+        faqs: [
+            { q: 'Is an electronic signature on a PDF legally binding?', a: 'In most countries a clear electronic signature is valid for common agreements. For regulated documents, check your local e-signature law.' },
+            { q: 'How do I sign a PDF without printing and scanning?', a: 'Type or draw your signature directly on the PDF in your browser and download the signed file — no printer or scanner needed.' },
+            { q: 'Can I sign a PDF on my phone for free?', a: 'Yes. The signer works in any mobile browser, free, and your document never leaves your device.' }
+        ]
     },
     {
         slug: 'redact-pdf', name: 'Redact PDF', shortDesc: 'Permanently hide sensitive info.', desc: 'Permanently blackout text and graphics so sensitive information cannot be recovered from your PDF.', icon: 'EyeOff', category: 'security', color: '#FF4D4D', accept: { 'application/pdf': ['.pdf'] }, multiple: false, minFiles: 1, urlInput: false, outputExt: '.pdf', outputMime: 'application/pdf', hasThumbnails: true,

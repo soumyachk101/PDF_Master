@@ -8,14 +8,17 @@ export default function robots(): MetadataRoute.Robots {
         allow: '/',
         disallow: ['/api/', '/pdf-preview'],
       },
-      // Explicit AI crawler policy — block training scrapers, allow retrieval bots
-      { userAgent: 'GPTBot', disallow: '/' },
-      { userAgent: 'Google-Extended', disallow: '/' },
-      { userAgent: 'CCBot', disallow: '/' },
-      { userAgent: 'anthropic-ai', disallow: '/' },
-      { userAgent: 'ClaudeBot', disallow: '/' },
+      // AI answer engines cite and link back — allow them for discovery.
+      // Content here is public marketing; user files never leave the browser.
+      { userAgent: 'GPTBot', allow: '/' },
+      { userAgent: 'OAI-SearchBot', allow: '/' },
+      { userAgent: 'ChatGPT-User', allow: '/' },
+      { userAgent: 'Google-Extended', allow: '/' },
+      { userAgent: 'ClaudeBot', allow: '/' },
+      { userAgent: 'anthropic-ai', allow: '/' },
       { userAgent: 'PerplexityBot', allow: '/' },
-      { userAgent: 'Applebot-Extended', disallow: '/' },
+      // Common Crawl is a bulk dataset scraper with no citations/traffic — keep blocked.
+      { userAgent: 'CCBot', disallow: '/' },
     ],
     sitemap: 'https://www.docshift.tech/sitemap.xml',
     host: 'https://www.docshift.tech',

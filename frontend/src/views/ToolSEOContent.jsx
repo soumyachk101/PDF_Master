@@ -11,8 +11,14 @@ export default function ToolSEOContent({ toolSlug }) {
             {/* SEO Rich Content Section */}
             <section className="mb-8 w-full text-left font-suisseintl">
                 <h2 className="font-suisseintlcond font-bold text-xl uppercase mb-4 text-[#000000]">
-                    How to {tool.name}
+                    How to use {tool.name}
                 </h2>
+                <ol className="text-xs sm:text-sm text-[#444444] leading-relaxed mb-8 space-y-2 list-decimal pl-5 [&_strong]:text-[#000000] [&_strong]:font-semibold">
+                    <li>Open the <strong>{tool.name}</strong> tool above and add your file{tool.multiple ? 's' : ''} — drag &amp; drop or click to browse.</li>
+                    <li>Adjust the available options (page order, ranges, or settings) to fit what you need.</li>
+                    <li>Click <strong>Process {tool.name}</strong>. Everything runs locally in your browser — no upload.</li>
+                    <li>Download your finished file instantly. Your original never leaves your device.</li>
+                </ol>
                 {tool.seoArticle ? (
                     <div
                         className="text-xs sm:text-sm text-[#444444] leading-relaxed mb-10 space-y-4 [&_a]:text-[#000000] [&_a]:font-bold [&_a]:underline [&_a]:hover:opacity-80"
@@ -49,7 +55,10 @@ export default function ToolSEOContent({ toolSlug }) {
                         <div className="space-y-4">
                             {tool.faqs.map((faq, index) => (
                                 <NeumorphicCard key={index} title={`Q: ${faq.q}`} hoverEffect={false} className="p-6 bg-[#ffffff] border border-[#000000] rounded-[32px]">
-                                    <p className="text-xs sm:text-sm text-[#444444] leading-relaxed">{faq.a}</p>
+                                    <p
+                                        className="text-xs sm:text-sm text-[#444444] leading-relaxed [&_a]:text-[#000000] [&_a]:font-bold [&_a]:underline [&_a]:hover:opacity-80"
+                                        dangerouslySetInnerHTML={{ __html: faq.a }}
+                                    />
                                 </NeumorphicCard>
                             ))}
                         </div>

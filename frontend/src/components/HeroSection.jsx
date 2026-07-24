@@ -68,7 +68,7 @@ const HeroSection = () => {
                             className="text-4xl sm:text-6xl lg:text-[4.5rem] xl:text-[5.2rem] font-suisseintlcond font-bold tracking-tight uppercase leading-[0.9] text-[#000000] mb-6"
                             style={{ letterSpacing: '-0.04em' }}
                         >
-                            The PDF <span className="bg-[#d1ffca] px-2 text-[#000000] inline-block mt-1 sm:mt-0">toolkit</span>
+                            Free PDF <span className="bg-[#d1ffca] px-2 text-[#000000] inline-block mt-1 sm:mt-0">tools</span>
                             <br />
                             built for <span className="underline decoration-2">privacy</span>.
                         </motion.h1>

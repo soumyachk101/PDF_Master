@@ -13,9 +13,9 @@ export const TOOLS = [
     },
     { 
         slug: 'split-pdf', name: 'Split PDF', shortDesc: 'Break a PDF into pages.', desc: 'Separate one page or a whole set into independent PDF files.', icon: 'Scissors', category: 'organize', color: '#F05B25', accept: { 'application/pdf': ['.pdf'] }, multiple: false, minFiles: 1, urlInput: false, outputExt: '.zip', outputMime: 'application/zip',
-        seoTitle: 'Split PDF Pages Online Free | Extract PDF Securely',
-        seoDesc: 'Easily split PDF pages online for free. Extract pages securely directly in your browser without uploading to any server.',
-        seoKeywords: 'split pdf pages online free, extract pdf pages, split pdf no upload, separate pdf pages, private pdf splitter',
+        seoTitle: 'Split PDF Online Free | Separate PDF into Multiple Files',
+        seoDesc: 'Split a PDF into multiple separate files for free. Break PDF pages apart securely in your browser with no uploads to any server.',
+        seoKeywords: 'split pdf online free, split pdf into multiple files, separate pdf pages, split pdf by page, pdf splitter, split pdf no upload',
         seoArticle: 'Split a large PDF document into multiple smaller files or extract specific pages entirely for free. Our online splitter is incredibly fast, bypassing slow upload queues by running the tasks securely locally. Once split, you can <a href="/tool/merge-pdf">combine PDF files</a> again or use our tool to <a href="/tool/remove-pages">delete pages from a PDF</a>. If you need fine-grained control over extracting pages, try to <a href="/tool/extract-pages">pull out selected pages</a>.',
         faqs: [
             { q: 'How do I extract specific pages?', a: 'Simply enter the page ranges you want to extract (e.g., "1-3, 5") and click process. We will instantly package the specific pages into a secure download.' },
@@ -97,7 +97,7 @@ export const TOOLS = [
     // ── CONVERT TO PDF ──────────────────────────────────────────────────────
     { 
         slug: 'jpg-to-pdf', name: 'JPG to PDF', shortDesc: 'Convert images to PDF.', desc: 'Convert JPG and PNG images to PDF with adjustable orientation and margins.', icon: 'Images', category: 'convertTo', color: '#F05B25', accept: { 'image/jpeg': ['.jpg', '.jpeg'], 'image/png': ['.png'] }, multiple: true, minFiles: 1, urlInput: false, outputExt: '.pdf', outputMime: 'application/pdf',
-        seoTitle: 'Convert JPG & PNG to PDF | Free Image to PDF Converter',
+        seoTitle: 'JPG to PDF Converter Free | Convert JPG & PNG to PDF',
         seoDesc: 'Combine multiple images into a single PDF document. Free, secure converter for JPG and PNG to PDF running in your browser.',
         seoKeywords: 'jpg to pdf converter, convert png to pdf, image to pdf online, combine images to pdf free',
         seoArticle: 'Convert JPG and PNG images to a portable PDF format with ease. Adjust orientation and margins to create a stunning customized PDF album or document from raw images. Because our tool runs locally, your sensitive photos are 100% private. Want to pull images out of a PDF instead? Run our <a href="/tool/pdf-to-jpg">export PDF pages as images tool</a>. If your images result in a huge file, use our <a href="/tool/compress-pdf">file size shrinker</a>, or take pictures using the <a href="/tool/scan-to-pdf">Scan to PDF feature</a>.'

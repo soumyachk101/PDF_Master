@@ -6,7 +6,7 @@ const HomePage = dynamic(() => import('@/views/HomePage'), {
 });
 
 export const metadata = {
-  title: 'DocShift – Free & Private PDF Tools',
+  title: { absolute: 'Free PDF Tools Online – Merge, Compress & Convert | DocShift' },
   description: 'Access 30+ PDF tools in your browser. Merge, compress, and convert PDFs securely without uploading files to any server. 100% private and free.',
   keywords: 'pdf tools, merge pdf, split pdf, free online pdf tools, secure pdf editor, convert pdf',
   alternates: {
@@ -15,13 +15,13 @@ export const metadata = {
   openGraph: {
     type: 'website',
     url: 'https://www.docshift.tech/',
-    title: 'DocShift – Free & Private PDF Tools',
+    title: 'Free PDF Tools Online – Merge, Split, Compress & Convert PDF | DocShift',
     description: 'Access 30+ PDF tools in your browser. Merge, compress, and convert PDFs securely without uploading files to any server. 100% private and free.',
     images: [{ url: '/logo.png', width: 1200, height: 630, alt: 'DocShift – Free PDF Tools' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'DocShift – Free & Private PDF Tools',
+    title: 'Free PDF Tools Online – Merge, Split, Compress & Convert PDF | DocShift',
     description: 'Access 30+ PDF tools in your browser. Merge, compress, and convert PDFs securely without uploading files to any server. 100% private and free.',
     images: ['/logo.png'],
   },

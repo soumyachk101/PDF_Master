@@ -8,6 +8,10 @@ export function generateStaticParams() {
   }));
 }
 
+// Every valid slug is known at build time, so anything outside generateStaticParams
+// is a 404 — not an indexable "Tool Not Found" page served with HTTP 200.
+export const dynamicParams = false;
+
 export async function generateMetadata({ params }) {
   const { toolSlug } = await params;
   const tool = getToolBySlug(toolSlug);
@@ -16,6 +20,7 @@ export async function generateMetadata({ params }) {
     return {
       title: 'Tool Not Found',
       description: 'The requested tool does not exist.',
+      robots: { index: false, follow: false },
     };
   }
 

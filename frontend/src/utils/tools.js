@@ -58,9 +58,9 @@ export const TOOLS = [
     },
     {
         slug: 'scan-to-pdf', name: 'Scan to PDF', shortDesc: 'Turn scans into a PDF.', desc: 'Convert camera scans, JPG, PNG and WebP images into a single searchable, shareable PDF document.', icon: 'ScanLine', category: 'organize', color: '#F05B25', accept: { 'image/jpeg': ['.jpg', '.jpeg'], 'image/png': ['.png'], 'image/webp': ['.webp'] }, multiple: true, minFiles: 1, urlInput: false, outputExt: '.pdf', outputMime: 'application/pdf',
-        seoTitle: 'Convert Scans & Images to PDF | Free Scan to PDF Tool',
-        seoDesc: 'Transform JPG, JPEG, PNG and WebP images or camera scans into a single, clean PDF file securely in your web browser.',
-        seoKeywords: 'scan to pdf, convert scan to pdf document, images to pdf converter, make pdf from camera scan',
+        seoTitle: 'Scan to PDF Without an App | Free Browser Scanner',
+        seoDesc: 'Turn photos, JPG, PNG or WebP scans into a PDF right in your browser — no app to install, no upload, and no account needed. 100% free and private.',
+        seoKeywords: 'scan to pdf without an app, scan to pdf online free, convert phone photos to pdf, no app pdf scanner, browser based pdf scanner',
         seoArticle: 'Turn any photo scan, JPG, PNG or WebP image into a cohesive PDF document instantly. Our free tool converts camera scans and image files into a single PDF document locally on your device for unmatched privacy. Scan to PDF preserves EXIF capture timestamps and original image orientation, which makes it ideal for receipts, whiteboards, and multi-page document archives. Need your resulting file to be text-searchable? Use our <a href="/tool/ocr-pdf">OCR PDF tool</a> after converting. It is often necessary to <a href="/tool/compress-pdf">shrink PDF file sizes</a> after combining multiple high-resolution images. You can also explicitly <a href="/tool/jpg-to-pdf">convert images to PDF</a> in batches.',
         faqs: [
             { q: 'What image formats are supported?', a: 'JPG, JPEG, PNG and WebP. You can mix formats in a single batch — they will be merged into one PDF in the order you drop them.' },
@@ -82,9 +82,9 @@ export const TOOLS = [
     },
     {
         slug: 'repair-pdf', name: 'Repair PDF', shortDesc: 'Fix corrupted PDF files.', desc: 'Repair a damaged or corrupt PDF, rebuild its cross-reference table, and recover readable content from broken files.', icon: 'Wrench', category: 'optimize', color: '#F05B25', accept: { 'application/pdf': ['.pdf'] }, multiple: false, minFiles: 1, urlInput: false, outputExt: '.pdf', outputMime: 'application/pdf',
-        seoTitle: 'Repair Corrupted PDF Files | Free Online PDF Recovery',
-        seoDesc: 'Fix broken or corrupted PDF documents instantly. Recover data securely from damaged PDFs completely within your browser.',
-        seoKeywords: 'repair corrupted pdf, fix broken pdf online, recover damaged pdf, fix pdf file free',
+        seoTitle: 'Fix "There was an error opening this document"',
+        seoDesc: 'Seeing "There was an error opening this document"? Our free tool repairs corrupted PDFs and recovers your content, processed securely in your browser.',
+        seoKeywords: 'there was an error opening this document, fix corrupted pdf, repair broken pdf online, recover damaged pdf free, pdf wont open fix',
         seoArticle: 'Repair a damaged PDF and recover critical data from corrupt PDF files automatically with our free recovery engine. It attempts to rebuild internal PDF structures — the xref table, stream dictionaries, and object links — and salvage your content. This is different from <a href="/tool/compress-pdf">Compress PDF</a> (which only optimises a healthy file) and <a href="/tool/unlock-pdf">Unlock PDF</a> (which only removes password restrictions). Repair targets files that refuse to open, display "There was an error opening this document", or show garbled pages. If the file opens but is locked, try our <a href="/tool/unlock-pdf">remove PDF password tool</a>. After your document is fixed, you might want to <a href="/tool/compress-pdf">optimize its size</a> for sharing, or <a href="/tool/pdf-to-pdfa">convert it to PDF/A</a> for long-term safe archiving.',
         faqs: [
             { q: 'What kinds of corruption can this tool fix?', a: 'It rebuilds missing xref tables, recovers orphaned objects, and re-attaches broken stream data. Heavily truncated files may still lose pages.' },
@@ -143,9 +143,9 @@ export const TOOLS = [
     },
     { 
         slug: 'excel-to-pdf', name: 'Excel to PDF', shortDesc: 'Convert spreadsheets to PDF.', desc: 'Make Excel spreadsheets easy to read by converting them to PDF format.', icon: 'Table', category: 'convertTo', color: '#F05B25', accept: { 'application/vnd.ms-excel': ['.xls'], 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': ['.xlsx'] }, multiple: false, minFiles: 1, urlInput: false, outputExt: '.pdf', outputMime: 'application/pdf',
-        seoTitle: 'Excel to PDF Converter | Free XLSX Worksheet Conversion',
-        seoDesc: 'Convert Excel spreadsheets (XLS, XLSX) into perfectly scaled PDF documents. 100% private and rapid financial document processing.',
-        seoKeywords: 'excel to pdf converter, convert xlsx to pdf online, free spreadsheet to pdf, turn xls into pdf',
+        seoTitle: 'Excel to PDF Without Uploading | Free Converter',
+        seoDesc: 'Convert Excel spreadsheets to PDF without uploading your financial data anywhere. Fast, free, and 100% processed locally in your browser.',
+        seoKeywords: 'excel to pdf without uploading, convert xlsx to pdf private, secure financial spreadsheet to pdf, xls to pdf free, protect financial data pdf',
         seoArticle: 'Make complex Excel spreadsheets easy to read by securely converting them to rigid PDF format. This locks your data layout in place so your invoices and financial sheets print perfectly. Need to extract tabular data from a previously converted file? <a href="/tool/pdf-to-excel">Convert PDF back to Excel</a> in seconds. Once you have a PDF, you can easily <a href="/tool/protect-pdf">add a password</a> or <a href="/tool/redact-pdf">permanently hide sensitive financial data</a>.',
         faqs: [
             { q: 'How do I convert Excel to PDF without losing columns?', a: 'DocShift renders your XLS or XLSX sheets to PDF keeping columns, rows and formatting readable on any device.' },
@@ -155,9 +155,9 @@ export const TOOLS = [
     },
     { 
         slug: 'html-to-pdf', name: 'HTML to PDF', shortDesc: 'Convert any webpage to PDF.', desc: 'Convert webpages to PDF by entering a URL. Preserves layout and styles.', icon: 'Globe', category: 'convertTo', color: '#F05B25', accept: null, multiple: false, minFiles: 0, urlInput: true, outputExt: '.pdf', outputMime: 'application/pdf',
-        seoTitle: 'Save Webpage to PDF Online | Convert HTML URL to PDF Free',
-        seoDesc: 'Convert any public webpage to an exact PDF replica. Just paste a URL to capture the site layout and styles securely.',
-        seoKeywords: 'html to pdf online, convert webpage to pdf, save website as pdf file, secure URL to pdf',
+        seoTitle: 'URL to PDF Converter Free | Save Any Webpage as PDF',
+        seoDesc: 'Convert any public webpage or HTML page to a pixel-perfect PDF by pasting its URL. Free, fast, and processed securely without uploading anything.',
+        seoKeywords: 'url to pdf converter, webpage to pdf online free, save website as pdf, convert html url to pdf, capture webpage as pdf',
         seoArticle: 'Convert entire webpages to high-quality PDF files simply by entering a URL. Our tool fetches the site and renders the exact layout and styles securely. Once you\'ve captured a webpage, you may want to <a href="/tool/compress-pdf">shrink the final document</a> since modern sites render large PDFs. Alternatively, you can <a href="/tool/pdf-to-jpg">save the webpage PDF as image snapshots</a> or <a href="/tool/crop-pdf">trim away unnecessary margins</a>.',
         faqs: [
             { q: 'How do I convert a webpage to PDF?', a: 'Paste a URL or HTML and DocShift renders the page into a clean, shareable PDF.' },
@@ -217,9 +217,9 @@ export const TOOLS = [
     },
     {
         slug: 'pdf-to-pdfa', name: 'PDF to PDF/A', shortDesc: 'Convert to archival PDF format.', desc: 'Transform your PDF to PDF/A, the ISO-standardized version for long-term, regulation-compliant archiving.', icon: 'Archive', category: 'convertFrom', color: '#F05B25', accept: { 'application/pdf': ['.pdf'] }, multiple: false, minFiles: 1, urlInput: false, outputExt: '.pdf', outputMime: 'application/pdf',
-        seoTitle: 'Convert PDF to PDF/A | Free Document Archiving Tool',
-        seoDesc: 'Transform your PDF to PDF/A formatting, the ISO-standardized version tailored for long-term safe archiving.',
-        seoKeywords: 'convert pdf to pdf/a online, free archive format converter, ensure long term preservation pdf, pdf to archival format',
+        seoTitle: 'PDF to PDF/A Converter | Court E-Filing Compliant',
+        seoDesc: 'Convert PDF to PDF/A, the ISO archival format required for court e-filing and long-term document compliance — free, private, and browser-based.',
+        seoKeywords: 'pdf to pdf/a converter, court e-filing pdf format, iso archival pdf, long term pdf archiving, pdf/a compliance tool',
         seoArticle: 'Transform your standard PDF to PDF/A, an ISO-standardized format (ISO 19005) tailored specifically for long-term archiving and preservation. This embeds all fonts, flattens transparency, strips JavaScript and external references, and attaches an XMP metadata stream — guaranteeing that your document will render identically decades from now on any compliant reader. PDF/A is required for legal, government, and many regulated-industry submissions, and is the only archival format accepted by most court e-filing systems. To ensure archives don\'t consume too much space, be sure to <a href="/tool/compress-pdf">shrink PDF size</a> first. If you need robust legal verifiability, you should <a href="/tool/sign-pdf">add a digital signature</a> and <a href="/tool/protect-pdf">lock the document securely</a>.',
         faqs: [
             { q: 'Which PDF/A conformance level do you produce?', a: 'We target PDF/A-2b, the most widely accepted baseline for archival — visually identical to the source, with all fonts embedded.' },
@@ -277,9 +277,9 @@ export const TOOLS = [
     },
     { 
         slug: 'edit-pdf', name: 'Edit PDF', shortDesc: 'Add text, shapes, and images.', desc: 'Add text, images, shapes or freehand annotations directly onto a PDF document.', icon: 'PenLine', category: 'edit', color: '#D7263D', accept: { 'application/pdf': ['.pdf'] }, multiple: false, minFiles: 1, urlInput: false, outputExt: '.pdf', outputMime: 'application/pdf', hasCanvas: true,
-        seoTitle: 'Edit PDF Online Free | Draw, Add Text & Annotate Private',
-        seoDesc: 'A fully-featured PDF editor in your browser. Add text, images, shapes or freehand annotations directly onto a PDF document.',
-        seoKeywords: 'edit pdf online free, add text to pdf private, draw on pdf browser, annotate pdf completely free without software',
+        seoTitle: 'Free PDF Editor | No Watermark, No Sign Up',
+        seoDesc: 'Edit PDFs free with no watermark and no sign up. Add text, images, shapes, or annotations directly in your browser — completely private.',
+        seoKeywords: 'free pdf editor no watermark, edit pdf no sign up, annotate pdf online free, add text to pdf private, pdf editor without account',
         seoArticle: 'Our flagship editor allows you to add text, images, shapes, or freehand annotations directly onto any PDF document smoothly. No clunky software installations just rapid, private editing right in your web browser. Try to <a href="/tool/add-watermark">overlay a global watermark</a> on top of your edits, or <a href="/tool/page-numbers">paginate the file</a> quickly. If you need a legal finish, simply <a href="/tool/sign-pdf">affix your digital signature</a>.',
         faqs: [
             { q: 'How do I edit text in a PDF without Adobe?', a: 'DocShift lets you add text, shapes, images and annotations to a PDF free in your browser — no Acrobat or install required.' },
@@ -327,9 +327,9 @@ export const TOOLS = [
     },
     {
         slug: 'redact-pdf', name: 'Redact PDF', shortDesc: 'Permanently hide sensitive info.', desc: 'Permanently blackout text and graphics so sensitive information cannot be recovered from your PDF.', icon: 'EyeOff', category: 'security', color: '#FF4D4D', accept: { 'application/pdf': ['.pdf'] }, multiple: false, minFiles: 1, urlInput: false, outputExt: '.pdf', outputMime: 'application/pdf', hasThumbnails: true,
-        seoTitle: 'Redact PDF Information | Blackout Text Permanently Free',
-        seoDesc: 'Permanently redact text and graphics to strip deeply sensitive information from a PDF securely without data leaks.',
-        seoKeywords: 'redact pdf text free, blackout pdf information private, censor pdf file online, scrub sensitive data from pdf',
+        seoTitle: 'Redact PDF Permanently | Not Just a Black Box',
+        seoDesc: 'Permanently redact PDF text and images — not just a black box overlay. The underlying data is stripped for good, processed securely in your browser.',
+        seoKeywords: 'redact pdf permanently, not just a black box pdf, truly remove text from pdf, permanent pdf redaction, secure redaction tool',
         seoArticle: 'Permanently redact localized text and graphics to confidently eradicate extremely sensitive information from your PDF file. Unlike simply drawing a black rectangle (which leaves the underlying text intact and recoverable), our engine irrevocably strips the underlying glyph data, metadata, and text-layer references — so redacted content is gone for good, even if someone opens the file in a forensic tool. This is the only safe redaction method for PII, financials, and legal discovery. Ensure to <a href="/tool/protect-pdf">add an encryption password</a> for a secondary layer of security lock, or <a href="/tool/remove-pages">completely remove specific sensitive pages</a>. You can also <a href="/tool/compare-pdf">compare the redacted file visually</a> against the unredacted original.',
         faqs: [
             { q: 'Is your redaction truly permanent?', a: 'Yes. We replace the underlying text objects with black rectangles and remove them from the content stream. Copy-paste, search, and PDF text extraction will return nothing.' },
@@ -338,9 +338,9 @@ export const TOOLS = [
     },
     {
         slug: 'compare-pdf', name: 'Compare PDF', shortDesc: 'Spot changes between two PDFs.', desc: 'Compare the text of two PDF versions and get a report of every added and removed line.', icon: 'GitCompare', category: 'security', color: '#FF4D4D', accept: { 'application/pdf': ['.pdf'] }, multiple: true, minFiles: 2, urlInput: false, outputExt: '.txt', outputMime: 'text/plain',
-        seoTitle: 'Compare PDF Files Online | Spot Text Differences Free',
-        seoDesc: 'Display a dynamic side-by-side document comparison to easily spot changes between PDF versions quickly and precisely.',
-        seoKeywords: 'compare pdf files difference, find changes in pdf online, spot pdf updates private, pdf diff tool free',
+        seoTitle: 'Compare Two PDFs Online Free | Spot Differences',
+        seoDesc: 'Compare two PDF files side-by-side and instantly see every line that changed, was added, or removed — free, accurate, and processed in your browser.',
+        seoKeywords: 'compare two pdfs online, pdf diff tool free, spot differences between pdf files, pdf comparison tool, find changes in pdf',
         seoArticle: 'Deploy a powerful side-by-side document comparison system to rapidly spot subtle textual changes between two PDF file versions. Excellent for contracts, NDAs, leases, design redlines, and legal discovery — anywhere you need to verify that "v2 is the same as v1 except for clause 4." The tool highlights insertions, deletions, and moved text in distinct colors and produces a third annotated PDF that you can save or share. This is not the same as <a href="/tool/pdf-to-word">PDF to Word</a> (which extracts text) or <a href="/tool/edit-pdf">Edit PDF</a> (which modifies a single file). If the documents check out fine, immediately <a href="/tool/merge-pdf">combine both PDF models</a> together efficiently. Alternatively, <a href="/tool/redact-pdf">blackout any discrepancies</a> directly, or <a href="/tool/split-pdf">cut out the mismatched pages completely</a>.',
         faqs: [
             { q: 'Do the two PDFs need to be the same length?', a: 'No. The comparison handles different page counts — added or removed pages are clearly labeled as such in the output.' },

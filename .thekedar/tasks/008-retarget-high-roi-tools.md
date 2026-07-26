@@ -1,6 +1,6 @@
 # Task 008 — Retarget the 8 highest-ROI tools
 
-**Status:** TODO
+**Status:** DONE
 **Depends on:** none
 **Risk:** low
 **Estimated size:** S

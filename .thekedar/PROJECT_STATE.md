@@ -40,7 +40,59 @@ part of task 008 or 017): `redact-pdf`'s already-shipped title/desc/keywords/art
 false permanence claims ("gone for good, even in forensic tools", a fabricated "text-select mode" UI that
 does not exist) — these were live before this session started, and task 008 (commit `e97a97d`)
 unknowingly strengthened them further. Softened to honest, hedged language that asserts nothing
-unverifiable. See the dedicated commit for this fix, separate from task 008's and 017's changelogs.
+unverifiable. See commit `2b8c4f3` for this fix, separate from task 008's and 017's changelogs.
+
+### Two more of the same pattern, found immediately after (same investigation pass)
+
+Reading the full `backend/src/routes/pdf.routes.js` (rather than one route at a time) surfaced two more
+tools wired to unrelated placeholder functions via the identical `// MVP: ... as placeholder` comment:
+
+- **`organize-pdf` → `pdfController.rotatePdf`** (`pdf.routes.js:22`, `// MVP: Basic rotate
+  functionality`). The frontend never sends reorder/delete data for this tool (`grep additionalData
+  frontend/src/views/ToolPage.jsx` — no entry for `organize-pdf` at all), so the backend call always
+  resolves to `rotatePdf(filePath, undefined)` → `parseInt(undefined) || 90` → **a blind 90° rotation of
+  the entire document, every time** — actively wrong, not merely incomplete. Cannot reorder or delete a
+  single page today.
+- **`edit-pdf` → `pdfController.watermarkPdf`** (`pdf.routes.js:57`, `// MVP: Use watermark as
+  placeholder`). No freehand drawing, shape, or text-editing implementation exists anywhere in the
+  codebase (confirmed: zero matches for `edit`/`annotate` in `pdf.controller.js`, zero matches for
+  `hasCanvas`/edit-specific UI in `ToolPage.jsx` beyond the `hasCanvas: true` config flag itself). Clicking
+  "Edit PDF" stamps a watermark; nothing else.
+
+**Decision (user, 2026-07-26):** Same treatment as `redact-pdf`. Tasks 012 and 016 skip these two tools
+(012 ships 5 of 6: `merge-pdf`, `split-pdf`, `remove-pages`, `extract-pdf`, `scan-to-pdf`; 016 ships 4 of
+5: `rotate-pdf`, `page-numbers`, `add-watermark`, `crop-pdf`). Already-shipped copy for both corrected in
+a standalone fix — see the dedicated commit, separate from tasks 012/016's changelogs.
+
+### One more found the same pass — works, but is materially mis-described
+
+**`translate-pdf`** actually runs (not broken), but its copy claims "AI-powered translation that
+preserves layout... fonts, document layouts, and formatting perfectly intact." The real implementation
+(`pdf.service.js:211`) extracts plain text via `pdf-parse` (all layout/font/formatting discarded),
+translates it through the free MyMemory API (`api.mymemory.translated.net`), and the controller
+(`pdf.controller.js:130-131`) serves the result as `Content-Type: text/plain`,
+`translated-result.txt`. Zero layout preservation occurs anywhere in the pipeline.
+
+**Decision (user, 2026-07-26):** Not paused — task 013 proceeds, but describes `translate-pdf` honestly
+as text extraction + translation, output is a plain translated text file. Every "preserves layout/fonts",
+"formatting perfectly intact", and "AI-powered" claim dropped.
+
+### Summary of every tool affected by this investigation
+
+| Tool | Status | Task | Treatment |
+|---|---|---|---|
+| `redact-pdf` | Broken (400s always) | 017 | Skipped; false copy corrected (commit `2b8c4f3`) |
+| `organize-pdf` | Broken (wrong action, not just incomplete) | 012 | Skipped; false copy corrected |
+| `edit-pdf` | Broken (does something unrelated) | 016 | Skipped; false copy corrected |
+| `translate-pdf` | Works, badly mis-described | 013 | Proceeds with honest copy |
+
+**Root-cause pattern for the three broken tools:** all three follow the identical
+`// MVP: Use X as placeholder` alias comment in `pdf.routes.js`, suggesting an unfinished MVP build where
+several features were stubbed to a same-shaped neighbor function and never completed. Worth a dedicated
+engineering pass across the whole routes file, not just these three — this investigation did not
+exhaustively verify every remaining route (e.g. `comparePdf`, `cropPdf`, `addPageNumbers` were checked
+only for existence/dedicated-function-ownership, not for behavioral correctness at the level applied to
+security/organize/edit).
 
 ## Project overview
 

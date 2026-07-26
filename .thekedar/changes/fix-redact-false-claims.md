@@ -1,6 +1,6 @@
 # Change record — Standalone fix: remove false permanence claims from redact-pdf
 
-**Date:** 2026-07-26 · **Commit:** `<pending>` · **Not part of task 008, 011, or 017**
+**Date:** 2026-07-26 · **Commit:** `2b8c4f3` · **Not part of task 008, 011, or 017**
 
 ## What happened
 

@@ -34,7 +34,7 @@ export const TOOLS = [
         seoTitle: 'Delete PDF Pages Without Uploading | Free Tool',
         seoDesc: 'Delete pages from a PDF without uploading it anywhere. Not sure whether to delete or extract? Deleting removes pages for good; extracting copies them out.',
         seoKeywords: 'delete pdf pages without uploading, remove vs extract pdf pages, permanently delete pdf pages, private pdf page remover, free pdf page deletion tool',
-        seoArticle: 'Remove unwanted pages from your PDF document entirely for free. This visual tool lets you delete specific pages from a PDF quickly and securely without uploading your data. Unlike "split" (which exports pages into new files) or "extract" (which copies pages out), remove-pages surgically deletes the pages you select from the original document, preserving page numbering, headers, and footers for the rest of the file. If you removed the wrong pages, you can easily <a href="/tool/merge-pdf">merge PDF files back</a> to restore them. Looking to pull pages out instead of deleting them? You can <a href="/tool/extract-pages">extract specific pages</a> or <a href="/tool/organize-pdf">reorder pdf pages</a> for a cleaner document structure.',
+        seoArticle: 'Remove unwanted pages from your PDF document entirely for free. This visual tool lets you delete specific pages from a PDF quickly and securely without uploading your data. Unlike "split" (which exports pages into new files) or "extract" (which copies pages out), remove-pages surgically deletes the pages you select from the original document, preserving page numbering, headers, and footers for the rest of the file. If you removed the wrong pages, you can easily <a href="/tool/merge-pdf">merge PDF files back</a> to restore them. Looking to pull pages out instead of deleting them? You can <a href="/tool/extract-pages">extract specific pages</a> or <a href="/tool/organize-pdf">adjust the page layout</a> for a cleaner document structure.',
         faqs: [
             { q: 'Does removing a page change the remaining page numbers?', a: 'No. When you delete a page, the other pages retain their original numbers. If you need renumbering, use the <a href="/tool/page-numbers">Add Page Numbers</a> tool afterward.' },
             { q: 'Can I remove multiple non-consecutive pages at once?', a: 'Yes. Tick the thumbnails for any pages you want gone — they do not need to be adjacent.' }
@@ -52,15 +52,15 @@ export const TOOLS = [
         ]
     },
     { 
-        slug: 'organize-pdf', name: 'Organize PDF', shortDesc: 'Sort and reorder pages visually.', desc: 'Drag to reorder pages, rotate individual pages, and delete unwanted ones.', icon: 'LayoutGrid', category: 'organize', color: '#F05B25', accept: { 'application/pdf': ['.pdf'] }, multiple: false, minFiles: 1, urlInput: false, outputExt: '.pdf', outputMime: 'application/pdf', hasThumbnails: true,
-        seoTitle: 'Reorder PDF Pages Without Uploading | Free Sorter',
-        seoDesc: 'Drag and drop to reorder PDF pages without uploading a single file. Sort, rotate, and organize documents visually, 100% private in your browser.',
-        seoKeywords: 'reorder pdf pages without uploading, organize pdf pages private, sort pdf pages online free, visual pdf page sorter, rearrange pdf without upload',
-        seoArticle: 'Organize your PDF files by dragging and dropping pages into the correct order. This visual organizer lets you sort and reorder PDF pages instantly directly in your browser. Since it runs locally, it is 100% private. While organizing, you notice some upside-down pages? Easily <a href="/tool/rotate-pdf">fix page orientation</a>. You can also <a href="/tool/remove-pages">permanently delete pages</a> or <a href="/tool/merge-pdf">combine multiple PDFs</a> to organize them all at once.',
+        slug: 'organize-pdf', name: 'Organize PDF', shortDesc: 'Adjust your PDF page layout.', desc: 'Make adjustments to the order and orientation of your PDF pages.', icon: 'LayoutGrid', category: 'organize', color: '#F05B25', accept: { 'application/pdf': ['.pdf'] }, multiple: false, minFiles: 1, urlInput: false, outputExt: '.pdf', outputMime: 'application/pdf', hasThumbnails: true,
+        seoTitle: 'Adjust PDF Pages Without Uploading | Free Tool',
+        seoDesc: 'Make changes to your PDF pages without uploading a single file. Processed entirely in your browser for complete privacy.',
+        seoKeywords: 'adjust pdf pages without uploading, organize pdf privately, pdf page tool online free, private pdf organizer',
+        seoArticle: 'Make adjustments to your PDF pages without uploading the file to a server — everything happens locally in your browser for complete privacy. If you need to fix page orientation specifically, DocShift\'s dedicated <a href="/tool/rotate-pdf">Rotate PDF</a> tool gives you precise control over rotation. You can also <a href="/tool/remove-pages">permanently delete unwanted pages</a> or <a href="/tool/merge-pdf">combine multiple PDFs</a> using their dedicated tools.',
+        updated: '2026-07-26',
         faqs: [
-            { q: 'How do I rearrange pages in a PDF for free?', a: 'Drag the page thumbnails into any order and download the reorganized PDF — free, in your browser, with no upload.' },
-            { q: 'Can I organize a PDF on my phone?', a: 'Yes. The visual organizer works in any mobile browser, so you can reorder pages by touch and save instantly.' },
-            { q: 'Will reordering pages change the file quality?', a: 'No. Pages are moved, not re-rendered, so text and images stay identical to the original.' }
+            { q: 'What does Organize PDF do?', a: 'It lets you make adjustments to your PDF pages locally in your browser. For precise page-by-page rotation, use <a href="/tool/rotate-pdf">Rotate PDF</a>; to remove specific pages, use <a href="/tool/remove-pages">Remove Pages</a>.' },
+            { q: 'Can I use this on my phone?', a: 'Yes. It works in any mobile browser, with no app to install and nothing uploaded to a server.' }
         ]
     },
     {
@@ -153,7 +153,7 @@ export const TOOLS = [
         seoTitle: 'Excel to PDF Without Uploading | Free Converter',
         seoDesc: 'Convert Excel spreadsheets to PDF without uploading your financial data anywhere. Fast, free, and 100% processed locally in your browser.',
         seoKeywords: 'excel to pdf without uploading, convert xlsx to pdf private, secure financial spreadsheet to pdf, xls to pdf free, protect financial data pdf',
-        seoArticle: 'Make complex Excel spreadsheets easy to read by securely converting them to rigid PDF format. This locks your data layout in place so your invoices and financial sheets print perfectly. Need to extract tabular data from a previously converted file? <a href="/tool/pdf-to-excel">Convert PDF back to Excel</a> in seconds. Once you have a PDF, you can easily <a href="/tool/protect-pdf">add a password</a> or <a href="/tool/redact-pdf">permanently hide sensitive financial data</a>.',
+        seoArticle: 'Make complex Excel spreadsheets easy to read by securely converting them to rigid PDF format. This locks your data layout in place so your invoices and financial sheets print perfectly. Need to extract tabular data from a previously converted file? <a href="/tool/pdf-to-excel">Convert PDF back to Excel</a> in seconds. Once you have a PDF, you can easily <a href="/tool/protect-pdf">add a password</a> or <a href="/tool/redact-pdf">blackout sensitive financial data</a>.',
         faqs: [
             { q: 'How do I convert Excel to PDF without losing columns?', a: 'DocShift renders your XLS or XLSX sheets to PDF keeping columns, rows and formatting readable on any device.' },
             { q: 'Is converting Excel to PDF free and private?', a: 'Yes. Conversion happens in your browser with no upload, signup or watermark.' },
@@ -191,7 +191,7 @@ export const TOOLS = [
         seoTitle: 'PDF to Word Without Uploading | Free DOCX Converter',
         seoDesc: 'Convert PDF to editable Word DOCX without uploading your document to any server. Free, accurate, and processed securely in your browser.',
         seoKeywords: 'pdf to word without uploading, convert pdf to docx private, editable pdf to word free, secure pdf to word converter, pdf text extraction private',
-        seoArticle: 'Easily convert static PDF files into completely editable DOC and DOCX Word documents. Our robust extraction accurately matches formatting, paragraphs, and tables completely within your browser. Once your Word doc is edited, you can quickly <a href="/tool/word-to-pdf">convert it back to PDF securely</a>. Need more direct editing without Word? Try our in-browser <a href="/tool/edit-pdf">PDF annotation tool</a>, or run <a href="/tool/ocr-pdf">OCR for scanned documents</a> before converting to Word.',
+        seoArticle: 'Easily convert static PDF files into completely editable DOC and DOCX Word documents. Our robust extraction accurately matches formatting, paragraphs, and tables completely within your browser. Once your Word doc is edited, you can quickly <a href="/tool/word-to-pdf">convert it back to PDF securely</a>. Need more direct editing without Word? Try our in-browser <a href="/tool/edit-pdf">PDF editor</a>, or run <a href="/tool/ocr-pdf">OCR for scanned documents</a> before converting to Word.',
         faqs: [
             { q: 'Can I convert PDF to Word for free without signup?', a: 'Yes. DocShift converts PDF to an editable Word (.docx) file for free with no email, account, or watermark.' },
             { q: 'Why does my PDF to Word conversion lose formatting?', a: 'Complex layouts like columns and tables can shift because PDF stores no reflow data. DocShift preserves text, fonts and basic structure as closely as possible.' },
@@ -203,7 +203,7 @@ export const TOOLS = [
         seoTitle: 'Convert PDF to PowerPoint (PPTX) | Slideshow Generator Free',
         seoDesc: 'Turn your PDF documents into easy-to-edit PPTX slideshow presentations. Free secure conversion done on your device entirely.',
         seoKeywords: 'pdf to powerpoint converter, convert pdf to pptx online, free pdf to slide deck private, editable pdf to ppt',
-        seoArticle: 'Turn your PDF files into easy to edit PPT and PPTX slideshows. This tool converts each PDF page into a PowerPoint slide seamlessly, retaining vectors and text so you can present like a pro. Need to finalize a finished PowerPoint? Instantly <a href="/tool/pptx-to-pdf">convert it back into a PDF</a> format. You can also quickly <a href="/tool/pdf-to-jpg">save slides as individual images</a> or <a href="/tool/edit-pdf">add annotations to slides</a> natively before conversion.',
+        seoArticle: 'Turn your PDF files into easy to edit PPT and PPTX slideshows. This tool converts each PDF page into a PowerPoint slide seamlessly, retaining vectors and text so you can present like a pro. Need to finalize a finished PowerPoint? Instantly <a href="/tool/pptx-to-pdf">convert it back into a PDF</a> format. You can also quickly <a href="/tool/pdf-to-jpg">save slides as individual images</a> or <a href="/tool/edit-pdf">make simple edits</a> natively before conversion.',
         faqs: [
             { q: 'How do I convert a PDF to editable PowerPoint?', a: 'DocShift turns each PDF page into an editable slide so you can reuse the content in PowerPoint.' },
             { q: 'Is PDF to PowerPoint conversion free?', a: 'Yes — free, no signup, and your file never leaves your device.' },
@@ -251,7 +251,7 @@ export const TOOLS = [
         seoTitle: 'Add Page Numbers to PDF | Free PDF Pagination Tool',
         seoDesc: 'Insert custom page numbers into a PDF document. Select font size, placement, and numbering styles efficiently in-browser.',
         seoKeywords: 'add page numbers to pdf, number pdf pages online, free pdf pagination, paginate pdf fast private',
-        seoArticle: 'Insert clear, consistent page numbers across your entire PDF document. Setup custom positions, font sizing, and staring digits natively without complex desktop software. After numbering, you can easily <a href="/tool/edit-pdf">draw more highlights or text</a> dynamically. If you split a numbered document, try to <a href="/tool/extract-pages">export just the chapter pages</a> you need, or <a href="/tool/add-watermark">apply a bold watermark</a> to finalize the copy.',
+        seoArticle: 'Insert clear, consistent page numbers across your entire PDF document. Setup custom positions, font sizing, and staring digits natively without complex desktop software. After numbering, you can easily <a href="/tool/edit-pdf">make further additions</a> dynamically. If you split a numbered document, try to <a href="/tool/extract-pages">export just the chapter pages</a> you need, or <a href="/tool/add-watermark">apply a bold watermark</a> to finalize the copy.',
         faqs: [
             { q: 'How do I add page numbers to a PDF for free?', a: 'Choose a position and style, and DocShift stamps sequential page numbers onto every page — free and in-browser.' },
             { q: 'Can I start numbering from a specific page?', a: 'Yes. Set the start page and starting number so numbering begins exactly where you want.' },
@@ -275,7 +275,7 @@ export const TOOLS = [
         seoTitle: 'Crop PDF Pages Online | Free PDF Margin Trimmer',
         seoDesc: 'Crop the margins of a PDF document visually. Adjust bounding boxes to keep specific areas and remove empty blank space.',
         seoKeywords: 'crop pdf online free, trim pdf margins, snip pdf borders, adjust pdf visible area size private',
-        seoArticle: 'Crop the margins of a PDF or select specific visual areas to keep using our intuitive drag interface. Trim out frustrating printer margins and oversized borders instantly completely for free. Once trimmed, it\'s a great idea to <a href="/tool/organize-pdf">reorder the newly cropped pages</a> safely, or use <a href="/tool/remove-pages">delete pages</a> if you see entirely blank ones. Do you want to modify orientation? <a href="/tool/rotate-pdf">Rotate pages swiftly</a> instead.',
+        seoArticle: 'Crop the margins of a PDF or select specific visual areas to keep using our intuitive drag interface. Trim out frustrating printer margins and oversized borders instantly completely for free. Once trimmed, it\'s a great idea to <a href="/tool/organize-pdf">adjust the newly cropped pages</a> safely, or use <a href="/tool/remove-pages">delete pages</a> if you see entirely blank ones. Do you want to modify orientation? <a href="/tool/rotate-pdf">Rotate pages swiftly</a> instead.',
         faqs: [
             { q: 'How do I crop the margins of a PDF?', a: 'Drag the crop box to trim unwanted margins or white space, then download the cropped PDF.' },
             { q: 'Can I crop all pages to the same size?', a: 'Yes. Apply one crop area across every page for a consistent result.' },
@@ -283,15 +283,15 @@ export const TOOLS = [
         ]
     },
     { 
-        slug: 'edit-pdf', name: 'Edit PDF', shortDesc: 'Add text, shapes, and images.', desc: 'Add text, images, shapes or freehand annotations directly onto a PDF document.', icon: 'PenLine', category: 'edit', color: '#D7263D', accept: { 'application/pdf': ['.pdf'] }, multiple: false, minFiles: 1, urlInput: false, outputExt: '.pdf', outputMime: 'application/pdf', hasCanvas: true,
-        seoTitle: 'Free PDF Editor | No Watermark, No Sign Up',
-        seoDesc: 'Edit PDFs free with no watermark and no sign up. Add text, images, shapes, or annotations directly in your browser — completely private.',
-        seoKeywords: 'free pdf editor no watermark, edit pdf no sign up, annotate pdf online free, add text to pdf private, pdf editor without account',
-        seoArticle: 'Our flagship editor allows you to add text, images, shapes, or freehand annotations directly onto any PDF document smoothly. No clunky software installations just rapid, private editing right in your web browser. Try to <a href="/tool/add-watermark">overlay a global watermark</a> on top of your edits, or <a href="/tool/page-numbers">paginate the file</a> quickly. If you need a legal finish, simply <a href="/tool/sign-pdf">affix your digital signature</a>.',
+        slug: 'edit-pdf', name: 'Edit PDF', shortDesc: 'Make simple additions to a PDF.', desc: 'Make simple additions to a PDF document in your browser.', icon: 'PenLine', category: 'edit', color: '#D7263D', accept: { 'application/pdf': ['.pdf'] }, multiple: false, minFiles: 1, urlInput: false, outputExt: '.pdf', outputMime: 'application/pdf', hasCanvas: true,
+        seoTitle: 'PDF Editor Online | Free & Private',
+        seoDesc: 'Make simple additions to a PDF document without uploading it anywhere. Free and processed entirely in your browser.',
+        seoKeywords: 'pdf editor online free, edit pdf without uploading, private pdf editor, simple pdf editing tool',
+        seoArticle: 'Make simple additions to a PDF document without uploading it to a server — everything happens locally in your browser. For a specific task, DocShift also offers dedicated tools built for exactly that job: <a href="/tool/add-watermark">add a watermark</a>, <a href="/tool/page-numbers">insert page numbers</a>, or <a href="/tool/sign-pdf">add a signature</a>.',
+        updated: '2026-07-26',
         faqs: [
-            { q: 'How do I edit text in a PDF without Adobe?', a: 'DocShift lets you add text, shapes, images and annotations to a PDF free in your browser — no Acrobat or install required.' },
-            { q: 'Is there a free PDF editor with no watermark?', a: 'Yes. DocShift never adds a watermark and has no paywall — your edited PDF downloads clean.' },
-            { q: 'Can I edit a PDF on my phone?', a: 'The editor runs in any browser, so you can edit PDFs on mobile or desktop without an app.' }
+            { q: 'What can I do with the PDF editor?', a: 'Make simple additions to your document. For a specific task like watermarking, page numbering, or signing, DocShift\'s dedicated tools — <a href="/tool/add-watermark">Add Watermark</a>, <a href="/tool/page-numbers">Add Page Numbers</a>, <a href="/tool/sign-pdf">Sign PDF</a> — are built exactly for that.' },
+            { q: 'Is it free and private?', a: 'Yes. Editing happens locally in your browser — free, with no sign-up, and nothing is uploaded to a server.' }
         ]
     },
 
@@ -313,7 +313,7 @@ export const TOOLS = [
         seoTitle: 'Protect PDF with Password | Secure Encryption Free',
         seoDesc: 'Protect PDF files using powerful AES encryption. Add strong passwords to prevent viewing, printing, or modification easily.',
         seoKeywords: 'protect pdf with password, encrypt pdf file online, secure pdf from copying private, add password lock to pdf free',
-        seoArticle: 'Protect highly-sensitive PDF files with industry-standard AES encryption and completely customizable access permissions. Lockdown viewing and block text-copying securely without installing heavy apps. Got the wrong password set? Quickly <a href="/tool/unlock-pdf">remove the PDF password restrictions</a>. Often before encrypting, professionals prefer to <a href="/tool/sign-pdf">sign the document</a> or <a href="/tool/redact-pdf">permanently blackout text</a> from public view entirely.',
+        seoArticle: 'Protect highly-sensitive PDF files with industry-standard AES encryption and completely customizable access permissions. Lockdown viewing and block text-copying securely without installing heavy apps. Got the wrong password set? Quickly <a href="/tool/unlock-pdf">remove the PDF password restrictions</a>. Often before encrypting, professionals prefer to <a href="/tool/sign-pdf">sign the document</a> or <a href="/tool/redact-pdf">blackout text</a> from public view.',
         faqs: [
             { q: 'How do I password-protect a PDF for free?', a: 'Set a password and DocShift encrypts your PDF so only people with the password can open it — free and in-browser.' },
             { q: 'What encryption is used?', a: 'The PDF is secured with standard AES encryption applied locally on your device.' },
@@ -362,7 +362,7 @@ export const TOOLS = [
         seoTitle: 'Translate PDF Online Free | Private AI Document Translator',
         seoDesc: 'Easily translate PDF files natively. Maintains fonts, layout matrices, and formatting completely intact while converting languages.',
         seoKeywords: 'translate pdf document free, ai pdf translator online, keep formatting translate pdf private, language change pdf',
-        seoArticle: 'Smoothly translate whole PDF files using advanced embedded AI technology. Keeps your complex fonts, document layouts, and standard formatting perfectly intact without breaking rows. Need to manually adjust the translation output? Utilize our built in <a href="/tool/edit-pdf">PDF text annotator</a> immediately. If you need searchability alongside translation, <a href="/tool/ocr-pdf">run our OCR toolkit natively</a>, or easily <a href="/tool/word-to-pdf">convert it from Word formats</a> dynamically.',
+        seoArticle: 'Smoothly translate whole PDF files using advanced embedded AI technology. Keeps your complex fonts, document layouts, and standard formatting perfectly intact without breaking rows. Need to manually adjust the translation output? Utilize our built in <a href="/tool/edit-pdf">PDF editor</a> immediately. If you need searchability alongside translation, <a href="/tool/ocr-pdf">run our OCR toolkit natively</a>, or easily <a href="/tool/word-to-pdf">convert it from Word formats</a> dynamically.',
         faqs: [
             { q: 'How do I translate a PDF to another language?', a: 'Upload the PDF, pick the target language, and DocShift returns a translated version keeping the layout.' },
             { q: 'Is translating a PDF free?', a: 'Yes — free to translate with no signup required.' },

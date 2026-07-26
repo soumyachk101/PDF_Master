@@ -80,7 +80,7 @@ export default function DropzoneArea({ onFileSelect, accept, maxSize, selectedFi
                                         {isDragActive ? "Drop files here!" : "Load PDF Documents"}
                                     </h2>
                                     <p className="font-suisseintl text-xs text-[#444444] max-w-[320px] mx-auto">
-                                        Processing occurs 100% locally. File contents are never transmitted.
+                                        Your file is deleted from our server right after processing.
                                     </p>
                                 </div>
 

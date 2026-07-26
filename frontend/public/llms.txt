@@ -1,8 +1,8 @@
 # DocShift
 
-> Free, browser-based PDF tools. Merge, compress, convert, split, edit, sign, redact, OCR, and translate PDFs entirely in your browser. No uploads, no signup, no tracking.
+> Free PDF tools online. Merge, compress, convert, split, edit, sign, redact, OCR, and translate PDFs — files are deleted from our server right after processing. No signup, no tracking.
 
-DocShift is a privacy-first PDF toolkit. Every tool runs 100% locally via Web Workers and WebAssembly — your files never leave your device.
+DocShift is a privacy-first PDF toolkit. Your file is uploaded securely to process it, then deleted from our server immediately afterward — never stored, logged, or shared.
 
 ## Pages
 
@@ -61,11 +61,11 @@ DocShift is a privacy-first PDF toolkit. Every tool runs 100% locally via Web Wo
 
 ## Tool Pages (Intelligence)
 
-- [Translate PDF](https://www.docshift.tech/tool/translate-pdf): AI-powered translation that preserves layout
+- [Translate PDF](https://www.docshift.tech/tool/translate-pdf): Extracts and translates PDF text into a plain-text file
 
 ## Key Differentiators
 
-- **No uploads** — every tool runs in the browser; no server sees your file.
+- **Files deleted after processing** — your upload is removed from our server immediately once your job finishes; nothing is stored, logged, or shared.
 - **No signup** — no accounts, no emails, no friction.
 - **Free forever** — no premium tiers, no watermarks, no usage caps.
 - **Source available** — source code is public on GitHub at https://github.com/soumyachk101/PDF_Master.

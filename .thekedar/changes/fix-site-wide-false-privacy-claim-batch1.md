@@ -1,6 +1,6 @@
 # Change record — Site-wide false privacy claim fix, batch 1: UI components, meta, legal pages
 
-**Date:** 2026-07-27 · **Commit:** `<pending>` · **Priority fix, not part of any numbered task**
+**Date:** 2026-07-27 · **Commit:** `723100d` · **Priority fix, not part of any numbered task**
 
 ## What happened
 

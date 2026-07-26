@@ -11,20 +11,20 @@ Current goal: take SEO from "good on-page" to top-notch — per-tool keyword tar
 
 ## Current phase
 
-Phase 1 — Technical correctness · **review** (all 7 tasks committed; paused for user checkpoint per agreed cadence)
+Phase 2 — Keyword realignment & schema · **review** (all 3 tasks committed, reviewed clean; paused for user checkpoint per agreed cadence)
 
 ## Phases
 
 <!-- Phase N — name · tasks NNN–NNN · planned | building | done -->
 - Phase 0 — Audit & plan · no task files · **done** (6 specialist audits → `.thekedar/AUDIT_FINDINGS.md`, 23 tasks planned)
-- Phase 1 — Technical correctness · tasks 001–007 · **done, pending user checkpoint**
-- Phase 2 — Keyword realignment & schema · tasks 008–010 · planned
+- Phase 1 — Technical correctness · tasks 001–007 · **done**
+- Phase 2 — Keyword realignment & schema · tasks 008–010 · **done, pending user checkpoint**
 - Phase 3 — Content depth · tasks 011–017 · planned
 - Phase 4 — Hubs, comparison, link assets · tasks 018–023 · planned
 
 ## Active task
 
-none — Phase 1 closed, waiting on user go-ahead for Phase 2
+none — Phase 2 closed, waiting on user go-ahead for Phase 3
 
 ## Done
 
@@ -36,10 +36,13 @@ none — Phase 1 closed, waiting on user go-ahead for Phase 2
 - 005 — Real PNG apple-touch-icon · `285adc5`
 - 006 — IndexNow key, CCBot unblock, honest llms.txt · `669d95c`
 - 007 — Intro splash shortened + audit-tool skip · `8cbf37b`
+- 008 — Retarget 8 high-ROI tools · `e97a97d`
+- 009 — Retarget remaining 9 mis-targeted tools · `3902376`
+- 010 — `@id`-linked schema entity graph · `415810e`
 
 ## Up next
 
-- 008 — Retarget the 8 high-ROI tools (Phase 2)
+- 011 — Tool content scaffolding (per-tool `steps` + `updated` fields, word-count script) — Phase 3
 
 ## Decisions log (append-only)
 
@@ -61,6 +64,21 @@ none — Phase 1 closed, waiting on user go-ahead for Phase 2
 - `Article`/`BlogPosting` schema — requires publish/modified dates that do not honestly exist yet.
 - A `/blog` — the three hubs plus comparison pages close every gap the audit named. Add one when there is a second thing to publish.
 - IndexNow auto-ping on build — would fire on every preview deploy and burn quota. Manual `npm run indexnow` only.
+
+## Phase 2 notes
+
+- All 17 audit-flagged mis-targeted tools are now retargeted (8 in task 008 + 9 in task 009). Every new
+  `seoTitle` ≤52 chars, every `seoDesc` in the 8/9 touched 120–160 chars, all 30 titles unique, the three
+  legacy banned phrases gone file-wide. `pdf-to-word` deliberately deviated from its suggested "scanned
+  PDF" phrasing — verified in `backend/src/services/pdf.service.js:399` that conversion uses Python
+  `pdf2docx` with no OCR step, so that claim would have been false. Retargeted to "without uploading"
+  instead, matching its siblings.
+- Schema entity graph (task 010) collapses `Organization` from 3 inlined copies per tool page to 1
+  canonical node referenced by `@id`. New `frontend/src/utils/schema.js` is the shared source of truth —
+  task 023 (About/Contact schema) and task 021 (comparison pages) should import `ORG_ID`/`SITE_ID` from
+  it rather than re-inlining.
+- Adversarial review of the full Phase 2 diff (`git diff 8cbf37b..415810e`) ran clean — confirmed the
+  reviewer actually executed the diff (cited real line numbers/quotes) rather than rubber-stamping.
 
 ## Needs a human — cannot be verified in this environment
 
@@ -99,6 +117,13 @@ criteria that were written but not executed. Each is low-probability, but none i
   `font-dancing` → `HelveticaOblique` and `font-alex` → `TimesRomanItalic`, so picking "Elegant Cursive"
   produces oblique Helvetica in the signed PDF. Found while tracing task 002; out of scope there (tool
   functionality, explicitly fenced off). Real UX defect, deserves its own task.
+- **Two tools sit 1 character under the 120-char seoDesc floor**, pre-existing, found during task 008's
+  verification: `pdf-to-excel` (119 chars) and `crop-pdf` (119 chars). Both are outside every Phase 2
+  task's scope. Both already belong to a Phase 3 cluster task (`pdf-to-excel` → 015 convertFrom cluster,
+  `crop-pdf` → 016 edit cluster) — trivial to absorb there, not worth a standalone task.
+- Six tool titles exceed 52 characters but were never flagged by the audit as mis-targeted, so Phase 2
+  left them alone: `extract-pages` (56), `pdf-to-pptx` (59), `rotate-pdf` (56), `add-watermark` (53),
+  `unlock-pdf` (55), `translate-pdf` (58). Not urgent — only the audit's 17-tool list was in scope.
 - No `/blog`, `/guides`, or comparison routes exist. `SEO_OFFPAGE_PLAYBOOK.md` Phases 2–3 are written but never built — these are the assets that make links acquirable.
 - Site-wide `WebSite` schema is bare (name + url only); no `SearchAction`, no `publisher`.
 - Four overlapping SEO docs at root and in `frontend/` (`SEO_AUDIT_REPORT.md`, `SEO_OFFPAGE_PLAYBOOK.md`, `frontend/SEO_IMPROVEMENTS_PLAN.md`, `frontend/seo-report.md`) — at least one contains a stale claim. Consolidate at the end.

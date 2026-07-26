@@ -6,6 +6,10 @@ export default function ToolSEOContent({ toolSlug }) {
     const tool = getToolBySlug(toolSlug);
     if (!tool) return null;
 
+    // Tight gap to the "Last updated" line when it renders; otherwise the usual
+    // spacing straight into the next heading.
+    const articleMarginClass = tool.updated ? 'mb-2' : 'mb-8';
+
     return (
         <>
             {/* SEO Rich Content Section */}
@@ -14,36 +18,41 @@ export default function ToolSEOContent({ toolSlug }) {
                     How to use {tool.name}
                 </h2>
                 <ol className="text-xs sm:text-sm text-[#444444] leading-relaxed mb-8 space-y-2 list-decimal pl-5 [&_strong]:text-[#000000] [&_strong]:font-semibold">
-                    <li>Open the <strong>{tool.name}</strong> tool above and add your file{tool.multiple ? 's' : ''} — drag &amp; drop or click to browse.</li>
-                    <li>Adjust the available options (page order, ranges, or settings) to fit what you need.</li>
-                    <li>Click <strong>Process {tool.name}</strong>. Everything runs locally in your browser — no upload.</li>
-                    <li>Download your finished file instantly. Your original never leaves your device.</li>
+                    {tool.steps && tool.steps.length > 0 ? (
+                        tool.steps.map((step, i) => (
+                            <li key={i} dangerouslySetInnerHTML={{ __html: step }} />
+                        ))
+                    ) : (
+                        <>
+                            <li>Open the <strong>{tool.name}</strong> tool above and add your file{tool.multiple ? 's' : ''} — drag &amp; drop or click to browse.</li>
+                            <li>Adjust the available options (page order, ranges, or settings) to fit what you need.</li>
+                            <li>Click <strong>Process {tool.name}</strong>. Everything runs locally in your browser — no upload.</li>
+                            <li>Download your finished file instantly. Your original never leaves your device.</li>
+                        </>
+                    )}
                 </ol>
                 {tool.seoArticle ? (
                     <div
-                        className="text-xs sm:text-sm text-[#444444] leading-relaxed mb-10 space-y-4 [&_a]:text-[#000000] [&_a]:font-bold [&_a]:underline [&_a]:hover:opacity-80"
+                        className={`text-xs sm:text-sm text-[#444444] leading-relaxed ${articleMarginClass} space-y-4 [&_a]:text-[#000000] [&_a]:font-bold [&_a]:underline [&_a]:hover:opacity-80`}
                         dangerouslySetInnerHTML={{ __html: tool.seoArticle }}
                     />
                 ) : (
-                    <p className="text-xs sm:text-sm text-[#444444] leading-relaxed mb-10">
+                    <p className={`text-xs sm:text-sm text-[#444444] leading-relaxed ${articleMarginClass}`}>
                         Use our free online tool to {tool.name.toLowerCase()} instantly. Load your file above and let our secure client-side processor execute it locally. No installation required.
+                    </p>
+                )}
+                {tool.updated && (
+                    <p className="text-[10px] text-[#888888] mb-8">
+                        Last updated: {new Date(`${tool.updated}T00:00:00Z`).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' })}
                     </p>
                 )}
 
                 <h2 className="font-suisseintlcond font-bold text-lg uppercase mb-3 text-[#000000]">
                     Why use DocShift?
                 </h2>
-                <div className="text-xs sm:text-sm text-[#444444] leading-relaxed mb-10 space-y-3.5">
-                    <p>
-                        <strong className="text-[#000000] font-semibold">100% Private &amp; Secure:</strong> We take your document privacy seriously. Files are never stored or transmitted, ensuring your data remains completely secure on your own local hardware.
-                    </p>
-                    <p>
-                        <strong className="text-[#000000] font-semibold">Blazing Fast:</strong> Forget heavy desktop software. Process your documents in absolute seconds directly from your web browser.
-                    </p>
-                    <p>
-                        <strong className="text-[#000000] font-semibold">Zero Installation:</strong> No downloads, no plugins, no sign-ups. Everything runs right in the browser.
-                    </p>
-                </div>
+                <p className="text-xs sm:text-sm text-[#444444] leading-relaxed mb-10">
+                    DocShift processes every file locally in your browser — nothing is stored or transmitted. There&apos;s nothing to install and no sign-up: your document is ready in seconds and never leaves your device.
+                </p>
 
                 {/* FAQ Section */}
                 {tool.faqs && tool.faqs.length > 0 && (

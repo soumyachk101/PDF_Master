@@ -1,6 +1,6 @@
 # Task 011 — Content scaffolding: per-tool steps, real dates, boilerplate shrink, word-count script
 
-**Status:** TODO
+**Status:** DONE
 **Depends on:** 010
 **Risk:** medium
 **Estimated size:** M

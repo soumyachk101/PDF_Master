@@ -6,6 +6,13 @@ export const TOOLS = [
         seoDesc: 'Merge PDF files together securely. Our free tool runs directly in your browser with no uploads required, ensuring total privacy.',
         seoKeywords: 'merge pdf files without uploading, combine pdf online private, secure pdf merge, join pdf files, free pdf combiner',
         seoArticle: 'Use our free online tool to merge PDF files instantly without uploading them to external servers. Since processing is optimized for privacy, your files remain completely secure on your device. Just arrange the files in your preferred order and click merge. Once combined, you might also want to <a href="/tool/compress-pdf">compress your PDF size</a> to reduce the file footprint, or <a href="/tool/split-pdf">split PDF pages</a> if you combined too many documents. Need to sort them first? Try our <a href="/tool/organize-pdf">free PDF organizer</a>.',
+        steps: [
+            'Drop two or more PDF files onto the <strong>Merge PDF</strong> tool, or click to browse for them.',
+            'Drag the file thumbnails into the exact order you want them combined.',
+            'Click <strong>Process Merge PDF</strong> — the files are combined entirely in your browser.',
+            'Download the single merged PDF. Nothing is uploaded at any point.'
+        ],
+        updated: '2026-07-26',
         faqs: [
             { q: 'Can I merge PDF files without uploading?', a: 'Yes! DocShift prioritizes your privacy. Your files are processed securely without being stored or analyzed by external cloud services.' },
             { q: 'Is there a limit to how many files I can merge?', a: 'You can merge large batches of files simultaneously completely for free, without worrying about premium paywalls.' }

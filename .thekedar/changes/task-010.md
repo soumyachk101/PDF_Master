@@ -1,6 +1,6 @@
 # Change record — Task 010: `@id`-linked schema entity graph
 
-**Date:** 2026-07-26 · **Commit:** `<pending>` · **Fix loops used:** 0/3
+**Date:** 2026-07-26 · **Commit:** `415810e` · **Fix loops used:** 0/3
 
 ## What changed
 

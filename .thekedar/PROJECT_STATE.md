@@ -236,7 +236,7 @@ owner actions listed below, not another content phase.
 - **fix** — site-wide false privacy claim, batch 1 (UI/meta/legal) · `723100d`
 - **fix** — site-wide false privacy claim, batch 2 (dropzone/OG/robots/llms.txt) · `cee542d`
 - 012–017 (content depth, 27/30 tools) + **fix** batch 3 (final sweep) · `96cab93`
-- 018–023 (hubs, comparison pages, llms-full.txt, About E-E-A-T) · see Phase 4 notes
+- 018–023 (hubs, comparison pages, llms-full.txt, About E-E-A-T) · `33df6ce`
 
 ## Up next
 

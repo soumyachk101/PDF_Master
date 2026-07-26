@@ -7,6 +7,7 @@ import { Suspense } from 'react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Inter, Bebas_Neue, IBM_Plex_Mono } from 'next/font/google';
 import IntroOverlay from '@/components/IntroOverlay';
+import { ORG_ID, organizationNode, webSiteNode } from '@/utils/schema';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -82,34 +83,6 @@ export const viewport = {
 };
 
 export default function RootLayout({ children }) {
-  const websiteSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'WebSite',
-    name: 'DocShift',
-    url: 'https://www.docshift.tech',
-  };
-
-  const organizationSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'Organization',
-    name: 'DocShift',
-    url: 'https://www.docshift.tech',
-    logo: 'https://www.docshift.tech/logo.png',
-    description: 'Free browser-based PDF tools. Merge, compress, convert and edit PDFs with 100% privacy.',
-    foundingDate: '2024',
-    sameAs: [
-      'https://x.com/soumyachk1',
-      'https://github.com/soumyachk101',
-      'https://discord.com/users/soumya.chk101',
-    ],
-    contactPoint: {
-      '@type': 'ContactPoint',
-      contactType: 'customer support',
-      email: 'support@docshift.tech',
-      availableLanguage: ['English'],
-    },
-  };
-
   const softwareSchema = {
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
@@ -119,11 +92,7 @@ export default function RootLayout({ children }) {
     operatingSystem: 'Web Browser',
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
     description: 'Free browser-based PDF tools. Merge, compress, convert and edit PDFs with 100% privacy.',
-    author: {
-      '@type': 'Organization',
-      name: 'DocShift',
-      url: 'https://www.docshift.tech',
-    },
+    author: { '@id': ORG_ID },
   };
 
   return (
@@ -132,8 +101,8 @@ export default function RootLayout({ children }) {
         <link rel="alternate" type="text/plain" href="https://www.docshift.tech/llms.txt" title="LLM-readable site summary" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }} />
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteNode) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationNode) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }} />
       </head>
       <body>

@@ -1,6 +1,6 @@
 # Change record — Task 009: Retarget the remaining 9 mis-targeted tools
 
-**Date:** 2026-07-26 · **Commit:** `<pending>` · **Fix loops used:** 0/3
+**Date:** 2026-07-26 · **Commit:** `3902376` · **Fix loops used:** 0/3
 
 ## What changed
 

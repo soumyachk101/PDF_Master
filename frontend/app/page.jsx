@@ -1,5 +1,6 @@
 import dynamic from 'next/dynamic';
 import { TOOLS } from '@/utils/tools';
+import { SITE_ID } from '@/utils/schema';
 
 const HomePage = dynamic(() => import('@/views/HomePage'), {
   loading: () => <div style={{ minHeight: '100vh' }} />,
@@ -31,6 +32,7 @@ export default function Page() {
     '@type': 'ItemList',
     name: 'DocShift PDF Tools',
     description: 'Free browser-based PDF tools for merging, splitting, compressing, converting, and editing PDFs.',
+    isPartOf: { '@id': SITE_ID },
     numberOfItems: TOOLS.length,
     itemListElement: TOOLS.map((tool, index) => ({
       '@type': 'ListItem',

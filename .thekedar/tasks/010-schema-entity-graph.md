@@ -1,6 +1,6 @@
 # Task 010 — `@id`-linked schema entity graph
 
-**Status:** TODO
+**Status:** DONE
 **Depends on:** 001
 **Risk:** medium
 **Estimated size:** M

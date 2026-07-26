@@ -1,6 +1,7 @@
 import { getToolBySlug, TOOLS } from '@/utils/tools';
 import ToolPage from '@/views/ToolPage';
 import ToolSEOContent from '@/views/ToolSEOContent';
+import { ORG_ID, SITE_ID } from '@/utils/schema';
 
 export function generateStaticParams() {
   return TOOLS.map((tool) => ({
@@ -52,20 +53,19 @@ export default async function ToolRoute({ params }) {
   const schemas = [];
 
   if (tool) {
+    const pageUrl = `https://www.docshift.tech/tool/${tool.slug}`;
+    const breadcrumbId = `${pageUrl}#breadcrumb`;
+
     schemas.push({
       '@context': 'https://schema.org',
       '@type': 'WebApplication',
       name: `${tool.name} - DocShift`,
-      url: `https://www.docshift.tech/tool/${tool.slug}`,
+      url: pageUrl,
       description: tool.shortDesc,
       applicationCategory: 'UtilitiesApplication',
       operatingSystem: 'Web Browser',
       offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
-      author: {
-        '@type': 'Organization',
-        name: 'DocShift',
-        url: 'https://www.docshift.tech',
-      },
+      author: { '@id': ORG_ID },
       featureList: [
         '100% private - files processed in browser',
         'No uploads or server storage',
@@ -86,6 +86,7 @@ export default async function ToolRoute({ params }) {
     schemas.push({
       '@context': 'https://schema.org',
       '@type': 'BreadcrumbList',
+      '@id': breadcrumbId,
       itemListElement: [
         {
           '@type': 'ListItem',
@@ -103,9 +104,21 @@ export default async function ToolRoute({ params }) {
           '@type': 'ListItem',
           position: 3,
           name: tool.name,
-          item: `https://www.docshift.tech/tool/${tool.slug}`,
+          item: pageUrl,
         },
       ],
+    });
+
+    schemas.push({
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      '@id': `${pageUrl}#webpage`,
+      url: pageUrl,
+      name: tool.seoTitle || `${tool.name} - DocShift`,
+      description: tool.seoDesc || tool.shortDesc,
+      inLanguage: 'en',
+      isPartOf: { '@id': SITE_ID },
+      breadcrumb: { '@id': breadcrumbId },
     });
 
     if (tool.faqs && tool.faqs.length > 0) {

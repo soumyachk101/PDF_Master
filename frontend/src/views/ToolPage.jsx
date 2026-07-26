@@ -12,6 +12,9 @@ import { Home, ArrowLeft, ArrowRight, Download, CheckCircle, AlertCircle, AlertT
 import { getIcon } from '@/utils/icons';
 import { SIGNATURE_FONTS, signatureFontFamily } from '@/utils/signatureFonts';
 import { NeumorphicCard, NeumorphicButton, GrooveHr, cn } from '@/components/ui/IndustrialComponents';
+import OrganizePagesPanel from '@/components/tool-panels/OrganizePagesPanel';
+import RedactRegionsPanel from '@/components/tool-panels/RedactRegionsPanel';
+import EditAnnotationsPanel from '@/components/tool-panels/EditAnnotationsPanel';
 
 const DynamicIcon = memo(({ name, color, size = 24, className = "" }) => {
     const IconComponent = getIcon(name);
@@ -44,6 +47,11 @@ export default function ToolPage({ toolSlug }) {
 
     const [selectedFiles, setSelectedFiles] = useState([]);
     const [splitRanges, setSplitRanges] = useState('');
+    const [removePagesInput, setRemovePagesInput] = useState('');
+    const [extractPagesInput, setExtractPagesInput] = useState('');
+    const [organizeOrder, setOrganizeOrder] = useState('');
+    const [redactRegions, setRedactRegions] = useState([]);
+    const [editAnnotations, setEditAnnotations] = useState([]);
     const [watermarkText, setWatermarkText] = useState('');
     const [watermarkPosition, setWatermarkPosition] = useState('diagonal');
     const [watermarkOpacity, setWatermarkOpacity] = useState('0.3');
@@ -106,6 +114,20 @@ export default function ToolPage({ toolSlug }) {
         setLocalError('');
         const additionalData = {};
         if (tool.slug === 'split-pdf' && splitRanges) additionalData.ranges = splitRanges;
+        if (tool.slug === 'remove-pages') {
+            if (!removePagesInput.trim()) {
+                setLocalError("Please enter which pages to remove, e.g. 2-3, 5.");
+                return;
+            }
+            additionalData.pages = removePagesInput;
+        }
+        if (tool.slug === 'extract-pages') {
+            if (!extractPagesInput.trim()) {
+                setLocalError("Please enter which pages to extract, e.g. 2-3, 5.");
+                return;
+            }
+            additionalData.ranges = extractPagesInput;
+        }
         if (tool.slug === 'add-watermark') {
             if (watermarkText) additionalData.text = watermarkText;
             additionalData.position = watermarkPosition;
@@ -129,6 +151,30 @@ export default function ToolPage({ toolSlug }) {
             additionalData.left = left;
         }
         if (tool.slug === 'ocr-pdf') additionalData.lang = ocrLang;
+
+        if (tool.slug === 'organize-pdf') {
+            if (!organizeOrder) {
+                setLocalError("Please wait for page previews to load before processing.");
+                return;
+            }
+            additionalData.order = organizeOrder;
+        }
+
+        if (tool.slug === 'redact-pdf') {
+            if (redactRegions.length === 0) {
+                setLocalError("Please drag at least one box over what you want to redact.");
+                return;
+            }
+            additionalData.regions = JSON.stringify(redactRegions);
+        }
+
+        if (tool.slug === 'edit-pdf') {
+            if (editAnnotations.length === 0) {
+                setLocalError("Please add at least one text box or pen stroke before processing.");
+                return;
+            }
+            additionalData.annotations = JSON.stringify(editAnnotations);
+        }
 
         if (tool.slug === 'sign-pdf') {
             if (!signText.trim()) {
@@ -179,6 +225,11 @@ export default function ToolPage({ toolSlug }) {
         resetState();
         setSelectedFiles([]);
         setSplitRanges('');
+        setRemovePagesInput('');
+        setExtractPagesInput('');
+        setOrganizeOrder('');
+        setRedactRegions([]);
+        setEditAnnotations([]);
         setWatermarkText('');
         setWatermarkPosition('diagonal');
         setWatermarkOpacity('0.3');
@@ -342,6 +393,58 @@ export default function ToolPage({ toolSlug }) {
                                                         })}
                                                     </div>
                                                 </div>
+                                            )}
+
+                                            {tool.slug === 'remove-pages' && (
+                                                <div className="mt-5 space-y-3 text-left">
+                                                    <div className="space-y-1.5">
+                                                        <label className="block text-xs font-bold uppercase tracking-wider text-[#000000] font-suisseintlmono">
+                                                            Pages to remove
+                                                        </label>
+                                                        <input
+                                                            type="text"
+                                                            placeholder="e.g., 2-3, 5, 7-10"
+                                                            value={removePagesInput}
+                                                            onChange={(e) => { setRemovePagesInput(e.target.value); setLocalError(''); }}
+                                                            className="w-full h-11 px-4 border border-[#000000] bg-[#ffffff] text-[#000000] font-suisseintl font-medium text-sm focus:border-2 focus:outline-none rounded-[8px] transition-all"
+                                                        />
+                                                        <p className="font-suisseintlmono text-[9px] text-[#444444] mt-1.5 ml-1">
+                                                            These page numbers will be deleted from the document
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            )}
+
+                                            {tool.slug === 'extract-pages' && (
+                                                <div className="mt-5 space-y-3 text-left">
+                                                    <div className="space-y-1.5">
+                                                        <label className="block text-xs font-bold uppercase tracking-wider text-[#000000] font-suisseintlmono">
+                                                            Pages to extract
+                                                        </label>
+                                                        <input
+                                                            type="text"
+                                                            placeholder="e.g., 2-3, 5, 7-10"
+                                                            value={extractPagesInput}
+                                                            onChange={(e) => { setExtractPagesInput(e.target.value); setLocalError(''); }}
+                                                            className="w-full h-11 px-4 border border-[#000000] bg-[#ffffff] text-[#000000] font-suisseintl font-medium text-sm focus:border-2 focus:outline-none rounded-[8px] transition-all"
+                                                        />
+                                                        <p className="font-suisseintlmono text-[9px] text-[#444444] mt-1.5 ml-1">
+                                                            Only these page numbers will be kept, in a new document
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            )}
+
+                                            {tool.slug === 'organize-pdf' && selectedFiles[0] && (
+                                                <OrganizePagesPanel file={selectedFiles[0]} onOrderChange={setOrganizeOrder} />
+                                            )}
+
+                                            {tool.slug === 'redact-pdf' && selectedFiles[0] && (
+                                                <RedactRegionsPanel file={selectedFiles[0]} onRegionsChange={setRedactRegions} />
+                                            )}
+
+                                            {tool.slug === 'edit-pdf' && selectedFiles[0] && (
+                                                <EditAnnotationsPanel file={selectedFiles[0]} onAnnotationsChange={setEditAnnotations} />
                                             )}
 
                                             {tool.slug === 'add-watermark' && (

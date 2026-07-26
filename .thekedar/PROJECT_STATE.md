@@ -194,6 +194,13 @@ exhaustively verify every remaining route (e.g. `comparePdf`, `cropPdf`, `addPag
 only for existence/dedicated-function-ownership, not for behavioral correctness at the level applied to
 security/organize/edit).
 
+**Update 2026-07-27:** all four real fixes referenced in this table's Treatment column ("the actual
+backend fix is separate engineering work") were planned as Phase 5, tasks 024–031 — see
+`.thekedar/phases/phase-5.md`. **Phase 5 is now done.** `redact-pdf`, `organize-pdf`, `edit-pdf`,
+`remove-pages` and `extract-pages` all have real, verified implementations — see the Phase 5 notes
+section below for what changed and how it was verified. The table above describes the *pre-fix* state
+for historical context; it is no longer the current state of these five tools.
+
 ## Project overview
 
 DocShift — 30 free browser-based PDF tools (files never leave the browser). Next.js 15.3 App Router in `frontend/`, Express backend in `backend/`, live at https://www.docshift.tech (canonical host = www).
@@ -201,7 +208,7 @@ Current goal: take SEO from "good on-page" to top-notch — per-tool keyword tar
 
 ## Current phase
 
-Phase 4 — Hubs, comparison, link assets · **done** (all 6 tasks landed; this was the last planned phase)
+Phase 5 — Real tool fixes · **done** (all 8 tasks; Q1/Q2 answered 2026-07-27, see Decisions log)
 
 ## Phases
 
@@ -211,11 +218,12 @@ Phase 4 — Hubs, comparison, link assets · **done** (all 6 tasks landed; this 
 - Phase 2 — Keyword realignment & schema · tasks 008–010 · **done**
 - Phase 3 — Content depth · tasks 011–017 · **done** (27 of 30 tools; 3 paused — see FOUNDATIONAL)
 - Phase 4 — Hubs, comparison, link assets · tasks 018–023 · **done**
+- Phase 5 — Real tool fixes · tasks 024–031 · **done**
 
 ## Active task
 
-none — all 5 planned phases (0–4) are done. What's left is the explicitly-deferred backend/UI work and
-owner actions listed below, not another content phase.
+none — Phase 5 closed. See Phase 5 notes below for what's left (content-copy strengthening for the 5
+fixed tools, and the two locally-unverifiable-without-a-browser interaction checks).
 
 ## Done
 
@@ -237,11 +245,14 @@ owner actions listed below, not another content phase.
 - **fix** — site-wide false privacy claim, batch 2 (dropzone/OG/robots/llms.txt) · `cee542d`
 - 012–017 (content depth, 27/30 tools) + **fix** batch 3 (final sweep) · `96cab93`
 - 018–023 (hubs, comparison pages, llms-full.txt, About E-E-A-T) · `33df6ce`
+- 024–031 (real fixes: remove/extract-pages, organize-pdf, redact-pdf, edit-pdf) · see Phase 5 notes for commit hash
 
 ## Up next
 
-Nothing planned. Remaining open items are the explicitly-deferred backend/UI fixes and owner actions
-below — pick up whichever the user wants to prioritize next.
+Nothing planned. Phase 5 was the explicitly-deferred backend/UI work referenced throughout this file
+(FOUNDATIONAL/CRITICAL sections, Phase 3/4 notes) — it's now done, not just planned. Remaining candidates,
+none scheduled: strengthening `tools.js` copy for the 5 now-fixed tools (their copy is still the honest,
+hedged pre-fix language), and the browser-interaction checks logged under "Needs a human" below.
 
 ## Decisions log (append-only)
 
@@ -260,6 +271,26 @@ below — pick up whichever the user wants to prioritize next.
   than find a replacement axis. The two `/alternatives/*` pages now make zero comparative claims about
   either named competitor — competitors are named only for search-intent framing (title/intro/one FAQ
   question), every other sentence is about DocShift alone. Stricter than the original Q1 answer, not looser.
+- 2026-07-27 — Phase 5 planned: real backend/frontend fixes for the four tools this project previously
+  only patched in copy (`redact-pdf`, `organize-pdf`, `edit-pdf`, `remove-pages`/`extract-pages`) —
+  decomposed into 8 tasks (024–031), sharing one new page-thumbnail endpoint (task 025) across three of
+  them instead of building it three times. Two tasks raise blocking questions before work starts: Q1
+  (task 028, redact-pdf's true-content-removal approach — PyMuPDF/AGPL vs. a zero-new-dependency
+  page-rasterization fallback) and Q2 (task 030/031, edit-pdf's undefined v1 scope — proposed default:
+  text boxes + freehand drawing only, explicitly deferring images/shapes/form-fields).
+- 2026-07-27 — **Q1 answered (task 028): PyMuPDF (Option A), AGPL-3.0 accepted.** Real content-stream
+  redaction via `page.add_redact_annot()` + `apply_redactions()`, same Python-subprocess deployment
+  pattern already proven for `pdfToWord`. Verified empirically (not assumed) that PyMuPDF's page
+  coordinate space is top-left origin, y-down — the opposite of every pdf-lib call elsewhere in this
+  backend, and the same orientation as on-screen pixels, so the frontend region-to-PDF conversion needs a
+  plain scale, no Y-flip.
+- 2026-07-27 — **Q2 answered (tasks 030/031): text boxes + freehand pen only, as proposed.** No image
+  insertion, shapes, or existing-content editing in this v1. `edit-pdf`'s own already-shipped copy ("simple
+  additions to a PDF") was never contradicted by this scope.
+- 2026-07-27 — Phase 5 built and verified in full: `redact-pdf`, `organize-pdf`, `edit-pdf` now have real
+  engines (replacing their `protectPdf`/`rotatePdf`/`watermarkPdf` aliases); `remove-pages`/`extract-pages`
+  now have a working page-range input. See Phase 5 notes below for the verification method and two things
+  that could not be checked without a real browser.
 
 ## Deferred with reasons (do not re-litigate without new information)
 
@@ -328,8 +359,64 @@ below — pick up whichever the user wants to prioritize next.
 - All 30 tools now have at least 2 internal links from body content (tool pages' own related-tools grid,
   plus the new hub pages), closing the audit's stated internal-linking gap. `llms-full.txt` means an AI
   agent can read the whole site in one fetch instead of 35, generated from `TOOLS` so it can't go stale.
-- This was the last planned phase. Everything remaining is the explicitly-deferred backend/UI work and
-  owner actions already logged below — there is no Phase 5 planned.
+- This was the last planned phase at the time. Everything remaining was the explicitly-deferred
+  backend/UI work — which became Phase 5, now also done (see below).
+
+## Phase 5 notes
+
+- **`redact-pdf`, `organize-pdf`, `edit-pdf` are real now** — no more `// MVP: ... as placeholder`
+  aliases in `pdf.routes.js`. `redact-pdf` uses PyMuPDF via a Python subprocess (same deployment pattern
+  as `pdfToWord`) for genuine content-stream redaction; `organize-pdf` has a real reorder/delete engine;
+  `edit-pdf` adds real text boxes and freehand pen strokes via `pdf-lib`. `remove-pages`/`extract-pages`
+  now parse `"2-3, 5"`-style range input correctly (previously: silent no-op / always-page-1, respectively).
+- **PyMuPDF's coordinate system was verified empirically, not assumed**, exactly as task 028 required:
+  wrote a tiny script rendering a filled rect and a redaction test in an isolated local venv, confirmed
+  top-left origin/y-down by inspecting actual output pixels and surviving text. This matters because it's
+  the opposite convention from every pdf-lib call elsewhere in this backend (bottom-left/y-up) — the two
+  new frontend region/annotation-drawing panels (redact vs. edit) each convert screen coordinates to their
+  engine's space in *opposite* Y directions, and that's correct, not a bug, if ever revisited.
+- **The redaction verification that actually matters**: built a test PDF with a known string in a marked
+  region, redacted it, then ran an *independent* extractor (Ghostscript's `txtwrite`, not PyMuPDF checking
+  its own work) against the output and confirmed the string does not appear anywhere. A visual black box
+  with the text still extractable underneath would have passed a weaker test and shipped the exact false
+  claim this task existed to eliminate.
+- **A new shared component directory**: `frontend/src/components/tool-panels/` (`OrganizePagesPanel.jsx`,
+  `RedactRegionsPanel.jsx`, `EditAnnotationsPanel.jsx`) plus `frontend/src/hooks/useThumbnails.js`. These
+  are the first tool-specific UI pieces broken out of `ToolPage.jsx` into their own files rather than
+  inline blocks — the established convention for every other tool — because each has genuinely
+  independent, non-trivial interactive state (drag-reorder, canvas drawing) that would have made an
+  already-1000-line file unreadable as one more inline block.
+- **Process note, hit twice this project**: this codebase's build enforces React's newer
+  `react-hooks/set-state-in-effect` and `react-hooks/refs` lint rules as build-*breaking* errors, not
+  warnings. Concretely: (1) never call `setState` synchronously in an effect body, even to reset state
+  when a dependency becomes falsy — compute the "nothing to show" case directly during render instead, or
+  derive booleans like `loading` from comparing a "fetched for X" state value against the current input,
+  only ever calling `setState` inside an async `.then()/.catch()`; (2) never read a ref's `.current`
+  directly in the JSX render body (e.g. to show a live drag-preview) — anything read during render must be
+  `useState`, even if a ref would "work" at runtime. Both fixes are in `useThumbnails.js` and
+  `RedactRegionsPanel.jsx` respectively if a future component needs the same pattern.
+- **Local verification gap, discovered while testing this phase**: this Mac had neither Ghostscript nor
+  qpdf installed, so several existing tools (`compress-pdf`, `repair-pdf`, `pdf-to-jpg`, `protect-pdf`,
+  `unlock-pdf`, `pdf-to-pdfa`, ...) could never have been locally verified before this phase either —
+  installed both via Homebrew to make real local testing possible (backend/production already has them
+  via the Dockerfile; this was purely a local dev-machine gap, unrelated to any code change).
+- Verification method: (1) a standalone Node script directly calling every new/changed `pdf.service.js`
+  export with real PDFs (not mocks) — all passed, including the redaction text-extraction test; (2) a
+  second pass hitting every new/changed endpoint over real HTTP with `curl` and real multipart bodies
+  (`/api/pdf/thumbnails`, `/organize-pdf`, `/redact-pdf`, `/edit-pdf`, `/remove-pages`, `/extract-pages`),
+  plus confirming neighboring unrelated real tools (`rotate-pdf`, `add-watermark`) still work unchanged;
+  (3) `npm run build` — all 79 pages, zero errors. All test artifacts and locally-installed Python
+  packages (`.python_deps/`, already gitignored) were removed after verification.
+- **Not verified — needs a real browser** (no Chrome extension connected this session either): the actual
+  drag-to-reorder interaction (`framer-motion`'s `Reorder.Group`), and the canvas pointer-event drawing in
+  `RedactRegionsPanel`/`EditAnnotationsPanel` (rectangle-dragging, freehand pen sampling, text-box
+  placement). Logic was verified at the HTTP/service layer with hand-constructed payloads shaped exactly
+  like what these components emit; the components themselves compile cleanly and follow this codebase's
+  established interaction patterns, but no one has clicked around on them yet.
+- **Deliberately not done in this phase**: `tools.js`'s copy for these 5 tools was *not* strengthened back
+  to describe real capability — it still carries the honest, hedged pre-fix language from Phase 3's
+  false-claim fix. That's a follow-up content task, kept separate on purpose (this phase's fence explicitly
+  excluded `tools.js` changes) so engineering and copy changes stay independently reviewable.
 
 ## Needs a human — cannot be verified in this environment
 
@@ -346,6 +433,10 @@ criteria that were written but not executed. Each is low-probability, but none i
 - **Task 006** — the IndexNow ping has never been sent. Run `npm run indexnow` **after** deploying, once
   the key file is live at `https://www.docshift.tech/f4ebcfecf43c89c997f6109b9c2f5184.txt`.
 - Re-run PageSpeed Insights after deploy to confirm the splash is gone from the filmstrip.
+- **Phase 5** — drag-to-reorder on `/tool/organize-pdf`, and the canvas region/annotation drawing on
+  `/tool/redact-pdf` and `/tool/edit-pdf`, have never been clicked on in a real browser. Backend logic and
+  the exact payload shape these components emit were verified independently (see Phase 5 notes); the
+  interactive drawing/dragging itself was not.
 
 ## Owner actions outside the codebase
 

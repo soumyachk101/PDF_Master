@@ -1,6 +1,6 @@
 # Change record — Task 006: IndexNow key, CCBot unblock, honest llms.txt
 
-**Date:** 2026-07-26 · **Commit:** `<pending>` · **Fix loops used:** 0/3
+**Date:** 2026-07-26 · **Commit:** `669d95c` · **Fix loops used:** 0/3
 
 ## What changed
 

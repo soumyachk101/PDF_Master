@@ -1,6 +1,6 @@
 # Task 007 — Stop the intro splash from eating first-paint
 
-**Status:** TODO
+**Status:** DONE
 **Depends on:** none
 **Risk:** medium
 **Estimated size:** S

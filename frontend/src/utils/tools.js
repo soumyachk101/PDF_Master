@@ -13,9 +13,9 @@ export const TOOLS = [
     },
     { 
         slug: 'split-pdf', name: 'Split PDF', shortDesc: 'Break a PDF into pages.', desc: 'Separate one page or a whole set into independent PDF files.', icon: 'Scissors', category: 'organize', color: '#F05B25', accept: { 'application/pdf': ['.pdf'] }, multiple: false, minFiles: 1, urlInput: false, outputExt: '.zip', outputMime: 'application/zip',
-        seoTitle: 'Split PDF Online Free | Separate PDF into Multiple Files',
-        seoDesc: 'Split a PDF into multiple separate files for free. Break PDF pages apart securely in your browser with no uploads to any server.',
-        seoKeywords: 'split pdf online free, split pdf into multiple files, separate pdf pages, split pdf by page, pdf splitter, split pdf no upload',
+        seoTitle: 'Split PDF Without Uploading Files | Free & Fast',
+        seoDesc: 'Split a PDF into multiple files without uploading anything. Break apart pages or extract ranges instantly, 100% processed in your browser.',
+        seoKeywords: 'split pdf without uploading files, separate pdf pages private, split pdf by page free, pdf splitter no upload, break pdf into files',
         seoArticle: 'Split a large PDF document into multiple smaller files or extract specific pages entirely for free. Our online splitter is incredibly fast, bypassing slow upload queues by running the tasks securely locally. Once split, you can <a href="/tool/merge-pdf">combine PDF files</a> again or use our tool to <a href="/tool/remove-pages">delete pages from a PDF</a>. If you need fine-grained control over extracting pages, try to <a href="/tool/extract-pages">pull out selected pages</a>.',
         faqs: [
             { q: 'How do I extract specific pages?', a: 'Simply enter the page ranges you want to extract (e.g., "1-3, 5") and click process. We will instantly package the specific pages into a secure download.' },
@@ -24,9 +24,9 @@ export const TOOLS = [
     },
     {
         slug: 'remove-pages', name: 'Remove Pages', shortDesc: 'Delete pages from a PDF.', desc: 'Select and permanently remove specific pages from your PDF document. Visual page selector for surgical edits.', icon: 'Trash2', category: 'organize', color: '#F05B25', accept: { 'application/pdf': ['.pdf'] }, multiple: false, minFiles: 1, urlInput: false, outputExt: '.pdf', outputMime: 'application/pdf', hasThumbnails: true,
-        seoTitle: 'Remove Pages from PDF Free | Delete PDF Pages Online',
-        seoDesc: 'Delete specific pages from a PDF document securely. Visual page removal tool that processes files 100% locally in your browser.',
-        seoKeywords: 'remove pages from pdf, delete pdf pages online, free pdf page remover, remove pdf sections securely',
+        seoTitle: 'Delete PDF Pages Without Uploading | Free Tool',
+        seoDesc: 'Delete pages from a PDF without uploading it anywhere. Not sure whether to delete or extract? Deleting removes pages for good; extracting copies them out.',
+        seoKeywords: 'delete pdf pages without uploading, remove vs extract pdf pages, permanently delete pdf pages, private pdf page remover, free pdf page deletion tool',
         seoArticle: 'Remove unwanted pages from your PDF document entirely for free. This visual tool lets you delete specific pages from a PDF quickly and securely without uploading your data. Unlike "split" (which exports pages into new files) or "extract" (which copies pages out), remove-pages surgically deletes the pages you select from the original document, preserving page numbering, headers, and footers for the rest of the file. If you removed the wrong pages, you can easily <a href="/tool/merge-pdf">merge PDF files back</a> to restore them. Looking to pull pages out instead of deleting them? You can <a href="/tool/extract-pages">extract specific pages</a> or <a href="/tool/organize-pdf">reorder pdf pages</a> for a cleaner document structure.',
         faqs: [
             { q: 'Does removing a page change the remaining page numbers?', a: 'No. When you delete a page, the other pages retain their original numbers. If you need renumbering, use the <a href="/tool/page-numbers">Add Page Numbers</a> tool afterward.' },
@@ -46,9 +46,9 @@ export const TOOLS = [
     },
     { 
         slug: 'organize-pdf', name: 'Organize PDF', shortDesc: 'Sort and reorder pages visually.', desc: 'Drag to reorder pages, rotate individual pages, and delete unwanted ones.', icon: 'LayoutGrid', category: 'organize', color: '#F05B25', accept: { 'application/pdf': ['.pdf'] }, multiple: false, minFiles: 1, urlInput: false, outputExt: '.pdf', outputMime: 'application/pdf', hasThumbnails: true,
-        seoTitle: 'Organize & Reorder PDF Pages Free | Visual PDF Sorter',
-        seoDesc: 'Drag and drop to sort, reorder, and organize your PDF pages. Free browser-based tool to visually rearrange PDF documents.',
-        seoKeywords: 'organize pdf pages online, reorder pdf pages, sort pdf pages, arrange pdf layout free',
+        seoTitle: 'Reorder PDF Pages Without Uploading | Free Sorter',
+        seoDesc: 'Drag and drop to reorder PDF pages without uploading a single file. Sort, rotate, and organize documents visually, 100% private in your browser.',
+        seoKeywords: 'reorder pdf pages without uploading, organize pdf pages private, sort pdf pages online free, visual pdf page sorter, rearrange pdf without upload',
         seoArticle: 'Organize your PDF files by dragging and dropping pages into the correct order. This visual organizer lets you sort and reorder PDF pages instantly directly in your browser. Since it runs locally, it is 100% private. While organizing, you notice some upside-down pages? Easily <a href="/tool/rotate-pdf">fix page orientation</a>. You can also <a href="/tool/remove-pages">permanently delete pages</a> or <a href="/tool/merge-pdf">combine multiple PDFs</a> to organize them all at once.',
         faqs: [
             { q: 'How do I rearrange pages in a PDF for free?', a: 'Drag the page thumbnails into any order and download the reorganized PDF — free, in your browser, with no upload.' },
@@ -107,9 +107,9 @@ export const TOOLS = [
     // ── CONVERT TO PDF ──────────────────────────────────────────────────────
     { 
         slug: 'jpg-to-pdf', name: 'JPG to PDF', shortDesc: 'Convert images to PDF.', desc: 'Convert JPG and PNG images to PDF with adjustable orientation and margins.', icon: 'Images', category: 'convertTo', color: '#F05B25', accept: { 'image/jpeg': ['.jpg', '.jpeg'], 'image/png': ['.png'] }, multiple: true, minFiles: 1, urlInput: false, outputExt: '.pdf', outputMime: 'application/pdf',
-        seoTitle: 'JPG to PDF Converter Free | Convert JPG & PNG to PDF',
-        seoDesc: 'Combine multiple images into a single PDF document. Free, secure converter for JPG and PNG to PDF running in your browser.',
-        seoKeywords: 'jpg to pdf converter, convert png to pdf, image to pdf online, combine images to pdf free',
+        seoTitle: 'Combine JPG to PDF Without Uploading | Free Tool',
+        seoDesc: 'Combine JPG and PNG images into one PDF without uploading your photos anywhere. Free, fast, and 100% processed locally in your browser.',
+        seoKeywords: 'combine jpg to pdf without uploading, jpg to pdf converter private, merge images into pdf free, png to pdf no upload, photos to pdf secure',
         seoArticle: 'Convert JPG and PNG images to a portable PDF format with ease. Adjust orientation and margins to create a stunning customized PDF album or document from raw images. Because our tool runs locally, your sensitive photos are 100% private. Want to pull images out of a PDF instead? Run our <a href="/tool/pdf-to-jpg">export PDF pages as images tool</a>. If your images result in a huge file, use our <a href="/tool/compress-pdf">file size shrinker</a>, or take pictures using the <a href="/tool/scan-to-pdf">Scan to PDF feature</a>.',
         faqs: [
             { q: 'How do I convert JPG to PDF without losing quality?', a: 'DocShift embeds every image at its original resolution, so your PDF keeps full JPG quality. To shrink the file afterward, run it through <a href="/tool/compress-pdf">Compress PDF</a>.' },
@@ -119,9 +119,9 @@ export const TOOLS = [
     },
     { 
         slug: 'word-to-pdf', name: 'Word to PDF', shortDesc: 'Convert DOCX files to PDF.', desc: 'Make DOC and DOCX files easy to read by converting them to PDF.', icon: 'FileText', category: 'convertTo', color: '#F05B25', accept: { 'application/msword': ['.doc'], 'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ['.docx'] }, multiple: false, minFiles: 1, urlInput: false, outputExt: '.pdf', outputMime: 'application/pdf',
-        seoTitle: 'Convert Word DOCX to PDF Online | Free Private Converter',
-        seoDesc: 'Convert Word documents (DOC, DOCX) to PDF format seamlessly. Free, quick, and secure without sharing your sensitive documents.',
-        seoKeywords: 'word to pdf converter, convert docx to pdf, doc to pdf free online, secure word to pdf',
+        seoTitle: 'Word to PDF Without Uploading | Free DOCX Converter',
+        seoDesc: 'Convert Word DOC and DOCX files to PDF without uploading your document to any server. Free, fast, and processed securely in your browser.',
+        seoKeywords: 'word to pdf without uploading, convert docx to pdf private, doc to pdf secure, free word to pdf converter, protect document privacy pdf',
         seoArticle: 'Make DOC and DOCX files perfectly readable on any device by converting them into PDF formatting. Our converter ensures your documents look exactly the same across different software platforms. If you need to go in the opposite direction later, you can <a href="/tool/pdf-to-word">convert PDF back to Word</a> easily. Once converted to PDF, you can securely <a href="/tool/sign-pdf">add your signature</a> or <a href="/tool/protect-pdf">lock it with a password</a> before sending.',
         faqs: [
             { q: 'How do I convert Word to PDF without losing formatting?', a: 'DocShift renders your DOC or DOCX exactly as written, keeping fonts, spacing and layout intact in the PDF.' },
@@ -131,9 +131,9 @@ export const TOOLS = [
     },
     { 
         slug: 'pptx-to-pdf', name: 'PowerPoint to PDF', shortDesc: 'Convert presentations to PDF.', desc: 'Make PPT and PPTX slideshows easy to view by converting them to PDF.', icon: 'Presentation', category: 'convertTo', color: '#F05B25', accept: { 'application/vnd.ms-powerpoint': ['.ppt'], 'application/vnd.openxmlformats-officedocument.presentationml.presentation': ['.pptx'] }, multiple: false, minFiles: 1, urlInput: false, outputExt: '.pdf', outputMime: 'application/pdf',
-        seoTitle: 'PowerPoint to PDF Converter | Convert PPT & PPTX Free',
-        seoDesc: 'Convert PPT and PPTX slideshows into clean PDF files. Secure browser-conversion ensures your presentations stay private.',
-        seoKeywords: 'powerpoint to pdf, convert pptx to pdf online, ppt to pdf completely free, secure presentation converter',
+        seoTitle: 'PowerPoint to PDF Without Uploading | Free Tool',
+        seoDesc: 'Convert PPT and PPTX slideshows to PDF without uploading your presentation anywhere. Free, secure, and processed entirely in your browser.',
+        seoKeywords: 'powerpoint to pdf without uploading, convert pptx to pdf private, ppt to pdf secure free, protect presentation privacy pdf, slideshow to pdf converter',
         seoArticle: 'Make your PPT and PPTX slideshows incredibly easy to view and share by converting them to PDF format. This prevents formatting issues and ensures anyone can read your presentation without needing Office installed. Check out our reverse tool if you ever need to <a href="/tool/pdf-to-pptx">turn PDFs back to slide decks</a>. You might also want to <a href="/tool/add-watermark">add a watermark</a> to protect your presentation, or <a href="/tool/merge-pdf">combine multiple presentations</a>.',
         faqs: [
             { q: 'How do I convert PowerPoint to PDF for free?', a: 'Drop your PPT or PPTX file and download a PDF that preserves every slide, layout and font — free and without signup.' },
@@ -169,9 +169,9 @@ export const TOOLS = [
     // ── CONVERT FROM PDF ────────────────────────────────────────────────────
     { 
         slug: 'pdf-to-jpg', name: 'PDF to JPG', shortDesc: 'Export PDF pages as images.', desc: 'Convert each PDF page into a JPG image or extract all embedded images.', icon: 'Image', category: 'convertFrom', color: '#F05B25', accept: { 'application/pdf': ['.pdf'] }, multiple: false, minFiles: 1, urlInput: false, outputExt: '.zip', outputMime: 'application/zip',
-        seoTitle: 'Convert PDF to JPG Free | Extract PDF Images Online',
-        seoDesc: 'Export all PDF pages as high-quality JPG images or extract embedded photos. Free and entirely private in your browser.',
-        seoKeywords: 'pdf to jpg converter, convert pdf pages to image, extract images from pdf free, save pdf as pictures',
+        seoTitle: 'PDF to JPG Without Uploading | High Resolution',
+        seoDesc: 'Convert PDF pages to high-resolution JPG images without uploading your file anywhere. Free, fast, and processed securely in your browser.',
+        seoKeywords: 'pdf to jpg without uploading, high resolution pdf to jpg, convert pdf to image private, extract images from pdf free, pdf page to picture',
         seoArticle: 'Convert PDF documents into high-resolution JPG images. You can choose to export every single page as a separate JPG or instruct the tool to extract original embedded images directly. Need to go the other way? <a href="/tool/jpg-to-pdf">Convert standard images into a smooth PDF</a>. If you only want an image of specific areas, you can <a href="/tool/extract-pages">export specific pages</a> first, or even <a href="/tool/html-to-pdf">save raw websites as PDFs</a> before conversion.',
         faqs: [
             { q: 'How do I convert each PDF page to a separate JPG?', a: 'DocShift exports every page as its own high-resolution JPG image and packages them for a single download.' },
@@ -181,9 +181,9 @@ export const TOOLS = [
     },
     { 
         slug: 'pdf-to-word', name: 'PDF to Word', shortDesc: 'Convert PDF to editable DOCX.', desc: 'Easily convert PDF files into editable DOC and DOCX documents.', icon: 'FileOutput', category: 'convertFrom', color: '#F05B25', accept: { 'application/pdf': ['.pdf'] }, multiple: false, minFiles: 1, urlInput: false, outputExt: '.docx', outputMime: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-        seoTitle: 'Convert PDF to Word DOCX | Editable Private Converter',
-        seoDesc: 'Easily convert PDF files into editable DOC and DOCX Word documents. Highly accurate text extraction processed securely.',
-        seoKeywords: 'pdf to word converter online, convert pdf to docx free, editable pdf to word private, extract text to word',
+        seoTitle: 'PDF to Word Without Uploading | Free DOCX Converter',
+        seoDesc: 'Convert PDF to editable Word DOCX without uploading your document to any server. Free, accurate, and processed securely in your browser.',
+        seoKeywords: 'pdf to word without uploading, convert pdf to docx private, editable pdf to word free, secure pdf to word converter, pdf text extraction private',
         seoArticle: 'Easily convert static PDF files into completely editable DOC and DOCX Word documents. Our robust extraction accurately matches formatting, paragraphs, and tables completely within your browser. Once your Word doc is edited, you can quickly <a href="/tool/word-to-pdf">convert it back to PDF securely</a>. Need more direct editing without Word? Try our in-browser <a href="/tool/edit-pdf">PDF annotation tool</a>, or run <a href="/tool/ocr-pdf">OCR for scanned documents</a> before converting to Word.',
         faqs: [
             { q: 'Can I convert PDF to Word for free without signup?', a: 'Yes. DocShift converts PDF to an editable Word (.docx) file for free with no email, account, or watermark.' },
@@ -315,9 +315,9 @@ export const TOOLS = [
     },
     { 
         slug: 'sign-pdf', name: 'Sign PDF', shortDesc: 'Add your signature to a PDF.', desc: 'Draw, type, or upload a signature and place it anywhere on your PDF.', icon: 'Pen', category: 'security', color: '#FF4D4D', accept: { 'application/pdf': ['.pdf'] }, multiple: false, minFiles: 1, urlInput: false, outputExt: '.pdf', outputMime: 'application/pdf', hasThumbnails: true,
-        seoTitle: 'Sign PDF Documents Online | Free eSignature Maker',
-        seoDesc: 'Draw, type, or upload a signature and stamp it securely anywhere on your PDF. Powerful, fast, and completely free signing.',
-        seoKeywords: 'sign pdf document online, draw signature on pdf, add esignature to pdf free, secure electronic sign PDF',
+        seoTitle: 'Sign PDF Without Uploading | Free eSignature Tool',
+        seoDesc: 'Draw, type, or upload a signature and place it on your PDF without uploading the document to any server. Free and 100% private in your browser.',
+        seoKeywords: 'sign pdf without uploading, esignature free private, draw signature on pdf secure, add signature to pdf online, sign document no upload',
         seoArticle: 'Draw, type, or effortlessly upload a signature image and place it smoothly anywhere on your PDF document. Getting legally binding signatures is fundamentally seamless and 100% private since processing stays on your machine. You can easily <a href="/tool/protect-pdf">lock your signed file</a> to prevent modifications, or <a href="/tool/add-watermark">stamp a massive watermark</a> beneath the signature natively. Feel free to <a href="/tool/edit-pdf">type your initials or dates</a> natively.',
         faqs: [
             { q: 'Is an electronic signature on a PDF legally binding?', a: 'In most countries a clear electronic signature is valid for common agreements. For regulated documents, check your local e-signature law.' },

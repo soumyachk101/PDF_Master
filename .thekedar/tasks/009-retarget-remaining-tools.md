@@ -1,6 +1,6 @@
 # Task 009 — Retarget the remaining 9 mis-targeted tools
 
-**Status:** TODO
+**Status:** DONE
 **Depends on:** 008
 **Risk:** low
 **Estimated size:** S

@@ -1,6 +1,6 @@
 # Change record — Task 008: Retarget the 8 highest-ROI tools
 
-**Date:** 2026-07-26 · **Commit:** `<pending>` · **Fix loops used:** 0/3
+**Date:** 2026-07-26 · **Commit:** `e97a97d` · **Fix loops used:** 0/3
 
 ## What changed
 

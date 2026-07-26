@@ -201,20 +201,21 @@ Current goal: take SEO from "good on-page" to top-notch — per-tool keyword tar
 
 ## Current phase
 
-Phase 2 — Keyword realignment & schema · **review** (all 3 tasks committed, reviewed clean; paused for user checkpoint per agreed cadence)
+Phase 3 — Content depth · **done** (all 6 clusters landed; see the FOUNDATIONAL section above for the
+site-wide false-claim investigation that dominated this phase's actual work)
 
 ## Phases
 
 <!-- Phase N — name · tasks NNN–NNN · planned | building | done -->
 - Phase 0 — Audit & plan · no task files · **done** (6 specialist audits → `.thekedar/AUDIT_FINDINGS.md`, 23 tasks planned)
 - Phase 1 — Technical correctness · tasks 001–007 · **done**
-- Phase 2 — Keyword realignment & schema · tasks 008–010 · **done, pending user checkpoint**
-- Phase 3 — Content depth · tasks 011–017 · planned
-- Phase 4 — Hubs, comparison, link assets · tasks 018–023 · planned
+- Phase 2 — Keyword realignment & schema · tasks 008–010 · **done**
+- Phase 3 — Content depth · tasks 011–017 · **done** (27 of 30 tools; 3 paused — see FOUNDATIONAL)
+- Phase 4 — Hubs, comparison, link assets · tasks 018–023 · planned, next up
 
 ## Active task
 
-none — Phase 2 closed, waiting on user go-ahead for Phase 3
+none — Phase 3 closed, waiting on user go-ahead for Phase 4
 
 ## Done
 
@@ -229,10 +230,16 @@ none — Phase 2 closed, waiting on user go-ahead for Phase 3
 - 008 — Retarget 8 high-ROI tools · `e97a97d`
 - 009 — Retarget remaining 9 mis-targeted tools · `3902376`
 - 010 — `@id`-linked schema entity graph · `415810e`
+- 011 — Tool content scaffolding · `055a161`
+- **fix** — redact-pdf broken backend + false claims · `2b8c4f3`
+- **fix** — organize-pdf/edit-pdf broken backend + false claims · `7ba9fc2`
+- **fix** — site-wide false privacy claim, batch 1 (UI/meta/legal) · `723100d`
+- **fix** — site-wide false privacy claim, batch 2 (dropzone/OG/robots/llms.txt) · `cee542d`
+- 012–017 (content depth, 27/30 tools) + **fix** batch 3 (final sweep) · `96cab93`
 
 ## Up next
 
-- 011 — Tool content scaffolding (per-tool `steps` + `updated` fields, word-count script) — Phase 3
+- 018 — `/convert-pdf` cluster hub — Phase 4
 
 ## Decisions log (append-only)
 
@@ -269,6 +276,24 @@ none — Phase 2 closed, waiting on user go-ahead for Phase 3
   it rather than re-inlining.
 - Adversarial review of the full Phase 2 diff (`git diff 8cbf37b..415810e`) ran clean — confirmed the
   reviewer actually executed the diff (cited real line numbers/quotes) rather than rubber-stamping.
+
+## Phase 3 notes
+
+- **This phase's actual work turned out to be much bigger than its original scope.** What started as
+  "add content depth to 30 tools" surfaced the FOUNDATIONAL false-privacy-claim finding above (the
+  site's core "100% browser-based" promise is false) plus 2 more broken-placeholder tools
+  (`remove-pages`/`extract-pages` lack a page-picker UI). Both are documented in full above rather than
+  repeated here.
+- 27 of 30 tools now carry ≥400 words of unique, verified copy (15,409 total words, up from 4,350 at the
+  start of this phase). The 3 exceptions (`organize-pdf`, `edit-pdf`, `redact-pdf`) are deliberately
+  paused pending their backend fixes, not an oversight.
+- Every `seoTitle`/`seoDesc`/`seoKeywords` field this phase touched had its "without uploading"/"in your
+  browser" framing (from tasks 008/009) replaced with the verified "deleted from our server right after
+  processing" narrative. This was necessary work, not scope creep — the old framing is what task
+  008/009 built the site's entire keyword strategy around, and it turned out to be false.
+- `pdf-to-excel` declares `outputExt: '.xlsx'` but the real server response is CSV — a functional-field
+  inconsistency, not a content one. Doesn't break the actual download (the frontend trusts real response
+  headers over this config value), so left as a minor follow-up rather than expanded into this phase.
 
 ## Needs a human — cannot be verified in this environment
 

@@ -1,6 +1,6 @@
 # Task 014 — Content depth: Convert-to-PDF cluster (5 tools)
 
-**Status:** TODO
+**Status:** DONE (see notes)
 **Depends on:** 009, 011
 **Risk:** low
 **Estimated size:** M
@@ -57,3 +57,20 @@ Per-tool angles:
 These 5 plus the 5 in task 015 are the 10 conversion tools the audit found with only one inbound
 internal link each. The `/convert-pdf` hub (task 018) fixes the link structure; this task fixes the
 pages it will link to. Order matters — write the content before building the hub around it.
+
+## Execution note (added post-hoc, honest record of what actually happened)
+
+This task's content was drafted by a multi-agent Workflow (6 clusters in parallel), not applied
+task-by-task in the usual one-commit-per-task pattern. Some drafting agents wrote directly to
+`tools.js` during the workflow run rather than returning JSON for the orchestrator to apply — an
+instruction gap, not intended. The orchestrator discovered this, verified no corruption resulted, then:
+(1) applied whichever clusters had NOT been auto-written, (2) corrected locked `seoTitle`/`seoDesc`/
+`seoKeywords` fields left stale by the ones that had, and (3) folded in adversarial-verify findings
+before finalizing. One tool in this cluster may be excluded if it was found to be a broken backend
+placeholder mid-investigation (see `.thekedar/PROJECT_STATE.md`'s FOUNDATIONAL/CRITICAL sections).
+
+Full record: `.thekedar/changes/fix-site-wide-false-privacy-claim-batch1.md`, `batch2.md`, and
+`batch3-and-phase3-content.md`. No separate per-task changelog was written for this task number
+specifically — the batch changelogs are the authoritative record, organized by what changed rather than
+by original task number, since the two didn't stay 1:1 once the site-wide false-claim investigation
+took over the same work session.

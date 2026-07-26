@@ -1,6 +1,6 @@
 # Change record — Batch 3 (final false-claim sweep) + Phase 3 content applied
 
-**Date:** 2026-07-27 · **Commit:** `<pending>` · **Priority fix batch 3, plus tasks 012/013 content-depth, plus corrections to 014-017**
+**Date:** 2026-07-27 · **Commit:** `96cab93` · **Priority fix batch 3, plus tasks 012/013 content-depth, plus corrections to 014-017**
 
 ## What happened — an unexpected discovery mid-batch
 

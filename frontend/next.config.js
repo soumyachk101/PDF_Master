@@ -38,6 +38,23 @@ const nextConfig = {
           { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
         ],
       },
+      {
+        // Unhashed public/ images. Safe to freeze only because nothing references
+        // them by a versioned URL — replacing one means giving it a new filename.
+        // Deliberately excludes sw.js and offline.html: a long-cached service
+        // worker pins users to a stale build.
+        source: '/:file(favicon\\.svg|logo\\.png|logo\\.webp|hero_graphic\\.png|hero_graphic\\.webp)',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+        ],
+      },
+      {
+        // Can legitimately change; a year is too long.
+        source: '/manifest.json',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=86400' },
+        ],
+      },
     ];
   },
   async rewrites() {

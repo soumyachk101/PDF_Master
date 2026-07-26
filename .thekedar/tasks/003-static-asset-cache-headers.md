@@ -1,6 +1,6 @@
 # Task 003 — Long-cache static `public/` assets
 
-**Status:** TODO
+**Status:** DONE
 **Depends on:** none
 **Risk:** low
 **Estimated size:** S

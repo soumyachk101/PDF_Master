@@ -1,6 +1,6 @@
 # Change record — Task 002: Signature fonts via next/font
 
-**Date:** 2026-07-26 · **Commit:** `<pending>` · **Fix loops used:** 0/3
+**Date:** 2026-07-26 · **Commit:** `9b820ad` · **Fix loops used:** 0/3
 
 ## What changed
 

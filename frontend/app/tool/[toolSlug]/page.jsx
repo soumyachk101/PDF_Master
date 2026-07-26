@@ -67,9 +67,9 @@ export default async function ToolRoute({ params }) {
       offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
       author: { '@id': ORG_ID },
       featureList: [
-        '100% private - files processed in browser',
-        'No uploads or server storage',
-        'Free forever with no limits',
+        'Files deleted from our server right after processing',
+        'No signup or account required',
+        'Free forever, no premium tiers',
         'Works on any device',
       ],
     });

@@ -150,6 +150,31 @@ translates it through the free MyMemory API (`api.mymemory.translated.net`), and
 as text extraction + translation, output is a plain translated text file. Every "preserves layout/fonts",
 "formatting perfectly intact", and "AI-powered" claim dropped.
 
+### A fourth and fifth gap, found by the Phase 3 drafting agent's own investigation (not the adversarial verify pass)
+
+While drafting the organize cluster, the agent discovered — and documented in its own notes, read in full
+before this entry was written — that **`remove-pages` and `extract-pages` have no page-picker UI at all**,
+despite both being configured with `hasThumbnails: true`:
+
+- `frontend/src/views/ToolPage.jsx`'s `handleSubmit` (the `additionalData` block, ~lines 105-166) sets a
+  `pages`/`ranges` value for `split-pdf`, `rotate-pdf`, `add-watermark`, and several others — but has
+  **no `tool.slug === 'remove-pages'` or `'extract-pages'` branch at all**. Confirmed independently by
+  this session, not just trusted from the agent's report.
+- `remove-pages` therefore always submits with no `pages` param. `pdf.service.js:950-960` returns the
+  file with nothing removed — a **silent no-op**, not an error.
+- `extract-pages` always submits with no `ranges` param. `pdf.service.js:122` defaults to
+  `indicesToCopy = [0]` — it **always extracts only page 1**, regardless of what a user might expect to
+  select.
+
+This is milder than the redact/organize/edit situation (no active wrong-direction damage, and the fix is
+plausibly small — wiring up an input control similar to `split-pdf`'s existing ranges field — rather than
+requiring new backend logic), so it was not raised as its own blocking question. The content applied for
+both tools during this session's tools.js sweep deliberately uses soft, mechanism-agnostic phrasing
+("tell DocShift which page numbers...") rather than the old, specific, now-disproven "tick the
+thumbnails" claim — so nothing false is asserted — but neither page's copy currently warns that the
+picker doesn't exist yet. **Flagging for the same fix-it-when-ready treatment as the other three**, at
+the user's discretion on timing.
+
 ### Summary of every tool affected by this investigation
 
 | Tool | Status | Task | Treatment |
@@ -158,6 +183,8 @@ as text extraction + translation, output is a plain translated text file. Every 
 | `organize-pdf` | Broken (wrong action, not just incomplete) | 012 | Skipped; false copy corrected |
 | `edit-pdf` | Broken (does something unrelated) | 016 | Skipped; false copy corrected |
 | `translate-pdf` | Works, badly mis-described | 013 | Proceeds with honest copy |
+| `remove-pages` | No page-picker UI — silent no-op | 012 | Content applied with neutral phrasing; flagged for a UI fix |
+| `extract-pages` | No page-picker UI — always extracts page 1 only | 012 | Content applied with neutral phrasing; flagged for a UI fix |
 
 **Root-cause pattern for the three broken tools:** all three follow the identical
 `// MVP: Use X as placeholder` alias comment in `pdf.routes.js`, suggesting an unfinished MVP build where

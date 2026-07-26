@@ -979,7 +979,7 @@ export default function ToolPage({ toolSlug }) {
                                         <span className="font-bold">{tool.name.toUpperCase()}</span>
                                     </div>
                                     <span className="font-suisseintlmono text-[10px] text-[#444444] hidden sm:inline tracking-wider">
-                                        WASM ENGINE DIRECT
+                                        SECURE PROCESSING
                                     </span>
                                 </div>
                             </div>

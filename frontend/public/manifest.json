@@ -1,7 +1,7 @@
 {
   "name": "DocShift - Free PDF Tools",
   "short_name": "DocShift",
-  "description": "30+ free PDF tools that work entirely in your browser. Merge, compress, convert PDFs with 100% privacy. No uploads required.",
+  "description": "30+ free PDF tools online. Merge, compress, convert PDFs — files are deleted from our server right after processing.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",

@@ -1,6 +1,6 @@
 # Change record — Site-wide false privacy claim fix, batch 2: dropzone, OG card, robots.ts, llms.txt
 
-**Date:** 2026-07-27 · **Commit:** `<pending>` · **Priority fix, continuation of batch 1**
+**Date:** 2026-07-27 · **Commit:** `cee542d` · **Priority fix, continuation of batch 1**
 
 ## What changed
 

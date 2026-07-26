@@ -26,8 +26,8 @@ export default function ToolSEOContent({ toolSlug }) {
                         <>
                             <li>Open the <strong>{tool.name}</strong> tool above and add your file{tool.multiple ? 's' : ''} — drag &amp; drop or click to browse.</li>
                             <li>Adjust the available options (page order, ranges, or settings) to fit what you need.</li>
-                            <li>Click <strong>Process {tool.name}</strong>. Everything runs locally in your browser — no upload.</li>
-                            <li>Download your finished file instantly. Your original never leaves your device.</li>
+                            <li>Click <strong>Process {tool.name}</strong> to run the conversion.</li>
+                            <li>Download your finished file. Your upload is deleted from our server right after processing.</li>
                         </>
                     )}
                 </ol>
@@ -51,7 +51,7 @@ export default function ToolSEOContent({ toolSlug }) {
                     Why use DocShift?
                 </h2>
                 <p className="text-xs sm:text-sm text-[#444444] leading-relaxed mb-10">
-                    DocShift processes every file locally in your browser — nothing is stored or transmitted. There&apos;s nothing to install and no sign-up: your document is ready in seconds and never leaves your device.
+                    DocShift deletes your file from our server the moment processing finishes — nothing is stored, logged, or shared. There&apos;s nothing to install and no sign-up: your document is ready in seconds.
                 </p>
 
                 {/* FAQ Section */}

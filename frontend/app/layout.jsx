@@ -54,7 +54,6 @@ export const metadata = {
     url: 'https://www.docshift.tech/',
     title: 'Free PDF Tools Online – Merge, Compress, Convert | DocShift',
     description: 'Free online PDF tools that work entirely in your browser. Merge, compress, convert PDF to Word, split and edit PDFs instantly. No uploads, 100% private.',
-    images: [{ url: 'https://www.docshift.tech/logo.png', width: 1200, height: 630, alt: 'DocShift - Free PDF Tools' }],
     siteName: 'DocShift',
     locale: 'en_US',
   },
@@ -62,7 +61,6 @@ export const metadata = {
     card: 'summary_large_image',
     title: 'Free PDF Tools Online – Merge, Compress, Convert | DocShift',
     description: 'Free online PDF tools that work entirely in your browser. Merge, compress, convert PDF to Word, split and edit PDFs instantly. No uploads, 100% private.',
-    images: ['https://www.docshift.tech/logo.png'],
     site: '@soumyachk1',
   },
   icons: {

@@ -17,13 +17,11 @@ export const metadata = {
     url: 'https://www.docshift.tech/',
     title: 'Free PDF Tools Online – Merge, Split, Compress & Convert PDF | DocShift',
     description: 'Access 30+ PDF tools in your browser. Merge, compress, and convert PDFs securely without uploading files to any server. 100% private and free.',
-    images: [{ url: '/logo.png', width: 1200, height: 630, alt: 'DocShift – Free PDF Tools' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Free PDF Tools Online – Merge, Split, Compress & Convert PDF | DocShift',
     description: 'Access 30+ PDF tools in your browser. Merge, compress, and convert PDFs securely without uploading files to any server. 100% private and free.',
-    images: ['/logo.png'],
   },
 };
 

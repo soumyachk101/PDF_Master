@@ -1,6 +1,6 @@
 # Task 004 — Real 1200×630 OG images via Next file convention
 
-**Status:** TODO
+**Status:** DONE
 **Depends on:** 001
 **Risk:** medium
 **Estimated size:** M
@@ -44,6 +44,14 @@ are currently unreachable for it.
 - [ ] Built `/` HTML contains `og:image:width` `1200` and `og:image:height` `630`, and its `og:image` URL does **not** contain `/api/og` or `logo.png`
 - [ ] Built `/tool/merge-pdf` HTML contains an `og:image` URL that does not start with `/api/`, and fetching that URL on a running build returns `200` with `content-type: image/png`
 - [ ] `grep -rn "api/og" frontend/app frontend/src` returns no results
+
+## Scope addition
+
+- `frontend/src/utils/ogTemplate.tsx` (new) — the card artwork (palette, wordmark, 6-colour bar) is
+  needed by `app/opengraph-image.tsx`, `app/tool/[toolSlug]/opengraph-image.tsx` and, next task, by
+  `app/apple-icon.tsx`. Task 005 explicitly requires the apple icon to "match the wordmark and palette
+  used by the OG image from task 004", which is only enforceable if there is one copy. Duplicating ~60
+  lines of JSX three times would guarantee drift. Not in Expected files, declared here before writing.
 
 ## Notes
 

@@ -1,6 +1,6 @@
 # Change record — Task 003: Long-cache static `public/` assets
 
-**Date:** 2026-07-26 · **Commit:** `832904c` · **Fix loops used:** 0/3
+**Date:** 2026-07-26 · **Commit:** `c0d518a` · **Fix loops used:** 0/3
 
 ## What changed
 

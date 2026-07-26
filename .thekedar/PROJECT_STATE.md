@@ -4,6 +4,79 @@
 > Contract: a fresh session must be able to resume correctly from this file alone.
 > Updated by the orchestrator after every task. Keep it terse.
 
+## 🔴🔴🔴 FOUNDATIONAL — the site's entire "100% browser-based, private, no upload" claim is false (found 2026-07-26, during Phase 3 content-drafting verification)
+
+**This is bigger than any other finding in this document. It is not a per-tool bug — it is the core brand
+promise of the whole product, and it is false, in production, right now, on every page.**
+
+### The claim, and where it lives
+
+"Free browser-based PDF tools... No uploads, 100% private... processes locally on your device... never
+sent over the internet" is asserted, in some form, in: the homepage hero and `layout.jsx`'s meta
+description, virtually every one of the 30 tools' `shortDesc`/`desc` fields, `ToolPage.jsx`'s **persistent
+UI sidebar shown on every single tool page** ("100% In-Browser Secure... runs strictly locally via
+client-side WebAssembly. No files are ever sent to external cloud servers, preventing data leaks" —
+`ToolPage.jsx:992-998`), the About page ("without uploading a single byte to any server... runs entirely
+in your browser using JavaScript and WebAssembly... When you close the tab, your data is gone"),
+`ToolSEOContent.jsx`'s "Why use DocShift?" paragraph (written by this session, task 011), `robots.ts`'s
+CCBot-unblock comment (written by this session, task 006 — "user files never leave the browser"), the
+`Organization`/`WebSite` schema `description` fields (written by this session, task 010), and 17 of the 30
+tools' `seoTitle`/`seoDesc` (retargeted around "without uploading" by this session, tasks 008/009).
+
+### The reality, verified independently by three separate Phase-3 adversarial-verify agents, then confirmed
+### a fourth time by direct inspection of primary sources before writing this entry
+
+- `frontend/src/hooks/useFileUpload.js:63` — every tool submission is
+  `axios.post(\`/api/pdf/${toolSlug}\`, formData, axiosConfig)`, a real HTTP POST carrying the actual
+  file (`formData.append('files', file)`, line 38).
+- `frontend/next.config.js:61` — `const backendUrl = process.env.BACKEND_URL ||
+  'https://pdf-master-backend-sxvj.onrender.com';` — proxies `/api/*` to a real external server.
+- `frontend/src/hooks/useFileUpload.js:8-9,57-58` — comments: "Wake the backend (free-tier host spins
+  down when idle)" and "the free-tier backend 502s while it cold-boots (~30-60s), so spaced retries
+  usually succeed." **This is a Render.com free-tier Node server that sleeps and cold-boots** — about as
+  far from "client-side WASM, never leaves your device" as a web architecture can be.
+- `backend/src/services/pdf.service.js` — every operation (`mergePdf`, `compressPdf`, `pdfToWord`,
+  `pdfToPdfa`, `signPdf`, `ocrPdf`, etc.) is plain server-side Node using `fs`, Ghostscript (`gs`), `qpdf`,
+  `libreoffice-convert`, a Python `pdf2docx` subprocess, and Tesseract.js — none of it runs in a browser,
+  none of it is WASM.
+- `grep -rln "wasm\|WebAssembly" frontend/src frontend/app` — the string "WebAssembly" appears only as
+  **marketing copy** in `HomePage.jsx`, `ToolPage.jsx`, and `about/page.jsx`. There is no actual
+  WebAssembly module, build step, or client-side processing path anywhere in the codebase.
+- `sign-pdf`'s live UI (`ToolPage.jsx:706-736`, rendered the moment a user types a signature) goes
+  further and fabricates a specific security mechanism: *"COMPLIANT ELECTRONIC SEAL... VERIFIED... This
+  signature is generated and stamped client-side using local cryptography. The document is protected
+  against unauthorized layout manipulation."* None of that is true either — same server round-trip, same
+  `pdf-lib` text stamp, no cryptography, no tamper-evidence of any kind.
+
+### Why this matters more than the three broken-placeholder tools
+
+Those were "this specific advertised feature doesn't do what it says." This is "the site tells every user,
+on every page, that their file never leaves their device — while uploading it to a cold-starting free-tier
+server running conventional Node/Ghostscript/LibreOffice/Python processes." Users are told this while
+being asked to process tax paperwork, signed contracts, financial spreadsheets (this session's own
+`excel-to-pdf` retarget explicitly leaned into "financial data never leaves your device," task 008),
+redaction targets, and legal documents. This is a materially false safety/privacy representation, not a
+feature gap.
+
+### What this means for this session's own work
+
+Tasks 006, 008, 009, 010, and 011 — all already committed — each reinforced or built directly on top of
+this false premise, in good faith, because it was the codebase's own stated architecture (in the UI,
+the About page, and the pre-existing SEO copy this session was asked to optimize, not to architecturally
+audit). The Phase 3 content-drafting workflow that just completed (27 tools, 6 clusters) was explicitly
+instructed to use "without uploading"/"runs in your browser" as a core differentiator in several clusters,
+following the same premise — **none of that content has been applied to `tools.js` yet.** It is sitting
+in the workflow's output file, unapplied, pending this decision.
+
+### Status: STOPPED. Awaiting user direction before any further Phase 3/4 work.
+
+This is not a call to make unilaterally. Options that need the user's input: (a) is there in fact a
+genuine client-side/WASM processing path for at least some tools that this investigation missed and the
+user can point to, (b) if the architecture is genuinely server-side as verified, how should the site's
+entire privacy narrative be corrected — a scope far larger than an SEO content task, (c) whether to apply
+any of the already-drafted Phase 3 content as-is (much of it doesn't repeat the false claim directly, but
+ships on pages whose surrounding UI does), with revisions, or not at all pending the larger fix.
+
 ## 🔴 CRITICAL — blocking product bug (found 2026-07-26, during task 017 investigation)
 
 **`redact-pdf` cannot succeed. Ever.** Confirmed by reading the full request path, not assumed:

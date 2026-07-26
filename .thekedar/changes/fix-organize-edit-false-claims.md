@@ -1,6 +1,6 @@
 # Change record — Standalone fix: organize-pdf and edit-pdf false claims
 
-**Date:** 2026-07-26 · **Commit:** `<pending>` · **Not part of task 012, 016, or any Phase 3 task**
+**Date:** 2026-07-26 · **Commit:** `7ba9fc2` · **Not part of task 012, 016, or any Phase 3 task**
 
 ## What happened
 

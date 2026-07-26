@@ -245,7 +245,8 @@ fixed tools, and the two locally-unverifiable-without-a-browser interaction chec
 - **fix** — site-wide false privacy claim, batch 2 (dropzone/OG/robots/llms.txt) · `cee542d`
 - 012–017 (content depth, 27/30 tools) + **fix** batch 3 (final sweep) · `96cab93`
 - 018–023 (hubs, comparison pages, llms-full.txt, About E-E-A-T) · `33df6ce`
-- 024–031 (real fixes: remove/extract-pages, organize-pdf, redact-pdf, edit-pdf) · see Phase 5 notes for commit hash
+- 024–031 (real fixes: remove/extract-pages, organize-pdf, redact-pdf, edit-pdf) · `5732f3c`
+  (pushed: `origin` a3f47e0..5732f3c, `PDF_Master_Frontend` main→b5080ef, `PDF_Master_Backend` main→31de4c4)
 
 ## Up next
 

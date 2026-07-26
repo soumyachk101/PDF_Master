@@ -1,6 +1,6 @@
 # Change record — Task 007: Stop the intro splash from eating first-paint
 
-**Date:** 2026-07-26 · **Commit:** `<pending>` · **Fix loops used:** 0/3
+**Date:** 2026-07-26 · **Commit:** `8cbf37b` · **Fix loops used:** 0/3
 
 ## What changed
 

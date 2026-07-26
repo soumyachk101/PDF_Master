@@ -1,6 +1,6 @@
 # Change record — Task 011: Content scaffolding
 
-**Date:** 2026-07-26 · **Commit:** `<pending>` · **Fix loops used:** 0/3
+**Date:** 2026-07-26 · **Commit:** `055a161` · **Fix loops used:** 0/3
 
 ## What changed
 

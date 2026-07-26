@@ -333,14 +333,15 @@ export const TOOLS = [
         ]
     },
     {
-        slug: 'redact-pdf', name: 'Redact PDF', shortDesc: 'Permanently hide sensitive info.', desc: 'Permanently blackout text and graphics so sensitive information cannot be recovered from your PDF.', icon: 'EyeOff', category: 'security', color: '#FF4D4D', accept: { 'application/pdf': ['.pdf'] }, multiple: false, minFiles: 1, urlInput: false, outputExt: '.pdf', outputMime: 'application/pdf', hasThumbnails: true,
-        seoTitle: 'Redact PDF Permanently | Not Just a Black Box',
-        seoDesc: 'Permanently redact PDF text and images — not just a black box overlay. The underlying data is stripped for good, processed securely in your browser.',
-        seoKeywords: 'redact pdf permanently, not just a black box pdf, truly remove text from pdf, permanent pdf redaction, secure redaction tool',
-        seoArticle: 'Permanently redact localized text and graphics to confidently eradicate extremely sensitive information from your PDF file. Unlike simply drawing a black rectangle (which leaves the underlying text intact and recoverable), our engine irrevocably strips the underlying glyph data, metadata, and text-layer references — so redacted content is gone for good, even if someone opens the file in a forensic tool. This is the only safe redaction method for PII, financials, and legal discovery. Ensure to <a href="/tool/protect-pdf">add an encryption password</a> for a secondary layer of security lock, or <a href="/tool/remove-pages">completely remove specific sensitive pages</a>. You can also <a href="/tool/compare-pdf">compare the redacted file visually</a> against the unredacted original.',
+        slug: 'redact-pdf', name: 'Redact PDF', shortDesc: 'Blackout sensitive info on a page.', desc: 'Blackout text and graphics to visually mark sensitive areas of your PDF before sharing it.', icon: 'EyeOff', category: 'security', color: '#FF4D4D', accept: { 'application/pdf': ['.pdf'] }, multiple: false, minFiles: 1, urlInput: false, outputExt: '.pdf', outputMime: 'application/pdf', hasThumbnails: true,
+        seoTitle: 'Redact PDF Information | Blackout Sensitive Text',
+        seoDesc: 'Mark sensitive text and graphics on a PDF page so they are blacked out before you share it. Processed in your browser — files are never uploaded to a server.',
+        seoKeywords: 'redact pdf online, blackout pdf text, hide sensitive info in pdf, mark pdf for redaction, private pdf redaction tool',
+        seoArticle: 'Mark sensitive text and graphics on a PDF page so they are blacked out before you share the file. Since redaction behavior varies between tools, always verify the result yourself before sending a document outside your organization — especially for PII, financials, or legal discovery. If you need a stronger guarantee, <a href="/tool/remove-pages">removing the entire page</a> is more certain than marking a region within it, and you can <a href="/tool/protect-pdf">add an encryption password</a> as an additional access barrier. You can also <a href="/tool/compare-pdf">compare the redacted file visually</a> against the original.',
+        updated: '2026-07-26',
         faqs: [
-            { q: 'Is your redaction truly permanent?', a: 'Yes. We replace the underlying text objects with black rectangles and remove them from the content stream. Copy-paste, search, and PDF text extraction will return nothing.' },
-            { q: 'Can I redact only specific words, not whole regions?', a: 'Yes — use the text-select mode to choose individual words or phrases; the rest of the page stays intact.' }
+            { q: 'Is redaction on DocShift permanent?', a: 'Always verify the result yourself before relying on redaction for a sensitive document — different tools handle the underlying content differently. For a more certain guarantee, consider <a href="/tool/remove-pages">removing the whole page</a> instead of marking a region within it.' },
+            { q: 'What is the difference between redacting and password-protecting a PDF?', a: '<a href="/tool/protect-pdf">Password protection</a> restricts who can open a file but does not change its content. Redaction is about visually marking sensitive content on the page itself.' }
         ]
     },
     {

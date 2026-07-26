@@ -4,6 +4,44 @@
 > Contract: a fresh session must be able to resume correctly from this file alone.
 > Updated by the orchestrator after every task. Keep it terse.
 
+## 🔴 CRITICAL — blocking product bug (found 2026-07-26, during task 017 investigation)
+
+**`redact-pdf` cannot succeed. Ever.** Confirmed by reading the full request path, not assumed:
+
+1. `backend/src/routes/pdf.routes.js:64` — `router.post('/redact-pdf', upload.single('files'),
+   pdfController.protectPdf); // MVP: Use protect as placeholder`. The redact endpoint is a literal alias
+   to `protectPdf` — there is no redaction implementation anywhere in the backend (`grep redact
+   backend/src/services/pdf.service.js` returns zero matches).
+2. `backend/src/controllers/pdf.controller.js:236-237` — `protectPdf` requires `req.body.password`;
+   without it, returns **HTTP 400** immediately.
+3. `frontend/src/views/ToolPage.jsx` — zero special-case handling for `tool.slug === 'redact-pdf'`
+   anywhere (`grep -n "redact-pdf" src/views/ToolPage.jsx` = no matches). No password field, no
+   text-selection UI. `additionalData.password` is set only for `protect-pdf` (line 151).
+
+**Net effect: every real use of "Redact PDF" 400s.** Not silently wrong — actively broken, always.
+
+**Also discovered:** `node-signpdf` and `node-forge` are installed (`backend/package.json`) but never
+invoked anywhere in the codebase (`grep -rn "node-signpdf\|require('forge')" backend/src/` = zero
+matches). `sign-pdf`'s real implementation (`pdf.service.js:595`) draws the typed/drawn signature text and
+a cosmetic "Digitally signed · &lt;date&gt;" label onto the page via `pdf-lib` — a visual stamp, not a
+PKI/certificate signature. Relevant to task 017's content, not a bug — sign-pdf's copy must not claim
+eIDAS/ESIGN/PAdES/X.509 compliance.
+
+**Also discovered:** the pre-existing (pre-session) `pdf-to-pdfa` FAQ claims "We target PDF/A-2b." The
+actual implementation (`pdf.service.js:930`) is a bare Ghostscript call — `gs -dPDFA -dBATCH -dNOPAUSE
+-sProcessColorModel=DeviceRGB -sDEVICE=pdfwrite -sPDFACompatibilityPolicy=1` — with no explicit level flag
+and no post-conversion validation step. This does not verifiably back a "PDF/A-2b" claim. Task 015 must
+not carry this claim forward; describe the archival conversion functionally instead.
+
+**Decision (user, 2026-07-26):** Pause `redact-pdf` content work. Task 017 ships the other 3 security
+tools (`unlock-pdf`, `protect-pdf`, `sign-pdf`) and explicitly skips `redact-pdf`. The actual backend fix
+is separate engineering work, the user's call on timing. **Also corrected as a standalone fix** (not
+part of task 008 or 017): `redact-pdf`'s already-shipped title/desc/keywords/article/faqs made explicit
+false permanence claims ("gone for good, even in forensic tools", a fabricated "text-select mode" UI that
+does not exist) — these were live before this session started, and task 008 (commit `e97a97d`)
+unknowingly strengthened them further. Softened to honest, hedged language that asserts nothing
+unverifiable. See the dedicated commit for this fix, separate from task 008's and 017's changelogs.
+
 ## Project overview
 
 DocShift — 30 free browser-based PDF tools (files never leave the browser). Next.js 15.3 App Router in `frontend/`, Express backend in `backend/`, live at https://www.docshift.tech (canonical host = www).

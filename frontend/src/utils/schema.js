@@ -16,7 +16,7 @@ export const organizationNode = {
     name: 'DocShift',
     url: 'https://www.docshift.tech',
     logo: 'https://www.docshift.tech/logo.png',
-    description: 'Free browser-based PDF tools. Merge, compress, convert and edit PDFs with 100% privacy.',
+    description: 'Free online PDF tools. Merge, compress, convert and edit PDFs, deleted from our server right after processing.',
     foundingDate: '2024',
     founder: {
         '@type': 'Person',
@@ -43,7 +43,7 @@ export const webSiteNode = {
     name: 'DocShift',
     alternateName: 'DocShift PDF Tools',
     url: 'https://www.docshift.tech',
-    description: 'Free browser-based PDF tools. Merge, compress, convert and edit PDFs with 100% privacy.',
+    description: 'Free online PDF tools. Merge, compress, convert and edit PDFs, deleted from our server right after processing.',
     inLanguage: 'en',
     publisher: { '@id': ORG_ID },
 };

@@ -710,9 +710,9 @@ export default function ToolPage({ toolSlug }) {
                                                                 </div>
                                                                 
                                                                 <span className="font-suisseintlmono text-[8px] font-bold text-[#000000]/60 uppercase tracking-widest block">
-                                                                    COMPLIANT ELECTRONIC SEAL
+                                                                    SIGNATURE PREVIEW
                                                                 </span>
-                                                                
+
                                                                 <div className="flex justify-between items-end border-b border-[#000000]/10 pb-2 mb-1.5">
                                                                     <div>
                                                                         <span className="text-[18px] font-medium leading-none block" style={{
@@ -721,17 +721,17 @@ export default function ToolPage({ toolSlug }) {
                                                                             {signText}
                                                                         </span>
                                                                         <span className="text-[9px] font-suisseintlmono text-[#444444] mt-1 block">
-                                                                            DocID: SECURE-WASM-{(selectedFiles[0]?.name || 'DOC').replace(/[^a-zA-Z0-9]/g, '').substring(0, 6).toUpperCase()}
+                                                                            DocID: SIGNED-{(selectedFiles[0]?.name || 'DOC').replace(/[^a-zA-Z0-9]/g, '').substring(0, 6).toUpperCase()}
                                                                         </span>
                                                                     </div>
                                                                     <div className="bg-[#d1ffca] border border-[#000000] text-[9px] font-bold px-2 py-0.5 uppercase tracking-wide flex items-center gap-1 font-suisseintlmono h-fit">
                                                                         <span className="w-1.5 h-1.5 rounded-full bg-[#000000]" />
-                                                                        VERIFIED
+                                                                        ADDED
                                                                     </div>
                                                                 </div>
-                                                                
+
                                                                 <span className="text-[9px] text-[#444444] font-suisseintl leading-normal">
-                                                                    This signature is generated and stamped client-side using local cryptography. The document is protected against unauthorized layout manipulation.
+                                                                    This places a typed or drawn signature image onto your document — not a certificate-based digital signature. For documents that need legal certainty, use a dedicated e-signature service instead.
                                                                 </span>
                                                             </div>
                                                         </div>
@@ -991,10 +991,10 @@ export default function ToolPage({ toolSlug }) {
                         {/* Security Notice Callout (Action Green accent background) */}
                         <div className="bg-[#d1ffca] border border-[#000000] p-6 rounded-[32px] text-left">
                             <h2 className="font-suisseintl font-bold text-xs uppercase tracking-wider text-[#000000] mb-3 flex items-center gap-2">
-                                <ShieldCheck size={16} /> 100% In-Browser Secure
+                                <ShieldCheck size={16} /> Processed & Deleted Securely
                             </h2>
                             <p className="font-suisseintl text-xs text-[#000000] leading-relaxed">
-                                Document conversion and adjustments run strictly locally via client-side WebAssembly. No files are ever sent to external cloud servers, preventing data leaks.
+                                Your file is uploaded securely to run this tool, then deleted from our server immediately after processing — never stored, logged, or shared.
                             </p>
                         </div>
 
@@ -1006,8 +1006,8 @@ export default function ToolPage({ toolSlug }) {
                             <div className="font-suisseintl text-xs text-[#444444] space-y-2.5 leading-relaxed">
                                 <p>1. Drag-and-drop or select your file in the workspace above.</p>
                                 <p>2. Adjust any options this tool shows for your document.</p>
-                                <p>3. Click <strong>"Process {tool.name}"</strong> to run it locally in your browser.</p>
-                                <p>4. Download the finished file — nothing is uploaded to a server.</p>
+                                <p>3. Click <strong>"Process {tool.name}"</strong> to run the conversion.</p>
+                                <p>4. Download the finished file — your upload is deleted from our server right after processing.</p>
                             </div>
                         </div>
 

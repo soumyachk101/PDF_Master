@@ -36,8 +36,8 @@ export const metadata = {
     default: 'Free PDF Tools Online – Merge, Compress, Convert | DocShift',
     template: '%s | DocShift',
   },
-  description: 'Free online PDF tools that work entirely in your browser. Merge, compress, convert PDF to Word, split and edit PDFs instantly. No uploads, 100% private.',
-  keywords: 'pdf tools, merge pdf without uploading, compress pdf in browser, completely free pdf tools online',
+  description: 'Free online PDF tools. Merge, compress, convert PDF to Word, split and edit PDFs instantly — your file is deleted from our server right after processing.',
+  keywords: 'pdf tools, merge pdf online, compress pdf free, completely free pdf tools online',
   authors: [{ name: 'DocShift' }],
   robots: {
     index: true,
@@ -54,14 +54,14 @@ export const metadata = {
     type: 'website',
     url: 'https://www.docshift.tech/',
     title: 'Free PDF Tools Online – Merge, Compress, Convert | DocShift',
-    description: 'Free online PDF tools that work entirely in your browser. Merge, compress, convert PDF to Word, split and edit PDFs instantly. No uploads, 100% private.',
+    description: 'Free online PDF tools. Merge, compress, convert PDF to Word, split and edit PDFs instantly — your file is deleted from our server right after processing.',
     siteName: 'DocShift',
     locale: 'en_US',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Free PDF Tools Online – Merge, Compress, Convert | DocShift',
-    description: 'Free online PDF tools that work entirely in your browser. Merge, compress, convert PDF to Word, split and edit PDFs instantly. No uploads, 100% private.',
+    description: 'Free online PDF tools. Merge, compress, convert PDF to Word, split and edit PDFs instantly — your file is deleted from our server right after processing.',
     site: '@soumyachk1',
   },
   icons: {
@@ -91,7 +91,7 @@ export default function RootLayout({ children }) {
     applicationCategory: 'UtilitiesApplication',
     operatingSystem: 'Web Browser',
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
-    description: 'Free browser-based PDF tools. Merge, compress, convert and edit PDFs with 100% privacy.',
+    description: 'Free online PDF tools. Merge, compress, convert and edit PDFs, deleted from our server right after processing.',
     author: { '@id': ORG_ID },
   };
 

@@ -1,13 +1,13 @@
 export const metadata = {
   title: 'Privacy Policy',
-  description: 'DocShift Privacy Policy – Learn how we protect your data. All PDF processing happens locally in your browser. No files are uploaded or stored on our servers.',
-  keywords: 'docshift privacy policy, pdf tool privacy, data protection, no upload pdf',
+  description: 'DocShift Privacy Policy – Learn how we protect your data. Files are deleted from our server immediately after processing.',
+  keywords: 'docshift privacy policy, pdf tool privacy, data protection, secure pdf processing',
   alternates: {
     canonical: '/privacy',
   },
   openGraph: {
     title: 'Privacy Policy | DocShift',
-    description: 'DocShift Privacy Policy – Learn how we protect your data. All PDF processing happens locally in your browser.',
+    description: 'DocShift Privacy Policy – Learn how we protect your data. Files are deleted from our server immediately after processing.',
     url: 'https://www.docshift.tech/privacy',
   },
 };
@@ -21,7 +21,7 @@ export default function PrivacyPolicyPage() {
             Privacy Policy
           </h1>
           <p className="font-suisseintlmono text-[11px] text-[#444444] mb-8">
-            Last updated: May 28, 2026
+            Last updated: July 27, 2026
           </p>
 
           <div className="font-suisseintl text-sm text-[#222222] leading-relaxed space-y-6">
@@ -39,7 +39,7 @@ export default function PrivacyPolicyPage() {
                 2. Information We Collect
               </h2>
               <p>
-                <strong>We do not collect, upload, or store any of your PDF files or documents.</strong> All PDF processing happens entirely within your browser using client-side JavaScript. Your files never leave your device.
+                <strong>We do not permanently store your PDF files or documents.</strong> When you use a tool, your file is uploaded securely to our server to process your request, then deleted immediately afterward. We do not read, analyze, retain, or share the contents of your files beyond the time needed to complete that request.
               </p>
               <p className="mt-2">We may collect the following non-personal information:</p>
               <ul className="list-disc list-inside mt-2 space-y-1">
@@ -75,7 +75,7 @@ export default function PrivacyPolicyPage() {
                 5. Third-Party Services
               </h2>
               <p>
-                We use Vercel for hosting and analytics. Their privacy policy can be found at <strong>vercel.com/privacy</strong>. We do not share any user data with third parties for marketing or advertising purposes.
+                We use Vercel for website hosting and analytics, and a separate server host to run the file-processing backend that powers our tools. Neither provider receives your file for any purpose other than serving the tool you requested, and neither is used for marketing or advertising. Vercel&apos;s privacy policy can be found at <strong>vercel.com/privacy</strong>.
               </p>
             </section>
 
@@ -84,7 +84,7 @@ export default function PrivacyPolicyPage() {
                 6. Data Security
               </h2>
               <p>
-                Since all file processing occurs locally in your browser, your documents are never transmitted over the internet. This architecture ensures maximum privacy and security for your files.
+                Your file is transmitted to our server over an encrypted (HTTPS) connection for processing, then deleted immediately afterward. We do not maintain a database of user files, and file contents are never logged or shared with third parties.
               </p>
             </section>
 

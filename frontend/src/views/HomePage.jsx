@@ -3,7 +3,7 @@
 import React, { useState, useMemo, useCallback, memo } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, X, ArrowUpRight, ShieldCheck, Zap, ServerCrash, HeartHandshake, Gift, MonitorSmartphone } from 'lucide-react';
+import { Search, X, ArrowUpRight, ShieldCheck, Zap, HeartHandshake, Gift, MonitorSmartphone } from 'lucide-react';
 
 import { CATEGORIES, TOOLS } from '@/utils/tools';
 import { getIcon } from '@/utils/icons';
@@ -293,13 +293,13 @@ function HomePage() {
                         {[
                             {
                                 icon: <ShieldCheck size={28} className="text-[#000000]" />,
-                                title: '100% Private',
-                                desc: 'All processing happens directly in your browser. Files are never uploaded to any server.'
+                                title: 'Files Auto-Deleted',
+                                desc: 'Your file is processed securely and deleted from our server right after — never stored, logged, or shared.'
                             },
                             {
                                 icon: <Zap size={28} className="text-[#000000]" />,
                                 title: 'Lightning Fast',
-                                desc: 'Powered by modern WebAssembly and optimized client-side engines for speed.'
+                                desc: 'Optimized processing engines mean most files convert in seconds.'
                             },
                             {
                                 icon: <MonitorSmartphone size={28} className="text-[#000000]" />,
@@ -315,11 +315,6 @@ function HomePage() {
                                 icon: <HeartHandshake size={28} className="text-[#000000]" />,
                                 title: 'No Signup Required',
                                 desc: 'Start using tools immediately. No account creation, no email required.'
-                            },
-                            {
-                                icon: <ServerCrash size={28} className="text-[#000000]" />,
-                                title: 'Offline Capable',
-                                desc: 'Once loaded, DocShift works even without an internet connection.'
                             }
                         ].map((feature, i) => (
                             <motion.div key={i} variants={cardVariants}>
@@ -360,11 +355,10 @@ function HomePage() {
                                         Built for <span className="underline decoration-2">Privacy</span>
                                     </h2>
                                     <p className="text-xs sm:text-sm text-[#444444] leading-relaxed mb-4">
-                                        DocShift processes all files directly in your browser using cutting-edge WebAssembly technology.
-                                        Your documents <strong className="text-[#000000] font-semibold">never leave your device</strong>. No uploads, no cloud processing, no data collection.
+                                        DocShift uploads your file securely to process it, then <strong className="text-[#000000] font-semibold">deletes it from our server immediately afterward</strong>. Nothing is stored, logged, or shared — and you never need an account to use it.
                                     </p>
                                     <p className="text-xs sm:text-sm text-[#444444] leading-relaxed">
-                                        Whether you're merging sensitive contracts, compressing confidential reports, or converting private documents - your files stay 100% on your machine.
+                                        Whether you're merging sensitive contracts, compressing confidential reports, or converting private documents, your file is gone from our server the moment processing finishes.
                                     </p>
                                 </div>
                                 <div className="flex flex-col gap-4">
@@ -372,7 +366,7 @@ function HomePage() {
                                     <div className="bg-[#d1ffca] border border-[#000000] p-5">
                                         <p className="font-suisseintlmono text-xs text-[#000000] leading-relaxed">
                                             <strong>&gt;&gt; SECURITY NOTICE:</strong><br/>
-                                            All document processing occurs locally via client-side JavaScript and WebAssembly. Zero data transmission to external servers.
+                                            Your file is processed securely and deleted from our server immediately afterward. We never store, log, or share your documents.
                                         </p>
                                     </div>
                                     <div className="flex justify-between items-center gap-3">

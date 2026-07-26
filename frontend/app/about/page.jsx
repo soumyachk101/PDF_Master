@@ -1,13 +1,13 @@
 export const metadata = {
   title: 'About Us',
-  description: 'Learn about DocShift – Free browser-based PDF tools built for privacy. No uploads, no signups, 100% local processing.',
-  keywords: 'about docshift, pdf tools, free pdf editor, browser pdf, privacy pdf tools',
+  description: 'Learn about DocShift – Free online PDF tools, no signup required. Files are deleted from our server right after processing.',
+  keywords: 'about docshift, pdf tools, free pdf editor, online pdf tools, secure pdf processing',
   alternates: {
     canonical: '/about',
   },
   openGraph: {
     title: 'About Us | DocShift',
-    description: 'Learn about DocShift – Free browser-based PDF tools built for privacy.',
+    description: 'Learn about DocShift – Free online PDF tools, no signup required.',
     url: 'https://www.docshift.tech/about',
   },
 };
@@ -30,7 +30,7 @@ export default function AboutPage() {
                 What is DocShift?
               </h2>
               <p>
-                DocShift is a free, browser-based toolkit for working with PDF files. Merge, split, compress, convert, edit, protect, and unlock your PDFs &mdash; all without uploading a single byte to any server.
+                DocShift is a free online toolkit for working with PDF files. Merge, split, compress, convert, edit, protect, and unlock your PDFs &mdash; each file is deleted from our server immediately after your job finishes.
               </p>
             </section>
 
@@ -39,7 +39,7 @@ export default function AboutPage() {
                 How It Works
               </h2>
               <p>
-                Every tool on DocShift runs entirely in your browser using JavaScript and WebAssembly. Your files are processed locally on your device and are never sent over the internet. When you close the tab, your data is gone.
+                Every tool on DocShift uploads your file securely to our server, processes it, and deletes it immediately afterward. We don&apos;t keep a database of user files &mdash; nothing is logged, stored long-term, or shared.
               </p>
             </section>
 
@@ -48,21 +48,21 @@ export default function AboutPage() {
                 Why DocShift?
               </h2>
               <ul className="list-disc list-inside space-y-2">
-                <li><strong>100% Private</strong> &mdash; No file uploads. All processing is local.</li>
+                <li><strong>Files Deleted After Use</strong> &mdash; Your file is removed from our server the moment processing finishes.</li>
                 <li><strong>Completely Free</strong> &mdash; No hidden fees, no premium tiers, no watermarks.</li>
                 <li><strong>No Signup</strong> &mdash; Use any tool instantly. No accounts, no emails.</li>
-                <li><strong>Fast &amp; Reliable</strong> &mdash; Modern browser APIs for quick processing.</li>
+                <li><strong>Fast &amp; Reliable</strong> &mdash; Optimized processing engines, most files convert in seconds.</li>
                 <li><strong>Clean Interface</strong> &mdash; No ads, no popups, no distractions.</li>
               </ul>
             </section>
 
             <section>
               <h2 className="font-suisseintlcond text-lg font-bold text-[#000000] uppercase tracking-wider mb-2">
-                Open Source
+                Source Available
               </h2>
               <p>
-                DocShift is built with Next.js and is open source. You can view the source code, report issues, or contribute on{' '}
-                <a href="https://github.com/soumyachk101" target="_blank" rel="noopener noreferrer" className="text-[#000000] underline font-bold hover:text-[#444444]">
+                DocShift is built with Next.js and its source code is public. You can view it or report issues on{' '}
+                <a href="https://github.com/soumyachk101/PDF_Master" target="_blank" rel="noopener noreferrer" className="text-[#000000] underline font-bold hover:text-[#444444]">
                   GitHub
                 </a>.
               </p>

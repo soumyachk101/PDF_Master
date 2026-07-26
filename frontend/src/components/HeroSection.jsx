@@ -33,7 +33,7 @@ const HeroSection = () => {
                             {' '}---{' '}
                             <span className="bg-[#d1ffca] px-1">30+ FREE PDF CONVERTERS</span>
                             {' '}---{' '}
-                            <span>100% PRIVATE IN-BROWSER PROCESSING</span>
+                            <span>FILES DELETED RIGHT AFTER PROCESSING</span>
                             {' '}---{' '}
                             <span className="bg-[#d1ffca] px-1">NO SIGNUP REQUIRED &#9733;</span>
                         </span>
@@ -56,7 +56,7 @@ const HeroSection = () => {
                                 SYSTEM STATUS: ACTIVE
                             </NeumorphicBadge>
                             <span className="font-suisseintlmono text-[9px] font-bold bg-[#000000] text-white px-2 py-0.5 tracking-wider">
-                                LOCAL WASM ENGINE
+                                FAST &amp; SECURE
                             </span>
                         </motion.div>
 
@@ -81,9 +81,9 @@ const HeroSection = () => {
                             className="text-sm sm:text-base text-[#444444] font-suisseintl mb-8 leading-relaxed max-w-xl"
                         >
                             DocShift is a high-contrast, professional-grade{' '}
-                            <strong className="text-[#000000] font-semibold">in-browser PDF suite</strong>. 
-                            Merge, convert, split, and protect documents with absolute security. 
-                            No server uploads, zero data collection.
+                            <strong className="text-[#000000] font-semibold">PDF toolkit</strong>.
+                            Merge, convert, split, and protect documents with confidence.
+                            No accounts, no stored files.
                         </motion.p>
 
                         {/* Actions */}

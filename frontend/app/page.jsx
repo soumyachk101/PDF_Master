@@ -8,7 +8,7 @@ const HomePage = dynamic(() => import('@/views/HomePage'), {
 
 export const metadata = {
   title: { absolute: 'Free PDF Tools Online – Merge, Compress & Convert | DocShift' },
-  description: 'Access 30+ PDF tools in your browser. Merge, compress, and convert PDFs securely without uploading files to any server. 100% private and free.',
+  description: 'Access 30+ PDF tools online. Merge, compress, and convert PDFs securely — your file is deleted from our server right after processing. Free, no signup.',
   keywords: 'pdf tools, merge pdf, split pdf, free online pdf tools, secure pdf editor, convert pdf',
   alternates: {
     canonical: '/',
@@ -17,12 +17,12 @@ export const metadata = {
     type: 'website',
     url: 'https://www.docshift.tech/',
     title: 'Free PDF Tools Online – Merge, Split, Compress & Convert PDF | DocShift',
-    description: 'Access 30+ PDF tools in your browser. Merge, compress, and convert PDFs securely without uploading files to any server. 100% private and free.',
+    description: 'Access 30+ PDF tools online. Merge, compress, and convert PDFs securely — your file is deleted from our server right after processing. Free, no signup.',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Free PDF Tools Online – Merge, Split, Compress & Convert PDF | DocShift',
-    description: 'Access 30+ PDF tools in your browser. Merge, compress, and convert PDFs securely without uploading files to any server. 100% private and free.',
+    description: 'Access 30+ PDF tools online. Merge, compress, and convert PDFs securely — your file is deleted from our server right after processing. Free, no signup.',
   },
 };
 

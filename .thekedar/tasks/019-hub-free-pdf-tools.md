@@ -1,6 +1,6 @@
 # Task 019 — `/free-pdf-tools` hub
 
-**Status:** TODO
+**Status:** DONE (see notes)
 **Depends on:** 018
 **Risk:** low
 **Estimated size:** M
@@ -53,3 +53,7 @@ query family across all 30 tools, and gives every tool a second inbound internal
 
 Combined with task 018, this gives all 30 tools at least two inbound internal links from body content
 rather than footer-only, which was the audit's stated internal-linking problem.
+
+## Execution note
+
+Built and verified 2026-07-27. Full change record, verification detail, and deviations from spec: see `.thekedar/changes/task-018-to-023-phase4.md`.

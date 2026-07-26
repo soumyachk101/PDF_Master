@@ -1,6 +1,6 @@
 # Task 018 — `/convert-pdf` cluster hub
 
-**Status:** TODO
+**Status:** DONE (see notes)
 **Depends on:** 014, 015
 **Risk:** low
 **Estimated size:** M
@@ -53,3 +53,7 @@ them out of the one-inbound-internal-link hole the audit found. This is the audi
 Depends on 014/015 so the hub links into pages that already carry real depth — a hub pointing at thin
 pages just distributes authority to nothing. Do not hardcode the ten slugs; deriving from `TOOLS` is
 both less code and self-maintaining.
+
+## Execution note
+
+Built and verified 2026-07-27. Full change record, verification detail, and deviations from spec: see `.thekedar/changes/task-018-to-023-phase4.md`.

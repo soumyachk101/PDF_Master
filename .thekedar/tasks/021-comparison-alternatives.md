@@ -1,6 +1,6 @@
 # Task 021 — Comparison / alternatives content
 
-**Status:** TODO
+**Status:** DONE (see notes — Q1 answer superseded, user re-confirmed)
 **Depends on:** 019, 020
 **Risk:** high
 **Estimated size:** M
@@ -69,3 +69,7 @@ The "what DocShift does not do" requirement is not modesty — a comparison page
 as marketing to both readers and answer engines, and gets ignored by exactly the queries it targets.
 Option (a) is the recommended default if the human has no preference: it is honest, it captures the
 brand queries, and it needs no external research.
+
+## Execution note
+
+Built and verified 2026-07-27. Full change record, verification detail, and deviations from spec: see `.thekedar/changes/task-018-to-023-phase4.md`.

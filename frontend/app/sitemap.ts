@@ -32,5 +32,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/contact`, lastModified: defaultLastModified, changeFrequency: 'monthly' as const, priority: 0.5 },
   ];
 
-  return [home, ...toolPages, ...staticPages];
+  const hubPages = [
+    { url: `${baseUrl}/convert-pdf`, lastModified: defaultLastModified, changeFrequency: 'monthly' as const, priority: 0.8 },
+    { url: `${baseUrl}/free-pdf-tools`, lastModified: defaultLastModified, changeFrequency: 'monthly' as const, priority: 0.8 },
+    { url: `${baseUrl}/pdf-security-guide`, lastModified: defaultLastModified, changeFrequency: 'monthly' as const, priority: 0.7 },
+    { url: `${baseUrl}/alternatives/ilovepdf`, lastModified: defaultLastModified, changeFrequency: 'monthly' as const, priority: 0.6 },
+    { url: `${baseUrl}/alternatives/smallpdf`, lastModified: defaultLastModified, changeFrequency: 'monthly' as const, priority: 0.6 },
+  ];
+
+  return [home, ...toolPages, ...staticPages, ...hubPages];
 }

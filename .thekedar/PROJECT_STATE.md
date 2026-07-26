@@ -68,14 +68,14 @@ instructed to use "without uploading"/"runs in your browser" as a core different
 following the same premise — **none of that content has been applied to `tools.js` yet.** It is sitting
 in the workflow's output file, unapplied, pending this decision.
 
-### Status: STOPPED. Awaiting user direction before any further Phase 3/4 work.
+### Status: RESOLVED — fixed site-wide across 3 batches, Phases 3 and 4 both completed on top of it.
 
-This is not a call to make unilaterally. Options that need the user's input: (a) is there in fact a
-genuine client-side/WASM processing path for at least some tools that this investigation missed and the
-user can point to, (b) if the architecture is genuinely server-side as verified, how should the site's
-entire privacy narrative be corrected — a scope far larger than an SEO content task, (c) whether to apply
-any of the already-drafted Phase 3 content as-is (much of it doesn't repeat the false claim directly, but
-ships on pages whose surrounding UI does), with revisions, or not at all pending the larger fix.
+User confirmed (2026-07-26): no client-side/WASM path exists (option (a) was checked and ruled out); the
+site-wide copy was corrected everywhere to the verified reality (upload → process → delete immediately);
+Phase 3 content was applied with the corrected narrative rather than the original false one. See commits
+`723100d`, `cee542d`, `96cab93` (batches 1–3) and the Phase 3/4 notes below for what this meant downstream —
+including task 021 (Phase 4), whose own Q1 answer had baked in the same false claim and had to be
+re-decided once this was resolved.
 
 ## 🔴 CRITICAL — blocking product bug (found 2026-07-26, during task 017 investigation)
 
@@ -201,8 +201,7 @@ Current goal: take SEO from "good on-page" to top-notch — per-tool keyword tar
 
 ## Current phase
 
-Phase 3 — Content depth · **done** (all 6 clusters landed; see the FOUNDATIONAL section above for the
-site-wide false-claim investigation that dominated this phase's actual work)
+Phase 4 — Hubs, comparison, link assets · **done** (all 6 tasks landed; this was the last planned phase)
 
 ## Phases
 
@@ -211,11 +210,12 @@ site-wide false-claim investigation that dominated this phase's actual work)
 - Phase 1 — Technical correctness · tasks 001–007 · **done**
 - Phase 2 — Keyword realignment & schema · tasks 008–010 · **done**
 - Phase 3 — Content depth · tasks 011–017 · **done** (27 of 30 tools; 3 paused — see FOUNDATIONAL)
-- Phase 4 — Hubs, comparison, link assets · tasks 018–023 · planned, next up
+- Phase 4 — Hubs, comparison, link assets · tasks 018–023 · **done**
 
 ## Active task
 
-none — Phase 3 closed, waiting on user go-ahead for Phase 4
+none — all 5 planned phases (0–4) are done. What's left is the explicitly-deferred backend/UI work and
+owner actions listed below, not another content phase.
 
 ## Done
 
@@ -236,10 +236,12 @@ none — Phase 3 closed, waiting on user go-ahead for Phase 4
 - **fix** — site-wide false privacy claim, batch 1 (UI/meta/legal) · `723100d`
 - **fix** — site-wide false privacy claim, batch 2 (dropzone/OG/robots/llms.txt) · `cee542d`
 - 012–017 (content depth, 27/30 tools) + **fix** batch 3 (final sweep) · `96cab93`
+- 018–023 (hubs, comparison pages, llms-full.txt, About E-E-A-T) · see Phase 4 notes
 
 ## Up next
 
-- 018 — `/convert-pdf` cluster hub — Phase 4
+Nothing planned. Remaining open items are the explicitly-deferred backend/UI fixes and owner actions
+below — pick up whichever the user wants to prioritize next.
 
 ## Decisions log (append-only)
 
@@ -252,6 +254,12 @@ none — Phase 3 closed, waiting on user go-ahead for Phase 4
 - 2026-07-26 — **No LICENSE file is being added.** `llms.txt` wording softens from "Open source" to "source code is public on GitHub" and the link repoints from the profile to `github.com/soumyachk101/PDF_Master`. Owner's decision; revisit if awesome-selfhosted/awesome-privacy listings become a priority, as both require a licence.
 - 2026-07-26 — **CCBot gets unblocked** in `robots.ts`, reversing the earlier decision recorded in that file's comment. Two independent audits converged: the Common Crawl zero is why no free backlink tool can see the site, and CCBot costs nothing for a discovery-first project.
 - 2026-07-26 — Execution cadence: pause after each phase for review. Tasks auto-continue *within* a phase.
+- 2026-07-27 — **Task 021's Q1 answer (architecture-axis-only) superseded and re-decided.** The FOUNDATIONAL
+  fix proved DocShift is server-side too, so "DocShift processes in the browser" — Q1's one permitted
+  claim — was itself false. Re-asked the user: chose to drop the architecture comparison entirely rather
+  than find a replacement axis. The two `/alternatives/*` pages now make zero comparative claims about
+  either named competitor — competitors are named only for search-intent framing (title/intro/one FAQ
+  question), every other sentence is about DocShift alone. Stricter than the original Q1 answer, not looser.
 
 ## Deferred with reasons (do not re-litigate without new information)
 
@@ -294,6 +302,34 @@ none — Phase 3 closed, waiting on user go-ahead for Phase 4
 - `pdf-to-excel` declares `outputExt: '.xlsx'` but the real server response is CSV — a functional-field
   inconsistency, not a content one. Doesn't break the actual download (the frontend trusts real response
   headers over this config value), so left as a minor follow-up rather than expanded into this phase.
+
+## Phase 4 notes
+
+- **Two more task files (020, 023) had the same stale premise as task 021's Q1**, caught by re-reading
+  each task file fresh rather than executing it verbatim: task 020 implicitly framed DocShift as the
+  "browser-local" side of an upload-vs-local comparison; task 023 asked for a bio fact about "the
+  browser-local architecture decision." Both rewritten around the real, verified architecture
+  (delete-immediately-after-processing) before writing anything, rather than shipping the false framing
+  a third and fourth time.
+- **`Footer.jsx`'s copyright bar had its own leftover instance** of the false-claim family — "Secure Local
+  Processing" — missed by every earlier grep sweep because it's a short, generic phrase far from the
+  claim patterns those sweeps targeted, not the article-length instances. Fixed to "Secure PDF Processing"
+  while in that file for task 018's footer-link requirement. Worth another exhaustive sweep periodically;
+  this session's experience is that these surface a few at a time, not all at once.
+- **`/pdf-security-guide` and both `/alternatives/*` pages deliberately do not link `redact-pdf`** despite
+  task 020/021's text listing it. It's the tool confirmed broken in Phase 3 (400s on every real use); the
+  redaction *concept* is explained (genuinely useful, tool-independent), and `redact-pdf` is named plainly
+  as "being rebuilt" on the alternatives pages, but nothing links it as something to try. Same reasoning as
+  every other paused-tool decision this project has made — don't drive fresh traffic to what doesn't work.
+- **Process lesson**: verifying a rebuilt Next.js page against a local `next start` server, `pkill -f
+  "next start"` does not match the actual running process (`next-server`, not `next start`), so a stale
+  build can keep answering through an entire rebuild+restart cycle and produce false-positive
+  verification. Kill by the PID actually bound to the port (`lsof -ti :<port>`) instead.
+- All 30 tools now have at least 2 internal links from body content (tool pages' own related-tools grid,
+  plus the new hub pages), closing the audit's stated internal-linking gap. `llms-full.txt` means an AI
+  agent can read the whole site in one fetch instead of 35, generated from `TOOLS` so it can't go stale.
+- This was the last planned phase. Everything remaining is the explicitly-deferred backend/UI work and
+  owner actions already logged below — there is no Phase 5 planned.
 
 ## Needs a human — cannot be verified in this environment
 

@@ -11,6 +11,11 @@ DocShift is a privacy-first PDF toolkit. Your file is uploaded securely to proce
 - [Contact](https://www.docshift.tech/contact): Support, feedback, collaboration
 - [Privacy Policy](https://www.docshift.tech/privacy): Data-handling commitments
 - [Terms of Service](https://www.docshift.tech/terms): Terms of use
+- [Convert PDF](https://www.docshift.tech/convert-pdf): Hub for all 10 PDF conversion tools, both directions
+- [Free PDF Tools](https://www.docshift.tech/free-pdf-tools): What "free" means on DocShift, all 30 tools by category
+- [PDF Security Guide](https://www.docshift.tech/pdf-security-guide): Passwords, redaction, signatures and PDF/A explained
+- [iLovePDF Alternative](https://www.docshift.tech/alternatives/ilovepdf): DocShift for people looking for an iLovePDF alternative
+- [Smallpdf Alternative](https://www.docshift.tech/alternatives/smallpdf): DocShift for people looking for a Smallpdf alternative
 
 ## Tool Pages (Organize)
 
@@ -69,3 +74,7 @@ DocShift is a privacy-first PDF toolkit. Your file is uploaded securely to proce
 - **No signup** — no accounts, no emails, no friction.
 - **Free forever** — no premium tiers, no watermarks, no usage caps.
 - **Source available** — source code is public on GitHub at https://github.com/soumyachk101/PDF_Master.
+
+## Full Content
+
+- [llms-full.txt](https://www.docshift.tech/llms-full.txt): This entire site's tool and guide content in one fetch.

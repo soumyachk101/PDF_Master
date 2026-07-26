@@ -5,6 +5,23 @@
 
 export const ORG_ID = 'https://www.docshift.tech/#organization';
 export const SITE_ID = 'https://www.docshift.tech/#website';
+export const PERSON_ID = 'https://www.docshift.tech/#person';
+
+// Same name/url/sameAs as the "Built By" credit on /about and the operator
+// line on /terms verbatim. No invented title, bio or credentials — see
+// task 023's report for the source of every field.
+export const personNode = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    '@id': PERSON_ID,
+    name: 'Soumya Chakraborty',
+    url: 'https://github.com/soumyachk101',
+    sameAs: [
+        'https://x.com/soumyachk1',
+        'https://github.com/soumyachk101',
+        'https://discord.com/users/soumya.chk101',
+    ],
+};
 
 // Same fields as the pre-existing Organization node in layout.jsx, plus @id
 // and founder — name and URL match the "Built By" credit on /about and the
@@ -18,11 +35,7 @@ export const organizationNode = {
     logo: 'https://www.docshift.tech/logo.png',
     description: 'Free online PDF tools. Merge, compress, convert and edit PDFs, deleted from our server right after processing.',
     foundingDate: '2024',
-    founder: {
-        '@type': 'Person',
-        name: 'Soumya Chakraborty',
-        url: 'https://github.com/soumyachk101',
-    },
+    founder: { '@id': PERSON_ID },
     sameAs: [
         'https://x.com/soumyachk1',
         'https://github.com/soumyachk101',

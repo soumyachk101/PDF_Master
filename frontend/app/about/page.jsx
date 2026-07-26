@@ -1,3 +1,5 @@
+import { SITE_ID, PERSON_ID } from '@/utils/schema';
+
 export const metadata = {
   title: 'About Us',
   description: 'Learn about DocShift – Free online PDF tools, no signup required. Files are deleted from our server right after processing.',
@@ -12,9 +14,24 @@ export const metadata = {
   },
 };
 
+const ABOUT_URL = 'https://www.docshift.tech/about';
+
 export default function AboutPage() {
+  const aboutPageSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'AboutPage',
+    '@id': `${ABOUT_URL}#webpage`,
+    url: ABOUT_URL,
+    name: 'About DocShift',
+    description: metadata.description,
+    inLanguage: 'en',
+    isPartOf: { '@id': SITE_ID },
+    mainEntity: { '@id': PERSON_ID },
+  };
+
   return (
     <div className="min-h-screen bg-[#c0c0c0] py-12 px-4 sm:px-8 overflow-x-hidden">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutPageSchema) }} />
       <div className="max-w-3xl mx-auto">
         <div className="bg-[#ffffff] border-2 border-[#000000] shadow-[4px_4px_0_#000000] p-6 sm:p-10">
           <h1 className="font-suisseintlcond text-3xl sm:text-4xl font-bold text-[#000000] mb-2 uppercase tracking-wider">
@@ -76,8 +93,12 @@ export default function AboutPage() {
                 DocShift is created and maintained by{' '}
                 <a href="https://github.com/soumyachk101" target="_blank" rel="noopener noreferrer" className="text-[#000000] underline font-bold hover:text-[#444444]">
                   Soumya Chakraborty
-                </a>.
-                For questions, feedback, or collaboration, visit the{' '}
+                </a>, built around one architectural decision: every uploaded file is processed and then
+                deleted from the server immediately, rather than stored &mdash; so there&apos;s nothing left
+                on our servers to lose, leak, or hand over.
+                For questions, feedback, or collaboration, reach out on{' '}
+                <a href="https://x.com/soumyachk1" target="_blank" rel="noopener noreferrer" className="text-[#000000] underline font-bold hover:text-[#444444]">X</a>,{' '}
+                <a href="https://discord.com/users/soumya.chk101" target="_blank" rel="noopener noreferrer" className="text-[#000000] underline font-bold hover:text-[#444444]">Discord</a>, or via the{' '}
                 <a href="/contact" className="text-[#000000] underline font-bold hover:text-[#444444]">Contact page</a>.
               </p>
             </section>

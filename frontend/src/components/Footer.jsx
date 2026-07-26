@@ -166,6 +166,28 @@ export default function Footer() {
                             ))}
                         </ul>
                     </div>
+
+                    {/* Guides */}
+                    <div>
+                        <h3 className="font-suisseintl font-bold text-xs uppercase tracking-wider mb-4 text-[#000000] border-b border-[#000000]/10 pb-2">
+                            Guides
+                        </h3>
+                        <ul className="flex flex-col gap-2.5">
+                            {[
+                                { name: 'Convert PDF', path: '/convert-pdf' },
+                                { name: 'Free PDF Tools', path: '/free-pdf-tools' },
+                                { name: 'PDF Security Guide', path: '/pdf-security-guide' },
+                                { name: 'iLovePDF Alternative', path: '/alternatives/ilovepdf' },
+                                { name: 'Smallpdf Alternative', path: '/alternatives/smallpdf' }
+                            ].map((item) => (
+                                <li key={item.path}>
+                                    <Link href={item.path} className="inline-block text-xs text-[#444444] font-suisseintl hover:text-[#000000] hover:underline transition-all duration-200">
+                                        {item.name}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
                 </div>
 
                 <div className="border-t border-[#000000]/10 my-6" />
@@ -173,7 +195,7 @@ export default function Footer() {
                 {/* Bottom Bar */}
                 <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
                     <p className="font-suisseintlmono text-[11px] text-[#444444]">
-                        &copy; {currentYear} <span className="font-bold text-[#000000]">DocShift</span> &middot; Secure Local Processing
+                        &copy; {currentYear} <span className="font-bold text-[#000000]">DocShift</span> &middot; Secure PDF Processing
                     </p>
                     <HitCounter />
                 </div>

@@ -7,7 +7,7 @@ import { Suspense } from 'react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Inter, Bebas_Neue, IBM_Plex_Mono } from 'next/font/google';
 import IntroOverlay from '@/components/IntroOverlay';
-import { ORG_ID, organizationNode, webSiteNode } from '@/utils/schema';
+import { ORG_ID, organizationNode, webSiteNode, personNode } from '@/utils/schema';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -99,10 +99,12 @@ export default function RootLayout({ children }) {
     <html lang="en" className={`${inter.variable} ${bebasNeue.variable} ${ibmPlexMono.variable}`} suppressHydrationWarning>
       <head>
         <link rel="alternate" type="text/plain" href="https://www.docshift.tech/llms.txt" title="LLM-readable site summary" />
+        <link rel="alternate" type="text/plain" href="https://www.docshift.tech/llms-full.txt" title="LLM-readable full site content" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteNode) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationNode) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(personNode) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }} />
       </head>
       <body>

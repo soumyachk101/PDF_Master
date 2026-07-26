@@ -1,6 +1,6 @@
 # Task 022 — Generated `llms-full.txt`
 
-**Status:** TODO
+**Status:** DONE (see notes)
 **Depends on:** 017, 020
 **Risk:** low
 **Estimated size:** S
@@ -50,3 +50,7 @@ time from `TOOLS`, so it can never drift from the tool pages the way a hand-writ
 Depends on the content tasks so the file ships with the expanded copy rather than the 143-word version.
 Route Handler rather than a `public/` file specifically so it regenerates on every build — the same
 reason the sitemap is generated rather than checked in.
+
+## Execution note
+
+Built and verified 2026-07-27. Full change record, verification detail, and deviations from spec: see `.thekedar/changes/task-018-to-023-phase4.md`.

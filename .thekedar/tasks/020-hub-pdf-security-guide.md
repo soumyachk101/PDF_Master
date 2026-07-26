@@ -1,6 +1,6 @@
 # Task 020 — `/pdf-security-guide` hub
 
-**Status:** TODO
+**Status:** DONE (see notes — one deviation from spec)
 **Depends on:** 017, 019
 **Risk:** medium
 **Estimated size:** M
@@ -59,3 +59,7 @@ engine, because it is the site's only genuinely explanatory content.
 Medium risk because the topic invites confident, unverifiable security claims — the fence above is
 longer than usual for exactly that reason. Depends on 017 so the tool pages it links to already carry
 verified security copy rather than contradicting the guide.
+
+## Execution note
+
+Built and verified 2026-07-27. Full change record, verification detail, and deviations from spec: see `.thekedar/changes/task-018-to-023-phase4.md`.

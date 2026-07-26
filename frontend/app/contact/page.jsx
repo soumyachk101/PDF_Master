@@ -1,4 +1,5 @@
 import { Twitter, Github, MessageCircle, Mail } from 'lucide-react';
+import { ORG_ID } from '@/utils/schema';
 
 export const metadata = {
   title: 'Contact',
@@ -14,7 +15,20 @@ export const metadata = {
   },
 };
 
+const CONTACT_URL = 'https://www.docshift.tech/contact';
+
 export default function ContactPage() {
+  const contactPageSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ContactPage',
+    '@id': `${CONTACT_URL}#webpage`,
+    url: CONTACT_URL,
+    name: 'Contact DocShift',
+    description: metadata.description,
+    inLanguage: 'en',
+    mainEntity: { '@id': ORG_ID },
+  };
+
   const links = [
     { icon: Mail, label: 'Email', href: 'mailto:support@docshift.tech', display: 'support@docshift.tech' },
     { icon: Twitter, label: 'Twitter / X', href: 'https://x.com/soumyachk1', display: '@soumyachk1' },
@@ -24,6 +38,7 @@ export default function ContactPage() {
 
   return (
     <div className="min-h-screen bg-[#c0c0c0] py-12 px-4 sm:px-8 overflow-x-hidden">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(contactPageSchema) }} />
       <div className="max-w-3xl mx-auto">
         <div className="bg-[#ffffff] border-2 border-[#000000] shadow-[4px_4px_0_#000000] p-6 sm:p-10">
           <h1 className="font-suisseintlcond text-3xl sm:text-4xl font-bold text-[#000000] mb-2 uppercase tracking-wider">

@@ -1,6 +1,6 @@
 # Task 023 — About page E-E-A-T: real bio + Person schema
 
-**Status:** TODO
+**Status:** DONE (see notes — one deviation from spec)
 **Depends on:** 010
 **Risk:** low
 **Estimated size:** S
@@ -53,3 +53,7 @@ or expanded author identity.
 The last acceptance criterion is the fabrication guard. An E-E-A-T task is the single easiest place for
 an agent to helpfully invent a plausible résumé; requiring a source for each fact makes that impossible
 to do quietly.
+
+## Execution note
+
+Built and verified 2026-07-27. Full change record, verification detail, and deviations from spec: see `.thekedar/changes/task-018-to-023-phase4.md`.

@@ -1,6 +1,6 @@
 # Task 006 — IndexNow key, CCBot unblock, honest llms.txt
 
-**Status:** TODO
+**Status:** DONE
 **Depends on:** none
 **Risk:** low
 **Estimated size:** S

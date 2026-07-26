@@ -68,4 +68,4 @@ DocShift is a privacy-first PDF toolkit. Every tool runs 100% locally via Web Wo
 - **No uploads** — every tool runs in the browser; no server sees your file.
 - **No signup** — no accounts, no emails, no friction.
 - **Free forever** — no premium tiers, no watermarks, no usage caps.
-- **Open source** — code on GitHub at https://github.com/soumyachk101.
+- **Source available** — source code is public on GitHub at https://github.com/soumyachk101/PDF_Master.

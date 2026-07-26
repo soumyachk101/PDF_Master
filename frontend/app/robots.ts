@@ -17,8 +17,12 @@ export default function robots(): MetadataRoute.Robots {
       { userAgent: 'ClaudeBot', allow: '/' },
       { userAgent: 'anthropic-ai', allow: '/' },
       { userAgent: 'PerplexityBot', allow: '/' },
-      // Common Crawl is a bulk dataset scraper with no citations/traffic — keep blocked.
-      { userAgent: 'CCBot', disallow: '/' },
+      // Common Crawl sends no traffic and no citations of its own, but its dumps feed
+      // pretraining for many open models — and every free backlink/index checker reads
+      // them. Blocking it made the site invisible to those tools for zero benefit on a
+      // site whose content is public marketing copy. User files never leave the browser
+      // either way, so there is nothing here worth withholding.
+      { userAgent: 'CCBot', allow: '/' },
     ],
     sitemap: 'https://www.docshift.tech/sitemap.xml',
     host: 'https://www.docshift.tech',

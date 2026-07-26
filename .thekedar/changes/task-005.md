@@ -1,6 +1,6 @@
 # Change record — Task 005: Real PNG apple-touch-icon
 
-**Date:** 2026-07-26 · **Commit:** `<pending>` · **Fix loops used:** 0/3 (one self-caught defect, see Verification)
+**Date:** 2026-07-26 · **Commit:** `285adc5` · **Fix loops used:** 0/3 (one self-caught defect, see Verification)
 
 ## What changed
 

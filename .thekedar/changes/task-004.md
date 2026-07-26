@@ -1,6 +1,6 @@
 # Change record — Task 004: Real 1200×630 OG images via Next file convention
 
-**Date:** 2026-07-26 · **Commit:** `<pending>` · **Fix loops used:** 0/3 (one self-caught defect, see Verification)
+**Date:** 2026-07-26 · **Commit:** `b70711a` · **Fix loops used:** 0/3 (one self-caught defect, see Verification)
 
 ## What changed
 

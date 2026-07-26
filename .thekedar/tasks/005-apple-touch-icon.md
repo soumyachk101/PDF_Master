@@ -1,6 +1,6 @@
 # Task 005 — Real PNG apple-touch-icon
 
-**Status:** TODO
+**Status:** DONE
 **Depends on:** 004
 **Risk:** low
 **Estimated size:** S

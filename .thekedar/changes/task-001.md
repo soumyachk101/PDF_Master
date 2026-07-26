@@ -1,6 +1,6 @@
 # Change record — Task 001: Invalid tool slugs must return HTTP 404
 
-**Date:** 2026-07-26 · **Commit:** `<pending>` · **Fix loops used:** 0/3
+**Date:** 2026-07-26 · **Commit:** `5b041b9` · **Fix loops used:** 0/3
 
 ## What changed
 

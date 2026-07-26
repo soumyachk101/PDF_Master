@@ -10,6 +10,7 @@ import DropzoneArea from '@/components/DropzoneArea';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { Home, ArrowLeft, ArrowRight, Download, CheckCircle, AlertCircle, AlertTriangle, Link as LinkIcon, FileCheck2, Files, ShieldCheck, HelpCircle, Eye, EyeOff, Plus, Minus, RotateCcw, RotateCw, ArrowDown, PenTool, Globe } from 'lucide-react';
 import { getIcon } from '@/utils/icons';
+import { SIGNATURE_FONTS, signatureFontFamily } from '@/utils/signatureFonts';
 import { NeumorphicCard, NeumorphicButton, GrooveHr, cn } from '@/components/ui/IndustrialComponents';
 
 const DynamicIcon = memo(({ name, color, size = 24, className = "" }) => {
@@ -648,11 +649,7 @@ export default function ToolPage({ toolSlug }) {
 
                                             {tool.slug === 'sign-pdf' && (
                                                 <div className="mt-5 space-y-4 text-left">
-                                                    <link 
-                                                        href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Caveat:wght@700&family=Dancing+Script:wght@600&family=Great+Vibes&family=Reenie+Beanie&family=Sacramento&display=swap" 
-                                                        rel="stylesheet" 
-                                                    />
-                                                                                              <div className="space-y-1.5">
+                                                    <div className="space-y-1.5">
                                                         <label className="block text-xs font-bold uppercase tracking-wider text-[#000000] font-suisseintlmono">
                                                             Signature text
                                                         </label>
@@ -677,10 +674,10 @@ export default function ToolPage({ toolSlug }) {
                                                             </label>
                                                             <div className="grid grid-cols-2 gap-2">
                                                                 {[
-                                                                    { id: 'font-dancing', name: 'Elegant Cursive', fontStyle: { fontFamily: "'Dancing Script', cursive" } },
-                                                                    { id: 'font-greatvibes', name: 'Calligraphy', fontStyle: { fontFamily: "'Great Vibes', cursive" } },
-                                                                    { id: 'font-alex', name: 'Classic Script', fontStyle: { fontFamily: "'Alex Brush', cursive" } },
-                                                                    { id: 'font-caveat', name: 'Modern Hand', fontStyle: { fontFamily: "'Caveat', cursive" } }
+                                                                    { id: 'font-dancing', name: 'Elegant Cursive', fontStyle: SIGNATURE_FONTS['font-dancing'].style },
+                                                                    { id: 'font-greatvibes', name: 'Calligraphy', fontStyle: SIGNATURE_FONTS['font-greatvibes'].style },
+                                                                    { id: 'font-alex', name: 'Classic Script', fontStyle: SIGNATURE_FONTS['font-alex'].style },
+                                                                    { id: 'font-caveat', name: 'Modern Hand', fontStyle: SIGNATURE_FONTS['font-caveat'].style }
                                                                 ].map(styleOpt => {
                                                                     const isSelected = selectedSignatureFont === styleOpt.id;
                                                                     return (
@@ -719,10 +716,7 @@ export default function ToolPage({ toolSlug }) {
                                                                 <div className="flex justify-between items-end border-b border-[#000000]/10 pb-2 mb-1.5">
                                                                     <div>
                                                                         <span className="text-[18px] font-medium leading-none block" style={{
-                                                                            fontFamily: selectedSignatureFont === 'font-dancing' ? "'Dancing Script', cursive" :
-                                                                                        selectedSignatureFont === 'font-greatvibes' ? "'Great Vibes', cursive" :
-                                                                                        selectedSignatureFont === 'font-alex' ? "'Alex Brush', cursive" :
-                                                                                        selectedSignatureFont === 'font-caveat' ? "'Caveat', cursive" : "'Dancing Script', cursive"
+                                                                            fontFamily: signatureFontFamily(selectedSignatureFont)
                                                                         }}>
                                                                             {signText}
                                                                         </span>

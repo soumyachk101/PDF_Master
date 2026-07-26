@@ -1,6 +1,6 @@
 # Task 002 — Move signature fonts to next/font, delete the in-body `<link>`
 
-**Status:** TODO
+**Status:** DONE
 **Depends on:** none
 **Risk:** medium
 **Estimated size:** S

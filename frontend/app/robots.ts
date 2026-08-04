@@ -6,7 +6,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/api/', '/pdf-preview'],
+        disallow: ['/api/', '/health', '/status', '/pdf-preview'],
       },
       // AI answer engines cite and link back — allow them for discovery.
       // Content here is public marketing; uploaded files are deleted right after

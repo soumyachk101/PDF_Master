@@ -58,7 +58,7 @@ const nextConfig = {
     ];
   },
   async rewrites() {
-    const backendUrl = process.env.BACKEND_URL || 'https://pdf-master-backend-sxvj.onrender.com';
+    const backendUrl = process.env.BACKEND_URL || 'https://pdf-master-backend.onrender.com';
     return [
       {
         source: '/api/:path*',

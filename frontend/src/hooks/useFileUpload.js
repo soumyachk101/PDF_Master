@@ -91,34 +91,39 @@ export function useFileUpload(toolSlug) {
             setProgress(98);
             await new Promise(r => setTimeout(r, 250));
 
-            // Extract filename from Content-Disposition header if available
-            let filename;
-            const contentDisposition = response.headers['content-disposition'];
-            if (contentDisposition) {
-                const filenameMatch = contentDisposition.match(/filename\*?=(?:UTF-8''|")?([^";\n]+)"?/i);
-                if (filenameMatch && filenameMatch[1]) {
-                    try {
-                        filename = decodeURIComponent(filenameMatch[1].replace(/^"/, '').replace(/"$/, ''));
-                    } catch {
-                        filename = filenameMatch[1].replace(/^"/, '').replace(/"$/, '');
+            // Priority 1: Use original uploaded file name if available
+            let filename = null;
+            if (files && files.length > 0 && files[0]?.name) {
+                const originalName = files[0].name;
+                const targetExt = tool?.outputExt || '.pdf';
+                const lastDot = originalName.lastIndexOf('.');
+                const baseName = lastDot !== -1 ? originalName.substring(0, lastDot) : originalName;
+
+                if (originalName.toLowerCase().endsWith(targetExt.toLowerCase())) {
+                    filename = originalName;
+                } else {
+                    filename = `${baseName}${targetExt}`;
+                }
+            }
+
+            // Priority 2: Extract filename from Content-Disposition header if available
+            if (!filename) {
+                const contentDisposition = response.headers['content-disposition'] || response.headers['Content-Disposition'];
+                if (contentDisposition) {
+                    const filenameMatch = contentDisposition.match(/filename\*?=(?:UTF-8''|")?([^";\n]+)"?/i);
+                    if (filenameMatch && filenameMatch[1]) {
+                        try {
+                            filename = decodeURIComponent(filenameMatch[1].replace(/^"/, '').replace(/"$/, ''));
+                        } catch {
+                            filename = filenameMatch[1].replace(/^"/, '').replace(/"$/, '');
+                        }
                     }
                 }
             }
 
+            // Priority 3: Fallback default filename
             if (!filename) {
-                if (files && files.length > 0 && files[0]?.name) {
-                    const originalName = files[0].name;
-                    const targetExt = tool?.outputExt || '.pdf';
-                    const lastDot = originalName.lastIndexOf('.');
-                    const baseName = lastDot !== -1 ? originalName.substring(0, lastDot) : originalName;
-                    if (originalName.toLowerCase().endsWith(targetExt.toLowerCase())) {
-                        filename = originalName;
-                    } else {
-                        filename = `${baseName}${targetExt}`;
-                    }
-                } else {
-                    filename = `${toolSlug}-result${tool?.outputExt || '.pdf'}`;
-                }
+                filename = `${toolSlug}-result${tool?.outputExt || '.pdf'}`;
             }
             
             // Extract the actual mime type sent by the backend

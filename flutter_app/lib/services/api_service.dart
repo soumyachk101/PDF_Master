@@ -68,28 +68,31 @@ class ApiService {
       final response = await http.Response.fromStream(streamedResponse);
 
       if (response.statusCode >= 200 && response.statusCode < 300) {
-        // Extract filename from Content-Disposition header
+        // Priority 1: Use exact original filename if available
         String? filename;
-        final contentDisposition = response.headers['content-disposition'];
-        if (contentDisposition != null) {
-          final regExp = RegExp(r'''filename\*?=(?:UTF-8''|")?([^";\n]+)"?''', caseSensitive: false);
-          final match = regExp.firstMatch(contentDisposition);
-          if (match != null && match.group(1) != null) {
-            try {
-              filename = Uri.decodeComponent(match.group(1)!.replaceAll('"', ''));
-            } catch (_) {
-              filename = match.group(1)!.replaceAll('"', '');
+        if (files.isNotEmpty && files.first.name.isNotEmpty) {
+          filename = files.first.name;
+        }
+
+        // Priority 2: Extract filename from Content-Disposition header
+        if (filename == null || filename.isEmpty) {
+          final contentDisposition = response.headers['content-disposition'];
+          if (contentDisposition != null) {
+            final regExp = RegExp(r'''filename\*?=(?:UTF-8''|")?([^";\n]+)"?''', caseSensitive: false);
+            final match = regExp.firstMatch(contentDisposition);
+            if (match != null && match.group(1) != null) {
+              try {
+                filename = Uri.decodeComponent(match.group(1)!.replaceAll('"', ''));
+              } catch (_) {
+                filename = match.group(1)!.replaceAll('"', '');
+              }
             }
           }
         }
 
-        // Fallback filename if header isn't parsed
+        // Priority 3: Fallback default filename
         if (filename == null || filename.isEmpty) {
-          if (files.isNotEmpty) {
-            filename = files.first.name;
-          } else {
-            filename = '$toolSlug-result.pdf';
-          }
+          filename = '$toolSlug-result.pdf';
         }
 
         // Save file to application document / download directory

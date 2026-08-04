@@ -99,7 +99,7 @@ export function useFileUpload(toolSlug) {
                 if (filenameMatch && filenameMatch[1]) {
                     try {
                         filename = decodeURIComponent(filenameMatch[1].replace(/^"/, '').replace(/"$/, ''));
-                    } catch (e) {
+                    } catch {
                         filename = filenameMatch[1].replace(/^"/, '').replace(/"$/, '');
                     }
                 }

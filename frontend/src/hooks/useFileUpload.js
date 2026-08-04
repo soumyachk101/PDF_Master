@@ -86,12 +86,32 @@ export function useFileUpload(toolSlug) {
             });
 
             // Extract filename from Content-Disposition header if available
-            let filename = `${toolSlug}-result${tool?.outputExt || '.pdf'}`;
+            let filename;
             const contentDisposition = response.headers['content-disposition'];
             if (contentDisposition) {
-                const filenameMatch = contentDisposition.match(/filename="?([^"]+)"?/);
-                if (filenameMatch && filenameMatch.length === 2) {
-                    filename = filenameMatch[1];
+                const filenameMatch = contentDisposition.match(/filename\*?=(?:UTF-8''|")?([^";\n]+)"?/i);
+                if (filenameMatch && filenameMatch[1]) {
+                    try {
+                        filename = decodeURIComponent(filenameMatch[1].replace(/^"/, '').replace(/"$/, ''));
+                    } catch (e) {
+                        filename = filenameMatch[1].replace(/^"/, '').replace(/"$/, '');
+                    }
+                }
+            }
+
+            if (!filename) {
+                if (files && files.length > 0 && files[0]?.name) {
+                    const originalName = files[0].name;
+                    const targetExt = tool?.outputExt || '.pdf';
+                    const lastDot = originalName.lastIndexOf('.');
+                    const baseName = lastDot !== -1 ? originalName.substring(0, lastDot) : originalName;
+                    if (originalName.toLowerCase().endsWith(targetExt.toLowerCase())) {
+                        filename = originalName;
+                    } else {
+                        filename = `${baseName}${targetExt}`;
+                    }
+                } else {
+                    filename = `${toolSlug}-result${tool?.outputExt || '.pdf'}`;
                 }
             }
             

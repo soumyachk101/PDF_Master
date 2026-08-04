@@ -30,6 +30,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/privacy`, lastModified: defaultLastModified, changeFrequency: 'yearly' as const, priority: 0.3 },
     { url: `${baseUrl}/terms`, lastModified: defaultLastModified, changeFrequency: 'yearly' as const, priority: 0.3 },
     { url: `${baseUrl}/contact`, lastModified: defaultLastModified, changeFrequency: 'monthly' as const, priority: 0.5 },
+    { url: `${baseUrl}/health`, lastModified: defaultLastModified, changeFrequency: 'weekly' as const, priority: 0.5 },
   ];
 
   const hubPages = [

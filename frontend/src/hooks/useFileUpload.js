@@ -43,16 +43,32 @@ export function useFileUpload(toolSlug) {
             formData.append(key, additionalData[key]);
         });
 
+        let processingInterval;
         try {
+            const startProcessingAnimation = () => {
+                if (processingInterval) return;
+                processingInterval = setInterval(() => {
+                    setProgress((prev) => (prev < 92 ? prev + 1 : prev));
+                }, 350);
+            };
+
             const axiosConfig = {
                 headers: { 'Content-Type': 'multipart/form-data' },
                 responseType: 'blob',
                 timeout: 300000,
                 onUploadProgress: (progressEvent) => {
-                    const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-                    setProgress(Math.min(percentCompleted / 2, 50));
+                    const total = progressEvent.total || progressEvent.loaded || 1;
+                    const percentCompleted = Math.round((progressEvent.loaded * 100) / total);
+                    const uploadProgress = Math.min(Math.round(percentCompleted / 2), 50);
+                    setProgress(uploadProgress);
+                    if (uploadProgress >= 50) {
+                        startProcessingAnimation();
+                    }
                 },
             };
+
+            // Start processing animation as safety fallback if progress events complete fast
+            startProcessingAnimation();
 
             // Retry on gateway errors: the free-tier backend 502s while it
             // cold-boots (~30-60s), so spaced retries usually succeed.
@@ -71,19 +87,9 @@ export function useFileUpload(toolSlug) {
                 }
             }
 
-            // Animate progress from current (up to 50%) to 95% smoothly
-            await new Promise((resolve) => {
-                const fakeProgress = setInterval(() => {
-                    setProgress(p => {
-                        if (p >= 95) {
-                            clearInterval(fakeProgress);
-                            resolve();
-                            return 95;
-                        }
-                        return p + 2;
-                    });
-                }, 200);
-            });
+            if (processingInterval) clearInterval(processingInterval);
+            setProgress(98);
+            await new Promise(r => setTimeout(r, 250));
 
             // Extract filename from Content-Disposition header if available
             let filename;
@@ -133,6 +139,7 @@ export function useFileUpload(toolSlug) {
             setAppState('success');
 
         } catch (error) {
+            if (processingInterval) clearInterval(processingInterval);
             console.error('File processing error:', error);
             setAppState('error');
 
